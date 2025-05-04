@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace E_Commerce.BL.Contracts.Repositories
+namespace E_Commerce.BL.Contracts.Services
 {
-    public class IProductRepository
+    public class IProductServices
     {
 
     }
