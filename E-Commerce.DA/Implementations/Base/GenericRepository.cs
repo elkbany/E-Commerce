@@ -5,12 +5,13 @@ using System.Text;
 using System.Threading.Tasks;
 using E_Commerce.DA.Context;
 using Microsoft.EntityFrameworkCore;
+using E_Commerce.BL.Contracts.Repositories;
 
 
 
 namespace E_Commerce.DA.Implementations.Base
 {
-    public class GenericRepository<T> where T : class
+    public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
         private readonly DBContext _context;
         private readonly DbSet<T> _dbSet;
@@ -20,25 +21,37 @@ namespace E_Commerce.DA.Implementations.Base
             _context = context;
             _dbSet = context.Set<T>();
         }
-        public T Create(T entity) {return _dbSet.Add(entity).Entity;}
-        public T Update(T entity) { return _dbSet.Update(entity).Entity; }
-        public T Delete(T entity) { return _dbSet.Remove(entity).Entity; }
 
-        public T GetById(int id)
+        public async Task<T> Create(T entity)
         {
-            return _dbSet.Find(id);
+            await _dbSet.AddAsync(entity);
+            return entity;
+        }
+        public async Task<T> Update(T entity)
+        {
+            return _dbSet.Update(entity).Entity;
         }
 
-        public IQueryable<T> GetAll()
+        public async Task<T> Delete(T entity)
         {
-            return _dbSet.AsQueryable();
+            return _dbSet.Remove(entity).Entity;
         }
 
-        public void SaveChanges()
+        public async Task<IQueryable<T>> GetAll()
+        {
+            return await Task.FromResult(_dbSet.AsQueryable());
+        }
+
+        public async Task<T?> GetById(int id)
+        {
+            return await _dbSet.FindAsync(id);
+        }
+
+        public async Task SaveChanges()
         {
             try
             {
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException ex)
             {
