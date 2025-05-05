@@ -18,8 +18,44 @@ namespace E_Commerce.DA.Implementations.Base
         public GenericRepository(DBContext context)
         {
             _context = context;
+            _dbSet = context.Set<T>();
+        }
+        public T Create(T entity) {return _dbSet.Add(entity).Entity;}
+        public T Update(T entity) { return _dbSet.Update(entity).Entity; }
+        public T Delete(T entity) { return _dbSet.Remove(entity).Entity; }
+
+        public T GetById(int id)
+        {
+            return _dbSet.Find(id);
         }
 
+        public IQueryable<T> GetAll()
+        {
+            return _dbSet.AsQueryable();
+        }
+
+        public void SaveChanges()
+        {
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch (DbUpdateConcurrencyException ex)
+            {
+                // Handle concurrency exception
+                throw new Exception("Concurrency error occurred while saving changes.", ex);
+            }
+            catch (DbUpdateException ex)
+            {
+                // Handle update exception
+                throw new Exception("An error occurred while updating the database.", ex);
+            }
+            catch (Exception ex)
+            {
+                // Handle other exceptions
+                throw new Exception("An unexpected error occurred.", ex);
+            }
+        }
 
     }
 }
