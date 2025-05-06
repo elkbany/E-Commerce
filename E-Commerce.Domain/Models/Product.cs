@@ -13,8 +13,9 @@
 
             public int UnitsInStock { get; set; }
 
-            public int CategoryID { get; set; }
-            public ICollection<CartItem> CartItem { get; set; }
+            public int? CategoryID { get; set; }
+            public Category? Category { get; set; }
+            public ICollection<CartItem> CartItems { get; set; }
             public ICollection<OrderDetail> OrderDetails { get; set; }
 
 

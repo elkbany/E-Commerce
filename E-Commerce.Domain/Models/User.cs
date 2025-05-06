@@ -5,13 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace E_Commerce.Domain.Models
-{
-    public enum UserRole
-    {
-        Client,
-        Admin
-    }
-    class User
+{ 
+   public class User
     {
         
             public int Id  { get; set; }  
@@ -25,7 +20,7 @@ namespace E_Commerce.Domain.Models
 
             public string LastName { get; set; }
 
-            public UserRole Role { get; set; }
+           // public UserRole Role { get; set; }
 
             public bool IsActive { get; set; } = true;
 

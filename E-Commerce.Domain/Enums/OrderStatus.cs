@@ -4,9 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace E_Commerce.BL.Features.Product
+namespace E_Commerce.Domain.Enums
 {
-    public class ProductDto
+    public enum OrderStatus
     {
+        Pending,
+        Approved,
+        Denied,
+        Shipped
     }
 }

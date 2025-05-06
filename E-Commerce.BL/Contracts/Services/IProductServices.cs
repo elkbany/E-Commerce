@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace E_Commerce.BL.Contracts.Services
 {
-    public class IProductServices
+    public interface IProductServices
     {
 
     }

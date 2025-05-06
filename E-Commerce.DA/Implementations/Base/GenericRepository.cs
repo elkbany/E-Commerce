@@ -22,7 +22,7 @@ namespace E_Commerce.DA.Implementations.Base
             _dbSet = context.Set<T>();
         }
 
-        public async Task<T> Create(T entity)
+        public async Task<T> AddAsync(T entity)
         {
             await _dbSet.AddAsync(entity);
             return entity;
@@ -37,17 +37,17 @@ namespace E_Commerce.DA.Implementations.Base
             return _dbSet.Remove(entity).Entity;
         }
 
-        public async Task<IQueryable<T>> GetAll()
+        public async Task<IQueryable<T>> GetAllAsync()
         {
             return await Task.FromResult(_dbSet.AsQueryable());
         }
 
-        public async Task<T?> GetById(int id)
+        public async Task<T?> GetByIdAsync(int id)
         {
             return await _dbSet.FindAsync(id);
         }
 
-        public async Task SaveChanges()
+        public async Task CommitAsync()
         {
             try
             {
