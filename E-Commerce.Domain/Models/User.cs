@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using E_Commerce.Domain.Enums;
 
 namespace E_Commerce.Domain.Models
 { 
@@ -20,14 +21,15 @@ namespace E_Commerce.Domain.Models
 
             public string LastName { get; set; }
 
-           // public UserRole Role { get; set; }
+            public UserStatus status { get; set; }
 
             public bool IsActive { get; set; } = true;
 
             public DateTime DateCreated { get; set; }
 
             public DateTime? LastLoginDate { get; set; }
-            public ICollection<CartItem> CartItem { get; set; }
+            public ICollection<CartItem> CartItems { get; set; }
+            public ICollection<Order> Orders { get; set; }
 
 
 

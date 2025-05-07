@@ -22,7 +22,8 @@ namespace E_Commerce.BL.Implementations
         }
         public async Task<ProductDTO> AddProductAsync(ProductDTO product)
         {
-            await DoValidationAsync<ProductDTOValidator,ProductDTO>(product);
+            #region Validations
+            await DoValidationAsync<ProductDTOValidator, ProductDTO>(product);
             //var category = 
             var pro = new Product
             {
@@ -31,9 +32,10 @@ namespace E_Commerce.BL.Implementations
                 Price = product.Price,
                 UnitsInStock = product.UnitsInStock,
 
-            };
-
-            var Pro = await _productRepository.AddAsync(pro);
+            }; 
+            #endregion
+                
+            var Pro =await productRepository.AddAsync(pro);
             var proMap = product?.Adapt<ProductDTO>();
             return proMap;
         }
@@ -52,9 +54,10 @@ namespace E_Commerce.BL.Implementations
             return proMap;
         }
 
-        public async Task<ProductDTO> UpdateProductAsync(Product product)
+        public async Task<ProductDTO> UpdateProductAsync(int id,ProductDTO productDTO)
         {
-            var pro = await _productRepository.Update(product);
+            var product = await productRepository.GetByIdAsync(id);
+            var pro = await productRepository.Update(product);
             var proMap = product?.Adapt<ProductDTO>();
             return proMap;
         }
