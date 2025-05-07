@@ -14,11 +14,11 @@ namespace E_Commerce.BL.Implementations
 {
     public class ProductServices : AppService,IProductServices
     {
-        private readonly IProductRepository _productRepository;
+        private readonly IProductRepository productRepository;
 
         public ProductServices(IProductRepository productRepository)
         {
-            _productRepository = productRepository;
+            productRepository = productRepository;
         }
         public async Task<ProductDTO> AddProductAsync(ProductDTO product)
         {
@@ -42,14 +42,14 @@ namespace E_Commerce.BL.Implementations
 
         public async Task<ProductDTO> GetProductByIdAsync(int id)
         {
-            var product = await _productRepository.GetByIdAsync(id);
+            var product = await productRepository.GetByIdAsync(id);
             var proMap = product?.Adapt<ProductDTO>();
             return proMap;
         }
 
         public async Task<IEnumerable<ProductDTO>> GetAllProductsAsync()
         {
-            var products = _productRepository.GetAllAsync();
+            var products = productRepository.GetAllAsync();
             var proMap = products.Adapt<List<ProductDTO>>();
             return proMap;
         }
@@ -64,10 +64,10 @@ namespace E_Commerce.BL.Implementations
 
         public async Task DeleteProductAsync(int id)
         {
-            var product = await _productRepository.GetByIdAsync(id);
+            var product = await productRepository.GetByIdAsync(id);
             if (product != null)
             {
-                await _productRepository.Delete(product);
+                await productRepository.Delete(product);
             }
         }
     }

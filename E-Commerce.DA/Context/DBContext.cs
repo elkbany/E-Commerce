@@ -14,9 +14,10 @@ namespace E_Commerce.DA.Context
     {
 
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public DBContext(DbContextOptions<DBContext> options) : base(options)
         {
-            optionsBuilder.UseSqlServer("Server=DESKTOP-14D4G93;Database=Day13;Trusted_Connection=True;TrustServerCertificate=True");
+
+            //options.UseSqlServer("Data Source=.;Initial Catalog=E-Commerce;Integrated Security=True;Trust Server Certificate=True;");
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
