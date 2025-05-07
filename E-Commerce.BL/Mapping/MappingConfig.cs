@@ -41,9 +41,9 @@ namespace E_Commerce.BL.Mapping
             TypeAdapterConfig<Category, CategoryDTO>.NewConfig();
             TypeAdapterConfig<Order, OrderDTO>
             .NewConfig()
-            .Map(dest => dest.Status, src => src.Status.ToString());    
-            //.Map(dest => dest.UserName, src => src.User.Username);
-            //.Map(dest => dest.OrderDetails, src => src.OrderDetails);
+            .Map(dest => dest.Status, src => src.Status.ToString())  
+            .Map(dest => dest.UserName, src => src.User.Username)
+            .Map(dest => dest.OrderDetails, src => src.OrderDetails);
 
             //TypeAdapterConfig<OrderDetail, OrderDetailDTO>
             //    .NewConfig()

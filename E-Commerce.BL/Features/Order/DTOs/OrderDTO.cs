@@ -1,4 +1,5 @@
-﻿using E_Commerce.Domain.Enums;
+﻿using E_Commerce.BL.Features.OrderDetail.DTOs;
+using E_Commerce.Domain.Enums;
 using E_Commerce.Domain.Models;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,6 @@ namespace E_Commerce.BL.Features.Order.DTOs
 
         public DateTime? DateProcessed { get; set; }
 
-        //public List<OrderDetailDTO> OrderDetails { get; set; }
+        public List<OrderDetailDTO> OrderDetails { get; set; }
     }
 }
