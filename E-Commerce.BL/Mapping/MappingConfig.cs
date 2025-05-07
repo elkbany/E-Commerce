@@ -1,4 +1,5 @@
-﻿using E_Commerce.BL.Features.Product.DTOs;
+﻿using E_Commerce.BL.Features.Category.DTOs;
+using E_Commerce.BL.Features.Product.DTOs;
 using E_Commerce.Domain.Models;
 using Mapster;
 using System;
@@ -16,7 +17,7 @@ namespace E_Commerce.BL.Mapping
 
             TypeAdapterConfig<Product, ProductDTO>.NewConfig()
                 .Map(dest => dest.Category, src => src.Category.Name);
-
+            TypeAdapterConfig<Category, CategoryDTO>.NewConfig();
         }
     }
 }
