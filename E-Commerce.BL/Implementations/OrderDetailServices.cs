@@ -56,7 +56,7 @@ namespace E_Commerce.BL.Implementations
             return orderDetailMap;
         }
 
-        public async Task DeleteProductAsync(int id)
+        public async Task DeleteOrderDetailedAsync(int id)
         {
             var orderdetail = await _orderDetailRepository.GetByIdAsync(id);
             if (orderdetail != null)
