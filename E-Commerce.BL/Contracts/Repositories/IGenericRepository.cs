@@ -13,6 +13,7 @@ namespace E_Commerce.BL.Contracts.Repositories
         public Task<T> Update(T entity);
         public Task<T> Delete(T entity);
         public Task<T> GetByIdAsync(int id);
-        public Task<IQueryable<T>> GetAllAsync();
+        public Task<IQueryable<T>> GetAllAsync(); 
+        public Task CommitAsync();
     }
 }
