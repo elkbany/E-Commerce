@@ -18,7 +18,7 @@ namespace E_Commerce.BL.Implementations
 
         public ProductServices(IProductRepository productRepository)
         {
-            this.productRepository = productRepository;
+            productRepository = productRepository;
         }
         public async Task<ProductDTO> AddProductAsync(ProductDTO product)
         {
