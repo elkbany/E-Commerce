@@ -14,6 +14,6 @@ namespace E_Commerce.BL.Contracts.Services
         Task<UserDTO> getUserById(int ID);
         Task<List<UserDTO>> getAllUser();
         Task<UpdateUserAccountDTO> Update(int Id, UpdateUserAccountDTO entity);
-        Task<UserDTO> Delete(int Id, User entity);
+        Task<UserDTO> Delete(int Id, User entity); 
     }
 }
