@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using E_Commerce.BL.Contracts.Repositories;
 using E_Commerce.BL.Contracts.Services;
-using E_Commerce.BL.Features.User.UserDTO;
+using E_Commerce.BL.Features.User.DTOs;
 using E_Commerce.Domain.Models;
 using Mapster;
 
@@ -63,15 +63,15 @@ namespace E_Commerce.BL.Implementations
 
 
         }
-        public async Task<UserDTO> Delete(int Id, User entity)
+        public async Task<UserDTO> Delete(int Id)
         {
-            var TheUser = _userRepository.GetByIdAsync(Id);
+            var TheUser = await _userRepository.GetByIdAsync(Id);
             if (TheUser == null)
             {
                 throw new Exception($"User with ID {Id} not found");
             }
 
-            var user = _userRepository.Delete(entity);
+            var user = _userRepository.Delete(TheUser);
             await _userRepository.CommitAsync();
             return user.Adapt<UserDTO>();
         }

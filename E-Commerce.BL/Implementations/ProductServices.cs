@@ -22,7 +22,7 @@ namespace E_Commerce.BL.Implementations
         }
         public async Task<ProductDTO> AddProductAsync(ProductDTO product)
         {
-            await DoValidationAsync<ProductDTOValidator,ProductDTO>(product);
+            await DoValidationAsync<ProductDTOValidator, ProductDTO>(product);
             //var category = 
             var pro = new Product
             {

@@ -1,5 +1,5 @@
 ﻿using E_Commerce.BL.Features.Product.DTOs;
-using E_Commerce.BL.Features.User.UserDTO;
+using E_Commerce.BL.Features.User.DTOs;
 using E_Commerce.Domain.Models;
 using Mapster;
 using System;
@@ -15,11 +15,11 @@ namespace E_Commerce.BL.Mapping
         public void Configure()
         {
 
-            TypeAdapterConfig<Product, ProductDTO>.NewConfig()
+            TypeAdapterConfig<Product, Features.Product.DTOs.ProductDTO>.NewConfig()
                 .Map(dest => dest.Category, src => src.Category.Name);
 
             #region User Mapping
-            TypeAdapterConfig<User, UserDTO>.NewConfig()
+            TypeAdapterConfig<User, Features.User.DTOs.UserDTO>.NewConfig()
               .Map(dest => dest.Username, src => src.Username)
               .Map(dest => dest.FirstName, src => src.FirstName)
               .Map(dest => dest.LastName, src => src.LastName)
