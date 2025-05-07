@@ -1,4 +1,8 @@
+using E_Commerce.BL.Contracts.Repositories;
+using E_Commerce.BL.Contracts.Services;
+using E_Commerce.BL.Implementations;
 using E_Commerce.DA.Context;
+using E_Commerce.DA.Implementations.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -30,8 +34,16 @@ namespace E_Commerce.Presentation
                    services.AddScoped<Form1>();
 
                    // Register your repositories and services here
-                   // services.AddScoped<IProductRepository, ProductRepository>();
-                   // services.AddScoped<IProductServices, ProductServices>();
+                   services.AddScoped<IProductRepository, ProductRepository>();
+                   services.AddScoped<IProductServices, ProductServices>();
+                   services.AddScoped<IUserRepository, UserRepository>();
+                   services.AddScoped<IUserServices, UserServices>();
+                   //services.AddScoped<IOrderRepository, OrderRepository>();
+                   //services.AddScoped<IOrderServices, OrderServices>();
+                   services.AddScoped<ICategoryRepository, CategoryRepository>();
+                   services.AddScoped<ICategoryServices, CategoryServices>();
+
+
                });
     }
 }

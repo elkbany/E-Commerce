@@ -11,7 +11,7 @@ using Mapster;
 
 namespace E_Commerce.BL.Implementations
 {
-    class UserServices:IUserServices
+    public class UserServices:IUserServices
     {
         private IUserRepository _userRepository;
         public UserServices(IUserRepository userRepository)

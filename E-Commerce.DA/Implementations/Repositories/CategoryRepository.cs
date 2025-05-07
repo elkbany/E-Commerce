@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace E_Commerce.DA.Implementations.Repositories
 {
-    class CategoryRepository : GenericRepository<Category> , ICategoryRepository
+   public class CategoryRepository : GenericRepository<Category> , ICategoryRepository
     {
         public CategoryRepository(DBContext context): base(context)
         {
