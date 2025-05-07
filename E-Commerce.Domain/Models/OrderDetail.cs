@@ -15,6 +15,7 @@ namespace E_Commerce.Domain.Models
         [ForeignKey("Product")]
         public int  ProductID { get; set; } 
 
+        public Product product { get; set; }
         public int Quantity { get; set; }
         public Product Product { get; set; }
         public Order Order { get; set; }
