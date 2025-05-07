@@ -28,8 +28,8 @@ namespace E_Commerce.Domain.Models
             public DateTime DateCreated { get; set; }
 
             public DateTime? LastLoginDate { get; set; }
-            public ICollection<CartItem> CartItem { get; set; }
-            public ICollection<Order> Order { get; set; }
+            public ICollection<CartItem> CartItems { get; set; }
+            public ICollection<Order> Orders { get; set; }
 
 
 

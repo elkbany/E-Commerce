@@ -15,7 +15,7 @@ namespace E_Commerce.Domain.Models
             public string Name { get; set; }
 
             public string? Description { get; set; } 
-           public ICollection<Product> products { get; set; }
+           public ICollection<Product> Products { get; set; }
 
            
             
