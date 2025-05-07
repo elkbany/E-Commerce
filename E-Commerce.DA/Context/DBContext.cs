@@ -12,11 +12,11 @@ namespace E_Commerce.DA.Context
 {
     public class DBContext : DbContext
     {
-        
+
 
         public DBContext(DbContextOptions<DBContext> options) : base(options)
         {
-           
+
             //options.UseSqlServer("Data Source=.;Initial Catalog=E-Commerce;Integrated Security=True;Trust Server Certificate=True;");
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
