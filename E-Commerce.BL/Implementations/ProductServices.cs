@@ -14,11 +14,11 @@ namespace E_Commerce.BL.Implementations
 {
     public class ProductServices : AppService,IProductServices
     {
-        private readonly IProductRepository productRepository;
+        private readonly IProductRepository _productRepository;
 
         public ProductServices(IProductRepository productRepository)
         {
-            this.productRepository = productRepository;
+            _productRepository = productRepository;
         }
         public async Task<ProductDTO> AddProductAsync(ProductDTO product)
         {
@@ -33,38 +33,38 @@ namespace E_Commerce.BL.Implementations
 
             };
 
-            var Pro = await productRepository.AddAsync(pro);
+            var Pro = await _productRepository.AddAsync(pro);
             var proMap = product?.Adapt<ProductDTO>();
             return proMap;
         }
 
         public async Task<ProductDTO> GetProductByIdAsync(int id)
         {
-            var product = await productRepository.GetByIdAsync(id);
+            var product = await _productRepository.GetByIdAsync(id);
             var proMap = product?.Adapt<ProductDTO>();
             return proMap;
         }
 
         public async Task<IEnumerable<ProductDTO>> GetAllProductsAsync()
         {
-            var products = productRepository.GetAllAsync();
+            var products = _productRepository.GetAllAsync();
             var proMap = products.Adapt<List<ProductDTO>>();
             return proMap;
         }
 
         public async Task<ProductDTO> UpdateProductAsync(Product product)
         {
-            var pro = await productRepository.Update(product);
+            var pro = await _productRepository.Update(product);
             var proMap = product?.Adapt<ProductDTO>();
             return proMap;
         }
 
         public async Task DeleteProductAsync(int id)
         {
-            var product = await productRepository.GetByIdAsync(id);
+            var product = await _productRepository.GetByIdAsync(id);
             if (product != null)
             {
-                await productRepository.Delete(product);
+                await _productRepository.Delete(product);
             }
         }
     }
