@@ -20,7 +20,7 @@ namespace E_Commerce.Presentation
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new Form1());
+            Application.Run(new Login());
         }
         static IHostBuilder CreateHostBuilder() =>
            Host.CreateDefaultBuilder()
@@ -31,7 +31,7 @@ namespace E_Commerce.Presentation
                        options.UseSqlServer("Data Source=.;Initial Catalog=E-Commerce;Integrated Security=True;Trust Server Certificate=True;"));
 
                    // Register Form1 (and other forms or services you need)
-                   services.AddScoped<Form1>();
+                   services.AddScoped<Login>();
 
                    // Register your repositories and services here
                    services.AddScoped<IProductRepository, ProductRepository>();
