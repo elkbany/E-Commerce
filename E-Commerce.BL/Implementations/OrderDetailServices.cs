@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace E_Commerce.BL.Implementations
 {
-    class OrderDetailServices :AppService, IOrderDetailServices
+   public class OrderDetailServices :AppService, IOrderDetailServices
     {
         private readonly IOrderDetailRepository _orderDetailRepository;
 

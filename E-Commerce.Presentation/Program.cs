@@ -38,10 +38,12 @@ namespace E_Commerce.Presentation
                    services.AddScoped<IProductServices, ProductServices>();
                    services.AddScoped<IUserRepository, UserRepository>();
                    services.AddScoped<IUserServices, UserServices>();
-                   //services.AddScoped<IOrderRepository, OrderRepository>();
-                   //services.AddScoped<IOrderServices, OrderServices>();
+                   services.AddScoped<IOrderRepository, OrderRepository>();
+                   services.AddScoped<IOrderServices, OrderServices>();
                    services.AddScoped<ICategoryRepository, CategoryRepository>();
                    services.AddScoped<ICategoryServices, CategoryServices>();
+                   services.AddScoped<IOrderDetailRepository, OrderDetailRepository>();
+                   services.AddScoped<IOrderDetailServices, OrderDetailServices>();
 
 
                });
