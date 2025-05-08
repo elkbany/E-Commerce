@@ -15,5 +15,7 @@ namespace E_Commerce.BL.Contracts.Repositories
         public Task<T> GetByIdAsync(int id);
         public Task<IQueryable<T>> GetAllAsync(); 
         public Task CommitAsync();
+
+        
     }
 }

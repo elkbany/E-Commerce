@@ -11,6 +11,8 @@ using System.Text;
 using System.Threading.Tasks;
 using E_Commerce.Domain.Models;
 using E_Commerce.BL.Features.Order.DTOs;
+using E_Commerce.BL.Features.CartItem;
+using System.Xml.Serialization;
 
 namespace E_Commerce.BL.Mapping
 {
@@ -44,6 +46,11 @@ namespace E_Commerce.BL.Mapping
             .Map(dest => dest.Status, src => src.Status.ToString())  
             .Map(dest => dest.UserName, src => src.User.Username)
             .Map(dest => dest.OrderDetails, src => src.OrderDetails);
+
+            TypeAdapterConfig<CartItem, CartItemDTO>.NewConfig()
+                .Map(dest => dest.ProductID, src => src.ProductID)
+                .Map(dest => dest.Product_Name, src => src.Product.Name)
+                .Map(dest => dest.Preoduct_Price, src => src.Product.Price);
 
             //TypeAdapterConfig<OrderDetail, OrderDetailDTO>
             //    .NewConfig()

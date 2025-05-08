@@ -15,7 +15,7 @@ namespace E_Commerce.BL.Implementations
    public class OrderDetailServices :AppService, IOrderDetailServices
     {
         private readonly IOrderDetailRepository _orderDetailRepository;
-
+         
         public OrderDetailServices (IOrderDetailRepository orderDetailRepository)
         {
             _orderDetailRepository = orderDetailRepository;
