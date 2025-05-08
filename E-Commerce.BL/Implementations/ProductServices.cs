@@ -37,6 +37,7 @@ namespace E_Commerce.BL.Implementations
                 
             var Pro =await productRepository.AddAsync(pro);
             var proMap = product?.Adapt<ProductDTO>();
+          // await productRepository.GetAllAsync(p=>p.UnitsInStock>0);
             return proMap;
         }
 
@@ -69,6 +70,12 @@ namespace E_Commerce.BL.Implementations
             {
                 await productRepository.Delete(product);
             }
+        }
+        public async Task<List<Product>> GetAllp()
+        {
+            var products = await productRepository.GetAllAsync(p=>p.UnitsInStock>0);
+            var proMap = products.Adapt<List<Product>>();
+            return proMap;
         }
     }
 }
