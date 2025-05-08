@@ -12,9 +12,7 @@ namespace E_Commerce.Domain.Models
         
             public int Id  { get; set; }  
             public string Username { get; set; }
-
             public string PasswordHash { get; set; } 
-
             public string Email { get; set; }
 
             public string FirstName { get; set; }
@@ -23,24 +21,19 @@ namespace E_Commerce.Domain.Models
 
             public UserStatus status { get; set; } = UserStatus.Client;
 
-             public bool IsActive { get; set; } = true;
+            public bool IsActive { get; set; } = true;
 
             public DateTime DateCreated { get; set; } = DateTime.Now;
             public DateTime DateUpdated { get; set; } =DateTime.Now;
            
-        public DateTime? LastLoginDate { get; set; } 
-             public bool IsSignedInNow { get; set; } = false;
-              public ICollection<CartItem> CartItems { get; set; }
+            public DateTime? LastLoginDate { get; set; } 
+            public bool IsSignedInNow { get; set; } = false;
+            public ICollection<CartItem> CartItems { get; set; }
             public ICollection<Order> Orders { get; set; }
 
 
 
 
-            public User()
-            {
-               
-                DateCreated = DateTime.UtcNow;
-            }
         
     }
 }
