@@ -11,6 +11,7 @@ namespace E_Commerce.BL.Features.Order.DTOs
 {
     public class OrderDTO
     {
+        public int OrderID { get; set; }
         public int UserID { get; set; }
         public string UserName { get; set; }
         public DateTime OrderDate { get; set; }
