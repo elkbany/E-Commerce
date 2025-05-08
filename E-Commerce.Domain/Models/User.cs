@@ -21,14 +21,15 @@ namespace E_Commerce.Domain.Models
 
             public string LastName { get; set; }
 
-            public UserStatus status { get; set; }
+            public UserStatus status { get; set; } = UserStatus.Client;
 
-            public bool IsActive { get; set; } = true;
+             public bool IsActive { get; set; } = true;
 
-            public DateTime DateCreated { get; set; }
+            public DateTime DateCreated { get; set; } = DateTime.Now;
 
-            public DateTime? LastLoginDate { get; set; }
-            public ICollection<CartItem> CartItems { get; set; }
+             public DateTime? LastLoginDate { get; set; } 
+             public bool IsSignedInNow { get; set; } = false;
+              public ICollection<CartItem> CartItems { get; set; }
             public ICollection<Order> Orders { get; set; }
 
 

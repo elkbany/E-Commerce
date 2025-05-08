@@ -9,6 +9,9 @@ namespace E_Commerce.BL.Contracts.Repositories
 {
     public interface IUserRepository : IGenericRepository<User>
     {
-        
+        public Task<bool> IsUsernameTakenAsync(string username);
+        public Task<bool> IsEmailAlreadyExistsAsync(string email);
+
+
     }
 }
