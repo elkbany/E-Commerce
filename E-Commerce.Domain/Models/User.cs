@@ -26,8 +26,9 @@ namespace E_Commerce.Domain.Models
              public bool IsActive { get; set; } = true;
 
             public DateTime DateCreated { get; set; } = DateTime.Now;
-
-             public DateTime? LastLoginDate { get; set; } 
+            public DateTime DateUpdated { get; set; } =DateTime.Now;
+           
+        public DateTime? LastLoginDate { get; set; } 
              public bool IsSignedInNow { get; set; } = false;
               public ICollection<CartItem> CartItems { get; set; }
             public ICollection<Order> Orders { get; set; }

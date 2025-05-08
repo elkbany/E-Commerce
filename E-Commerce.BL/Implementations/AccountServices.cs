@@ -41,7 +41,8 @@ namespace E_Commerce.BL.Implementations
             };
             user.PasswordHash = hasher.HashPassword(user, registerUserDto.Password);
             var userReg = await userRepository.AddAsync(user);
-           return userReg != null;
+            await userRepository.CommitAsync();
+            return userReg != null;
         }
         public async Task<bool> LoginUserAsync(string usernameOrEmail, string password)
         {
@@ -54,10 +55,56 @@ namespace E_Commerce.BL.Implementations
         
             var hasher = new PasswordHasher<User>();
             var result = hasher.VerifyHashedPassword(user, user.PasswordHash, password);
-
+            if(result== Microsoft.AspNetCore.Identity.PasswordVerificationResult.Success)
+            {
+                user.IsSignedInNow = true;
+            }
+            await userRepository.Update(user);
+            await userRepository.CommitAsync();
             return result == Microsoft.AspNetCore.Identity.PasswordVerificationResult.Success;
         }
-     
+        public async Task<bool> LogoutUserAsync(string usernameOrEmail)
+        {
+            var user = await userRepository
+                .FirstOrDefaultAsync(u => u.Username == usernameOrEmail || u.Email == usernameOrEmail);
+
+            if (user == null || !user.IsSignedInNow)
+                return false;
+
+            user.IsSignedInNow = false;
+            user.LastLoginDate = DateTime.UtcNow;
+
+            var result = await userRepository.Update(user);
+            await userRepository.CommitAsync();
+            return result != null;
+        }
+
+        public async Task<bool> UpdateUserAsync(UpdateUserDto dto)
+        {
+          
+            var user = await userRepository
+                .FirstOrDefaultAsync(u => u.Id == dto.Id); 
+
+            if(user == null||!user.IsSignedInNow)
+                return false;
+
+           
+            user.FirstName = dto.FirstName;
+            user.LastName = dto.LastName;
+            user.DateUpdated = DateTime.UtcNow;
+
+          
+            if (!string.IsNullOrWhiteSpace(dto.Password))
+            {
+                var hasher = new PasswordHasher<User>();
+                user.PasswordHash = hasher.HashPassword(user, dto.Password);
+            }
+
+        
+            var updated = await userRepository.Update(user);
+            await userRepository.CommitAsync();
+            return updated != null;
+        }
 
     }
 }
