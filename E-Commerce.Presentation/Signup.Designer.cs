@@ -33,6 +33,9 @@
             pictureBox1 = new PictureBox();
             label6 = new Label();
             panel1 = new Panel();
+            signup_confirmpassword = new TextBox();
+            label10 = new Label();
+            signup_firstName = new TextBox();
             label8 = new Label();
             signup_email = new TextBox();
             label5 = new Label();
@@ -62,7 +65,7 @@
             panel2.Location = new Point(0, 0);
             panel2.Margin = new Padding(3, 2, 3, 2);
             panel2.Name = "panel2";
-            panel2.Size = new Size(245, 416);
+            panel2.Size = new Size(245, 472);
             panel2.TabIndex = 1;
             // 
             // label7
@@ -99,6 +102,8 @@
             // panel1
             // 
             panel1.BackColor = Color.White;
+            panel1.Controls.Add(signup_confirmpassword);
+            panel1.Controls.Add(label10);
             panel1.Controls.Add(signup_firstName);
             panel1.Controls.Add(label8);
             panel1.Controls.Add(signup_email);
@@ -115,12 +120,33 @@
             panel1.Controls.Add(signup_lastName);
             panel1.Controls.Add(label2);
             panel1.Controls.Add(label1);
+            panel1.Dock = DockStyle.Fill;
             panel1.Location = new Point(0, 0);
             panel1.Margin = new Padding(3, 2, 3, 2);
             panel1.Name = "panel1";
-            panel1.Size = new Size(569, 416);
+            panel1.Size = new Size(569, 472);
             panel1.TabIndex = 2;
             panel1.Paint += panel1_Paint;
+            // 
+            // signup_confirmpassword
+            // 
+            signup_confirmpassword.Location = new Point(250, 351);
+            signup_confirmpassword.Margin = new Padding(3, 2, 3, 2);
+            signup_confirmpassword.Multiline = true;
+            signup_confirmpassword.Name = "signup_confirmpassword";
+            signup_confirmpassword.PasswordChar = '*';
+            signup_confirmpassword.Size = new Size(267, 24);
+            signup_confirmpassword.TabIndex = 17;
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label10.Location = new Point(250, 332);
+            label10.Name = "label10";
+            label10.Size = new Size(119, 19);
+            label10.TabIndex = 16;
+            label10.Text = "ConfirmPassword:";
             // 
             // signup_firstName
             // 
@@ -198,7 +224,7 @@
             signup_loginHere.Cursor = Cursors.Hand;
             signup_loginHere.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             signup_loginHere.ForeColor = SystemColors.ControlDarkDark;
-            signup_loginHere.Location = new Point(424, 389);
+            signup_loginHere.Location = new Point(426, 440);
             signup_loginHere.Name = "signup_loginHere";
             signup_loginHere.Size = new Size(66, 15);
             signup_loginHere.TabIndex = 8;
@@ -210,7 +236,7 @@
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label4.ForeColor = SystemColors.ControlDarkDark;
-            label4.Location = new Point(262, 389);
+            label4.Location = new Point(264, 440);
             label4.Name = "label4";
             label4.Size = new Size(142, 15);
             label4.TabIndex = 7;
@@ -222,7 +248,7 @@
             signup_showPassword.BackColor = Color.Transparent;
             signup_showPassword.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
             signup_showPassword.ForeColor = SystemColors.AppWorkspace;
-            signup_showPassword.Location = new Point(384, 324);
+            signup_showPassword.Location = new Point(394, 379);
             signup_showPassword.Margin = new Padding(3, 2, 3, 2);
             signup_showPassword.Name = "signup_showPassword";
             signup_showPassword.Size = new Size(123, 23);
@@ -237,7 +263,7 @@
             signup_btn.Cursor = Cursors.Hand;
             signup_btn.FlatAppearance.BorderSize = 0;
             signup_btn.ForeColor = Color.White;
-            signup_btn.Location = new Point(333, 356);
+            signup_btn.Location = new Point(335, 407);
             signup_btn.Margin = new Padding(3, 2, 3, 2);
             signup_btn.Name = "signup_btn";
             signup_btn.Size = new Size(88, 26);
@@ -298,7 +324,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(569, 417);
+            ClientSize = new Size(569, 472);
             Controls.Add(panel2);
             Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.None;
@@ -337,5 +363,7 @@
         private Label label5;
         private TextBox signup_firstName;
         private Label label8;
+        private TextBox signup_confirmpassword;
+        private Label label10;
     }
 }
