@@ -1,4 +1,5 @@
 ﻿using E_Commerce.BL.Contracts.Repositories;
+using E_Commerce.BL.Features.Order.DTOs;
 using E_Commerce.Domain.Enums;
 using E_Commerce.Domain.Models;
 using FluentValidation;
@@ -6,35 +7,23 @@ using System.Threading.Tasks;
 
 namespace E_Commerce.BL.Validators
 {
-    public class OrderDTOValidator : AbstractValidator<int>
+    public class OrderDTOValidator : AbstractValidator<OrderDTO>
     {
-        private readonly IOrderRepository _orderRepository;
-        private Order _order;
 
-        public OrderDTOValidator(IOrderRepository orderRepository)
+        public OrderDTOValidator()
         {
-            _orderRepository = orderRepository;
+            RuleFor(order => order.UserID)
+            .GreaterThan(0)
+            .WithMessage("User ID must be greater than 0.");
 
-            RuleFor(orderId => orderId)
-                .MustAsync(async (orderId, cancellation) =>
-                {
-                    try
-                    {
-                        _order = await _orderRepository.GetByIdAsync(orderId);
-                        return _order != null;
-                    }
-                    catch
-                    {
-                        return false;
-                    }
-                })
-                .WithMessage("Failed to retrieve order or order does not exist.")
-                .DependentRules(() =>
-                {
-                    RuleFor(orderId => _order.Status)
-                        .Equal(OrderStatus.Pending)
-                        .WithMessage("Order can only be processed if it is in Pending status.");
-                });
+            RuleFor(order => order.OrderDate)
+                .NotEmpty()
+                .WithMessage("Order Date is required.");
+
+            RuleFor(order => order.TotalAmount)
+                .GreaterThan(0)
+                .WithMessage("Total Amount must be greater than 0.");
         }
+
     }
 }

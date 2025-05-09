@@ -44,6 +44,7 @@ namespace E_Commerce.TestConsole
                 Console.WriteLine("Invalid Order ID.");
             }
 
+            Console.WriteLine("Press any key to exit...");
         }
     }
 }
