@@ -1,4 +1,8 @@
-﻿using System;
+﻿using E_Commerce.BL.Contracts.Services;
+using E_Commerce.BL.Features.User.DTOs;
+using E_Commerce.BL.Implementations;
+using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,15 +16,18 @@ namespace E_Commerce.Presentation
 {
     public partial class Signup : Form
     {
-        public Signup()
+        private readonly IAccountServices accountServices;
+
+        public Signup(IAccountServices accountServices)
         {
             InitializeComponent();
+            this.accountServices = accountServices;
         }
 
         private void signup_loginHere_Click(object sender, EventArgs e)
         {
-            Login lForm = new Login();
-            lForm.Show();
+            var loginForm = ServiceProviderContainer.ServiceProvider.GetRequiredService<Login>();
+            loginForm.Show();
             this.Hide();
         }
 
@@ -46,6 +53,36 @@ namespace E_Commerce.Presentation
             Application.Exit();
         }
 
-       
+        private void signup_btn_Click(object sender, EventArgs e)
+        {
+            var reg = new RegisterUserDto();
+            reg.Username = signup_username.Text;
+            reg.Email = signup_email.Text;
+            //reg.FirstName = signup_firstName.Text;
+            //reg.LastName = signup_lastName.Text;
+            reg.Password = signup_password.Text;
+            try
+            {
+                var success =  accountServices.RegisterUser(reg);
+                if (success.Result)
+                {
+                    MessageBox.Show("Registration successful.");
+                }
+                else
+                {
+                    MessageBox.Show("Registration failed.");
+                }
+            }
+            catch (FluentValidation.ValidationException ex)
+            {
+                var errorMessages = string.Join("\n", ex.Errors.Select(e => e.ErrorMessage));
+                MessageBox.Show(errorMessages, "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Unexpected error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+        }
     }
 }

@@ -1,16 +1,22 @@
+using E_Commerce.BL.Contracts.Services;
+using Microsoft.Extensions.DependencyInjection;
+
 namespace E_Commerce.Presentation
 {
     public partial class Login : Form
     {
-        public Login()
+        private readonly IAccountServices accountServices;
+
+        public Login(IAccountServices accountServices)
         {
             InitializeComponent();
+            this.accountServices = accountServices;
         }
 
         private void login_registerHere_Click(object sender, EventArgs e)
         {
-            Signup sForm = new Signup();
-            sForm.Show();
+            var signUpForm = ServiceProviderContainer.ServiceProvider.GetRequiredService<Signup>();
+            signUpForm.Show();
             this.Hide();
         }
 
@@ -33,9 +39,19 @@ namespace E_Commerce.Presentation
 
         private void login_btn_Click(object sender, EventArgs e)
         {
-            Admin admin = new Admin();
-            admin.Show();
-            this.Hide();
+            var regSucces = accountServices.LoginUserAsync(login_username.Text, login_password.Text);
+            if (regSucces.Result)
+            {
+                MessageBox.Show("Login Successful");
+                // Navigate to the next form
+                // var nextForm = new NextForm();
+                // nextForm.Show();
+                // this.Hide();
+            }
+            else
+            {
+                MessageBox.Show("Login Failed");
+            }
         }
     }
 }

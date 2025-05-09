@@ -20,7 +20,12 @@ namespace E_Commerce.Presentation
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new Login());
+            var host = CreateHostBuilder().Build();
+            ServiceProviderContainer.ServiceProvider = host.Services;
+            var signUpForm = host.Services.GetRequiredService<Signup>();
+            var loginForm = host.Services.GetRequiredService<Login>();
+            Application.Run(loginForm);
+            //Application.Run(new Login());
         }
         static IHostBuilder CreateHostBuilder() =>
            Host.CreateDefaultBuilder()
@@ -29,10 +34,13 @@ namespace E_Commerce.Presentation
                    // Register DbContext with SQL Server
                    services.AddDbContext<DBContext>(options =>
                        options.UseSqlServer("Data Source=.;Initial Catalog=E-Commerce;Integrated Security=True;Trust Server Certificate=True;"));
-
+                   var serviceProvider = services.BuildServiceProvider();
+                   ServiceProviderContainer.ServiceProvider = serviceProvider;
+              
                    // Register Form1 (and other forms or services you need)
                    services.AddScoped<Login>();
-
+                   services.AddScoped<Signup>();
+                  
                    // Register your repositories and services here
                    services.AddScoped<IProductRepository, ProductRepository>();
                    services.AddScoped<IProductServices, ProductServices>();
@@ -44,6 +52,8 @@ namespace E_Commerce.Presentation
                    services.AddScoped<ICategoryServices, CategoryServices>();
                    services.AddScoped<IOrderDetailRepository, OrderDetailRepository>();
                    services.AddScoped<IOrderDetailServices, OrderDetailServices>();
+                 
+                   services.AddScoped<IAccountServices, AccountServices>();
 
 
                });
