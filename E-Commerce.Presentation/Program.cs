@@ -43,6 +43,7 @@ namespace E_Commerce.Presentation
                    // Register Form1 (and other forms or services you need)
                    services.AddScoped<Login>();
                    services.AddScoped<Signup>();
+
                   
                    // Register your repositories and services here
                    services.AddScoped<IProductRepository, ProductRepository>();
@@ -55,10 +56,13 @@ namespace E_Commerce.Presentation
                    services.AddScoped<ICategoryServices, CategoryServices>();
                    services.AddScoped<IOrderDetailRepository, OrderDetailRepository>();
                    services.AddScoped<IOrderDetailServices, OrderDetailServices>();
+
                  
                    services.AddScoped<IAccountServices, AccountServices>();
                    services.AddTransient<IValidator<RegisterUserDto>, RegisterUserDtoValidator>();
-                   services.AddTransient<IValidator<LoginUserDto>, loginUserDtoValidator>();
+                   services.AddTransient<IValidator<LoginUserDto>, LoginUserDtoValidator>();
+
+
 
                });
     }

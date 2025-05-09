@@ -27,11 +27,7 @@ namespace E_Commerce.BL.Implementations
                 LastName = registerUserDto.LastName,
                 Username = registerUserDto.Username,
                 Email = registerUserDto.Email,
-                //DateCreated = DateTime.UtcNow,
-                //IsActive = true, // افتراضي
-                //status = UserStatus.Client, // افتراضي
-                //IsSignedInNow = false,
-                //LastLoginDate = null
+
             };
             user.PasswordHash = hasher.HashPassword(user, registerUserDto.Password);
             var userReg = await userRepository.AddAsync(user);
@@ -41,21 +37,23 @@ namespace E_Commerce.BL.Implementations
 
         public async Task<bool> LoginUserAsync(LoginUserDto loginUserDto)
         {
-            await DoValidationAsync<loginUserDtoValidator, LoginUserDto>(loginUserDto, userRepository);
-            var user = await userRepository.FirstOrDefaultAsync(u => u.Username == loginUserDto.Username );
+            await DoValidationAsync<LoginUserDtoValidator, LoginUserDto>(loginUserDto);
+            var user = await userRepository.FirstOrDefaultAsync(u => u.Username == loginUserDto.UsernameOrEmail || u.Email == loginUserDto.UsernameOrEmail  );
             if (user == null || !user.IsActive)
                 return false;
 
             var hasher = new PasswordHasher<User>();
             var result = hasher.VerifyHashedPassword(user, user.PasswordHash, loginUserDto.Password);
+            
             if (result == PasswordVerificationResult.Success)
             {
                 user.IsSignedInNow = true;
                 user.LastLoginDate = DateTime.UtcNow;
                 await userRepository.Update(user);
                 await userRepository.CommitAsync();
-            }
             return true;
+            }
+            return false;
         }
 
         public async Task<bool> LogoutUserAsync(string usernameOrEmail)
