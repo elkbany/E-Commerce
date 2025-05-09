@@ -30,5 +30,12 @@ namespace E_Commerce.Presentation
                 login_password.PasswordChar = '*';
             }
         }
+
+        private void login_btn_Click(object sender, EventArgs e)
+        {
+            Admin admin = new Admin();
+            admin.Show();
+            this.Hide();
+        }
     }
 }
