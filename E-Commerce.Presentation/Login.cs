@@ -1,10 +1,15 @@
+using E_Commerce.BL.Contracts.Services;
+
 namespace E_Commerce.Presentation
 {
     public partial class Login : Form
     {
-        public Login()
+        private readonly IAccountServices accountServices;
+
+        public Login(IAccountServices accountServices)
         {
             InitializeComponent();
+            this.accountServices = accountServices;
         }
 
         private void login_registerHere_Click(object sender, EventArgs e)

@@ -192,6 +192,7 @@
             signup_btn.TabIndex = 5;
             signup_btn.Text = "SIGNUP";
             signup_btn.UseVisualStyleBackColor = false;
+            signup_btn.Click += signup_btn_Click;
             // 
             // signup_username
             // 

@@ -1,4 +1,7 @@
-﻿using System;
+﻿using E_Commerce.BL.Contracts.Services;
+using E_Commerce.BL.Features.User.DTOs;
+using Microsoft.Extensions.DependencyInjection;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -19,8 +22,8 @@ namespace E_Commerce.Presentation
 
         private void signup_loginHere_Click(object sender, EventArgs e)
         {
-            Login lForm = new Login();
-            lForm.Show();
+            var loginForm = ServiceProviderContainer.ServiceProvider.GetRequiredService<Login>();
+            loginForm.Show();
             this.Hide();
         }
 
@@ -44,6 +47,12 @@ namespace E_Commerce.Presentation
         private void signup_close_Click_1(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void signup_btn_Click(object sender, EventArgs e)
+        {
+            var reg = new RegisterUserDto();
+
         }
     }
 }
