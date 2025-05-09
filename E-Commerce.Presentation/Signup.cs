@@ -59,13 +59,15 @@ namespace E_Commerce.Presentation
         {
             var reg = new RegisterUserDto();
             reg.Username = signup_username.Text;
+            reg.Email = signup_lastName.Text;
+            //reg.FirstName = signup_firstName.Text;
             reg.Email = signup_email.Text;
             //reg.FirstName = signup_firstName.;
             //reg.LastName = signup_lastName.Text;
             reg.Password = signup_password.Text;
             try
             {
-                var success =  accountServices.RegisterUser(reg);
+                var success = accountServices.RegisterUser(reg);
                 if (success.Result)
                 {
                     MessageBox.Show("Registration successful.");
@@ -86,5 +88,11 @@ namespace E_Commerce.Presentation
             }
 
         }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
     }
 }
