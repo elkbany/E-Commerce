@@ -11,7 +11,7 @@ namespace E_Commerce.BL.Contracts.Services
    public interface IAccountServices
     {
         Task<bool> RegisterUser(RegisterUserDto registerUserDto);
-        Task<bool> LoginUserAsync(string usernameOrEmail, string password);
+        Task<bool> LoginUserAsync(LoginUserDto loginUserDto);
         Task<bool> LogoutUserAsync(string usernameOrEmail);
         Task<bool> UpdateUserAsync(UpdateUserDto dto);
     }

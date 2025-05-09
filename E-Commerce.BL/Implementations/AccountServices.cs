@@ -39,14 +39,15 @@ namespace E_Commerce.BL.Implementations
             return userReg != null;
         }
 
-        public async Task<bool> LoginUserAsync(string usernameOrEmail, string password)
+        public async Task<bool> LoginUserAsync(LoginUserDto loginUserDto)
         {
-            var user = await userRepository.FirstOrDefaultAsync(u => u.Username == usernameOrEmail || u.Email == usernameOrEmail);
+            await DoValidationAsync<loginUserDtoValidator, LoginUserDto>(loginUserDto, userRepository);
+            var user = await userRepository.FirstOrDefaultAsync(u => u.Username == loginUserDto.Username );
             if (user == null || !user.IsActive)
                 return false;
 
             var hasher = new PasswordHasher<User>();
-            var result = hasher.VerifyHashedPassword(user, user.PasswordHash, password);
+            var result = hasher.VerifyHashedPassword(user, user.PasswordHash, loginUserDto.Password);
             if (result == PasswordVerificationResult.Success)
             {
                 user.IsSignedInNow = true;
@@ -54,7 +55,7 @@ namespace E_Commerce.BL.Implementations
                 await userRepository.Update(user);
                 await userRepository.CommitAsync();
             }
-            return result == PasswordVerificationResult.Success;
+            return true;
         }
 
         public async Task<bool> LogoutUserAsync(string usernameOrEmail)

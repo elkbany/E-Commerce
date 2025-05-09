@@ -58,6 +58,7 @@ namespace E_Commerce.Presentation
                  
                    services.AddScoped<IAccountServices, AccountServices>();
                    services.AddTransient<IValidator<RegisterUserDto>, RegisterUserDtoValidator>();
+                   services.AddTransient<IValidator<LoginUserDto>, loginUserDtoValidator>();
 
                });
     }
