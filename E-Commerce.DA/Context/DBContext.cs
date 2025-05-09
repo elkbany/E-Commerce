@@ -43,6 +43,7 @@ namespace E_Commerce.DA.Context
                 .WithMany(p => p.OrderDetails)
                 .HasForeignKey(od => od.ProductID)
                 .OnDelete(DeleteBehavior.Restrict);
+
             #endregion
             #region Product
             modelBuilder.Entity<Product>().HasMany(p => p.OrderDetails)
