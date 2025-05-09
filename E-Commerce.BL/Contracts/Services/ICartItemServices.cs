@@ -11,8 +11,9 @@ namespace E_Commerce.BL.Contracts.Services
      public interface ICartItemServices
     {
         Task<List<CartItem>> GetCartItemsByUserIdAsync(int userId);
-        Task UpdateCartItemQuantityAsync(int cartItemId, int newQuantity);
         Task ClearCartAsync(int userId);
+        Task AddToCartAsync(CartItem item);
+        Task RemoveCartItemAsync(int cartItemId);
 
     }
 

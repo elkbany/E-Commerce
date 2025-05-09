@@ -10,6 +10,6 @@ namespace E_Commerce.BL.Contracts.Repositories
     public interface ICartItemRepository: IGenericRepository<CartItem>
 
     {
-        Task<List<CartItem>> GetCartItemsByUserIdAsync(int userId);
+        
     }
 }

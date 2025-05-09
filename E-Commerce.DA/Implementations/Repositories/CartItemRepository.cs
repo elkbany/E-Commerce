@@ -13,20 +13,12 @@ namespace E_Commerce.DA.Implementations.Repositories
 {
     public class CartItemRepository : GenericRepository<CartItem>, ICartItemRepository
     {
-        protected readonly DBContext _context;
-        private readonly DbSet<CartItem> _dbSet;
+       
+       
         public CartItemRepository(DBContext context) : base(context)
         {
-            _context = context;
-           
         }
-        public async Task<List<CartItem>> GetCartItemsByUserIdAsync(int userId)
-        {
-            return await _context.CartItems
-                .Where(c => c.UserID == userId)
-                .Include(c => c.Product) // Optional
-                .ToListAsync();
-        }
+     
 
 
     }
