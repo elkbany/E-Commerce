@@ -33,7 +33,6 @@
             pictureBox1 = new PictureBox();
             label6 = new Label();
             panel1 = new Panel();
-            signup_firstName = new TextBox();
             label8 = new Label();
             signup_email = new TextBox();
             label5 = new Label();
