@@ -68,6 +68,18 @@ namespace E_Commerce.DA.Context
                 .OnDelete(DeleteBehavior.Restrict);
             #endregion
 
+            modelBuilder.Entity<Order>(entity =>
+            {
+                entity.Property(e => e.TotalAmount)
+                      .HasColumnType("decimal(18,2)"); // Precision 18, Scale 2
+            });
+
+            modelBuilder.Entity<Product>(entity =>
+            {
+                entity.Property(e => e.Price)
+                      .HasColumnType("decimal(18,2)"); // Precision 18, Scale 2
+            });
+        
 
         }
 

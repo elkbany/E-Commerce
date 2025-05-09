@@ -1,7 +1,6 @@
 ﻿using E_Commerce.Domain.Enums;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,8 +11,7 @@ namespace E_Commerce.Domain.Models
 
     public class Order
     {
-        public int OrderID { get; set; }
-        [ForeignKey("User")]
+        public int OrderID { get; set; }  
 
         public int UserID { get; set; } 
 
@@ -24,8 +22,10 @@ namespace E_Commerce.Domain.Models
         public OrderStatus Status { get; set; } = OrderStatus.Pending;
 
         public DateTime? DateProcessed { get; set; }
-        public User User { get; set; }
+
         public ICollection<OrderDetail> OrderDetails { get; set; }
+        public User User { get; set; }
+
         public Order()
         {
           
