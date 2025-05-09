@@ -26,6 +26,7 @@ namespace E_Commerce.Presentation
 
         private void signup_loginHere_Click(object sender, EventArgs e)
         {
+            // new login(new AccountServices())
             var loginForm = ServiceProviderContainer.ServiceProvider.GetRequiredService<Login>();
             loginForm.Show();
             this.Hide();
