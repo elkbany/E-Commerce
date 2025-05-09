@@ -9,47 +9,87 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static E_Commerce.BL.Implementations.CartItemServices;
 
 namespace E_Commerce.BL.Implementations
 {
     public class CartItemServices : AppService, ICartItemServices
     {
-        private readonly ICartItemRepository _cartItemRepository;
+        
+            private readonly ICartItemRepository _cartRepo;
+            private readonly IProductRepository _productRepo;
+            private readonly IOrderServices _orderService;
 
-        public CartItemServices(ICartItemRepository cartItemRepository)
-        {
-            _cartItemRepository = cartItemRepository;
-        }
-        public async Task<List<CartItem>> GetCartItemsByUserIdAsync(int userId)
-        {
-            return await _cartItemRepository.GetAllAsync(ci => ci.UserID == userId);
-        }
-
-        public async Task ClearCartAsync(int userId)
-        {
-            var items = await _cartItemRepository.GetAllAsync(ci => ci.UserID == userId);
-            foreach (var item in items)
+            public CartItemServices(ICartItemRepository cartRepo,IProductRepository productRepo,IOrderServices orderService)
             {
-                await _cartItemRepository.Delete(item);
+                _cartRepo = cartRepo;
+                _productRepo = productRepo;
+                _orderService = orderService;
             }
-            await _cartItemRepository.CommitAsync();
-        }
 
-        public async Task AddToCartAsync(CartItem item)
-        {
-            await _cartItemRepository.AddAsync(item);
-            await _cartItemRepository.CommitAsync();
-        }
-
-        public async Task RemoveCartItemAsync(int cartItemId)
-        {
-            var item = await _cartItemRepository.GetByIdAsync(cartItemId);
-            if (item != null)
+            public async Task AddToCartAsync(int userId, int productId, int quantity)
             {
-                await _cartItemRepository.Delete(item);
-                await _cartItemRepository.CommitAsync();
+                var cartItem = await _cartRepo.FirstOrDefaultAsync(x => x.UserID == userId && x.ProductID == productId);
+
+                if (cartItem != null)
+                {
+                    cartItem.Quantity += quantity;
+                    await _cartRepo.Update(cartItem);
+                }
+                else
+                {
+                    cartItem = new CartItem
+                    {
+                        UserID = userId,
+                        ProductID = productId,
+                        Quantity = quantity
+                    };
+                    await _cartRepo.AddAsync(cartItem);
+                }
+
+                await _cartRepo.CommitAsync();
+            }
+
+            public async Task<List<CartItem>> GetCartItemsByUserIdAsync(int userId)
+            {
+                return await _cartRepo.GetAllAsync(x => x.UserID == userId, x => x.Product);
+            }
+
+            public async Task UpdateCartItemQuantityAsync(int cartItemId, int newQuantity)
+            {
+                var cartItem = await _cartRepo.GetByIdAsync(cartItemId);
+                if (cartItem != null)
+                {
+                    cartItem.Quantity = newQuantity;
+                    await _cartRepo.Update(cartItem);
+                    await _cartRepo.CommitAsync();
+                }
+            }
+
+            public async Task RemoveCartItemAsync(int cartItemId)
+            {
+                var cartItem = await _cartRepo.GetByIdAsync(cartItemId);
+                if (cartItem != null)
+                {
+                    await _cartRepo.Delete(cartItem);
+                    await _cartRepo.CommitAsync();
+                }
+            }
+
+            public async Task SubmitCartAsync(int userId)
+            {
+                var items = await _cartRepo.GetAllAsync(x => x.UserID == userId, x => x.Product);
+                if (!items.Any()) return;
+
+                await _orderService.CreateOrderFromCartItemsAsync(userId, items);
+
+                foreach (var item in items)
+                    await _cartRepo.Delete(item);
+
+                await _cartRepo.CommitAsync();
             }
         }
+
 
     }
 }

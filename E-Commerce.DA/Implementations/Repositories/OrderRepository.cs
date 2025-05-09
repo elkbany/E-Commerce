@@ -20,9 +20,15 @@ namespace E_Commerce.DA.Implementations.Repositories
             _context = context;
         }
 
+
         public async Task<IEnumerable<Order>> GetOrdersByStatusAsync(OrderStatus status)
         {
             return await _context.Orders.Where(o => o.Status == status).ToListAsync();
+        }
+
+        Task IOrderRepository.GetOrdersByStatusAsync(OrderStatus status)
+        {
+            return GetOrdersByStatusAsync(status);
         }
     }
     
