@@ -10,11 +10,11 @@ namespace E_Commerce.BL.Contracts.Services
 {
      public interface ICartItemServices
     {
+        Task AddToCartAsync(int userId, int productId, int quantity);
         Task<List<CartItem>> GetCartItemsByUserIdAsync(int userId);
-        Task ClearCartAsync(int userId);
-        Task AddToCartAsync(CartItem item);
+        Task UpdateCartItemQuantityAsync(int cartItemId, int newQuantity);
         Task RemoveCartItemAsync(int cartItemId);
-
+        Task SubmitCartAsync(int userId);
     }
 
 }
