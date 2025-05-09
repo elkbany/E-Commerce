@@ -78,11 +78,11 @@ namespace E_Commerce.Presentation
         bool expand = false;
         private void timer1_Tick(object sender, EventArgs e)
         {
-            if(expand == false)
-            {
-                dropdownContainer.Height += 15;
+            //if(expand == false)
+            //{
+            //    dropdownContainer.Height += 15;
 
-            }
+            //}
         }
     }
 }

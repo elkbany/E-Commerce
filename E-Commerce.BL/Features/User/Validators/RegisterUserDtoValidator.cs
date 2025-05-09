@@ -11,28 +11,28 @@ namespace E_Commerce.BL.Features.User.Validators
 {
     public class RegisterUserDtoValidator : AbstractValidator<RegisterUserDto>
     {
-        private readonly IUserRepository userRepository;
+       
 
-        public RegisterUserDtoValidator(IUserRepository userRepository ) 
+        public RegisterUserDtoValidator() 
         {
-            this.userRepository = userRepository;
+            //this.userRepository = userRepository;
 
-            RuleFor(x => x.Username)
-                .NotEmpty()
-                .WithMessage("Username is required.")
-                .Length(3, 20)
-                 .WithMessage("Username must be between 3 and 20 characters.")
-                .MustAsync(async (username, cancellation) =>
-                      !await userRepository.IsUsernameTakenAsync(username))
-                .WithMessage("This Username is exists , Your username must be unique.");
-            RuleFor(x => x.Email)
-                .NotEmpty()
-                .WithMessage("Email is required.")
-                .EmailAddress()
-                .WithMessage("Invalid email format.")
-                 .MustAsync(async (email, cancellation) =>
-                      !await userRepository.IsEmailAlreadyExistsAsync(email))
-                .WithMessage("This Email Address is already registered");
+            //RuleFor(x => x.Username)
+            //    .NotEmpty()
+            //    .WithMessage("Username is required.")
+            //    .Length(3, 20)
+            //     .WithMessage("Username must be between 3 and 20 characters.")
+            //    .MustAsync(async (username, cancellation) =>
+            //          !await userRepository.IsUsernameTakenAsync(username))
+            //    .WithMessage("This Username is exists , Your username must be unique.");
+            //RuleFor(x => x.Email)
+            //    .NotEmpty()
+            //    .WithMessage("Email is required.")
+            //    .EmailAddress()
+            //    .WithMessage("Invalid email format.")
+            //     .MustAsync(async (email, cancellation) =>
+            //          !await userRepository.IsEmailAlreadyExistsAsync(email))
+            //    .WithMessage("This Email Address is already registered");
             RuleFor(x => x.FirstName)
                 .NotEmpty()
                 .WithMessage("First name is required.")

@@ -17,6 +17,7 @@ namespace E_Commerce.Presentation
     public partial class Signup : Form
     {
         private readonly IAccountServices accountServices;
+        private object signup_firstName;
 
         public Signup(IAccountServices accountServices)
         {
@@ -59,7 +60,7 @@ namespace E_Commerce.Presentation
             var reg = new RegisterUserDto();
             reg.Username = signup_username.Text;
             reg.Email = signup_email.Text;
-            //reg.FirstName = signup_firstName.Text;
+            //reg.FirstName = signup_firstName.;
             //reg.LastName = signup_lastName.Text;
             reg.Password = signup_password.Text;
             try

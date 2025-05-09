@@ -1,8 +1,11 @@
 using E_Commerce.BL.Contracts.Repositories;
 using E_Commerce.BL.Contracts.Services;
+using E_Commerce.BL.Features.User.DTOs;
+using E_Commerce.BL.Features.User.Validators;
 using E_Commerce.BL.Implementations;
 using E_Commerce.DA.Context;
 using E_Commerce.DA.Implementations.Repositories;
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -54,7 +57,7 @@ namespace E_Commerce.Presentation
                    services.AddScoped<IOrderDetailServices, OrderDetailServices>();
                  
                    services.AddScoped<IAccountServices, AccountServices>();
-
+                   services.AddTransient<IValidator<RegisterUserDto>, RegisterUserDtoValidator>();
 
                });
     }
