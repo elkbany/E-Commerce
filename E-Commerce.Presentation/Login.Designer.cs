@@ -128,6 +128,7 @@
             login_btn.TabIndex = 5;
             login_btn.Text = "LOGIN";
             login_btn.UseVisualStyleBackColor = false;
+            login_btn.Click += login_btn_Click;
             // 
             // login_password
             // 

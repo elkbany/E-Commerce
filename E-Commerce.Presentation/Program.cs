@@ -22,7 +22,7 @@ namespace E_Commerce.Presentation
             ApplicationConfiguration.Initialize();
             var host = CreateHostBuilder().Build();
             ServiceProviderContainer.ServiceProvider = host.Services;
-
+            var signUpForm = host.Services.GetRequiredService<Signup>();
             var loginForm = host.Services.GetRequiredService<Login>();
             Application.Run(loginForm);
             //Application.Run(new Login());
