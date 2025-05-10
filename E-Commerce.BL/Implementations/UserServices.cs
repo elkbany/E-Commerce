@@ -52,13 +52,13 @@ namespace E_Commerce.BL.Implementations
         public async Task<List<UserIformationDTO>> getAllClient()
         {
 
-            var AddUser = _userRepository.GetAllAsync(s => s.status == UserStatus.Client);
+            var AddUser = _userRepository.GetAllAsync(s => s.Status == UserStatus.Client);
             return AddUser.Adapt<List<UserIformationDTO>>();
         }
         public async Task<List<UserIformationDTO>> getAllAdmin()
         {
 
-            var AddUser = _userRepository.GetAllAsync(s => s.status == UserStatus.Admin);
+            var AddUser = _userRepository.GetAllAsync(s => s.Status == UserStatus.Admin);
             return AddUser.Adapt<List<UserIformationDTO>>();
         }
         public async Task<UpdateUserAccountDTO> Update(int Id, UpdateUserAccountDTO entity)

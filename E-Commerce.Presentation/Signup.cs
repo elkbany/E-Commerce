@@ -27,18 +27,32 @@ namespace E_Commerce.Presentation
 
         private void signup_loginHere_Click(object sender, EventArgs e)
         {
-            // new login(new AccountServices())
-            var loginForm = ServiceProviderContainer.ServiceProvider.GetRequiredService<Login>();
-            loginForm.Show();
-            this.Hide();
+
         }
 
         private void signup_close_Click(object sender, EventArgs e)
         {
-            Application.Exit();
         }
 
         private void signup_showPassword_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+        private void signup_close_Click_1(object sender, EventArgs e)
+        {
+        }
+
+        private async void signup_btn_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void signup_showPassword_CheckedChanged_1(object sender, EventArgs e)
         {
             if (signup_showPassword.Checked)
             {
@@ -52,54 +66,58 @@ namespace E_Commerce.Presentation
             }
         }
 
-        private void signup_close_Click_1(object sender, EventArgs e)
+        private async void signup_btn_Click_1(object sender, EventArgs e)
         {
-            Application.Exit();
+            var reg = new RegisterUserDto
+            {
+                FirstName = signup_firstName?.Text ?? string.Empty, // استخدم Null-conditional operator
+                LastName = signup_lastName?.Text ?? string.Empty,
+                Username = signup_username?.Text ?? string.Empty,
+                Email = signup_email?.Text ?? string.Empty,
+                Password = signup_password?.Text ?? string.Empty,
+                ConfirmPassword = signup_confirmpassword?.Text ?? string.Empty
+
+            };
+
+            try
+            {
+                var success = await accountServices.RegisterUser(reg); // استخدم await
+                if (success)
+                {
+                    MessageBox.Show("Registration successful.");
+                    var loginForm = ServiceProviderContainer.ServiceProvider.GetRequiredService<Login>();
+                    loginForm.Show();
+                    this.Hide();
+                }
+                else
+                {
+                    MessageBox.Show("Registration failed.");
+                }
+            }
+            catch (FluentValidation.ValidationException ex)
+            {
+                var errorMessages = string.Join("\n", ex.Errors.Select(e => e.ErrorMessage));
+                MessageBox.Show(errorMessages, "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Unexpected error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
-private async void signup_btn_Click(object sender, EventArgs e)
-{
-    var reg = new RegisterUserDto
-    {
-        FirstName = signup_firstName?.Text ?? string.Empty, // استخدم Null-conditional operator
-        LastName = signup_lastName?.Text ?? string.Empty,
-        Username = signup_username?.Text ?? string.Empty,
-        Email = signup_email?.Text ?? string.Empty,
-        Password = signup_password?.Text ?? string.Empty,
-        ConfirmPassword = signup_confirmpassword?.Text ?? string.Empty
-
-    };
-
-    try
-    {
-        var success = await accountServices.RegisterUser(reg); // استخدم await
-        if (success)
+        private void signup_loginHere_Click_1(object sender, EventArgs e)
         {
-            MessageBox.Show("Registration successful.");
+            // new login(new AccountServices())
             var loginForm = ServiceProviderContainer.ServiceProvider.GetRequiredService<Login>();
             loginForm.Show();
             this.Hide();
         }
-        else
+
+        private void signup_close_Click_2(object sender, EventArgs e)
         {
-            MessageBox.Show("Registration failed.");
+            this.Close();
+
         }
     }
-    catch (FluentValidation.ValidationException ex)
-    {
-        var errorMessages = string.Join("\n", ex.Errors.Select(e => e.ErrorMessage));
-        MessageBox.Show(errorMessages, "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-    }
-    catch (Exception ex)
-    {
-        MessageBox.Show($"Unexpected error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-    }
-}
 
-        private void panel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
-    }
 }
