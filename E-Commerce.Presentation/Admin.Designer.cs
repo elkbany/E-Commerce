@@ -30,6 +30,8 @@
         {
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Admin));
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             panel1 = new Panel();
             nightControlBox1 = new ReaLTaiizor.Controls.NightControlBox();
             label1 = new Label();
@@ -51,6 +53,7 @@
             settingsTransition = new System.Windows.Forms.Timer(components);
             sidebarTransition = new System.Windows.Forms.Timer(components);
             timer1 = new System.Windows.Forms.Timer(components);
+            guna2Button1 = new Guna.UI2.WinForms.Guna2Button();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)btnMenue).BeginInit();
             sidebar.SuspendLayout();
@@ -90,7 +93,7 @@
             nightControlBox1.EnableMaximizeColor = Color.FromArgb(160, 160, 160);
             nightControlBox1.EnableMinimizeButton = true;
             nightControlBox1.EnableMinimizeColor = Color.FromArgb(160, 160, 160);
-            nightControlBox1.Location = new Point(749, 0);
+            nightControlBox1.Location = new Point(732, 0);
             nightControlBox1.MaximizeHoverColor = Color.FromArgb(15, 255, 255, 255);
             nightControlBox1.MaximizeHoverForeColor = Color.White;
             nightControlBox1.MinimizeHoverColor = Color.FromArgb(15, 255, 255, 255);
@@ -318,11 +321,30 @@
             timer1.Interval = 10;
             timer1.Tick += timer1_Tick;
             // 
+            // guna2Button1
+            // 
+            guna2Button1.AutoRoundedCorners = true;
+            guna2Button1.BorderRadius = 21;
+            guna2Button1.CustomizableEdges = customizableEdges1;
+            guna2Button1.DisabledState.BorderColor = Color.DarkGray;
+            guna2Button1.DisabledState.CustomBorderColor = Color.DarkGray;
+            guna2Button1.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
+            guna2Button1.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
+            guna2Button1.Font = new Font("Segoe UI", 9F);
+            guna2Button1.ForeColor = Color.White;
+            guna2Button1.Location = new Point(462, 157);
+            guna2Button1.Name = "guna2Button1";
+            guna2Button1.ShadowDecoration.CustomizableEdges = customizableEdges2;
+            guna2Button1.Size = new Size(180, 45);
+            guna2Button1.TabIndex = 6;
+            guna2Button1.Text = "guna2Button1";
+            // 
             // Admin
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(871, 514);
+            Controls.Add(guna2Button1);
             Controls.Add(panel7);
             Controls.Add(sidebar);
             Controls.Add(panel1);
@@ -368,5 +390,6 @@
         private System.Windows.Forms.Timer settingsTransition;
         private System.Windows.Forms.Timer sidebarTransition;
         private System.Windows.Forms.Timer timer1;
+        private Guna.UI2.WinForms.Guna2Button guna2Button1;
     }
 }
