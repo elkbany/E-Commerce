@@ -27,26 +27,16 @@ namespace E_Commerce.BL.Implementations
                 _orderService = orderService;
             }
 
-            public async Task AddToCartAsync(int userId, int productId, int quantity)
+            public async Task AddToCartAsync(int clientId, int productId, int quantity)
             {
-                var cartItem = await _cartRepo.FirstOrDefaultAsync(x => x.UserID == userId && x.ProductID == productId);
-
-                if (cartItem != null)
-                {
-                    cartItem.Quantity += quantity;
-                    await _cartRepo.Update(cartItem);
-                }
-                else
-                {
-                    cartItem = new CartItem
+                
+                   var cartItem = new CartItem
                     {
-                        UserID = userId,
+                        UserID = clientId,
                         ProductID = productId,
                         Quantity = quantity
                     };
-                    await _cartRepo.AddAsync(cartItem);
-                }
-
+                await _cartRepo.AddAsync(cartItem);
                 await _cartRepo.CommitAsync();
             }
 
@@ -55,25 +45,24 @@ namespace E_Commerce.BL.Implementations
                 return await _cartRepo.GetAllAsync(x => x.UserID == userId, x => x.Product);
             }
 
-            public async Task UpdateCartItemQuantityAsync(int cartItemId, int newQuantity)
+            public async Task UpdateProductQuantityAsync(int productId, int newQuantity)
             {
-                var cartItem = await _cartRepo.GetByIdAsync(cartItemId);
-                if (cartItem != null)
+                var product = await _cartRepo.FirstOrDefaultAsync(p=>p.ProductID==productId);
+                if (product.Product.UnitsInStock>newQuantity)
                 {
-                    cartItem.Quantity = newQuantity;
-                    await _cartRepo.Update(cartItem);
+                    product.Quantity = newQuantity;
+                    await _cartRepo.Update(product);
                     await _cartRepo.CommitAsync();
                 }
+                ///we need message here???
             }
 
-            public async Task RemoveCartItemAsync(int cartItemId)
+            public async Task RemoveProductAsync(int productId)
             {
-                var cartItem = await _cartRepo.GetByIdAsync(cartItemId);
-                if (cartItem != null)
-                {
-                    await _cartRepo.Delete(cartItem);
-                    await _cartRepo.CommitAsync();
-                }
+            var product = await _cartRepo.FirstOrDefaultAsync(p => p.ProductID == productId);
+           
+                    await _cartRepo.Delete(product);
+                    await _cartRepo.CommitAsync(); 
             }
 
             public async Task SubmitCartAsync(int userId)

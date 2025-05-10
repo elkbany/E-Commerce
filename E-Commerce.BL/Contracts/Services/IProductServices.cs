@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using E_Commerce.BL.Features.Product.DTOs;
 using E_Commerce.Domain.Models;
+using E_Commerce.BL.Contracts.Repositories;
 
 namespace E_Commerce.BL.Contracts.Services
 {
@@ -17,5 +18,8 @@ namespace E_Commerce.BL.Contracts.Services
         Task<IEnumerable<ProductDTO>> GetAllProductsAsync();
         Task<ProductDTO> UpdateProductAsync(int id, ProductDTO productDTO);
         Task DeleteProductAsync(int id);
+        Task<List<AvaliableProductDTO>> GetAvalibaleProducts();
+        Task<ProductDetailesDTO> ProductDetailes(string name);
+       
     }
 }

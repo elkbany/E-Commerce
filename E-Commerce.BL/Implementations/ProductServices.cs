@@ -71,11 +71,22 @@ namespace E_Commerce.BL.Implementations
                 await productRepository.Delete(product);
             }
         }
-        public async Task<List<Product>> GetAllp()
+        //public async Task<List<Product>> GetAllp()
+        //{
+        //    var products = await productRepository.GetAllAsync(p=>p.UnitsInStock>0);
+        //    var proMap = products.Adapt<List<Product>>();
+        //    return proMap;
+        //}
+        public async Task<List<AvaliableProductDTO>> GetAvalibaleProducts()
         {
-            var products = await productRepository.GetAllAsync(p=>p.UnitsInStock>0);
-            var proMap = products.Adapt<List<Product>>();
-            return proMap;
+            var products = await productRepository.GetAllAsync(p => p.UnitsInStock > 0);
+            return products.Adapt<List<AvaliableProductDTO>>();
+        }
+
+        public async Task<ProductDetailesDTO> ProductDetailes(string name)
+        {
+            var product = productRepository.GetByName(name);
+            return product?.Adapt<ProductDetailesDTO>();/////if no product no output
         }
     }
 }
