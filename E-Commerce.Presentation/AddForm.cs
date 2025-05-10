@@ -19,15 +19,19 @@ namespace E_Commerce.Presentation
         }
 
         [System.ComponentModel.Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public string ProductName { get; private set; }
 
         [System.ComponentModel.Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public decimal ProductPrice { get; private set; }
 
         [System.ComponentModel.Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public int UnitsInStock { get; private set; }
 
         [System.ComponentModel.Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public string ProductCategory { get; private set; }
         //public string Category { get; internal set; }
 

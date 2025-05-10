@@ -14,15 +14,19 @@ namespace E_Commerce.Presentation
     public partial class EditForm : Form
     {
         [System.ComponentModel.Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public string EditedName { get; private set; }
 
         [System.ComponentModel.Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public decimal EditedPrice { get; private set; }
 
         [System.ComponentModel.Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public int EditedUnitsInStock { get; private set; }
 
         [System.ComponentModel.Browsable(false)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public string EditedCategory { get; private set; }
 
 

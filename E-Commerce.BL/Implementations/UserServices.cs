@@ -28,8 +28,7 @@ namespace E_Commerce.BL.Implementations
                 Email = user.Email,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
-                status = user.status
-
+                Status = UserStatus.Client
             };
             var AddUser = _userRepository.AddAsync(newUser);
             await _userRepository.CommitAsync();

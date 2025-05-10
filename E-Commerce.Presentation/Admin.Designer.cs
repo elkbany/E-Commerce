@@ -97,7 +97,7 @@
             panel1.Location = new Point(0, 0);
             panel1.Margin = new Padding(3, 2, 3, 2);
             panel1.Name = "panel1";
-            panel1.Size = new Size(1920, 39);
+            panel1.Size = new Size(1902, 39);
             panel1.TabIndex = 0;
             // 
             // label1
@@ -106,7 +106,7 @@
             label1.Font = new Font("Segoe UI Semibold", 10.2F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
             label1.Location = new Point(50, 9);
             label1.Name = "label1";
-            label1.Size = new Size(105, 23);
+            label1.Size = new Size(85, 19);
             label1.TabIndex = 1;
             label1.Text = "Admin Page";
             // 
@@ -135,7 +135,7 @@
             nightControlBox1.EnableMaximizeColor = Color.FromArgb(160, 160, 160);
             nightControlBox1.EnableMinimizeButton = true;
             nightControlBox1.EnableMinimizeColor = Color.FromArgb(160, 160, 160);
-            nightControlBox1.Location = new Point(1781, 0);
+            nightControlBox1.Location = new Point(1756, 3);
             nightControlBox1.MaximizeHoverColor = Color.FromArgb(15, 255, 255, 255);
             nightControlBox1.MaximizeHoverForeColor = Color.White;
             nightControlBox1.MinimizeHoverColor = Color.FromArgb(15, 255, 255, 255);
@@ -159,7 +159,7 @@
             sidebar.Margin = new Padding(0);
             sidebar.Name = "sidebar";
             sidebar.Padding = new Padding(0, 30, 0, 0);
-            sidebar.Size = new Size(287, 1063);
+            sidebar.Size = new Size(287, 786);
             sidebar.TabIndex = 1;
             // 
             // panel2
@@ -179,7 +179,7 @@
             label2.ImageAlign = ContentAlignment.MiddleLeft;
             label2.Location = new Point(62, 13);
             label2.Name = "label2";
-            label2.Size = new Size(160, 31);
+            label2.Size = new Size(134, 25);
             label2.TabIndex = 3;
             label2.Text = "     Dashboard";
             label2.TextAlign = ContentAlignment.MiddleRight;
@@ -356,7 +356,7 @@
             label3.Font = new Font("Segoe UI", 19.8000011F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
             label3.Location = new Point(304, 70);
             label3.Name = "label3";
-            label3.Size = new Size(159, 46);
+            label3.Size = new Size(127, 37);
             label3.TabIndex = 2;
             label3.Text = "Products";
             // 
@@ -386,7 +386,7 @@
             label4.AutoSize = true;
             label4.Location = new Point(330, 176);
             label4.Name = "label4";
-            label4.Size = new Size(18, 20);
+            label4.Size = new Size(14, 15);
             label4.TabIndex = 4;
             label4.Text = "#";
             // 
@@ -397,7 +397,7 @@
             label5.ForeColor = Color.Gray;
             label5.Location = new Point(395, 173);
             label5.Name = "label5";
-            label5.Size = new Size(66, 28);
+            label5.Size = new Size(53, 21);
             label5.TabIndex = 5;
             label5.Text = "Name";
             // 
@@ -408,7 +408,7 @@
             label6.ForeColor = Color.Gray;
             label6.Location = new Point(708, 173);
             label6.Name = "label6";
-            label6.Size = new Size(56, 28);
+            label6.Size = new Size(46, 21);
             label6.TabIndex = 6;
             label6.Text = "Price";
             // 
@@ -419,7 +419,7 @@
             label7.ForeColor = Color.Gray;
             label7.Location = new Point(1072, 173);
             label7.Name = "label7";
-            label7.Size = new Size(126, 28);
+            label7.Size = new Size(102, 21);
             label7.TabIndex = 7;
             label7.Text = "UnitsInStock";
             // 
@@ -430,7 +430,7 @@
             label8.ForeColor = Color.Gray;
             label8.Location = new Point(1415, 173);
             label8.Name = "label8";
-            label8.Size = new Size(94, 28);
+            label8.Size = new Size(78, 21);
             label8.TabIndex = 8;
             label8.Text = "Category";
             // 
@@ -441,7 +441,7 @@
             label9.ForeColor = Color.Gray;
             label9.Location = new Point(1781, 173);
             label9.Name = "label9";
-            label9.Size = new Size(112, 28);
+            label9.Size = new Size(91, 21);
             label9.TabIndex = 9;
             label9.Text = "Operations";
             // 
@@ -519,7 +519,7 @@
             lblCategory.AutoSize = true;
             lblCategory.Location = new Point(1124, 11);
             lblCategory.Name = "lblCategory";
-            lblCategory.Size = new Size(50, 23);
+            lblCategory.Size = new Size(42, 19);
             lblCategory.TabIndex = 4;
             lblCategory.Text = "Cat 1";
             // 
@@ -528,7 +528,7 @@
             lblUnitsInStock.AutoSize = true;
             lblUnitsInStock.Location = new Point(774, 11);
             lblUnitsInStock.Name = "lblUnitsInStock";
-            lblUnitsInStock.Size = new Size(28, 23);
+            lblUnitsInStock.Size = new Size(25, 19);
             lblUnitsInStock.TabIndex = 3;
             lblUnitsInStock.Text = "15";
             // 
@@ -537,7 +537,7 @@
             lblPrice.AutoSize = true;
             lblPrice.Location = new Point(404, 11);
             lblPrice.Name = "lblPrice";
-            lblPrice.Size = new Size(50, 23);
+            lblPrice.Size = new Size(44, 19);
             lblPrice.TabIndex = 2;
             lblPrice.Text = "$2.00";
             // 
@@ -546,7 +546,7 @@
             lblName.AutoSize = true;
             lblName.Location = new Point(91, 11);
             lblName.Name = "lblName";
-            lblName.Size = new Size(68, 23);
+            lblName.Size = new Size(58, 19);
             lblName.TabIndex = 1;
             lblName.Text = "Pro 100";
             // 
@@ -555,7 +555,7 @@
             label24.AutoSize = true;
             label24.Location = new Point(26, 11);
             label24.Name = "label24";
-            label24.Size = new Size(19, 23);
+            label24.Size = new Size(17, 19);
             label24.TabIndex = 0;
             label24.Text = "1";
             // 
@@ -563,7 +563,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1920, 1102);
+            ClientSize = new Size(1902, 825);
             Controls.Add(flowPanel1);
             Controls.Add(label9);
             Controls.Add(label8);
