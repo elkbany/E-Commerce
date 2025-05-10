@@ -27,7 +27,8 @@ namespace E_Commerce.BL.Implementations
                 PasswordHash = user.Password,
                 Email = user.Email,
                 FirstName = user.FirstName,
-                LastName = user.LastName
+                LastName = user.LastName,
+                status = user.status
 
             };
             var AddUser = _userRepository.AddAsync(newUser);
