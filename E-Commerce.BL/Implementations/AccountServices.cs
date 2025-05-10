@@ -28,6 +28,9 @@ namespace E_Commerce.BL.Implementations
                 LastName = registerUserDto.LastName,
                 Username = registerUserDto.Username,
                 Email = registerUserDto.Email,
+                Status = UserStatus.Client, // Default Client 
+                IsActive = true,
+                IsSignedInNow = false
 
             };
             user.PasswordHash = hasher.HashPassword(user, registerUserDto.Password);
@@ -92,8 +95,21 @@ namespace E_Commerce.BL.Implementations
         }
         public async Task<UserIformationDTO> ViewProfile(int id)
         {
-            var user=await userRepository.GetByIdAsync(id);
+            var user = await userRepository.GetByIdAsync(id);
             return user.Adapt<UserIformationDTO>();
         }
+
+        public async Task<int> GetUserIdByUsernameOrEmailAsync(string usernameOrEmail)
+        {
+            var user = await userRepository.FirstOrDefaultAsync(u => u.Username == usernameOrEmail || u.Email == usernameOrEmail);
+            return user?.Id ?? -1;
+        }
+
+        public async Task<UserStatus> GetUserStatusAsync(int userId)
+        {
+            var user = await userRepository.GetByIdAsync(userId);
+            return user?.Status ?? UserStatus.Client; // إذا كان المستخدم غير موجود، افترض أنه Client
+        }
+
     }
 }

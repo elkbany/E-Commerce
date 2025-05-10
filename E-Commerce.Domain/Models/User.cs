@@ -19,7 +19,7 @@ namespace E_Commerce.Domain.Models
 
             public string LastName { get; set; }
 
-            public UserStatus status { get; set; } = UserStatus.Client;
+            public UserStatus Status { get; set; }
 
             public bool IsActive { get; set; } = true;
 
