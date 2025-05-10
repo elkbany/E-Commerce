@@ -71,8 +71,9 @@
             panel1.Controls.Add(btnMenue);
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(0, 0);
+            panel1.Margin = new Padding(3, 2, 3, 2);
             panel1.Name = "panel1";
-            panel1.Size = new Size(995, 44);
+            panel1.Size = new Size(871, 33);
             panel1.TabIndex = 0;
             // 
             // nightControlBox1
@@ -89,7 +90,7 @@
             nightControlBox1.EnableMaximizeColor = Color.FromArgb(160, 160, 160);
             nightControlBox1.EnableMinimizeButton = true;
             nightControlBox1.EnableMinimizeColor = Color.FromArgb(160, 160, 160);
-            nightControlBox1.Location = new Point(856, 0);
+            nightControlBox1.Location = new Point(749, 0);
             nightControlBox1.MaximizeHoverColor = Color.FromArgb(15, 255, 255, 255);
             nightControlBox1.MaximizeHoverForeColor = Color.White;
             nightControlBox1.MinimizeHoverColor = Color.FromArgb(15, 255, 255, 255);
@@ -102,18 +103,19 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 10.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(67, 9);
+            label1.Location = new Point(59, 7);
             label1.Name = "label1";
-            label1.Size = new Size(108, 23);
+            label1.Size = new Size(91, 19);
             label1.TabIndex = 1;
             label1.Text = "Admin Page";
             // 
             // btnMenue
             // 
             btnMenue.Image = (Image)resources.GetObject("btnMenue.Image");
-            btnMenue.Location = new Point(13, 1);
+            btnMenue.Location = new Point(11, 1);
+            btnMenue.Margin = new Padding(3, 2, 3, 2);
             btnMenue.Name = "btnMenue";
-            btnMenue.Size = new Size(48, 43);
+            btnMenue.Size = new Size(42, 32);
             btnMenue.SizeMode = PictureBoxSizeMode.CenterImage;
             btnMenue.TabIndex = 1;
             btnMenue.TabStop = false;
@@ -127,18 +129,20 @@
             sidebar.Controls.Add(panel4);
             sidebar.Controls.Add(panel5);
             sidebar.Dock = DockStyle.Left;
-            sidebar.Location = new Point(0, 44);
+            sidebar.Location = new Point(0, 33);
+            sidebar.Margin = new Padding(3, 2, 3, 2);
             sidebar.Name = "sidebar";
-            sidebar.Padding = new Padding(0, 30, 0, 0);
-            sidebar.Size = new Size(276, 642);
+            sidebar.Padding = new Padding(0, 22, 0, 0);
+            sidebar.Size = new Size(242, 481);
             sidebar.TabIndex = 1;
             // 
             // panel2
             // 
             panel2.Controls.Add(button1);
-            panel2.Location = new Point(3, 33);
+            panel2.Location = new Point(3, 24);
+            panel2.Margin = new Padding(3, 2, 3, 2);
             panel2.Name = "panel2";
-            panel2.Size = new Size(273, 56);
+            panel2.Size = new Size(239, 42);
             panel2.TabIndex = 3;
             // 
             // button1
@@ -148,10 +152,11 @@
             button1.ForeColor = Color.White;
             button1.Image = (Image)resources.GetObject("button1.Image");
             button1.ImageAlign = ContentAlignment.MiddleLeft;
-            button1.Location = new Point(-15, -13);
+            button1.Location = new Point(-13, -10);
+            button1.Margin = new Padding(3, 2, 3, 2);
             button1.Name = "button1";
-            button1.Padding = new Padding(25, 0, 0, 0);
-            button1.Size = new Size(301, 79);
+            button1.Padding = new Padding(22, 0, 0, 0);
+            button1.Size = new Size(263, 59);
             button1.TabIndex = 2;
             button1.Text = "        Dashboard";
             button1.TextAlign = ContentAlignment.MiddleLeft;
@@ -160,9 +165,10 @@
             // panel3
             // 
             panel3.Controls.Add(button2);
-            panel3.Location = new Point(3, 95);
+            panel3.Location = new Point(3, 70);
+            panel3.Margin = new Padding(3, 2, 3, 2);
             panel3.Name = "panel3";
-            panel3.Size = new Size(273, 56);
+            panel3.Size = new Size(239, 42);
             panel3.TabIndex = 4;
             // 
             // button2
@@ -172,10 +178,11 @@
             button2.ForeColor = Color.White;
             button2.Image = (Image)resources.GetObject("button2.Image");
             button2.ImageAlign = ContentAlignment.MiddleLeft;
-            button2.Location = new Point(-15, -13);
+            button2.Location = new Point(-13, -10);
+            button2.Margin = new Padding(3, 2, 3, 2);
             button2.Name = "button2";
-            button2.Padding = new Padding(25, 0, 0, 0);
-            button2.Size = new Size(301, 79);
+            button2.Padding = new Padding(22, 0, 0, 0);
+            button2.Size = new Size(263, 59);
             button2.TabIndex = 2;
             button2.Text = "        Products";
             button2.TextAlign = ContentAlignment.MiddleLeft;
@@ -184,9 +191,10 @@
             // panel4
             // 
             panel4.Controls.Add(button3);
-            panel4.Location = new Point(3, 157);
+            panel4.Location = new Point(3, 116);
+            panel4.Margin = new Padding(3, 2, 3, 2);
             panel4.Name = "panel4";
-            panel4.Size = new Size(273, 56);
+            panel4.Size = new Size(239, 42);
             panel4.TabIndex = 4;
             // 
             // button3
@@ -196,10 +204,11 @@
             button3.ForeColor = Color.White;
             button3.Image = (Image)resources.GetObject("button3.Image");
             button3.ImageAlign = ContentAlignment.MiddleLeft;
-            button3.Location = new Point(-15, -13);
+            button3.Location = new Point(-13, -10);
+            button3.Margin = new Padding(3, 2, 3, 2);
             button3.Name = "button3";
-            button3.Padding = new Padding(25, 0, 0, 0);
-            button3.Size = new Size(301, 79);
+            button3.Padding = new Padding(22, 0, 0, 0);
+            button3.Size = new Size(263, 59);
             button3.TabIndex = 2;
             button3.Text = "        Categories";
             button3.TextAlign = ContentAlignment.MiddleLeft;
@@ -208,9 +217,10 @@
             // panel5
             // 
             panel5.Controls.Add(button4);
-            panel5.Location = new Point(3, 219);
+            panel5.Location = new Point(3, 162);
+            panel5.Margin = new Padding(3, 2, 3, 2);
             panel5.Name = "panel5";
-            panel5.Size = new Size(273, 56);
+            panel5.Size = new Size(239, 42);
             panel5.TabIndex = 4;
             // 
             // button4
@@ -220,10 +230,11 @@
             button4.ForeColor = Color.White;
             button4.Image = (Image)resources.GetObject("button4.Image");
             button4.ImageAlign = ContentAlignment.MiddleLeft;
-            button4.Location = new Point(-15, -13);
+            button4.Location = new Point(-13, -10);
+            button4.Margin = new Padding(3, 2, 3, 2);
             button4.Name = "button4";
-            button4.Padding = new Padding(25, 0, 0, 0);
-            button4.Size = new Size(301, 79);
+            button4.Padding = new Padding(22, 0, 0, 0);
+            button4.Size = new Size(263, 59);
             button4.TabIndex = 2;
             button4.Text = "        Users";
             button4.TextAlign = ContentAlignment.MiddleLeft;
@@ -233,18 +244,19 @@
             // 
             settingsContainer.BackColor = Color.FromArgb(32, 33, 36);
             settingsContainer.Controls.Add(panel6);
-            settingsContainer.Location = new Point(499, 422);
+            settingsContainer.Location = new Point(437, 316);
             settingsContainer.Margin = new Padding(0);
             settingsContainer.Name = "settingsContainer";
-            settingsContainer.Size = new Size(273, 79);
+            settingsContainer.Size = new Size(239, 59);
             settingsContainer.TabIndex = 5;
             // 
             // panel6
             // 
             panel6.Controls.Add(settings);
-            panel6.Location = new Point(3, 3);
+            panel6.Location = new Point(3, 2);
+            panel6.Margin = new Padding(3, 2, 3, 2);
             panel6.Name = "panel6";
-            panel6.Size = new Size(273, 56);
+            panel6.Size = new Size(239, 42);
             panel6.TabIndex = 4;
             // 
             // settings
@@ -254,11 +266,11 @@
             settings.ForeColor = Color.White;
             settings.Image = (Image)resources.GetObject("settings.Image");
             settings.ImageAlign = ContentAlignment.MiddleLeft;
-            settings.Location = new Point(-15, -13);
+            settings.Location = new Point(-13, -10);
             settings.Margin = new Padding(0);
             settings.Name = "settings";
-            settings.Padding = new Padding(25, 0, 0, 0);
-            settings.Size = new Size(301, 79);
+            settings.Padding = new Padding(22, 0, 0, 0);
+            settings.Size = new Size(263, 59);
             settings.TabIndex = 2;
             settings.Text = "        Settings";
             settings.TextAlign = ContentAlignment.MiddleLeft;
@@ -268,9 +280,10 @@
             // panel7
             // 
             panel7.Controls.Add(button6);
-            panel7.Location = new Point(499, 504);
+            panel7.Location = new Point(437, 378);
+            panel7.Margin = new Padding(3, 2, 3, 2);
             panel7.Name = "panel7";
-            panel7.Size = new Size(273, 56);
+            panel7.Size = new Size(239, 42);
             panel7.TabIndex = 5;
             // 
             // button6
@@ -280,11 +293,11 @@
             button6.ForeColor = Color.White;
             button6.Image = (Image)resources.GetObject("button6.Image");
             button6.ImageAlign = ContentAlignment.MiddleLeft;
-            button6.Location = new Point(-15, -13);
+            button6.Location = new Point(-13, -10);
             button6.Margin = new Padding(0);
             button6.Name = "button6";
-            button6.Padding = new Padding(25, 0, 0, 0);
-            button6.Size = new Size(301, 79);
+            button6.Padding = new Padding(22, 0, 0, 0);
+            button6.Size = new Size(263, 59);
             button6.TabIndex = 2;
             button6.Text = "        Profile";
             button6.TextAlign = ContentAlignment.MiddleLeft;
@@ -307,14 +320,15 @@
             // 
             // Admin
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(995, 686);
+            ClientSize = new Size(871, 514);
             Controls.Add(panel7);
             Controls.Add(sidebar);
             Controls.Add(panel1);
             Controls.Add(settingsContainer);
             FormBorderStyle = FormBorderStyle.None;
+            Margin = new Padding(3, 2, 3, 2);
             Name = "Admin";
             Text = "Admin";
             panel1.ResumeLayout(false);
