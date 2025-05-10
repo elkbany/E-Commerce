@@ -4,6 +4,7 @@ using E_Commerce.BL.Features.User.DTOs;
 using E_Commerce.BL.Features.User.Validators;
 using E_Commerce.Domain.Enums;
 using E_Commerce.Domain.Models;
+using Mapster;
 using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
 namespace E_Commerce.BL.Implementations
@@ -88,6 +89,11 @@ namespace E_Commerce.BL.Implementations
             var updated = await userRepository.Update(user);
             await userRepository.CommitAsync();
             return updated != null;
+        }
+        public async Task<UserIformationDTO> ViewProfile(int id)
+        {
+            var user=await userRepository.GetByIdAsync(id);
+            return user.Adapt<UserIformationDTO>();
         }
     }
 }

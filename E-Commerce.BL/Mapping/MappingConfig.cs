@@ -13,6 +13,7 @@ using E_Commerce.Domain.Models;
 using E_Commerce.BL.Features.Order.DTOs;
 using E_Commerce.BL.Features.CartItem;
 using System.Xml.Serialization;
+using E_Commerce.BL.Features.CartItem.DTO;
 
 namespace E_Commerce.BL.Mapping
 {
@@ -21,11 +22,11 @@ namespace E_Commerce.BL.Mapping
         public void Configure()
         {
 
-            TypeAdapterConfig<Product, Features.Product.DTOs.ProductDTO>.NewConfig()
+            TypeAdapterConfig<Product,ProductDTO>.NewConfig()
                 .Map(dest => dest.Category, src => src.Category.Name);
 
             #region User Mapping
-            TypeAdapterConfig<User, Features.User.DTOs.UserDTO>.NewConfig()
+            TypeAdapterConfig<User,UserDTO>.NewConfig()
               .Map(dest => dest.Username, src => src.Username)
               .Map(dest => dest.FirstName, src => src.FirstName)
               .Map(dest => dest.LastName, src => src.LastName)
@@ -37,6 +38,22 @@ namespace E_Commerce.BL.Mapping
                .Map(dest => dest.LastName, src => src.LastName)
                .Map(dest => dest.PasswordHash, src => src.Password)
                .Map(dest => dest.Email, src => src.Email);
+
+            TypeAdapterConfig<User, UserIformationDTO>.NewConfig()
+               .Map(dest => dest.FirstName, src => src.FirstName)
+               .Map(dest => dest.LastName, src => src.LastName)
+               .Map(dest => dest.Email, src => src.Email)
+               .Map(dest => dest.Username, src => src.Username);
+            #endregion
+
+            #region Product Mapping
+
+            TypeAdapterConfig<Product, ProductDetailesDTO>.NewConfig()
+              .Map(dest => dest.Name, src => src.Name)
+              .Map(dest => dest.Price, src => src.Price)
+              .Map(dest => dest.Description, src => src.Description)
+              .Map(dest => dest.UnitsInStock, src => src.UnitsInStock)
+              .Map(dest => dest.Category, src => src.Category.Name);
             #endregion
 
 
@@ -47,7 +64,7 @@ namespace E_Commerce.BL.Mapping
             .Map(dest => dest.UserName, src => src.User.Username)
             .Map(dest => dest.OrderDetails, src => src.OrderDetails);
 
-            TypeAdapterConfig<CartItem, CartItemDTO>.NewConfig()
+            TypeAdapterConfig<CartItem, CartItemDTO>.NewConfig()//////check
                 .Map(dest => dest.ProductID, src => src.ProductID)
                 .Map(dest => dest.Product_Name, src => src.Product.Name)
                 .Map(dest => dest.Preoduct_Price, src => src.Product.Price);
