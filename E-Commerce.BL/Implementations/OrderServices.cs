@@ -1,17 +1,10 @@
 ﻿using E_Commerce.BL.Contracts.Repositories;
 using E_Commerce.BL.Contracts.Services;
 using E_Commerce.BL.Features.Order.DTOs;
-using E_Commerce.BL.Features.Product.DTOs;
-using E_Commerce.BL.Validators;
 using E_Commerce.Domain.Enums;
 using E_Commerce.Domain.Models;
 using FluentValidation;
 using Mapster;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace E_Commerce.BL.Implementations
 {
@@ -20,11 +13,13 @@ namespace E_Commerce.BL.Implementations
         private readonly  IOrderRepository _orderRepository;
         private readonly IValidator<int> _orderValidator;
         private readonly IUserRepository _userRepository;
+        private readonly IOrderDetailRepository _orderDetailRepository;
 
-        public OrderServices(IOrderRepository orderRepository, IValidator<int> orderValidator)
+        public OrderServices(IOrderRepository orderRepository, IValidator<int> orderValidator, IOrderDetailRepository orderDetailRepository)
         {
             _orderRepository = orderRepository;
             _orderValidator = orderValidator;
+            _orderDetailRepository = orderDetailRepository;
         }
         public async Task<OrderDTO> AddOrderAsync(OrderDTO orderDTO)
         {
@@ -114,6 +109,34 @@ namespace E_Commerce.BL.Implementations
             return (true, "Order denied successfully.", orderDTO);
         }
 
+        public async Task CreateOrderFromCartItemsAsync(int userId, List<CartItem> cartItems)
+        {
+           
+            var order = new Order
+            {
+                UserID = userId,
+                OrderDate = DateTime.UtcNow,
+                TotalAmount = cartItems.Sum(ci => ci.Product.Price * ci.Quantity), 
+            };
 
+            await _orderRepository.AddAsync(order);
+            await _orderRepository.CommitAsync();
+
+           
+            foreach (var cartItem in cartItems)
+            {
+                var orderDetail = new OrderDetail
+                {
+                    OrderID = order.OrderID,
+                    ProductID = cartItem.ProductID,
+                    Quantity = cartItem.Quantity,
+                 
+                };
+                await _orderDetailRepository.AddAsync(orderDetail);
+
+            }
+
+            await _orderRepository.CommitAsync();
+        }
     }
 }

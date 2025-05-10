@@ -18,6 +18,7 @@ namespace E_Commerce.Presentation
     {
         private readonly IAccountServices accountServices;
 
+
         public Signup(IAccountServices accountServices)
         {
             InitializeComponent();
@@ -26,47 +27,67 @@ namespace E_Commerce.Presentation
 
         private void signup_loginHere_Click(object sender, EventArgs e)
         {
-            var loginForm = ServiceProviderContainer.ServiceProvider.GetRequiredService<Login>();
-            loginForm.Show();
-            this.Hide();
+
         }
 
         private void signup_close_Click(object sender, EventArgs e)
         {
-            Application.Exit();
         }
 
         private void signup_showPassword_CheckedChanged(object sender, EventArgs e)
         {
+
+        }
+        private void signup_close_Click_1(object sender, EventArgs e)
+        {
+        }
+
+        private async void signup_btn_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void signup_showPassword_CheckedChanged_1(object sender, EventArgs e)
+        {
             if (signup_showPassword.Checked)
             {
                 signup_password.PasswordChar = '\0';
+                signup_confirmpassword.PasswordChar = '\0';
             }
             else
             {
                 signup_password.PasswordChar = '*';
+                signup_confirmpassword.PasswordChar = '*';
             }
         }
 
-        private void signup_close_Click_1(object sender, EventArgs e)
+        private async void signup_btn_Click_1(object sender, EventArgs e)
         {
-            Application.Exit();
-        }
+            var reg = new RegisterUserDto
+            {
+                FirstName = signup_firstName?.Text ?? string.Empty, // استخدم Null-conditional operator
+                LastName = signup_lastName?.Text ?? string.Empty,
+                Username = signup_username?.Text ?? string.Empty,
+                Email = signup_email?.Text ?? string.Empty,
+                Password = signup_password?.Text ?? string.Empty,
+                ConfirmPassword = signup_confirmpassword?.Text ?? string.Empty
 
-        private void signup_btn_Click(object sender, EventArgs e)
-        {
-            var reg = new RegisterUserDto();
-            reg.Username = signup_username.Text;
-            reg.Email = signup_email.Text;
-            //reg.FirstName = signup_firstName.Text;
-            //reg.LastName = signup_lastName.Text;
-            reg.Password = signup_password.Text;
+            };
+
             try
             {
-                var success =  accountServices.RegisterUser(reg);
-                if (success.Result)
+                var success = await accountServices.RegisterUser(reg); // استخدم await
+                if (success)
                 {
                     MessageBox.Show("Registration successful.");
+                    var loginForm = ServiceProviderContainer.ServiceProvider.GetRequiredService<Login>();
+                    loginForm.Show();
+                    this.Hide();
                 }
                 else
                 {
@@ -82,7 +103,21 @@ namespace E_Commerce.Presentation
             {
                 MessageBox.Show($"Unexpected error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void signup_loginHere_Click_1(object sender, EventArgs e)
+        {
+            // new login(new AccountServices())
+            var loginForm = ServiceProviderContainer.ServiceProvider.GetRequiredService<Login>();
+            loginForm.Show();
+            this.Hide();
+        }
+
+        private void signup_close_Click_2(object sender, EventArgs e)
+        {
+            this.Close();
 
         }
     }
+
 }

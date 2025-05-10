@@ -12,13 +12,6 @@ namespace E_Commerce.BL.Implementations
         protected async Task DoValidationAsync<TValidator, TRequest>(TRequest request, params object[] constructorParameters)
            where TValidator : AbstractValidator<TRequest>
         {
-            //TValidator instance;
-            //if (unitOfWork != null)
-            //{
-            //    //object[] constructorParameters = { unitOfWork }; // Pass the parameter values
-            //    instance = (TValidator)Activator.CreateInstance(typeof(TValidator), unitOfWork)!;
-            //}
-            //else instance = Activator.CreateInstance<TValidator>();
 
             var instance = (TValidator)Activator.CreateInstance(typeof(TValidator), constructorParameters)!;
 

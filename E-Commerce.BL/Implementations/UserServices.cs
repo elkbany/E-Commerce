@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using E_Commerce.BL.Contracts.Repositories;
 using E_Commerce.BL.Contracts.Services;
 using E_Commerce.BL.Features.User.DTOs;
+using E_Commerce.Domain.Enums;
 using E_Commerce.Domain.Models;
 using Mapster;
 
@@ -26,7 +27,8 @@ namespace E_Commerce.BL.Implementations
                 PasswordHash = user.Password,
                 Email = user.Email,
                 FirstName = user.FirstName,
-                LastName = user.LastName
+                LastName = user.LastName,
+                status = user.status
 
             };
             var AddUser = _userRepository.AddAsync(newUser);
@@ -41,11 +43,23 @@ namespace E_Commerce.BL.Implementations
             return AddUser.Adapt<UserDTO>();
         }
 
-        public async Task<List<UserDTO>> getAllUser()
+        //public async Task<List<UserDTO>> getAllUser()
+        //{
+
+        //    var AddUser = _userRepository.GetAllAsync();
+        //    return AddUser.Adapt<List<UserDTO>>();
+        //}
+        public async Task<List<UserIformationDTO>> getAllClient()
         {
 
-            var AddUser = _userRepository.GetAllAsync();
-            return AddUser.Adapt<List<UserDTO>>();
+            var AddUser = _userRepository.GetAllAsync(s => s.Status == UserStatus.Client);
+            return AddUser.Adapt<List<UserIformationDTO>>();
+        }
+        public async Task<List<UserIformationDTO>> getAllAdmin()
+        {
+
+            var AddUser = _userRepository.GetAllAsync(s => s.Status == UserStatus.Admin);
+            return AddUser.Adapt<List<UserIformationDTO>>();
         }
         public async Task<UpdateUserAccountDTO> Update(int Id, UpdateUserAccountDTO entity)
         {
@@ -75,6 +89,28 @@ namespace E_Commerce.BL.Implementations
             await _userRepository.CommitAsync();
             return user.Adapt<UserDTO>();
         }
+        public async Task activateUser(int Id)
+        {
+            var user =await _userRepository.GetByIdAsync(Id);
+            if (user != null) 
+            {
+                user.IsActive = true;
+                await _userRepository.Update(user);
+                await _userRepository.CommitAsync();
+            }
+           
+        }
 
+        public async Task deactivateUser(int Id)
+        {
+            var user = await _userRepository.GetByIdAsync(Id);
+            if (user != null)
+            {
+                user.IsActive = false;
+                await _userRepository.Update(user);
+                await _userRepository.CommitAsync();
+            }
+
+        }
     }
 }

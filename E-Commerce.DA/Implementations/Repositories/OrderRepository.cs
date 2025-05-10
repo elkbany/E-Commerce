@@ -14,11 +14,12 @@ namespace E_Commerce.DA.Implementations.Repositories
 {
     public class OrderRepository : GenericRepository<Order>, IOrderRepository
     {
-        private readonly DBContext _context;
+
         public OrderRepository(DBContext context) : base(context)
         {
-            _context = context;
+            
         }
+
 
         public async Task<IEnumerable<Order>> GetOrdersByStatusAsync(OrderStatus status)
         {

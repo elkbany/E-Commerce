@@ -10,8 +10,9 @@ namespace E_Commerce.BL.Contracts.Repositories
 {
     public interface IOrderRepository : IGenericRepository<Order>
     {
-        Task<IEnumerable<Order>> GetOrdersByStatusAsync(OrderStatus status);
+
+        public Task<IEnumerable<Order>> GetOrdersByStatusAsync(OrderStatus status);
     }
-    
-    
+
+
 }

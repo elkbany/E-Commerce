@@ -9,6 +9,6 @@ namespace E_Commerce.BL.Contracts.Repositories
 {
     public interface IProductRepository : IGenericRepository<Product>
     {
-
+        Product GetByName(string name);
     }
 }

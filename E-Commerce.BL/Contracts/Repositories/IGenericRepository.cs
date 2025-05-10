@@ -21,5 +21,7 @@ namespace E_Commerce.BL.Contracts.Repositories
         public Task<bool> AnyAsync(Expression<Func<T, bool>>? criteria = null);
         public Task<int> CountAsync(Expression<Func<T, bool>>? criteria = null);
         public Task CommitAsync();
+
+        
     }
 }

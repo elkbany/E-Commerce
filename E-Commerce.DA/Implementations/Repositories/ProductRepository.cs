@@ -12,11 +12,13 @@ namespace E_Commerce.DA.Implementations.Repositories
 {
     public class ProductRepository : GenericRepository<Product>, IProductRepository
     {
-        private readonly DBContext context;
-
         public ProductRepository(DBContext context) : base(context)
         {
-            this.context = context;
+            
+        }
+        public Product GetByName(string name)
+        {
+            return _context.Products.Where(n => n.Name == name).FirstOrDefault();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using E_Commerce.BL.Features.User.DTOs;
 using E_Commerce.BL.Features.User.Validators;
+using E_Commerce.Domain.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,8 +12,11 @@ namespace E_Commerce.BL.Contracts.Services
    public interface IAccountServices
     {
         Task<bool> RegisterUser(RegisterUserDto registerUserDto);
-        Task<bool> LoginUserAsync(string usernameOrEmail, string password);
+        Task<bool> LoginUserAsync(LoginUserDto loginUserDto);
         Task<bool> LogoutUserAsync(string usernameOrEmail);
         Task<bool> UpdateUserAsync(UpdateUserDto dto);
+        Task<int> GetUserIdByUsernameOrEmailAsync(string usernameOrEmail);
+        Task<UserStatus> GetUserStatusAsync(int userId);
+        Task<UserIformationDTO> ViewProfile(int id);
     }
 }

@@ -95,6 +95,7 @@
             panel1.Controls.Add(nightControlBox1);
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(0, 0);
+            panel1.Margin = new Padding(3, 2, 3, 2);
             panel1.Name = "panel1";
             panel1.Size = new Size(1920, 39);
             panel1.TabIndex = 0;
@@ -560,7 +561,7 @@
             // 
             // Admin
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1920, 1102);
             Controls.Add(flowPanel1);

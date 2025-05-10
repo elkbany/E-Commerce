@@ -1,9 +1,12 @@
-using AdminTest;
+﻿using AdminTest;
 using E_Commerce.BL.Contracts.Repositories;
 using E_Commerce.BL.Contracts.Services;
+using E_Commerce.BL.Features.User.DTOs;
+using E_Commerce.BL.Features.User.Validators;
 using E_Commerce.BL.Implementations;
 using E_Commerce.DA.Context;
 using E_Commerce.DA.Implementations.Repositories;
+using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -23,10 +26,9 @@ namespace E_Commerce.Presentation
             ApplicationConfiguration.Initialize();
             var host = CreateHostBuilder().Build();
             ServiceProviderContainer.ServiceProvider = host.Services;
-            var signUpForm = host.Services.GetRequiredService<Signup>();
-            var loginForm = host.Services.GetRequiredService<Login>();
-            Application.Run(new Admin());
-            //Application.Run(new Login());
+            //var loginForm = host.Services.GetRequiredService<Login>();
+            var startForm = host.Services.GetRequiredService<Start>();
+            Application.Run(new Start());
         }
         static IHostBuilder CreateHostBuilder() =>
            Host.CreateDefaultBuilder()
@@ -34,28 +36,41 @@ namespace E_Commerce.Presentation
                {
                    // Register DbContext with SQL Server
                    services.AddDbContext<DBContext>(options =>
-                       options.UseSqlServer("Data Source=.;Initial Catalog=E-Commerce;Integrated Security=True;Trust Server Certificate=True;"));
+                   options.UseSqlServer("Data Source=.;Initial Catalog=E-Commerce;Integrated Security=True;Trust Server Certificate=True;"));
+                   
                    var serviceProvider = services.BuildServiceProvider();
                    ServiceProviderContainer.ServiceProvider = serviceProvider;
-              
-                   // Register Form1 (and other forms or services you need)
+
+                   // Register Forms
                    services.AddScoped<Login>();
                    services.AddScoped<Signup>();
-                  
-                   // Register your repositories and services here
+                   services.AddScoped<frmMain>();
+                   services.AddScoped<Admin>();
+                   services.AddScoped<Start>();
+                   services.AddScoped<frmProfile>();
+                   //services.AddScoped<homeForm>();
+                   //services.AddScoped<cartForm>();
+
+                   // Register Repositories
                    services.AddScoped<IProductRepository, ProductRepository>();
-                   services.AddScoped<IProductServices, ProductServices>();
                    services.AddScoped<IUserRepository, UserRepository>();
-                   services.AddScoped<IUserServices, UserServices>();
                    services.AddScoped<IOrderRepository, OrderRepository>();
-                   services.AddScoped<IOrderServices, OrderServices>();
                    services.AddScoped<ICategoryRepository, CategoryRepository>();
-                   services.AddScoped<ICategoryServices, CategoryServices>();
                    services.AddScoped<IOrderDetailRepository, OrderDetailRepository>();
+                   services.AddScoped<ICartItemRepository, CartItemRepository>(); // أضف CartItemRepository
+
+                   // Register Services
+                   services.AddScoped<IProductServices, ProductServices>();
+                   services.AddScoped<IUserServices, UserServices>();
+                   services.AddScoped<IOrderServices, OrderServices>();
+                   services.AddScoped<ICategoryServices, CategoryServices>();
                    services.AddScoped<IOrderDetailServices, OrderDetailServices>();
-                 
+                   services.AddScoped<ICartItemServices, CartItemServices>(); // أضف CartItemServices
                    services.AddScoped<IAccountServices, AccountServices>();
 
+                   // Register Validators
+                   services.AddTransient<IValidator<RegisterUserDto>, RegisterUserDtoValidator>();
+                   services.AddTransient<IValidator<LoginUserDto>, LoginUserDtoValidator>();
 
                });
     }
