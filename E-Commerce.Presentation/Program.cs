@@ -1,3 +1,4 @@
+using AdminTest;
 using E_Commerce.BL.Contracts.Repositories;
 using E_Commerce.BL.Contracts.Services;
 using E_Commerce.BL.Implementations;
@@ -24,7 +25,7 @@ namespace E_Commerce.Presentation
             ServiceProviderContainer.ServiceProvider = host.Services;
             var signUpForm = host.Services.GetRequiredService<Signup>();
             var loginForm = host.Services.GetRequiredService<Login>();
-            Application.Run(loginForm);
+            Application.Run(new Admin());
             //Application.Run(new Login());
         }
         static IHostBuilder CreateHostBuilder() =>

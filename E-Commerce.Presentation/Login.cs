@@ -1,3 +1,4 @@
+using AdminTest;
 using E_Commerce.BL.Contracts.Services;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -39,6 +40,9 @@ namespace E_Commerce.Presentation
 
         private void login_btn_Click(object sender, EventArgs e)
         {
+            Admin form = new Admin();
+            form.Show();
+            this.Hide();
             var regSucces = accountServices.LoginUserAsync(login_username.Text, login_password.Text);
             if (regSucces.Result)
             {
