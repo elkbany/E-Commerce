@@ -127,7 +127,7 @@
             login_btn.Location = new Point(250, 204);
             login_btn.Margin = new Padding(3, 2, 3, 2);
             login_btn.Name = "login_btn";
-            login_btn.Size = new Size(88, 26);
+            login_btn.Size = new Size(119, 46);
             login_btn.TabIndex = 5;
             login_btn.Text = "LOGIN";
             login_btn.UseVisualStyleBackColor = false;
@@ -264,5 +264,6 @@
         private Label label6;
         private Label label7;
         private Label login_close;
+        private Guna.UI2.WinForms.Guna2Button guna2Button1;
     }
 }

@@ -10,7 +10,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Guna.UI2.WinForms" Version="2.0.4.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.4">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -23,12 +22,6 @@
   <ItemGroup>
     <ProjectReference Include="..\E-Commerce.BL\E-Commerce.BL.csproj" />
     <ProjectReference Include="..\E-Commerce.DA\E-Commerce.DA.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Reference Include="Guna.UI2">
-      <HintPath>..\..\..\Repository\Guna.UI2.dll</HintPath>
-    </Reference>
   </ItemGroup>
 
   <ItemGroup>
