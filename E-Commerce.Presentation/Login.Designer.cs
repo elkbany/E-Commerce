@@ -264,6 +264,5 @@
         private Label label6;
         private Label label7;
         private Label login_close;
-        private Guna.UI2.WinForms.Guna2Button guna2Button1;
     }
 }
