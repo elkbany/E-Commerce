@@ -211,5 +211,8 @@
         private TextBox login_username;
         private Label label2;
         private Label label1;
+        private Guna.UI2.WinForms.Guna2Button guna2Button1;
+        private Guna.UI2.WinForms.Guna2Button guna2Button1;
+        private Guna.UI2.WinForms.Guna2Button guna2Button1;
     }
 }
