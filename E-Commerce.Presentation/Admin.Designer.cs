@@ -135,7 +135,7 @@
             nightControlBox1.EnableMaximizeColor = Color.FromArgb(160, 160, 160);
             nightControlBox1.EnableMinimizeButton = true;
             nightControlBox1.EnableMinimizeColor = Color.FromArgb(160, 160, 160);
-            nightControlBox1.Location = new Point(1756, 3);
+            nightControlBox1.Location = new Point(1763, 0);
             nightControlBox1.MaximizeHoverColor = Color.FromArgb(15, 255, 255, 255);
             nightControlBox1.MaximizeHoverForeColor = Color.White;
             nightControlBox1.MinimizeHoverColor = Color.FromArgb(15, 255, 255, 255);
@@ -516,10 +516,9 @@
             // 
             // lblCategory
             // 
-            lblCategory.AutoSize = true;
             lblCategory.Location = new Point(1124, 11);
             lblCategory.Name = "lblCategory";
-            lblCategory.Size = new Size(42, 19);
+            lblCategory.Size = new Size(50, 19);
             lblCategory.TabIndex = 4;
             lblCategory.Text = "Cat 1";
             // 

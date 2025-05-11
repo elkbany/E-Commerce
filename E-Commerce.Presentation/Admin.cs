@@ -150,6 +150,8 @@ namespace AdminTest
                 flowPanel1.Controls.Add(productPanel);
             }
         }
+
+       
     }
 }
 
