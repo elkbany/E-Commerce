@@ -206,6 +206,7 @@
             btnOrders.TabIndex = 5;
             btnOrders.Text = "Orders";
             btnOrders.UseVisualStyleBackColor = false;
+            btnOrders.Click += btnOrders_Click;
             // 
             // btnProfile
             // 

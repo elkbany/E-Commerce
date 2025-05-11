@@ -6,6 +6,7 @@ using E_Commerce.BL.Features.User.Validators;
 using E_Commerce.BL.Implementations;
 using E_Commerce.DA.Context;
 using E_Commerce.DA.Implementations.Repositories;
+using E_Commerce.BL.Features.Order.Validators; // أضف الـ Namespace ده
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -21,23 +22,20 @@ namespace E_Commerce.Presentation
         [STAThread]
         static void Main()
         {
-            // To customize application configuration such as set high DPI settings or default font,
-            // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
             var host = CreateHostBuilder().Build();
             ServiceProviderContainer.ServiceProvider = host.Services;
-            //var loginForm = host.Services.GetRequiredService<Login>();
-            var startForm = host.Services.GetRequiredService<Start>();
             Application.Run(new Start());
         }
+
         static IHostBuilder CreateHostBuilder() =>
            Host.CreateDefaultBuilder()
                .ConfigureServices((context, services) =>
                {
                    // Register DbContext with SQL Server
                    services.AddDbContext<DBContext>(options =>
-                   options.UseSqlServer("Data Source=.;Initial Catalog=E-Commerce;Integrated Security=True;Trust Server Certificate=True;"));
-                   
+                       options.UseSqlServer("Data Source=.;Initial Catalog=E-Commerce;Integrated Security=True;Trust Server Certificate=True;"));
+
                    var serviceProvider = services.BuildServiceProvider();
                    ServiceProviderContainer.ServiceProvider = serviceProvider;
 
@@ -49,8 +47,9 @@ namespace E_Commerce.Presentation
                    services.AddScoped<Start>();
                    services.AddScoped<frmProfile>();
                    services.AddScoped<frmChangePassword>();
-
-
+                   services.AddScoped<frmProducts>();
+                   services.AddScoped<frmOrders>();
+                   services.AddScoped<frmOrderDetails>();
 
                    // Register Repositories
                    services.AddScoped<IProductRepository, ProductRepository>();
@@ -58,7 +57,7 @@ namespace E_Commerce.Presentation
                    services.AddScoped<IOrderRepository, OrderRepository>();
                    services.AddScoped<ICategoryRepository, CategoryRepository>();
                    services.AddScoped<IOrderDetailRepository, OrderDetailRepository>();
-                   services.AddScoped<ICartItemRepository, CartItemRepository>(); // أضف CartItemRepository
+                   services.AddScoped<ICartItemRepository, CartItemRepository>();
 
                    // Register Services
                    services.AddScoped<IProductServices, ProductServices>();
@@ -66,13 +65,13 @@ namespace E_Commerce.Presentation
                    services.AddScoped<IOrderServices, OrderServices>();
                    services.AddScoped<ICategoryServices, CategoryServices>();
                    services.AddScoped<IOrderDetailServices, OrderDetailServices>();
-                   services.AddScoped<ICartItemServices, CartItemServices>(); // أضف CartItemServices
+                   services.AddScoped<ICartItemServices, CartItemServices>();
                    services.AddScoped<IAccountServices, AccountServices>();
 
                    // Register Validators
                    services.AddTransient<IValidator<RegisterUserDto>, RegisterUserDtoValidator>();
                    services.AddTransient<IValidator<LoginUserDto>, LoginUserDtoValidator>();
-
+                   services.AddTransient<IValidator<int>, OrderIdValidator>(); // أضف تسجيل الـ Validator ده
                });
     }
 }

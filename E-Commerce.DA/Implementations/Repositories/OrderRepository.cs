@@ -25,6 +25,13 @@ namespace E_Commerce.DA.Implementations.Repositories
         {
             return await _context.Orders.Where(o => o.Status == status).ToListAsync();
         }
+
+        public async Task<IEnumerable<Order>> GetOrdersByUserIdAsync(int userId)
+        {
+            return await _context.Orders
+                    .Where(o => o.UserID == userId)
+                    .ToListAsync();
+        }
     }
     
     
