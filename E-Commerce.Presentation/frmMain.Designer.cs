@@ -31,6 +31,7 @@
             components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             panel1 = new Panel();
+            nightControlBox1 = new ReaLTaiizor.Controls.NightControlBox();
             label1 = new Label();
             btnDrag = new PictureBox();
             sidebar = new FlowLayoutPanel();
@@ -43,7 +44,6 @@
             btnProfile = new Button();
             btnLogout = new Button();
             sidebarTransition = new System.Windows.Forms.Timer(components);
-            nightControlBox1 = new ReaLTaiizor.Controls.NightControlBox();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)btnDrag).BeginInit();
             sidebar.SuspendLayout();
@@ -61,6 +61,29 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(1289, 38);
             panel1.TabIndex = 0;
+            // 
+            // nightControlBox1
+            // 
+            nightControlBox1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            nightControlBox1.BackColor = Color.Transparent;
+            nightControlBox1.CloseHoverColor = Color.FromArgb(199, 80, 80);
+            nightControlBox1.CloseHoverForeColor = Color.White;
+            nightControlBox1.DefaultLocation = true;
+            nightControlBox1.DisableMaximizeColor = Color.FromArgb(105, 105, 105);
+            nightControlBox1.DisableMinimizeColor = Color.FromArgb(105, 105, 105);
+            nightControlBox1.EnableCloseColor = Color.FromArgb(160, 160, 160);
+            nightControlBox1.EnableMaximizeButton = true;
+            nightControlBox1.EnableMaximizeColor = Color.FromArgb(160, 160, 160);
+            nightControlBox1.EnableMinimizeButton = true;
+            nightControlBox1.EnableMinimizeColor = Color.FromArgb(160, 160, 160);
+            nightControlBox1.Location = new Point(1150, 0);
+            nightControlBox1.MaximizeHoverColor = Color.FromArgb(15, 255, 255, 255);
+            nightControlBox1.MaximizeHoverForeColor = Color.White;
+            nightControlBox1.MinimizeHoverColor = Color.FromArgb(15, 255, 255, 255);
+            nightControlBox1.MinimizeHoverForeColor = Color.White;
+            nightControlBox1.Name = "nightControlBox1";
+            nightControlBox1.Size = new Size(139, 31);
+            nightControlBox1.TabIndex = 5;
             // 
             // label1
             // 
@@ -85,7 +108,7 @@
             // 
             // sidebar
             // 
-            sidebar.BackColor = Color.FromArgb(26, 24, 29);
+            sidebar.BackColor = Color.FromArgb(0, 120, 212);
             sidebar.Controls.Add(panel2);
             sidebar.Controls.Add(btnProducts);
             sidebar.Controls.Add(btnCart);
@@ -132,7 +155,7 @@
             // 
             // btnProducts
             // 
-            btnProducts.BackColor = Color.FromArgb(23, 24, 29);
+            btnProducts.BackColor = Color.FromArgb(0, 120, 212);
             btnProducts.FlatStyle = FlatStyle.Flat;
             btnProducts.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnProducts.ForeColor = SystemColors.Control;
@@ -150,7 +173,7 @@
             // 
             // btnCart
             // 
-            btnCart.BackColor = Color.FromArgb(23, 24, 29);
+            btnCart.BackColor = Color.FromArgb(0, 120, 212);
             btnCart.FlatStyle = FlatStyle.Flat;
             btnCart.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnCart.ForeColor = SystemColors.Control;
@@ -168,7 +191,7 @@
             // btnOrders
             // 
             btnOrders.AccessibleDescription = "";
-            btnOrders.BackColor = Color.FromArgb(23, 24, 29);
+            btnOrders.BackColor = Color.FromArgb(0, 120, 212);
             btnOrders.FlatStyle = FlatStyle.Flat;
             btnOrders.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnOrders.ForeColor = SystemColors.Control;
@@ -185,7 +208,7 @@
             // 
             // btnProfile
             // 
-            btnProfile.BackColor = Color.FromArgb(23, 24, 29);
+            btnProfile.BackColor = Color.FromArgb(0, 120, 212);
             btnProfile.FlatStyle = FlatStyle.Flat;
             btnProfile.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnProfile.ForeColor = SystemColors.Control;
@@ -203,7 +226,7 @@
             // 
             // btnLogout
             // 
-            btnLogout.BackColor = Color.FromArgb(23, 24, 29);
+            btnLogout.BackColor = Color.FromArgb(0, 120, 212);
             btnLogout.FlatStyle = FlatStyle.Flat;
             btnLogout.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnLogout.ForeColor = SystemColors.Control;
@@ -223,29 +246,6 @@
             // 
             sidebarTransition.Interval = 10;
             sidebarTransition.Tick += sidebarTransition_Tick;
-            // 
-            // nightControlBox1
-            // 
-            nightControlBox1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            nightControlBox1.BackColor = Color.Transparent;
-            nightControlBox1.CloseHoverColor = Color.FromArgb(199, 80, 80);
-            nightControlBox1.CloseHoverForeColor = Color.White;
-            nightControlBox1.DefaultLocation = true;
-            nightControlBox1.DisableMaximizeColor = Color.FromArgb(105, 105, 105);
-            nightControlBox1.DisableMinimizeColor = Color.FromArgb(105, 105, 105);
-            nightControlBox1.EnableCloseColor = Color.FromArgb(160, 160, 160);
-            nightControlBox1.EnableMaximizeButton = true;
-            nightControlBox1.EnableMaximizeColor = Color.FromArgb(160, 160, 160);
-            nightControlBox1.EnableMinimizeButton = true;
-            nightControlBox1.EnableMinimizeColor = Color.FromArgb(160, 160, 160);
-            nightControlBox1.Location = new Point(1147, 2);
-            nightControlBox1.MaximizeHoverColor = Color.FromArgb(15, 255, 255, 255);
-            nightControlBox1.MaximizeHoverForeColor = Color.White;
-            nightControlBox1.MinimizeHoverColor = Color.FromArgb(15, 255, 255, 255);
-            nightControlBox1.MinimizeHoverForeColor = Color.White;
-            nightControlBox1.Name = "nightControlBox1";
-            nightControlBox1.Size = new Size(139, 31);
-            nightControlBox1.TabIndex = 5;
             // 
             // frmMain
             // 

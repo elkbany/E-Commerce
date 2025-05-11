@@ -1,5 +1,4 @@
 ﻿using E_Commerce.BL.Features.User.DTOs;
-using E_Commerce.BL.Features.User.Validators;
 using E_Commerce.Domain.Enums;
 using System;
 using System.Collections.Generic;
@@ -9,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace E_Commerce.BL.Contracts.Services
 {
-   public interface IAccountServices
+    public interface IAccountServices
     {
         Task<bool> RegisterUser(RegisterUserDto registerUserDto);
         Task<bool> LoginUserAsync(LoginUserDto loginUserDto);

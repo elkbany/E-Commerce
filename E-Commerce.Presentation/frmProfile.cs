@@ -1,4 +1,5 @@
-﻿using System;
+﻿using E_Commerce.BL.Contracts.Services;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,14 +13,36 @@ namespace E_Commerce.Presentation
 {
     public partial class frmProfile : Form
     {
-        public frmProfile()
+        private readonly IAccountServices accountServices;
+        private int userId;
+
+        public frmProfile(IAccountServices accountServices, int userId)
         {
             InitializeComponent();
+
+            this.accountServices = accountServices;
+            this.userId = userId;
         }
 
         private void label1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void checkBox1_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void panel1_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            var changePasswordForm = new frmChangePassword();
+            changePasswordForm.Show();
         }
     }
 }

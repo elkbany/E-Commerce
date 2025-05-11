@@ -47,6 +47,7 @@ namespace E_Commerce.Presentation
                    services.AddScoped<Admin>();
                    services.AddScoped<Start>();
                    services.AddScoped<frmProfile>();
+                   services.AddScoped<frmChangePassword>();
                    //services.AddScoped<homeForm>();
                    //services.AddScoped<cartForm>();
 

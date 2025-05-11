@@ -136,7 +136,7 @@ namespace E_Commerce.Presentation
         {
             if (profile == null)
             {
-                profile = new frmProfile();
+                profile = new frmProfile(ServiceProviderContainer.ServiceProvider.GetRequiredService<IAccountServices>(), userId);
                 profile.FormClosed += profile_FormClosed;
 
                 profile.MdiParent = this;
