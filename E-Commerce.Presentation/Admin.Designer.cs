@@ -189,6 +189,7 @@
             btnProducts.Animated = true;
             btnProducts.AutoRoundedCorners = true;
             btnProducts.BackColor = Color.Transparent;
+            btnProducts.BorderRadius = 27;
             btnProducts.Cursor = Cursors.Hand;
             btnProducts.CustomizableEdges = customizableEdges1;
             btnProducts.DisabledState.BorderColor = Color.DarkGray;
@@ -216,6 +217,7 @@
             guna2Button1.Animated = true;
             guna2Button1.AutoRoundedCorners = true;
             guna2Button1.BackColor = Color.Transparent;
+            guna2Button1.BorderRadius = 27;
             guna2Button1.Cursor = Cursors.Hand;
             guna2Button1.CustomizableEdges = customizableEdges3;
             guna2Button1.DisabledState.BorderColor = Color.DarkGray;
@@ -243,6 +245,7 @@
             guna2Button2.Animated = true;
             guna2Button2.AutoRoundedCorners = true;
             guna2Button2.BackColor = Color.Transparent;
+            guna2Button2.BorderRadius = 27;
             guna2Button2.Cursor = Cursors.Hand;
             guna2Button2.CustomizableEdges = customizableEdges5;
             guna2Button2.DisabledState.BorderColor = Color.DarkGray;
@@ -270,6 +273,7 @@
             guna2Button3.Animated = true;
             guna2Button3.AutoRoundedCorners = true;
             guna2Button3.BackColor = Color.Transparent;
+            guna2Button3.BorderRadius = 27;
             guna2Button3.Cursor = Cursors.Hand;
             guna2Button3.CustomizableEdges = customizableEdges7;
             guna2Button3.DisabledState.BorderColor = Color.DarkGray;
@@ -297,6 +301,7 @@
             guna2Button4.Animated = true;
             guna2Button4.AutoRoundedCorners = true;
             guna2Button4.BackColor = Color.Transparent;
+            guna2Button4.BorderRadius = 27;
             guna2Button4.Cursor = Cursors.Hand;
             guna2Button4.CustomizableEdges = customizableEdges9;
             guna2Button4.DisabledState.BorderColor = Color.DarkGray;

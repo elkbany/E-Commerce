@@ -90,8 +90,6 @@ namespace E_Commerce.Presentation
                         clientForm.Show();
                         this.Close();
                     }
-
-
                 }
                 else
                 {
