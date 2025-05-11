@@ -1,4 +1,5 @@
-﻿using System;
+﻿using E_Commerce.Domain.Enums;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,5 +18,6 @@ namespace E_Commerce.BL.Features.User.DTOs
         public string FirstName { get; set; }
 
         public string LastName { get; set; }
+        public UserStatus status { get; set; }
     }
 }

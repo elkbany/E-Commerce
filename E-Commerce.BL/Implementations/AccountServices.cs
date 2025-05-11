@@ -28,7 +28,7 @@ namespace E_Commerce.BL.Implementations
                 LastName = registerUserDto.LastName,
                 Username = registerUserDto.Username,
                 Email = registerUserDto.Email,
-                Status = UserStatus.Client, // Default Client 
+                Status = UserStatus.Admin, // Default Client 
                 IsActive = true,
                 IsSignedInNow = false
 
