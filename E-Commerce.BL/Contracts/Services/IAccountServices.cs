@@ -14,6 +14,7 @@ namespace E_Commerce.BL.Contracts.Services
         Task<bool> LoginUserAsync(LoginUserDto loginUserDto);
         Task<bool> LogoutUserAsync(string usernameOrEmail);
         Task<bool> UpdateUserAsync(UpdateUserDto dto);
+        Task<bool> UpdateUserAccount(UpdateUserAccountDTO dto, int userId);
         Task<int> GetUserIdByUsernameOrEmailAsync(string usernameOrEmail);
         Task<UserStatus> GetUserStatusAsync(int userId);
         Task<UserIformationDTO> ViewProfile(int id);
