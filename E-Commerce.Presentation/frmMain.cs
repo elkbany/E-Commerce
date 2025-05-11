@@ -52,7 +52,7 @@ namespace E_Commerce.Presentation
             if (userInfo != null)
             {
                 // مثال: عرض الـ Username في Label (غيّر الـ Control حسب UI بتاعك)
-                labelUsername.Text = userInfo.Username; 
+                labelUsername.Text = userInfo.Username;
             }
         }
 
@@ -138,7 +138,6 @@ namespace E_Commerce.Presentation
             {
                 profile = new frmProfile(ServiceProviderContainer.ServiceProvider.GetRequiredService<IAccountServices>(), userId);
                 profile.FormClosed += profile_FormClosed;
-
                 profile.MdiParent = this;
                 profile.Dock = DockStyle.Fill;
                 profile.Show();
@@ -160,6 +159,11 @@ namespace E_Commerce.Presentation
         }
 
         private void labelUsername_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void nightControlBox1_Click_1(object sender, EventArgs e)
         {
 
         }

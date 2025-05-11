@@ -1,50 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
+﻿using E_Commerce.BL.Contracts.Services;
+using System;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace E_Commerce.Presentation
 {
     public partial class frmChangePassword : Form
     {
-        private bool dragging = false;
-        private Point dragCursorPoint;
-        private Point dragFormPoint;
+        private readonly IAccountServices accountServices;
+        private readonly int userId;
 
-
-        public frmChangePassword()
+        public frmChangePassword(IAccountServices accountServices, int userId)
         {
             InitializeComponent();
-        }
-        private void Form1_MouseDown(object sender, MouseEventArgs e)
-        {
-            dragging = true;
-            dragCursorPoint = Cursor.Position;
-            dragFormPoint = this.Location;
+            this.accountServices = accountServices;
+            this.userId = userId;
         }
 
-        private void Form1_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (dragging)
-            {
-                Point dif = Point.Subtract(Cursor.Position, new Size(dragCursorPoint));
-                this.Location = Point.Add(dragFormPoint, new Size(dif));
-            }
-        }
+        [DllImport("user32.DLL", EntryPoint = "ReleaseCapture")]
+        private extern static void ReleaseCapture();
 
-        private void Form1_MouseUp(object sender, MouseEventArgs e)
-        {
-            dragging = false;
-        }
+        [DllImport("user32.DLL", EntryPoint = "SendMessage")]
+        private extern static void SendMessage(IntPtr hwnd, int wMsg, int wParam, int lParam);
+
         private void label1_Click(object sender, EventArgs e)
         {
-
         }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
@@ -61,14 +41,54 @@ namespace E_Commerce.Presentation
             }
         }
 
-        private void button2_Click(object sender, EventArgs e)
+        private void button2_Click(object sender, EventArgs e) // Cancel
         {
             this.Close();
         }
 
         private void frmChangePassword_Load(object sender, EventArgs e)
         {
+        }
 
+        private void frmChangePassword_MouseDown(object sender, MouseEventArgs e)
+        {
+            ReleaseCapture();
+            SendMessage(this.Handle, 0x112, 0xf012, 0);
+        }
+
+        private void panel1_MouseDown(object sender, MouseEventArgs e)
+        {
+            ReleaseCapture();
+            SendMessage(this.Handle, 0x112, 0xf012, 0);
+        }
+
+        private async void button1_Click(object sender, EventArgs e) // Save
+        {
+            if (string.IsNullOrWhiteSpace(lnlOldPassword.Text) || string.IsNullOrWhiteSpace(lblNewPassword1.Text) || string.IsNullOrWhiteSpace(lblNewPassword2.Text))
+            {
+                MessageBox.Show("Please fill all fields.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (lblNewPassword1.Text != lblNewPassword2.Text)
+            {
+                MessageBox.Show("New password and confirmation do not match.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (MessageBox.Show("Are you sure you want to change your password?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                try
+                {
+                    //await accountServices.ChangePasswordAsync(userId, lnlOldPassword.Text, lblNewPassword1.Text);
+                    MessageBox.Show("Password changed successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    this.Close();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error changing password: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
     }
 }
