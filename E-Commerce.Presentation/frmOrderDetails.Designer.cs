@@ -46,6 +46,7 @@
             dataGridViewOrderDetails.ReadOnly = true;
             dataGridViewOrderDetails.Size = new Size(776, 400);
             dataGridViewOrderDetails.TabIndex = 0;
+            dataGridViewOrderDetails.CellContentClick += dataGridViewOrderDetails_CellContentClick;
             // 
             // lblOrderId
             // 

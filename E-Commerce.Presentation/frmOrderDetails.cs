@@ -8,40 +8,51 @@ namespace E_Commerce.Presentation
     public partial class frmOrderDetails : Form
     {
         private readonly int orderId;
+        private readonly IOrderDetailServices _orderDetailServices;
 
         public frmOrderDetails(int orderId)
         {
             InitializeComponent();
             this.orderId = orderId;
+            _orderDetailServices = ServiceProviderContainer.ServiceProvider.GetRequiredService<IOrderDetailServices>();
             LoadOrderDetails();
         }
 
         private async void LoadOrderDetails()
         {
-            try
-            {
-                var orderService = ServiceProviderContainer.ServiceProvider.GetRequiredService<IOrderServices>();
-                var order = await orderService.GetOrdertByIdAsync(orderId);
+            
+                // Fetch order details using the new method
+                var orderDetails = await _orderDetailServices.GetOrderDetailsByOrderIdAsync(orderId);
 
-                if (order != null)
+                if (orderDetails != null && orderDetails.Any())
                 {
-                    lblOrderId.Text = $"Order #{order.OrderID} Details";
-                    dataGridViewOrderDetails.DataSource = order.OrderDetails; // تعرض OrderDetails
+                    lblOrderId.Text = $"Order #{orderId} Details";
+                    dataGridViewOrderDetails.DataSource = orderDetails.ToList();
+
+                    // Customize column headers
+                    dataGridViewOrderDetails.Columns["Id"].Visible = false; // Hide Id column
+                    dataGridViewOrderDetails.Columns["OrderId"].Visible = false; // Hide OrderId column
+                    dataGridViewOrderDetails.Columns["ProductId"].Visible = false; // Hide ProductId column
+                    dataGridViewOrderDetails.Columns["ProductName"].HeaderText = "Product Name";
+                    dataGridViewOrderDetails.Columns["Quantity"].HeaderText = "Quantity";
+                    dataGridViewOrderDetails.Columns["Price"].HeaderText = "Unit Price";
+                    dataGridViewOrderDetails.Columns["TotalPrice"].HeaderText = "Total Price";
                 }
                 else
                 {
-                    MessageBox.Show("Order not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("No order details found for this order.", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error loading order details: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            
+            
         }
 
         private void btnClose_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void dataGridViewOrderDetails_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
         }
     }
 }
