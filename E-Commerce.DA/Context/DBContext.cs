@@ -624,6 +624,8 @@ namespace E_Commerce.DA.Context
                     DateAdded = DateTime.Parse("2025-05-22T09:00:00Z")
                 }
             );
+            
+       
         }
     #endregion
 

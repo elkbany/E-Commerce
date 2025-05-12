@@ -44,10 +44,6 @@
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges12 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges13 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges14 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges15 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges16 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges17 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges18 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             panel1 = new Panel();
             label1 = new Label();
             btnSide = new PictureBox();
@@ -70,21 +66,11 @@
             label7 = new Label();
             label8 = new Label();
             label9 = new Label();
-            flowPanel1 = new FlowLayoutPanel();
-            panelTemplate = new Panel();
-            btnEdit = new Guna.UI2.WinForms.Guna2Button();
-            DeleteButton = new Guna.UI2.WinForms.Guna2Button();
-            lblCategory = new Label();
-            lblUnitsInStock = new Label();
-            lblPrice = new Label();
-            lblName = new Label();
-            label24 = new Label();
+            flowLayoutPanelProducts = new FlowLayoutPanel();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)btnSide).BeginInit();
             sidebar.SuspendLayout();
             panel2.SuspendLayout();
-            flowPanel1.SuspendLayout();
-            panelTemplate.SuspendLayout();
             SuspendLayout();
             // 
             // panel1
@@ -119,7 +105,6 @@
             btnSide.SizeMode = PictureBoxSizeMode.CenterImage;
             btnSide.TabIndex = 1;
             btnSide.TabStop = false;
-            btnSide.Click += btnSide_Click;
             // 
             // nightControlBox1
             // 
@@ -354,7 +339,6 @@
             // sidebarTransition
             // 
             sidebarTransition.Interval = 10;
-            sidebarTransition.Tick += sidebarTransition_Tick;
             // 
             // label3
             // 
@@ -451,126 +435,22 @@
             label9.TabIndex = 9;
             label9.Text = "Operations";
             // 
-            // flowPanel1
+            // flowLayoutPanelProducts
             // 
-            flowPanel1.AutoScroll = true;
-            flowPanel1.Controls.Add(panelTemplate);
-            flowPanel1.FlowDirection = FlowDirection.TopDown;
-            flowPanel1.Location = new Point(304, 214);
-            flowPanel1.Name = "flowPanel1";
-            flowPanel1.Size = new Size(1604, 867);
-            flowPanel1.TabIndex = 10;
-            flowPanel1.WrapContents = false;
-            // 
-            // panelTemplate
-            // 
-            panelTemplate.BackColor = Color.White;
-            panelTemplate.Controls.Add(btnEdit);
-            panelTemplate.Controls.Add(DeleteButton);
-            panelTemplate.Controls.Add(lblCategory);
-            panelTemplate.Controls.Add(lblUnitsInStock);
-            panelTemplate.Controls.Add(lblPrice);
-            panelTemplate.Controls.Add(lblName);
-            panelTemplate.Controls.Add(label24);
-            panelTemplate.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            panelTemplate.Location = new Point(3, 3);
-            panelTemplate.Name = "panelTemplate";
-            panelTemplate.Size = new Size(1586, 50);
-            panelTemplate.TabIndex = 6;
-            // 
-            // btnEdit
-            // 
-            btnEdit.BorderColor = Color.Cyan;
-            btnEdit.BorderRadius = 6;
-            btnEdit.BorderThickness = 1;
-            btnEdit.CustomizableEdges = customizableEdges15;
-            btnEdit.DisabledState.BorderColor = Color.DarkGray;
-            btnEdit.DisabledState.CustomBorderColor = Color.DarkGray;
-            btnEdit.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
-            btnEdit.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
-            btnEdit.FillColor = Color.White;
-            btnEdit.Font = new Font("Segoe UI", 9F);
-            btnEdit.ForeColor = Color.White;
-            btnEdit.Image = (Image)resources.GetObject("btnEdit.Image");
-            btnEdit.Location = new Point(1482, 6);
-            btnEdit.Name = "btnEdit";
-            btnEdit.ShadowDecoration.CustomizableEdges = customizableEdges16;
-            btnEdit.Size = new Size(35, 34);
-            btnEdit.TabIndex = 5;
-            btnEdit.Click += btnEdit_Click;
-            // 
-            // DeleteButton
-            // 
-            DeleteButton.BorderColor = Color.IndianRed;
-            DeleteButton.BorderRadius = 6;
-            DeleteButton.BorderThickness = 1;
-            DeleteButton.CustomizableEdges = customizableEdges17;
-            DeleteButton.DisabledState.BorderColor = Color.DarkGray;
-            DeleteButton.DisabledState.CustomBorderColor = Color.DarkGray;
-            DeleteButton.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
-            DeleteButton.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
-            DeleteButton.FillColor = Color.White;
-            DeleteButton.Font = new Font("Segoe UI", 9F);
-            DeleteButton.ForeColor = Color.White;
-            DeleteButton.Image = (Image)resources.GetObject("DeleteButton.Image");
-            DeleteButton.Location = new Point(1537, 6);
-            DeleteButton.Name = "DeleteButton";
-            DeleteButton.ShadowDecoration.CustomizableEdges = customizableEdges18;
-            DeleteButton.Size = new Size(35, 34);
-            DeleteButton.TabIndex = 0;
-            DeleteButton.Click += DeleteButton_Click;
-            // 
-            // lblCategory
-            // 
-            lblCategory.AutoSize = true;
-            lblCategory.Location = new Point(1124, 11);
-            lblCategory.Name = "lblCategory";
-            lblCategory.Size = new Size(42, 19);
-            lblCategory.TabIndex = 4;
-            lblCategory.Text = "Cat 1";
-            // 
-            // lblUnitsInStock
-            // 
-            lblUnitsInStock.AutoSize = true;
-            lblUnitsInStock.Location = new Point(774, 11);
-            lblUnitsInStock.Name = "lblUnitsInStock";
-            lblUnitsInStock.Size = new Size(25, 19);
-            lblUnitsInStock.TabIndex = 3;
-            lblUnitsInStock.Text = "15";
-            // 
-            // lblPrice
-            // 
-            lblPrice.AutoSize = true;
-            lblPrice.Location = new Point(404, 11);
-            lblPrice.Name = "lblPrice";
-            lblPrice.Size = new Size(44, 19);
-            lblPrice.TabIndex = 2;
-            lblPrice.Text = "$2.00";
-            // 
-            // lblName
-            // 
-            lblName.AutoSize = true;
-            lblName.Location = new Point(91, 11);
-            lblName.Name = "lblName";
-            lblName.Size = new Size(58, 19);
-            lblName.TabIndex = 1;
-            lblName.Text = "Pro 100";
-            // 
-            // label24
-            // 
-            label24.AutoSize = true;
-            label24.Location = new Point(26, 11);
-            label24.Name = "label24";
-            label24.Size = new Size(17, 19);
-            label24.TabIndex = 0;
-            label24.Text = "1";
+            flowLayoutPanelProducts.AutoScroll = true;
+            flowLayoutPanelProducts.FlowDirection = FlowDirection.TopDown;
+            flowLayoutPanelProducts.Location = new Point(304, 214);
+            flowLayoutPanelProducts.Name = "flowLayoutPanelProducts";
+            flowLayoutPanelProducts.Size = new Size(1604, 867);
+            flowLayoutPanelProducts.TabIndex = 10;
+            flowLayoutPanelProducts.WrapContents = false;
             // 
             // Admin
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1386, 788);
-            Controls.Add(flowPanel1);
+            ClientSize = new Size(1902, 825);
+            Controls.Add(flowLayoutPanelProducts);
             Controls.Add(label9);
             Controls.Add(label8);
             Controls.Add(label7);
@@ -591,9 +471,6 @@
             sidebar.ResumeLayout(false);
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
-            flowPanel1.ResumeLayout(false);
-            panelTemplate.ResumeLayout(false);
-            panelTemplate.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -622,7 +499,7 @@
         private Label label7;
         private Label label8;
         private Label label9;
-        private FlowLayoutPanel flowPanel1;
+        private FlowLayoutPanel flowLayoutPanelProducts;
         private Panel panelTemplate;
         private Guna.UI2.WinForms.Guna2Button btnEdit;
         private Guna.UI2.WinForms.Guna2Button DeleteButton;

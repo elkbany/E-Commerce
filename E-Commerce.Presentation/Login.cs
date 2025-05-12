@@ -111,5 +111,10 @@ namespace E_Commerce.Presentation
             signupForm.Show();
             this.Hide(); // أو this.Close() لو عايز تقفل Login بدل ما تخبيه
         }
+
+        private void login_username_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }
