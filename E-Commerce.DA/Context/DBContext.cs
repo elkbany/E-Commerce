@@ -624,38 +624,8 @@ namespace E_Commerce.DA.Context
                     DateAdded = DateTime.Parse("2025-05-22T09:00:00Z")
                 }
             );
-            // Seed order detail 1 (for Order 1)
-            modelBuilder.Entity<OrderDetail>().HasData(
-                new OrderDetail
-                {
-                    Id = 1,
-                    OrderID = 1,
-                    ProductID = 1,
-                    Quantity = 2 // 2 Smartphones
-                }
-            );
-
-            // Seed order detail 2 (for Order 1)
-            modelBuilder.Entity<OrderDetail>().HasData(
-                new OrderDetail
-                {
-                    Id = 2,
-                    OrderID = 1,
-                    ProductID = 2,
-                    Quantity = 5 
-                }
-            );
-
-            // Seed order detail 3 (for Order 2)
-            modelBuilder.Entity<OrderDetail>().HasData(
-                new OrderDetail
-                {
-                    Id = 3,
-                    OrderID = 2,
-                    ProductID = 1,
-                    Quantity = 1 // 1 Smartphone
-                }
-            );
+            
+       
         }
     #endregion
 
