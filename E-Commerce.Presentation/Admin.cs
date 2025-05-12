@@ -150,6 +150,11 @@ namespace AdminTest
                 flowPanel1.Controls.Add(productPanel);
             }
         }
+
+        private void guna2Button3_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
 

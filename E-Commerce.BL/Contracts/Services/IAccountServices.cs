@@ -18,5 +18,7 @@ namespace E_Commerce.BL.Contracts.Services
         Task<int> GetUserIdByUsernameOrEmailAsync(string usernameOrEmail);
         Task<UserStatus> GetUserStatusAsync(int userId);
         Task<UserIformationDTO> ViewProfile(int id);
+        Task<bool> VerifyPasswordAsync(int userId, string password);
+        
     }
 }

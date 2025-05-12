@@ -45,15 +45,41 @@ namespace E_Commerce.Presentation
 
 
 
-        private void button1_Click(object sender, EventArgs e) // Save
-        {
+       
+            private async void button1_Click(object sender, EventArgs e) // Save (تغيير إلى async void)
+             {
+            try
+            {
+                var updateDto = new UpdateUserAccountDTO
+                {
+                    FirstName = txtProfileFirstName.Text,
+                    LastName = txtProfileLastName.Text,
+                    Email = txtProfileEmail.Text
+                };
 
-            MessageBox.Show("Save functionality will be added later.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                bool isUpdated = await accountServices.UpdateUserAccount(updateDto, userId);
+
+                if (isUpdated)
+                {
+                    MessageBox.Show("User profile updated successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    LoadUserInfo();
+                }
+                else
+                {
+                    MessageBox.Show("Failed to update user profile.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error updating profile: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
+       // MessageBox.Show("Save functionality will be added later.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        
 
         private void button2_Click(object sender, EventArgs e) // Cancel
         {
-
+            LoadUserInfo();
         }
         private void button3_Click(object sender, EventArgs e) // Change Password
         {

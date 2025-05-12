@@ -1,4 +1,6 @@
 ﻿using E_Commerce.BL.Contracts.Services;
+using E_Commerce.BL.Features.User.DTOs;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
@@ -33,11 +35,13 @@ namespace E_Commerce.Presentation
             {
                 lblNewPassword1.PasswordChar = '\0';
                 lblNewPassword2.PasswordChar = '\0';
+                lnlOldPassword.PasswordChar = '\0';
             }
             else
             {
                 lblNewPassword1.PasswordChar = '*';
                 lblNewPassword2.PasswordChar = '*';
+                lnlOldPassword.PasswordChar = '*';
             }
         }
 
@@ -64,30 +68,85 @@ namespace E_Commerce.Presentation
 
         private async void button1_Click(object sender, EventArgs e) // Save
         {
-            if (string.IsNullOrWhiteSpace(lnlOldPassword.Text) || string.IsNullOrWhiteSpace(lblNewPassword1.Text) || string.IsNullOrWhiteSpace(lblNewPassword2.Text))
+            try
             {
-                MessageBox.Show("Please fill all fields.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            if (lblNewPassword1.Text != lblNewPassword2.Text)
-            {
-                MessageBox.Show("New password and confirmation do not match.", "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            if (MessageBox.Show("Are you sure you want to change your password?", "Confirmation", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-            {
-                try
+                // Validate all fields are filled
+                if (string.IsNullOrWhiteSpace(lnlOldPassword.Text) ||
+                    string.IsNullOrWhiteSpace(lblNewPassword1.Text) ||
+                    string.IsNullOrWhiteSpace(lblNewPassword2.Text))
                 {
-                    //await accountServices.ChangePasswordAsync(userId, lnlOldPassword.Text, lblNewPassword1.Text);
-                    MessageBox.Show("Password changed successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBox.Show("Please fill in all password fields.", "Validation Error",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // Validate new password length
+                if (lblNewPassword1.Text.Length < 6)
+                {
+                    MessageBox.Show("New password must be at least 6 characters long.", "Validation Error",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // Validate password match
+                if (lblNewPassword1.Text != lblNewPassword2.Text)
+                {
+                    MessageBox.Show("New passwords do not match.", "Validation Error",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // Verify old password
+                if (!await accountServices.VerifyPasswordAsync(userId, lnlOldPassword.Text))
+                {
+                    MessageBox.Show("Old password is incorrect.", "Validation Error",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                // Confirm password change
+                if (MessageBox.Show("Are you sure you want to change your password?", "Confirmation",
+                                  MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+                {
+                    return;
+                }
+
+                // Update password
+                var updateDto = new UpdateUserDto
+                {
+                    Id = userId,
+                    Password = lblNewPassword1.Text
+                };
+
+                bool isUpdated = await accountServices.UpdateUserAsync(updateDto);
+
+                if (isUpdated)
+                {
+                    MessageBox.Show("Password changed successfully!", "Success",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Information);
                     this.Close();
                 }
-                catch (Exception ex)
+                else
                 {
-                    MessageBox.Show($"Error changing password: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Failed to update password. Please try again.", "Error",
+                                  MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+            }
+            catch (ArgumentException ex)
+            {
+                MessageBox.Show(ex.Message, "Validation Error",
+                              MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            catch (Exception ex)
+            {
+                string errorMessage = "An error occurred while changing your password.";
+                if (ex.InnerException != null)
+                {
+                    errorMessage += $"\n\nTechnical details: {ex.InnerException.Message}";
+                }
+
+                MessageBox.Show(errorMessage, "Error",
+                              MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }
