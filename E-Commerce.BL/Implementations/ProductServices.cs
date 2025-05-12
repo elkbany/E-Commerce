@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace E_Commerce.BL.Implementations
 {
-    public class ProductServices : AppService,IProductServices
+    public class ProductServices : AppService, IProductServices
     {
         private readonly IProductRepository productRepository;
 
@@ -88,6 +88,39 @@ namespace E_Commerce.BL.Implementations
             var product = productRepository.GetByName(name);
             return product?.Adapt<ProductDetailesDTO>();/////if no product no output
         }
+
+        public async Task<List<ProductDTO>> GetAllProductsByCatigory(Category category)
+        {
+            var products = productRepository.GetAllAsync(p=>p.Category== category);
+            var proMap = products.Adapt<List<ProductDTO>>();
+            return proMap;
+
+        }
+        public async Task<List<ProductDTO>> GetAllProductsByCatigoryName(string categoryName)
+        {
+            var products = productRepository.GetAllAsync(p => p.Category.Name == categoryName);
+            var proMap = products.Adapt<List<ProductDTO>>();
+            return proMap;
+
+        }
+        public async Task<List<ProductDTO>> SearchProductsByName(string ProductName)
+        {
+         
+              
+                if (string.IsNullOrWhiteSpace(ProductName))
+                {
+                    return new List<ProductDTO>();
+                }
+
+               
+                var products = await productRepository.GetAllAsync(p => p.Name != null && p.Name.ToLower().Contains(ProductName.ToLower()));
+                return products.Adapt<List<ProductDTO>>();
+            
+           
+                
+            
+        }
+
     }
 }
 
