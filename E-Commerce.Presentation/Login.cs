@@ -1,14 +1,12 @@
 ﻿using AdminTest;
 using E_Commerce.BL.Contracts.Services;
 using E_Commerce.BL.Features.User.DTOs;
-using E_Commerce.BL.Features.User.Validators;
+using E_Commerce.Domain.Enums;
+using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.Windows.Forms;
-using FluentValidation;
-using E_Commerce.Domain.Enums;
-using System.Runtime.InteropServices;
-
 
 namespace E_Commerce.Presentation
 {
@@ -16,54 +14,22 @@ namespace E_Commerce.Presentation
     {
         private readonly IAccountServices accountServices;
         private readonly IValidator<LoginUserDto> validator;
+        private readonly Start _startForm; // أضف الـ Reference
 
-        [DllImport("user32.DLL", EntryPoint = "ReleaseCapture")]
-        private extern static void ReleaseCapture();
-
-        [DllImport("user32.DLL", EntryPoint = "SendMessage")]
-        private extern static void SendMessage(IntPtr hwnd, int wMsg, int wParam, int lParam);
-
-        public Login(IAccountServices accountServices, IValidator<LoginUserDto> validator)
+        public Login(IAccountServices accountServices, IValidator<LoginUserDto> validator, Start startForm)
         {
             InitializeComponent();
             this.accountServices = accountServices;
             this.validator = validator;
+            _startForm = startForm; // خزّن الـ Start Form
         }
 
-        public Login(IAccountServices accountServices)
-        {
-            this.accountServices = accountServices;
-        }
-
-        private void login_registerHere_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void login_close_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void login_showPassword_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private async void login_btn_Click(object sender, EventArgs e)
-        {
-        }
-
-        private void Login_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private async void login_btn_Click_1(object sender, EventArgs e)
+        private async void btnLogin_Click(object sender, EventArgs e)
         {
             var loginUserDto = new LoginUserDto
             {
-                UsernameOrEmail = login_username.Text.Trim(),
-                Password = login_password.Text
+                UsernameOrEmail = txtUsername.Text.Trim(), // عدّلنا هنا
+                Password = txtPassword.Text // عدّلنا هنا
             };
 
             var validationResult = await validator.ValidateAsync(loginUserDto);
@@ -76,11 +42,10 @@ namespace E_Commerce.Presentation
 
             try
             {
-                var success = await accountServices.LoginUserAsync(loginUserDto); // استخدام LoginUserDto كما في AccountServices
+                var success = await accountServices.LoginUserAsync(loginUserDto);
                 if (success)
                 {
                     MessageBox.Show("Login Successful", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    //var userForm = ServiceProviderContainer.ServiceProvider.GetRequiredService<UserForm>();
 
                     int userId = await accountServices.GetUserIdByUsernameOrEmailAsync(loginUserDto.UsernameOrEmail);
                     if (userId == -1)
@@ -88,6 +53,7 @@ namespace E_Commerce.Presentation
                         MessageBox.Show("User not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
+
                     UserStatus userStatus = await accountServices.GetUserStatusAsync(userId);
                     if (userStatus == UserStatus.Admin)
                     {
@@ -97,8 +63,8 @@ namespace E_Commerce.Presentation
                     }
                     else
                     {
-                        var clientForm = ActivatorUtilities.CreateInstance<frmMain>(ServiceProviderContainer.ServiceProvider, accountServices, userId);                        // تمرير userId باستخدام Reflection (لو عايز تستخدمه في frmMain)
-                        //var clientForm = ServiceProviderContainer.ServiceProvider.GetRequiredService<frmMain>(); // if no userId
+                        var clientForm = ServiceProviderContainer.ServiceProvider.GetRequiredService<frmMain>();
+                        clientForm.SetUserId(userId); // لو فيه SetUserId
                         clientForm.Show();
                         this.Close();
                     }
@@ -112,38 +78,38 @@ namespace E_Commerce.Presentation
             {
                 MessageBox.Show($"Unexpected error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
-
         }
 
-        private void login_showPassword_CheckedChanged_1(object sender, EventArgs e)
+        private void btnClose_Click(object sender, EventArgs e)
         {
-            if (login_showPassword.Checked)
+            this.Close();
+        }
+
+        private void showPassword_CheckedChanged(object sender, EventArgs e)
+        {
+            txtPassword.UseSystemPasswordChar = !showPassword.Checked;
+        }
+
+        private void Login_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            if (_startForm != null && !_startForm.IsDisposed)
             {
-                login_password.PasswordChar = '\0';
+                _startForm.StartPosition = FormStartPosition.Manual;
+                _startForm.Location = this.Location;
+                _startForm.Show();
             }
             else
             {
-                login_password.PasswordChar = '*';
+                Application.Exit();
             }
         }
-
-        private void login_registerHere_Click_1(object sender, EventArgs e)
+        private void lblSignUpHere_Click(object sender, EventArgs e)
         {
-            var signUpForm = ServiceProviderContainer.ServiceProvider.GetRequiredService<Signup>();
-            signUpForm.ShowDialog(); // استخدم ShowDialog عشان يرجع لـ Login بعد الإغلاق
-        }
-
-        private void login_close_Click_1(object sender, EventArgs e)
-        {
-            Application.Exit();
-
-        }
-
-        private void Login_MouseDown(object sender, MouseEventArgs e)
-        {
-            ReleaseCapture();
-            SendMessage(this.Handle, 0x112, 0xf012, 0);
+            var signupForm = ServiceProviderContainer.ServiceProvider.GetRequiredService<Signup>();
+            signupForm.StartPosition = FormStartPosition.Manual;
+            signupForm.Location = this.Location;
+            signupForm.Show();
+            this.Hide(); // أو this.Close() لو عايز تقفل Login بدل ما تخبيه
         }
 
         private void login_username_TextChanged(object sender, EventArgs e)

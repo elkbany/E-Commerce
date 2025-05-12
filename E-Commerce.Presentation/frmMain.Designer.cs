@@ -36,6 +36,7 @@
             btnDrag = new PictureBox();
             sidebar = new FlowLayoutPanel();
             panel2 = new Panel();
+            pictureBox1 = new PictureBox();
             label2 = new Label();
             labelUsername = new Label();
             btnProducts = new Button();
@@ -48,6 +49,7 @@
             ((System.ComponentModel.ISupportInitialize)btnDrag).BeginInit();
             sidebar.SuspendLayout();
             panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // panel1
@@ -84,7 +86,6 @@
             nightControlBox1.Name = "nightControlBox1";
             nightControlBox1.Size = new Size(139, 31);
             nightControlBox1.TabIndex = 5;
-            nightControlBox1.Click += nightControlBox1_Click_1;
             // 
             // label1
             // 
@@ -124,6 +125,7 @@
             // 
             // panel2
             // 
+            panel2.Controls.Add(pictureBox1);
             panel2.Controls.Add(label2);
             panel2.Controls.Add(labelUsername);
             panel2.Location = new Point(3, 3);
@@ -131,12 +133,22 @@
             panel2.Size = new Size(251, 80);
             panel2.TabIndex = 10;
             // 
+            // pictureBox1
+            // 
+            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
+            pictureBox1.Location = new Point(15, 27);
+            pictureBox1.Name = "pictureBox1";
+            pictureBox1.Size = new Size(32, 32);
+            pictureBox1.SizeMode = PictureBoxSizeMode.AutoSize;
+            pictureBox1.TabIndex = 4;
+            pictureBox1.TabStop = false;
+            // 
             // label2
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label2.ForeColor = SystemColors.Control;
-            label2.Location = new Point(18, 27);
+            label2.Location = new Point(60, 31);
             label2.Name = "label2";
             label2.Size = new Size(99, 25);
             label2.TabIndex = 10;
@@ -147,12 +159,11 @@
             labelUsername.AutoSize = true;
             labelUsername.Font = new Font("Segoe UI", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
             labelUsername.ForeColor = SystemColors.Control;
-            labelUsername.Location = new Point(123, 27);
+            labelUsername.Location = new Point(153, 32);
             labelUsername.Name = "labelUsername";
             labelUsername.Size = new Size(63, 25);
             labelUsername.TabIndex = 9;
             labelUsername.Text = "label2";
-            labelUsername.Click += labelUsername_Click;
             // 
             // btnProducts
             // 
@@ -188,6 +199,7 @@
             btnCart.TabIndex = 6;
             btnCart.Text = "Cart";
             btnCart.UseVisualStyleBackColor = false;
+            btnCart.Click += btnCart_Click;
             // 
             // btnOrders
             // 
@@ -262,13 +274,13 @@
             IsMdiContainer = true;
             Name = "frmMain";
             Text = "frmMain";
-            Load += frmMain_Load;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)btnDrag).EndInit();
             sidebar.ResumeLayout(false);
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
         }
 
@@ -288,5 +300,6 @@
         private Label labelUsername;
         private Label label2;
         private ReaLTaiizor.Controls.NightControlBox nightControlBox1;
+        private PictureBox pictureBox1;
     }
 }

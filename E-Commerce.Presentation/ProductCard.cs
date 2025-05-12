@@ -1,49 +1,56 @@
-﻿using System;
-using System.Windows.Forms;
-using E_Commerce.BL.Contracts.Services;
+﻿using E_Commerce.BL.Contracts.Services;
 using E_Commerce.BL.Features.CartItem.DTO;
-using Microsoft.Extensions.DependencyInjection;
-using System.ComponentModel;
+using System;
+using System.Windows.Forms;
 
 namespace E_Commerce.Presentation
 {
     public partial class ProductCard : UserControl
     {
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public int ProductId { get; private set; }
-        private int userId;
+        private readonly ICartItemServices cartServices;
+        private readonly int userId;
+        private int productId;
 
-        public ProductCard()
+        public ProductCard(ICartItemServices cartServices, int userId)
         {
             InitializeComponent();
+            this.cartServices = cartServices;
+            this.userId = userId;
         }
 
-        public void SetProductData(int productId, string productName, decimal price, string category, int userId)
+        public void SetProductData(int productId, string name, decimal price, string category)
         {
-            ProductId = productId;
-            this.userId = userId;
-            lblProductName.Text = productName;
-            lblPrice.Text = $"Price: ${price:F2}";
-            lblCategory.Text = $"Category: {category}";
+            this.productId = productId;
+            lblProductName.Text = name;
+            lblPrice.Text = $"${price:F2}";
+            lblCategory.Text = category ?? "Unknown";
+            // Placeholder image (replace with real image later)
+            //pictureBoxProduct.Image = Properties.Resources.placeholder_product;
         }
 
         private async void btnAddToCart_Click(object sender, EventArgs e)
         {
-            var cartService = ServiceProviderContainer.ServiceProvider.GetRequiredService<ICartItemServices>();
-            var cartItemDto = new AddCartItemDTO
-            {
-                UserId = userId,
-                ProductId = ProductId,
-                Quantity = 1 // الكمية الافتراضية
-            };
             try
             {
-                await cartService.AddToCartAsync(cartItemDto);
-                MessageBox.Show($"Product ID {ProductId} added to cart!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                var cartItemDto = new AddCartItemDTO
+                {
+                    UserId = userId,
+                    ProductId = productId,
+                    Quantity = 1
+                };
+                var result = await cartServices.AddToCartAsync(cartItemDto);
+                if (result != null)
+                {
+                    MessageBox.Show("Product added to cart!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Failed to add product to cart.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error adding to cart: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

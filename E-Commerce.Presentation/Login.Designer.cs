@@ -2,15 +2,8 @@
 {
     partial class Login
     {
-        /// <summary>
-        ///  Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        ///  Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -20,201 +13,203 @@
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
+        private CheckBox showPassword; // أضف دي مع الـ Fields
 
-        /// <summary>
-        ///  Required method for Designer support - do not modify
-        ///  the contents of this method with the code editor.
-        /// </summary>
+        private Label lblNoAccount; // أضف الـ Fields
+        private Label lblSignUpHere;
+
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Login));
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges3 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges4 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges5 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges6 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            lblTitle = new Label();
+            lblUsername = new Label();
+            txtUsername = new Guna.UI2.WinForms.Guna2TextBox();
+            lblPassword = new Label();
+            txtPassword = new Guna.UI2.WinForms.Guna2TextBox();
+            btnLogin = new Guna.UI2.WinForms.Guna2Button();
+            btnClose = new Label();
             pictureBox1 = new PictureBox();
-            login_close = new Label();
-            login_registerHere = new Label();
-            label4 = new Label();
-            login_showPassword = new CheckBox();
-            login_btn = new Button();
-            login_password = new TextBox();
-            label3 = new Label();
-            login_username = new TextBox();
-            label2 = new Label();
-            label1 = new Label();
+            showPassword = new CheckBox(); // أضف الـ CheckBox
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
+
+            // 
+            // lblTitle
+            // 
+            lblTitle.AutoSize = true;
+            lblTitle.Font = new Font("Segoe UI", 20F, FontStyle.Bold);
+            lblTitle.Location = new Point(691, 83);
+            lblTitle.Name = "lblTitle";
+            lblTitle.Size = new Size(89, 37);
+            lblTitle.TabIndex = 0;
+            lblTitle.Text = "Login";
+            // 
+            // lblUsername
+            // 
+            lblUsername.AutoSize = true;
+            lblUsername.Font = new Font("Segoe UI", 12F);
+            lblUsername.Location = new Point(691, 153);
+            lblUsername.Name = "lblUsername";
+            lblUsername.Size = new Size(125, 21);
+            lblUsername.TabIndex = 1;
+            lblUsername.Text = "Username/Email";
+            // 
+            // txtUsername
+            // 
+            txtUsername.BorderRadius = 10;
+            txtUsername.CustomizableEdges = customizableEdges1;
+            txtUsername.DefaultText = "";
+            txtUsername.Font = new Font("Segoe UI", 12F);
+            txtUsername.Location = new Point(691, 183);
+            txtUsername.Name = "txtUsername";
+            txtUsername.PasswordChar = '\0';
+            txtUsername.PlaceholderText = "Enter username or email";
+            txtUsername.SelectedText = "";
+            txtUsername.ShadowDecoration.CustomizableEdges = customizableEdges2;
+            txtUsername.Size = new Size(300, 40);
+            txtUsername.TabIndex = 2;
+            // 
+            // lblPassword
+            // 
+            lblPassword.AutoSize = true;
+            lblPassword.Font = new Font("Segoe UI", 12F);
+            lblPassword.Location = new Point(691, 253);
+            lblPassword.Name = "lblPassword";
+            lblPassword.Size = new Size(76, 21);
+            lblPassword.TabIndex = 3;
+            lblPassword.Text = "Password";
+            // 
+            // txtPassword
+            // 
+            txtPassword.BorderRadius = 10;
+            txtPassword.CustomizableEdges = customizableEdges3;
+            txtPassword.DefaultText = "";
+            txtPassword.Font = new Font("Segoe UI", 12F);
+            txtPassword.Location = new Point(691, 283);
+            txtPassword.Name = "txtPassword";
+            txtPassword.PasswordChar = '●';
+            txtPassword.PlaceholderText = "Enter password";
+            txtPassword.SelectedText = "";
+            txtPassword.ShadowDecoration.CustomizableEdges = customizableEdges4;
+            txtPassword.Size = new Size(300, 40);
+            txtPassword.TabIndex = 4;
+            txtPassword.UseSystemPasswordChar = true;
+            // 
+            // btnLogin
+            // 
+            btnLogin.AutoRoundedCorners = true;
+            btnLogin.BorderRadius = 21;
+            btnLogin.CustomizableEdges = customizableEdges5;
+            btnLogin.FillColor = Color.FromArgb(0, 120, 212);
+            btnLogin.Font = new Font("Segoe UI", 12F);
+            btnLogin.ForeColor = Color.White;
+            btnLogin.Location = new Point(691, 353);
+            btnLogin.Name = "btnLogin";
+            btnLogin.ShadowDecoration.CustomizableEdges = customizableEdges6;
+            btnLogin.Size = new Size(300, 45);
+            btnLogin.TabIndex = 5;
+            btnLogin.Text = "Login";
+            btnLogin.Click += btnLogin_Click;
+            // 
+            // btnClose
+            // 
+            btnClose.AutoSize = true;
+            btnClose.Cursor = Cursors.Hand;
+            btnClose.Font = new Font("Segoe UI", 10.8F);
+            btnClose.Location = new Point(1035, 9);
+            btnClose.Name = "btnClose";
+            btnClose.Size = new Size(18, 20);
+            btnClose.TabIndex = 6;
+            btnClose.Text = "X";
+            btnClose.Click += btnClose_Click;
             // 
             // pictureBox1
             // 
-            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(35, 45);
+            pictureBox1.Image = Properties.Resources._6184159_3094352;
+            pictureBox1.Location = new Point(58, 31);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(407, 396);
+            pictureBox1.Size = new Size(526, 407);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
-            pictureBox1.TabIndex = 21;
+            pictureBox1.TabIndex = 7;
             pictureBox1.TabStop = false;
             // 
-            // login_close
+            // showPassword
             // 
-            login_close.AutoSize = true;
-            login_close.Cursor = Cursors.Hand;
-            login_close.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            login_close.Location = new Point(975, 8);
-            login_close.Name = "login_close";
-            login_close.Size = new Size(18, 20);
-            login_close.TabIndex = 20;
-            login_close.Text = "X";
-            login_close.Click += login_close_Click_1;
-            // 
-            // login_registerHere
-            // 
-            login_registerHere.AutoSize = true;
-            login_registerHere.Cursor = Cursors.Hand;
-            login_registerHere.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            login_registerHere.ForeColor = Color.FromArgb(0, 120, 212);
-            login_registerHere.Location = new Point(727, 389);
-            login_registerHere.Name = "login_registerHere";
-            login_registerHere.Size = new Size(83, 15);
-            login_registerHere.TabIndex = 18;
-            login_registerHere.Text = "Register here";
-            login_registerHere.Click += login_registerHere_Click_1;
-            // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label4.ForeColor = SystemColors.ControlDarkDark;
-            label4.Location = new Point(590, 389);
-            label4.Name = "label4";
-            label4.Size = new Size(131, 15);
-            label4.TabIndex = 19;
-            label4.Text = "Don't have an account?";
-            // 
-            // login_showPassword
-            // 
-            login_showPassword.AutoSize = true;
-            login_showPassword.BackColor = Color.Transparent;
-            login_showPassword.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            login_showPassword.ForeColor = SystemColors.AppWorkspace;
-            login_showPassword.Location = new Point(708, 268);
-            login_showPassword.Margin = new Padding(3, 2, 3, 2);
-            login_showPassword.Name = "login_showPassword";
-            login_showPassword.Size = new Size(123, 23);
-            login_showPassword.TabIndex = 15;
-            login_showPassword.Text = "Show Password";
-            login_showPassword.UseVisualStyleBackColor = false;
-            login_showPassword.CheckedChanged += login_showPassword_CheckedChanged_1;
-            // 
-            // login_btn
-            // 
-            login_btn.BackColor = Color.FromArgb(0, 120, 212);
-            login_btn.Cursor = Cursors.Hand;
-            login_btn.FlatAppearance.BorderSize = 0;
-            login_btn.FlatStyle = FlatStyle.Flat;
-            login_btn.ForeColor = Color.White;
-            login_btn.Location = new Point(626, 307);
-            login_btn.Margin = new Padding(3, 2, 3, 2);
-            login_btn.Name = "login_btn";
-            login_btn.Size = new Size(138, 46);
-            login_btn.TabIndex = 17;
-            login_btn.Text = "LOGIN";
-            login_btn.UseVisualStyleBackColor = false;
-            login_btn.Click += login_btn_Click_1;
-            // 
-            // login_password
-            // 
-            login_password.Font = new Font("Segoe UI", 10.2F);
-            login_password.Location = new Point(564, 233);
-            login_password.Margin = new Padding(3, 2, 3, 2);
-            login_password.Multiline = true;
-            login_password.Name = "login_password";
-            login_password.PasswordChar = '*';
-            login_password.Size = new Size(267, 24);
-            login_password.TabIndex = 14;
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label3.Location = new Point(564, 213);
-            label3.Name = "label3";
-            label3.Size = new Size(70, 19);
-            label3.TabIndex = 16;
-            label3.Text = "Password:";
-            // 
-            // login_username
-            // 
-            login_username.Font = new Font("Segoe UI", 10.2F);
-            login_username.Location = new Point(564, 176);
-            login_username.Margin = new Padding(3, 2, 3, 2);
-            login_username.Multiline = true;
-            login_username.Name = "login_username";
-            login_username.Size = new Size(267, 24);
-            login_username.TabIndex = 12;
-            login_username.TextChanged += login_username_TextChanged;
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label2.Location = new Point(564, 157);
-            label2.Name = "label2";
-            label2.Size = new Size(74, 19);
-            label2.TabIndex = 13;
-            label2.Text = "Username:";
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Font = new Font("MS UI Gothic", 16.2F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label1.Location = new Point(564, 121);
-            label1.Name = "label1";
-            label1.Size = new Size(161, 22);
-            label1.TabIndex = 11;
-            label1.Text = "Welcome Back!";
+            showPassword.AutoSize = true;
+            showPassword.BackColor = Color.Transparent;
+            showPassword.Font = new Font("Segoe UI", 10F);
+            showPassword.ForeColor = Color.FromArgb(0, 120, 212);
+            showPassword.Location = new Point(691, 323); // تحت txtPassword
+            showPassword.Name = "showPassword";
+            showPassword.Size = new Size(123, 23);
+            showPassword.TabIndex = 8;
+            showPassword.Text = "Show Password";
+            showPassword.UseVisualStyleBackColor = false;
+            showPassword.CheckedChanged += showPassword_CheckedChanged;
+            // إضافة lblNoAccount
+            lblNoAccount = new Label();
+            lblNoAccount.AutoSize = true;
+            lblNoAccount.Font = new Font("Segoe UI", 9F);
+            lblNoAccount.ForeColor = SystemColors.ControlDarkDark;
+            lblNoAccount.Location = new Point(691, 410); // تحت btnLogin (اضبطه حسب الـ Layout)
+            lblNoAccount.Name = "lblNoAccount";
+            lblNoAccount.Size = new Size(142, 15);
+            lblNoAccount.TabIndex = 9;
+            lblNoAccount.Text = "Don't have an account?";
+
+            // إضافة lblSignUpHere
+            lblSignUpHere = new Label();
+            lblSignUpHere.AutoSize = true;
+            lblSignUpHere.Cursor = Cursors.Hand;
+            lblSignUpHere.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblSignUpHere.ForeColor = Color.FromArgb(0, 120, 212);
+            lblSignUpHere.Location = new Point(833, 410); // بجانب lblNoAccount
+            lblSignUpHere.Name = "lblSignUpHere";
+            lblSignUpHere.Size = new Size(86, 15);
+            lblSignUpHere.TabIndex = 10;
+            lblSignUpHere.Text = "Sign up here";
+            lblSignUpHere.Click += lblSignUpHere_Click; // أضف Event Handler
+
+            // إضافة الـ Labels للـ Controls
+            Controls.Add(lblSignUpHere);
+            Controls.Add(lblNoAccount);
             // 
             // Login
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
-            ClientSize = new Size(1002, 500);
+            ClientSize = new Size(1065, 492);
+            Controls.Add(showPassword); // أضف الـ CheckBox للـ Controls
             Controls.Add(pictureBox1);
-            Controls.Add(login_close);
-            Controls.Add(login_registerHere);
-            Controls.Add(label4);
-            Controls.Add(login_showPassword);
-            Controls.Add(login_btn);
-            Controls.Add(login_password);
-            Controls.Add(label3);
-            Controls.Add(login_username);
-            Controls.Add(label2);
-            Controls.Add(label1);
+            Controls.Add(btnClose);
+            Controls.Add(btnLogin);
+            Controls.Add(txtPassword);
+            Controls.Add(lblPassword);
+            Controls.Add(txtUsername);
+            Controls.Add(lblUsername);
+            Controls.Add(lblTitle);
             FormBorderStyle = FormBorderStyle.None;
-            Margin = new Padding(3, 2, 3, 2);
             Name = "Login";
-            Text = "Form1";
-            Load += Login_Load;
-            MouseDown += Login_MouseDown;
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "Login";
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
 
-        #endregion
-
+        private System.Windows.Forms.Label lblTitle;
+        private System.Windows.Forms.Label lblUsername;
+        private Guna.UI2.WinForms.Guna2TextBox txtUsername;
+        private System.Windows.Forms.Label lblPassword;
+        private Guna.UI2.WinForms.Guna2TextBox txtPassword;
+        private Guna.UI2.WinForms.Guna2Button btnLogin;
+        private System.Windows.Forms.Label btnClose;
         private PictureBox pictureBox1;
-        private Label login_close;
-        private Label login_registerHere;
-        private Label label4;
-        private CheckBox login_showPassword;
-        private Button login_btn;
-        private TextBox login_password;
-        private Label label3;
-        private TextBox login_username;
-        private Label label2;
-        private Label label1;
-        //private Guna.UI2.WinForms.Guna2Button guna2Button1;
-        //private Guna.UI2.WinForms.Guna2Button guna2Button1;
-        //private Guna.UI2.WinForms.Guna2Button guna2Button1;
     }
 }
