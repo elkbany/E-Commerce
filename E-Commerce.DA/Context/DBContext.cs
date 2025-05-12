@@ -145,7 +145,48 @@ namespace E_Commerce.DA.Context
                     DateProcessed = DateTime.Parse("2025-05-11T00:00:00Z").AddDays(1).AddHours(2) // May 12, 2025, 02:00:00 UTC
                 }
             );
+            modelBuilder.Entity<Category>().HasData(
+           new Category
+           {
+               Id = 1,
+               Name = "Electronics",
+               Description = "Devices and gadgets"
+           }
+       );
 
+            // Seed category 2
+            modelBuilder.Entity<Category>().HasData(
+                new Category
+                {
+                    Id = 2,
+                    Name = "Clothing",
+                    Description = "Apparel and accessories"
+                }
+            );
+            modelBuilder.Entity<Product>().HasData(
+           new Product
+           {
+               Id = 1,
+               Name = "Smartphone",
+               Description = "Latest model smartphone",
+               Price = 699.99m,
+               UnitsInStock = 5000,
+               CategoryID = 1
+           }
+       );
+
+            // Seed product 2
+            modelBuilder.Entity<Product>().HasData(
+                new Product
+                {
+                    Id = 2,
+                    Name = "T-Shirt",
+                    Description = "Cotton casual t-shirt",
+                    Price = 19.99m,
+                    UnitsInStock = 7500,
+                    CategoryID = 2
+                }
+            );
         }
 
 
