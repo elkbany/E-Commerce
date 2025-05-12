@@ -130,6 +130,11 @@ namespace E_Commerce.Presentation
             ReleaseCapture();
             SendMessage(this.Handle, 0x112, 0xf012, 0);
         }
+
+        private void signup_confirmpassword_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 
 }

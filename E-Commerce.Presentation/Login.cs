@@ -30,6 +30,11 @@ namespace E_Commerce.Presentation
             this.validator = validator;
         }
 
+        public Login(IAccountServices accountServices)
+        {
+            this.accountServices = accountServices;
+        }
+
         private void login_registerHere_Click(object sender, EventArgs e)
         {
 

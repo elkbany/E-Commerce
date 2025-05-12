@@ -70,6 +70,7 @@
             signup_confirmpassword.PasswordChar = '*';
             signup_confirmpassword.Size = new Size(267, 24);
             signup_confirmpassword.TabIndex = 26;
+            signup_confirmpassword.TextChanged += signup_confirmpassword_TextChanged;
             // 
             // label10
             // 

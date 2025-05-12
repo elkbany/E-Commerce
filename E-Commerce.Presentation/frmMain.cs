@@ -12,7 +12,7 @@ namespace E_Commerce.Presentation
         private int userId;
         frmProducts products;
         frmProfile profile;
-        frmOrders orders; // تم التصحيح هنا
+        frmOrders orders;
 
         public frmMain(IAccountServices accountServices, int userId)
         {
@@ -20,7 +20,6 @@ namespace E_Commerce.Presentation
             this.accountServices = accountServices;
             this.userId = userId;
             LoadUserInfo();
-            //LoadHomeForm();
         }
 
         private void LoadHomeForm()
@@ -148,9 +147,13 @@ namespace E_Commerce.Presentation
             orders = null;
         }
 
-        private void btnLogout_Click(object sender, EventArgs e)
+        private async void btnLogout_Click(object sender, EventArgs e)
         {
+
+            var userInfo = await accountServices.ViewProfile(userId);  
+            await accountServices.LogoutUserAsync(userInfo.Username);
             Application.Exit();
+
         }
 
         private void labelUsername_Click(object sender, EventArgs e)
