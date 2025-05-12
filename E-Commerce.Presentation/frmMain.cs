@@ -8,21 +8,24 @@ namespace E_Commerce.Presentation
     public partial class frmMain : Form
     {
         private readonly IAccountServices accountServices;
-        private readonly IServiceProvider serviceProvider; // نضيف الـ DI container
         private int userId;
         private frmProducts products;
         private frmProfile profile;
         private frmOrders orders;
-        private frmCart cart; // نضيف frmCart
+        private frmCart cart;
+        private bool sidebarExpand = true; // أضفت المتغيّر ده عشان sidebarTransition_Tick
 
-        public frmMain(IAccountServices accountServices, IServiceProvider serviceProvider, int userId)
+        public frmMain(IAccountServices accountServices)
         {
             InitializeComponent();
             this.accountServices = accountServices;
-            this.serviceProvider = serviceProvider; // نخزّن الـ DI container
+        }
+
+        public void SetUserId(int userId)
+        {
             this.userId = userId;
             LoadUserInfo();
-            //LoadHomeForm(); // هنشغّلها لو عايزين المنتجات تفتح أول ما البرنامج يشتغل
+            LoadHomeForm(); // هنضيف استدعاء LoadHomeForm هنا عشان المنتجات تظهر أول ما تفتح frmMain
         }
 
         private void LoadHomeForm()
@@ -33,13 +36,13 @@ namespace E_Commerce.Presentation
             }
 
             products = new frmProducts(
-                serviceProvider.GetRequiredService<IProductServices>(),
-                serviceProvider.GetRequiredService<ICartItemServices>(),
-                serviceProvider.GetRequiredService<ICategoryServices>(),
+                ServiceProviderContainer.ServiceProvider.GetRequiredService<IProductServices>(),
+                ServiceProviderContainer.ServiceProvider.GetRequiredService<ICartItemServices>(),
+                ServiceProviderContainer.ServiceProvider.GetRequiredService<ICategoryServices>(),
                 userId)
             {
                 MdiParent = this,
-                Dock = DockStyle.Fill
+                WindowState = FormWindowState.Maximized
             };
             products.Show();
         }
@@ -64,7 +67,6 @@ namespace E_Commerce.Presentation
             }
         }
 
-        bool sidebarExpand = true;
         private void sidebarTransition_Tick(object sender, EventArgs e)
         {
             if (sidebarExpand)
@@ -97,9 +99,9 @@ namespace E_Commerce.Presentation
             if (products == null || products.IsDisposed)
             {
                 products = new frmProducts(
-                    serviceProvider.GetRequiredService<IProductServices>(),
-                    serviceProvider.GetRequiredService<ICartItemServices>(),
-                    serviceProvider.GetRequiredService<ICategoryServices>(),
+                    ServiceProviderContainer.ServiceProvider.GetRequiredService<IProductServices>(),
+                    ServiceProviderContainer.ServiceProvider.GetRequiredService<ICartItemServices>(),
+                    ServiceProviderContainer.ServiceProvider.GetRequiredService<ICategoryServices>(),
                     userId)
                 {
                     MdiParent = this,
@@ -119,6 +121,25 @@ namespace E_Commerce.Presentation
             products = null;
         }
 
+        private void btnCart_Click(object sender, EventArgs e)
+        {
+            if (cart == null || cart.IsDisposed)
+            {
+                cart = new frmCart(
+                    ServiceProviderContainer.ServiceProvider.GetRequiredService<ICartItemServices>(),
+                    userId)
+                {
+                    MdiParent = this,
+                    Dock = DockStyle.Fill
+                };
+                cart.FormClosed += cart_FormClosed;
+                cart.Show();
+            }
+            else
+            {
+                cart.Activate();
+            }
+        }
 
         private void cart_FormClosed(object sender, FormClosedEventArgs e)
         {
@@ -130,7 +151,7 @@ namespace E_Commerce.Presentation
             if (profile == null || profile.IsDisposed)
             {
                 profile = new frmProfile(
-                    serviceProvider.GetRequiredService<IAccountServices>(),
+                    ServiceProviderContainer.ServiceProvider.GetRequiredService<IAccountServices>(),
                     userId)
                 {
                     MdiParent = this,
@@ -155,7 +176,7 @@ namespace E_Commerce.Presentation
             if (orders == null || orders.IsDisposed)
             {
                 orders = new frmOrders(
-                    serviceProvider.GetRequiredService<IOrderServices>(),
+                    ServiceProviderContainer.ServiceProvider.GetRequiredService<IOrderServices>(),
                     userId)
                 {
                     MdiParent = this,
@@ -199,24 +220,12 @@ namespace E_Commerce.Presentation
             }
         }
 
-        private void btnCart_Click_1(object sender, EventArgs e)
+        private void labelUsername_Click(object sender, EventArgs e)
         {
-            if (cart == null)
-            {
-                cart = new frmCart(
-                    serviceProvider.GetRequiredService<ICartItemServices>(),
-                    userId)
-                {
-                    MdiParent = this,
-                    Dock = DockStyle.Fill
-                };
-                cart.FormClosed += cart_FormClosed;
-                cart.Show();
-            }
-            else
-            {
-                cart.Activate();
-            }
+        }
+
+        private void nightControlBox1_Click(object sender, EventArgs e)
+        {
         }
     }
 }

@@ -2,15 +2,8 @@
 {
     partial class Start
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -20,12 +13,6 @@
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
-
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Start));
@@ -36,6 +23,8 @@
             label2 = new Label();
             login = new Button();
             login_close = new Label();
+            label5 = new Label();
+            signupHere = new Label();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
@@ -124,12 +113,38 @@
             login_close.Text = "X";
             login_close.Click += login_close_Click;
             // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            label5.ForeColor = SystemColors.ControlDarkDark;
+            label5.Location = new Point(49, 430);
+            label5.Name = "label5";
+            label5.Size = new Size(142, 15);
+            label5.TabIndex = 16;
+            label5.Text = "Don't have an account?";
+            // 
+            // signupHere
+            // 
+            signupHere.AutoSize = true;
+            signupHere.Cursor = Cursors.Hand;
+            signupHere.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            signupHere.ForeColor = Color.FromArgb(0, 120, 212);
+            signupHere.Location = new Point(197, 430);
+            signupHere.Name = "signupHere";
+            signupHere.Size = new Size(86, 15);
+            signupHere.TabIndex = 17;
+            signupHere.Text = "Sign up here";
+            signupHere.Click += signupHere_Click;
+            // 
             // Start
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
             ClientSize = new Size(1121, 593);
+            Controls.Add(signupHere);
+            Controls.Add(label5);
             Controls.Add(login_close);
             Controls.Add(login);
             Controls.Add(label4);
@@ -148,8 +163,6 @@
             PerformLayout();
         }
 
-        #endregion
-
         private PictureBox pictureBox1;
         private Label label4;
         private Label label3;
@@ -157,5 +170,7 @@
         private Label label2;
         private Button login;
         private Label login_close;
+        private Label label5;
+        private Label signupHere;
     }
 }

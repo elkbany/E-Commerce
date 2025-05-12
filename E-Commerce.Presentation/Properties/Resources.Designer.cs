@@ -83,6 +83,26 @@ namespace E_Commerce.Presentation.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap account {
+            get {
+                object obj = ResourceManager.GetObject("account", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap account1 {
+            get {
+                object obj = ResourceManager.GetObject("account1", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap draggable_32 {
             get {
                 object obj = ResourceManager.GetObject("draggable-32", resourceCulture);
@@ -126,6 +146,16 @@ namespace E_Commerce.Presentation.Properties {
         internal static System.Drawing.Bitmap Screenshot_2025_02_21_210207 {
             get {
                 object obj = ResourceManager.GetObject("Screenshot 2025-02-21 210207", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap social_media_marketing_mobile_phone_concept {
+            get {
+                object obj = ResourceManager.GetObject("social-media-marketing-mobile-phone-concept", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

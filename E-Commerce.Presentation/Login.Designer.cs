@@ -13,6 +13,11 @@
             base.Dispose(disposing);
         }
 
+        private CheckBox showPassword; // أضف دي مع الـ Fields
+
+        private Label lblNoAccount; // أضف الـ Fields
+        private Label lblSignUpHere;
+
         private void InitializeComponent()
         {
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
@@ -29,8 +34,10 @@
             btnLogin = new Guna.UI2.WinForms.Guna2Button();
             btnClose = new Label();
             pictureBox1 = new PictureBox();
+            showPassword = new CheckBox(); // أضف الـ CheckBox
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
+
             // 
             // lblTitle
             // 
@@ -131,12 +138,54 @@
             pictureBox1.TabIndex = 7;
             pictureBox1.TabStop = false;
             // 
+            // showPassword
+            // 
+            showPassword.AutoSize = true;
+            showPassword.BackColor = Color.Transparent;
+            showPassword.Font = new Font("Segoe UI", 10F);
+            showPassword.ForeColor = Color.FromArgb(0, 120, 212);
+            showPassword.Location = new Point(691, 323); // تحت txtPassword
+            showPassword.Name = "showPassword";
+            showPassword.Size = new Size(123, 23);
+            showPassword.TabIndex = 8;
+            showPassword.Text = "Show Password";
+            showPassword.UseVisualStyleBackColor = false;
+            showPassword.CheckedChanged += showPassword_CheckedChanged;
+            // إضافة lblNoAccount
+            lblNoAccount = new Label();
+            lblNoAccount.AutoSize = true;
+            lblNoAccount.Font = new Font("Segoe UI", 9F);
+            lblNoAccount.ForeColor = SystemColors.ControlDarkDark;
+            lblNoAccount.Location = new Point(691, 410); // تحت btnLogin (اضبطه حسب الـ Layout)
+            lblNoAccount.Name = "lblNoAccount";
+            lblNoAccount.Size = new Size(142, 15);
+            lblNoAccount.TabIndex = 9;
+            lblNoAccount.Text = "Don't have an account?";
+
+            // إضافة lblSignUpHere
+            lblSignUpHere = new Label();
+            lblSignUpHere.AutoSize = true;
+            lblSignUpHere.Cursor = Cursors.Hand;
+            lblSignUpHere.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblSignUpHere.ForeColor = Color.FromArgb(0, 120, 212);
+            lblSignUpHere.Location = new Point(833, 410); // بجانب lblNoAccount
+            lblSignUpHere.Name = "lblSignUpHere";
+            lblSignUpHere.Size = new Size(86, 15);
+            lblSignUpHere.TabIndex = 10;
+            lblSignUpHere.Text = "Sign up here";
+            lblSignUpHere.Click += lblSignUpHere_Click; // أضف Event Handler
+
+            // إضافة الـ Labels للـ Controls
+            Controls.Add(lblSignUpHere);
+            Controls.Add(lblNoAccount);
+            // 
             // Login
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
             ClientSize = new Size(1065, 492);
+            Controls.Add(showPassword); // أضف الـ CheckBox للـ Controls
             Controls.Add(pictureBox1);
             Controls.Add(btnClose);
             Controls.Add(btnLogin);
