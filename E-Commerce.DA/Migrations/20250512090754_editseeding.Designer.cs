@@ -4,6 +4,7 @@ using E_Commerce.DA.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace E_Commerce.DA.Migrations
 {
     [DbContext(typeof(DBContext))]
-    partial class DBContextModelSnapshot : ModelSnapshot
+    [Migration("20250512090754_editseeding")]
+    partial class editseeding
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -81,38 +84,6 @@ namespace E_Commerce.DA.Migrations
                             DateAdded = new DateTime(2025, 5, 14, 12, 0, 0, 0, DateTimeKind.Local),
                             ProductID = 7,
                             Quantity = 2,
-                            UserID = 4
-                        },
-                        new
-                        {
-                            Id = 5,
-                            DateAdded = new DateTime(2025, 5, 19, 13, 0, 0, 0, DateTimeKind.Local),
-                            ProductID = 13,
-                            Quantity = 2,
-                            UserID = 1
-                        },
-                        new
-                        {
-                            Id = 6,
-                            DateAdded = new DateTime(2025, 5, 20, 15, 0, 0, 0, DateTimeKind.Local),
-                            ProductID = 15,
-                            Quantity = 1,
-                            UserID = 2
-                        },
-                        new
-                        {
-                            Id = 7,
-                            DateAdded = new DateTime(2025, 5, 21, 18, 0, 0, 0, DateTimeKind.Local),
-                            ProductID = 14,
-                            Quantity = 1,
-                            UserID = 3
-                        },
-                        new
-                        {
-                            Id = 8,
-                            DateAdded = new DateTime(2025, 5, 22, 12, 0, 0, 0, DateTimeKind.Local),
-                            ProductID = 16,
-                            Quantity = 1,
                             UserID = 4
                         });
                 });
@@ -226,58 +197,6 @@ namespace E_Commerce.DA.Migrations
                             Status = 0,
                             TotalAmount = 104.97m,
                             UserID = 4
-                        },
-                        new
-                        {
-                            OrderID = 5,
-                            DateProcessed = new DateTime(2025, 5, 15, 7, 0, 0, 0, DateTimeKind.Local),
-                            OrderDate = new DateTime(2025, 5, 15, 3, 0, 0, 0, DateTimeKind.Local),
-                            Status = 1,
-                            TotalAmount = 1349.98m,
-                            UserID = 1
-                        },
-                        new
-                        {
-                            OrderID = 6,
-                            OrderDate = new DateTime(2025, 5, 16, 3, 0, 0, 0, DateTimeKind.Local),
-                            Status = 0,
-                            TotalAmount = 99.97m,
-                            UserID = 2
-                        },
-                        new
-                        {
-                            OrderID = 7,
-                            DateProcessed = new DateTime(2025, 5, 17, 8, 0, 0, 0, DateTimeKind.Local),
-                            OrderDate = new DateTime(2025, 5, 17, 3, 0, 0, 0, DateTimeKind.Local),
-                            Status = 3,
-                            TotalAmount = 164.96m,
-                            UserID = 3
-                        },
-                        new
-                        {
-                            OrderID = 8,
-                            DateProcessed = new DateTime(2025, 5, 18, 9, 0, 0, 0, DateTimeKind.Local),
-                            OrderDate = new DateTime(2025, 5, 18, 3, 0, 0, 0, DateTimeKind.Local),
-                            Status = 1,
-                            TotalAmount = 29.98m,
-                            UserID = 4
-                        },
-                        new
-                        {
-                            OrderID = 9,
-                            OrderDate = new DateTime(2025, 5, 19, 3, 0, 0, 0, DateTimeKind.Local),
-                            Status = 0,
-                            TotalAmount = 279.97m,
-                            UserID = 1
-                        },
-                        new
-                        {
-                            OrderID = 10,
-                            DateProcessed = new DateTime(2025, 5, 20, 10, 0, 0, 0, DateTimeKind.Local),
-                            OrderDate = new DateTime(2025, 5, 20, 3, 0, 0, 0, DateTimeKind.Local),
-                            Status = 1,
-                            TotalAmount = 199.97m,
-                            UserID = 2
                         });
                 });
 
@@ -361,90 +280,6 @@ namespace E_Commerce.DA.Migrations
                             Id = 8,
                             OrderID = 4,
                             ProductID = 8,
-                            Quantity = 1
-                        },
-                        new
-                        {
-                            Id = 9,
-                            OrderID = 5,
-                            ProductID = 3,
-                            Quantity = 1
-                        },
-                        new
-                        {
-                            Id = 10,
-                            OrderID = 5,
-                            ProductID = 2,
-                            Quantity = 2
-                        },
-                        new
-                        {
-                            Id = 11,
-                            OrderID = 6,
-                            ProductID = 4,
-                            Quantity = 1
-                        },
-                        new
-                        {
-                            Id = 12,
-                            OrderID = 6,
-                            ProductID = 8,
-                            Quantity = 1
-                        },
-                        new
-                        {
-                            Id = 13,
-                            OrderID = 7,
-                            ProductID = 7,
-                            Quantity = 1
-                        },
-                        new
-                        {
-                            Id = 14,
-                            OrderID = 7,
-                            ProductID = 6,
-                            Quantity = 3
-                        },
-                        new
-                        {
-                            Id = 15,
-                            OrderID = 8,
-                            ProductID = 5,
-                            Quantity = 2
-                        },
-                        new
-                        {
-                            Id = 16,
-                            OrderID = 8,
-                            ProductID = 2,
-                            Quantity = 1
-                        },
-                        new
-                        {
-                            Id = 17,
-                            OrderID = 9,
-                            ProductID = 9,
-                            Quantity = 1
-                        },
-                        new
-                        {
-                            Id = 18,
-                            OrderID = 9,
-                            ProductID = 11,
-                            Quantity = 1
-                        },
-                        new
-                        {
-                            Id = 19,
-                            OrderID = 10,
-                            ProductID = 10,
-                            Quantity = 1
-                        },
-                        new
-                        {
-                            Id = 20,
-                            OrderID = 10,
-                            ProductID = 12,
                             Quantity = 1
                         });
                 });
@@ -552,78 +387,6 @@ namespace E_Commerce.DA.Migrations
                             Name = "Coffee Maker",
                             Price = 59.99m,
                             UnitsInStock = 4000
-                        },
-                        new
-                        {
-                            Id = 9,
-                            CategoryID = 1,
-                            Description = "Noise-cancelling over-ear headphones",
-                            Name = "Wireless Headphones",
-                            Price = 199.99m,
-                            UnitsInStock = 3000
-                        },
-                        new
-                        {
-                            Id = 10,
-                            CategoryID = 1,
-                            Description = "Fitness tracking smart watch",
-                            Name = "Smart Watch",
-                            Price = 249.99m,
-                            UnitsInStock = 2500
-                        },
-                        new
-                        {
-                            Id = 11,
-                            CategoryID = 2,
-                            Description = "Water-resistant winter jacket",
-                            Name = "Jacket",
-                            Price = 79.99m,
-                            UnitsInStock = 4000
-                        },
-                        new
-                        {
-                            Id = 12,
-                            CategoryID = 2,
-                            Description = "Comfortable running sneakers",
-                            Name = "Sneakers",
-                            Price = 69.99m,
-                            UnitsInStock = 5000
-                        },
-                        new
-                        {
-                            Id = 13,
-                            CategoryID = 3,
-                            Description = "Gripping mystery thriller",
-                            Name = "Mystery Novel",
-                            Price = 12.99m,
-                            UnitsInStock = 12000
-                        },
-                        new
-                        {
-                            Id = 14,
-                            CategoryID = 3,
-                            Description = "Comprehensive world history text",
-                            Name = "History Book",
-                            Price = 29.99m,
-                            UnitsInStock = 7000
-                        },
-                        new
-                        {
-                            Id = 15,
-                            CategoryID = 4,
-                            Description = "Multi-function air fryer",
-                            Name = "Air Fryer",
-                            Price = 119.99m,
-                            UnitsInStock = 2000
-                        },
-                        new
-                        {
-                            Id = 16,
-                            CategoryID = 4,
-                            Description = "Compact toaster oven with multiple settings",
-                            Name = "Toaster Oven",
-                            Price = 79.99m,
-                            UnitsInStock = 3500
                         });
                 });
 
@@ -718,7 +481,7 @@ namespace E_Commerce.DA.Migrations
                             LastName = "Admin",
                             PasswordHash = "AQAAAAIAAYagAAAAECtJWIRqgoBEDzcFOu4Kz0LCY/MSge+0SZns5va/p5u6Gg4O87dz1beHha+iyFbsHA==",
                             Status = 0,
-                            Username = "admin2"
+                            Username = "SuperAdmin"
                         },
                         new
                         {

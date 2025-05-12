@@ -55,7 +55,7 @@
             // 
             comboBoxStatusFilter.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxStatusFilter.Font = new Font("Segoe UI", 10F);
-            comboBoxStatusFilter.Items.AddRange(new object[] { "All", "Pending", "Approved", "Denied" });
+            comboBoxStatusFilter.Items.AddRange(new object[] { "All", "Pending", "Approved", "Denied", "Shipped" });
             comboBoxStatusFilter.Location = new Point(600, 10);
             comboBoxStatusFilter.Name = "comboBoxStatusFilter";
             comboBoxStatusFilter.Size = new Size(188, 26);
