@@ -15,18 +15,20 @@
 
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ProductCard));
             pictureBoxProduct = new PictureBox();
             lblProductName = new Label();
             lblPrice = new Label();
             lblCategory = new Label();
             btnAddToCart = new Button();
             panelCard = new Panel();
-            panelCard.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBoxProduct).BeginInit();
+            panelCard.SuspendLayout();
             SuspendLayout();
             // 
             // pictureBoxProduct
             // 
+            pictureBoxProduct.Image = (Image)resources.GetObject("pictureBoxProduct.Image");
             pictureBoxProduct.Location = new Point(10, 10);
             pictureBoxProduct.Name = "pictureBoxProduct";
             pictureBoxProduct.Size = new Size(100, 100);
@@ -40,7 +42,7 @@
             lblProductName.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
             lblProductName.Location = new Point(120, 10);
             lblProductName.Name = "lblProductName";
-            lblProductName.Size = new Size(100, 21);
+            lblProductName.Size = new Size(120, 21);
             lblProductName.TabIndex = 1;
             lblProductName.Text = "Product Name";
             // 
@@ -50,7 +52,7 @@
             lblPrice.Font = new Font("Segoe UI", 10F);
             lblPrice.Location = new Point(120, 40);
             lblPrice.Name = "lblPrice";
-            lblPrice.Size = new Size(70, 19);
+            lblPrice.Size = new Size(88, 19);
             lblPrice.TabIndex = 2;
             lblPrice.Text = "Price: $50.00";
             // 
@@ -60,7 +62,7 @@
             lblCategory.Font = new Font("Segoe UI", 10F);
             lblCategory.Location = new Point(120, 65);
             lblCategory.Name = "lblCategory";
-            lblCategory.Size = new Size(90, 19);
+            lblCategory.Size = new Size(99, 19);
             lblCategory.TabIndex = 3;
             lblCategory.Text = "Category: Tech";
             // 
@@ -89,9 +91,9 @@
             panelCard.Controls.Add(pictureBoxProduct);
             panelCard.Location = new Point(0, 0);
             panelCard.Name = "panelCard";
+            panelCard.Padding = new Padding(10);
             panelCard.Size = new Size(260, 130);
             panelCard.TabIndex = 5;
-            panelCard.Padding = new Padding(10);
             // 
             // ProductCard
             // 
@@ -100,9 +102,9 @@
             Controls.Add(panelCard);
             Name = "ProductCard";
             Size = new Size(260, 130);
+            ((System.ComponentModel.ISupportInitialize)pictureBoxProduct).EndInit();
             panelCard.ResumeLayout(false);
             panelCard.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)pictureBoxProduct).EndInit();
             ResumeLayout(false);
         }
 
