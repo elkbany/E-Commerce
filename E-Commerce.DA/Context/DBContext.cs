@@ -121,7 +121,31 @@ namespace E_Commerce.DA.Context
                     PasswordHash = "AQAAAAIAAYagAAAAEBHDiyLRTxpFa9qgoSrzKlEMb2TQjBd1itcvuGrwgvtx80k7zeKga6KPH7+QO+522w=="
                 }
                 );
-                
+            modelBuilder.Entity<Order>().HasData(
+           new Order
+           {
+               OrderID = 1,
+               UserID = 1,
+               OrderDate = DateTime.Parse("2025-05-11T00:00:00Z"),
+               TotalAmount = 150.00m,
+               Status = OrderStatus.Pending,
+               DateProcessed = null
+           }
+       );
+
+            // Seed order 2 (for User 2)
+            modelBuilder.Entity<Order>().HasData(
+                new Order
+                {
+                    OrderID = 2,
+                    UserID = 2,
+                    OrderDate = DateTime.Parse("2025-05-11T00:00:00Z").AddDays(1), // May 12, 2025
+                    TotalAmount = 275.50m,
+                    Status = OrderStatus.Approved,
+                    DateProcessed = DateTime.Parse("2025-05-11T00:00:00Z").AddDays(1).AddHours(2) // May 12, 2025, 02:00:00 UTC
+                }
+            );
+
         }
 
 
