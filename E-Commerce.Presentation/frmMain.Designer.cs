@@ -84,6 +84,7 @@
             nightControlBox1.Name = "nightControlBox1";
             nightControlBox1.Size = new Size(139, 31);
             nightControlBox1.TabIndex = 5;
+            nightControlBox1.Click += nightControlBox1_Click_1;
             // 
             // label1
             // 
@@ -205,6 +206,7 @@
             btnOrders.TabIndex = 5;
             btnOrders.Text = "Orders";
             btnOrders.UseVisualStyleBackColor = false;
+            btnOrders.Click += btnOrders_Click;
             // 
             // btnProfile
             // 

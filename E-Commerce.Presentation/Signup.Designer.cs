@@ -283,6 +283,7 @@
             Margin = new Padding(3, 2, 3, 2);
             Name = "Signup";
             Text = "Signup";
+            MouseDown += Signup_MouseDown;
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();

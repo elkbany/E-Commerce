@@ -36,7 +36,7 @@ namespace E_Commerce.BL.Mapping
             TypeAdapterConfig<UpdateUserAccountDTO, User>.NewConfig()
                .Map(dest => dest.FirstName, src => src.FirstName)
                .Map(dest => dest.LastName, src => src.LastName)
-               .Map(dest => dest.PasswordHash, src => src.Password)
+               //.Map(dest => dest.PasswordHash, src => src.Password)
                .Map(dest => dest.Email, src => src.Email);
 
             TypeAdapterConfig<User, UserIformationDTO>.NewConfig()
@@ -66,8 +66,23 @@ namespace E_Commerce.BL.Mapping
 
             TypeAdapterConfig<CartItem, CartItemDTO>.NewConfig()//////check
                 .Map(dest => dest.ProductID, src => src.ProductID)
-                .Map(dest => dest.Product_Name, src => src.Product.Name)
-                .Map(dest => dest.Preoduct_Price, src => src.Product.Price);
+                .Map(dest => dest.ProductName, src => src.Product.Name)
+                .Map(dest => dest.ProductPrice, src => src.Product.Price);
+
+            // CartItem to CartItemDTO
+            TypeAdapterConfig<CartItem, CartItemDTO>.NewConfig()
+                .Map(dest => dest.Id, src => src.Id)
+                .Map(dest => dest.ProductID, src => src.ProductID)
+                .Map(dest => dest.ProductName, src => src.Product.Name)
+                .Map(dest => dest.ProductPrice, src => src.Product.Price)
+                .Map(dest => dest.Quantity, src => src.Quantity);
+
+            // AddCartItemDTO to CartItem
+            TypeAdapterConfig<AddCartItemDTO, CartItem>.NewConfig()
+                .Map(dest => dest.UserID, src => src.UserId)
+                .Map(dest => dest.ProductID, src => src.ProductId)
+                .Map(dest => dest.Quantity, src => src.Quantity)
+                .Map(dest => dest.DateAdded, src => DateTime.UtcNow);
 
             //TypeAdapterConfig<OrderDetail, OrderDetailDTO>
             //    .NewConfig()

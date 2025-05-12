@@ -62,6 +62,7 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(446, 389);
             panel1.TabIndex = 1;
+            panel1.MouseDown += panel1_MouseDown;
             // 
             // showPassword
             // 
@@ -99,6 +100,7 @@
             button1.TabIndex = 9;
             button1.Text = "Save";
             button1.UseVisualStyleBackColor = false;
+            button1.Click += button1_Click;
             // 
             // panel4
             // 
@@ -202,7 +204,9 @@
             Name = "frmChangePassword";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "frmProfile";
+            TopMost = true;
             Load += frmChangePassword_Load;
+            MouseDown += frmChangePassword_MouseDown;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             panel4.ResumeLayout(false);

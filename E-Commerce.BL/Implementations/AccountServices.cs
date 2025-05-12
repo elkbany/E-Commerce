@@ -93,6 +93,29 @@ namespace E_Commerce.BL.Implementations
             await userRepository.CommitAsync();
             return updated != null;
         }
+        public async Task<bool> UpdateUserAccount(UpdateUserAccountDTO dto, int userId)
+        {
+            await DoValidationAsync<UpdateUserAccountDTOValidator, UpdateUserAccountDTO>(dto);
+
+            var user = await userRepository.FirstOrDefaultAsync(u => u.Id == userId);
+            if (user == null || !user.IsSignedInNow)
+                return false;
+
+            user.FirstName = dto.FirstName;
+            user.LastName = dto.LastName;
+            user.Email = dto.Email;
+            user.DateUpdated = DateTime.UtcNow;
+
+            //if (!string.IsNullOrWhiteSpace(dto.Password))
+            //{
+            //    var hasher = new PasswordHasher<User>();
+            //    user.PasswordHash = hasher.HashPassword(user, dto.Password);
+            //}
+
+            var updated = await userRepository.Update(user);
+            await userRepository.CommitAsync();
+            return updated != null;
+        }
         public async Task<UserIformationDTO> ViewProfile(int id)
         {
             var user = await userRepository.GetByIdAsync(id);
