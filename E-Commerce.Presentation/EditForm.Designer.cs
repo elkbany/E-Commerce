@@ -60,9 +60,9 @@
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 13.8F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
             label1.ForeColor = Color.White;
-            label1.Location = new Point(238, 9);
+            label1.Location = new Point(208, 7);
             label1.Name = "label1";
-            label1.Size = new Size(151, 31);
+            label1.Size = new Size(123, 25);
             label1.TabIndex = 0;
             label1.Text = "Editing Page";
             // 
@@ -70,9 +70,9 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label2.Location = new Point(32, 113);
+            label2.Location = new Point(28, 85);
             label2.Name = "label2";
-            label2.Size = new Size(67, 25);
+            label2.Size = new Size(55, 20);
             label2.TabIndex = 1;
             label2.Text = "Name:";
             // 
@@ -80,9 +80,9 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label3.Location = new Point(32, 223);
+            label3.Location = new Point(28, 167);
             label3.Name = "label3";
-            label3.Size = new Size(59, 25);
+            label3.Size = new Size(47, 20);
             label3.TabIndex = 2;
             label3.Text = "Price:";
             // 
@@ -90,9 +90,9 @@
             // 
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label4.Location = new Point(32, 341);
+            label4.Location = new Point(28, 256);
             label4.Name = "label4";
-            label4.Size = new Size(135, 25);
+            label4.Size = new Size(110, 20);
             label4.TabIndex = 3;
             label4.Text = "Units in Stock:";
             // 
@@ -100,9 +100,9 @@
             // 
             label5.AutoSize = true;
             label5.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label5.Location = new Point(32, 436);
+            label5.Location = new Point(28, 327);
             label5.Name = "label5";
-            label5.Size = new Size(95, 25);
+            label5.Size = new Size(77, 20);
             label5.TabIndex = 4;
             label5.Text = "Category:";
             // 
@@ -118,13 +118,12 @@
             txtUnitsInStock.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
             txtUnitsInStock.Font = new Font("Segoe UI", 9F);
             txtUnitsInStock.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-            txtUnitsInStock.Location = new Point(216, 329);
-            txtUnitsInStock.Margin = new Padding(3, 4, 3, 4);
+            txtUnitsInStock.Location = new Point(189, 247);
             txtUnitsInStock.Name = "txtUnitsInStock";
             txtUnitsInStock.PlaceholderText = "";
             txtUnitsInStock.SelectedText = "";
             txtUnitsInStock.ShadowDecoration.CustomizableEdges = customizableEdges2;
-            txtUnitsInStock.Size = new Size(286, 37);
+            txtUnitsInStock.Size = new Size(250, 28);
             txtUnitsInStock.TabIndex = 11;
             // 
             // txtCategory
@@ -139,13 +138,12 @@
             txtCategory.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
             txtCategory.Font = new Font("Segoe UI", 9F);
             txtCategory.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-            txtCategory.Location = new Point(216, 424);
-            txtCategory.Margin = new Padding(3, 4, 3, 4);
+            txtCategory.Location = new Point(189, 318);
             txtCategory.Name = "txtCategory";
             txtCategory.PlaceholderText = "";
             txtCategory.SelectedText = "";
             txtCategory.ShadowDecoration.CustomizableEdges = customizableEdges4;
-            txtCategory.Size = new Size(286, 37);
+            txtCategory.Size = new Size(250, 28);
             txtCategory.TabIndex = 12;
             // 
             // panel1
@@ -154,8 +152,9 @@
             panel1.Controls.Add(label1);
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(0, 0);
+            panel1.Margin = new Padding(3, 2, 3, 2);
             panel1.Name = "panel1";
-            panel1.Size = new Size(644, 47);
+            panel1.Size = new Size(564, 35);
             panel1.TabIndex = 13;
             // 
             // btnSave
@@ -169,13 +168,14 @@
             btnSave.FillColor = Color.FromArgb(102, 210, 214);
             btnSave.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnSave.ForeColor = Color.White;
-            btnSave.Location = new Point(346, 544);
+            btnSave.Location = new Point(303, 408);
+            btnSave.Margin = new Padding(3, 2, 3, 2);
             btnSave.Name = "btnSave";
             btnSave.ShadowDecoration.CustomizableEdges = customizableEdges6;
-            btnSave.Size = new Size(112, 42);
+            btnSave.Size = new Size(98, 32);
             btnSave.TabIndex = 14;
             btnSave.Text = "Save";
-            btnSave.Click += btnSave_Click;
+            btnSave.Click += btnSave_Click_1;
             // 
             // btnCancel
             // 
@@ -188,13 +188,14 @@
             btnCancel.FillColor = Color.FromArgb(229, 105, 151);
             btnCancel.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnCancel.ForeColor = Color.White;
-            btnCancel.Location = new Point(486, 544);
+            btnCancel.Location = new Point(425, 408);
+            btnCancel.Margin = new Padding(3, 2, 3, 2);
             btnCancel.Name = "btnCancel";
             btnCancel.ShadowDecoration.CustomizableEdges = customizableEdges8;
-            btnCancel.Size = new Size(112, 42);
+            btnCancel.Size = new Size(98, 32);
             btnCancel.TabIndex = 15;
             btnCancel.Text = "Cancel";
-            btnCancel.Click += btnCancel_Click;
+            btnCancel.Click += btnCancel_Click_1;
             // 
             // txtPrice
             // 
@@ -208,13 +209,12 @@
             txtPrice.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
             txtPrice.Font = new Font("Segoe UI", 9F);
             txtPrice.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-            txtPrice.Location = new Point(216, 211);
-            txtPrice.Margin = new Padding(3, 4, 3, 4);
+            txtPrice.Location = new Point(189, 158);
             txtPrice.Name = "txtPrice";
             txtPrice.PlaceholderText = "";
             txtPrice.SelectedText = "";
             txtPrice.ShadowDecoration.CustomizableEdges = customizableEdges10;
-            txtPrice.Size = new Size(286, 37);
+            txtPrice.Size = new Size(250, 28);
             txtPrice.TabIndex = 17;
             // 
             // txtName
@@ -229,21 +229,20 @@
             txtName.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
             txtName.Font = new Font("Segoe UI", 9F);
             txtName.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-            txtName.Location = new Point(216, 101);
-            txtName.Margin = new Padding(3, 4, 3, 4);
+            txtName.Location = new Point(189, 76);
             txtName.Name = "txtName";
             txtName.PlaceholderText = "";
             txtName.SelectedText = "";
             txtName.ShadowDecoration.CustomizableEdges = customizableEdges12;
-            txtName.Size = new Size(286, 37);
+            txtName.Size = new Size(250, 28);
             txtName.TabIndex = 18;
             // 
             // EditForm
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(191, 215, 237);
-            ClientSize = new Size(644, 638);
+            ClientSize = new Size(564, 478);
             Controls.Add(txtName);
             Controls.Add(txtPrice);
             Controls.Add(btnCancel);
@@ -256,6 +255,7 @@
             Controls.Add(label3);
             Controls.Add(label2);
             FormBorderStyle = FormBorderStyle.None;
+            Margin = new Padding(3, 2, 3, 2);
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "EditForm";
@@ -274,7 +274,6 @@
         private Label label3;
         private Label label4;
         private Label label5;
-        private Guna.UI2.WinForms.Guna2TextBox txtCategory;
         private Panel panel1;
         public Guna.UI2.WinForms.Guna2Button btnSave;
         public Guna.UI2.WinForms.Guna2Button btnCancel;
@@ -282,5 +281,6 @@
         public Guna.UI2.WinForms.Guna2TextBox txtPrice;
         public Guna.UI2.WinForms.Guna2TextBox txtName;
         public Guna.UI2.WinForms.Guna2TextBox txtUnitsInStock;
+        public Guna.UI2.WinForms.Guna2TextBox txtCategory;
     }
 }

@@ -150,6 +150,7 @@
             login_username.Name = "login_username";
             login_username.Size = new Size(267, 24);
             login_username.TabIndex = 12;
+            login_username.TextChanged += login_username_TextChanged;
             // 
             // label2
             // 

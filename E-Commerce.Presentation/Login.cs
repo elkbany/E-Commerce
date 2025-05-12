@@ -23,6 +23,10 @@ namespace E_Commerce.Presentation
             this.validator = validator;
         }
 
+        public Login()
+        {
+        }
+
         private void login_registerHere_Click(object sender, EventArgs e)
         {
 
@@ -125,6 +129,11 @@ namespace E_Commerce.Presentation
         private void login_close_Click_1(object sender, EventArgs e)
         {
             Application.Exit();
+
+        }
+
+        private void login_username_TextChanged(object sender, EventArgs e)
+        {
 
         }
     }
