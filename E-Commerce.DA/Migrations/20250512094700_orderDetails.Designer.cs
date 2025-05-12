@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace E_Commerce.DA.Migrations
 {
     [DbContext(typeof(DBContext))]
-    [Migration("20250507143504_init")]
-    partial class init
+    [Migration("20250512094700_orderDetails")]
+    partial class orderDetails
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -71,7 +71,21 @@ namespace E_Commerce.DA.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Categorys");
+                    b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "Devices and gadgets",
+                            Name = "Electronics"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Description = "Apparel and accessories",
+                            Name = "Clothing"
+                        });
                 });
 
             modelBuilder.Entity("E_Commerce.Domain.Models.Order", b =>
@@ -102,6 +116,25 @@ namespace E_Commerce.DA.Migrations
                     b.HasIndex("UserID");
 
                     b.ToTable("Orders");
+
+                    b.HasData(
+                        new
+                        {
+                            OrderID = 1,
+                            OrderDate = new DateTime(2025, 5, 11, 3, 0, 0, 0, DateTimeKind.Local),
+                            Status = 0,
+                            TotalAmount = 150.00m,
+                            UserID = 1
+                        },
+                        new
+                        {
+                            OrderID = 2,
+                            DateProcessed = new DateTime(2025, 5, 12, 5, 0, 0, 0, DateTimeKind.Local),
+                            OrderDate = new DateTime(2025, 5, 12, 3, 0, 0, 0, DateTimeKind.Local),
+                            Status = 1,
+                            TotalAmount = 275.50m,
+                            UserID = 2
+                        });
                 });
 
             modelBuilder.Entity("E_Commerce.Domain.Models.OrderDetail", b =>
@@ -128,6 +161,29 @@ namespace E_Commerce.DA.Migrations
                     b.HasIndex("ProductID");
 
                     b.ToTable("OrderDetails");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            OrderID = 1,
+                            ProductID = 1,
+                            Quantity = 2
+                        },
+                        new
+                        {
+                            Id = 2,
+                            OrderID = 1,
+                            ProductID = 2,
+                            Quantity = 5
+                        },
+                        new
+                        {
+                            Id = 3,
+                            OrderID = 2,
+                            ProductID = 1,
+                            Quantity = 1
+                        });
                 });
 
             modelBuilder.Entity("E_Commerce.Domain.Models.Product", b =>
@@ -160,6 +216,26 @@ namespace E_Commerce.DA.Migrations
                     b.HasIndex("CategoryID");
 
                     b.ToTable("Products");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CategoryID = 1,
+                            Description = "Latest model smartphone",
+                            Name = "Smartphone",
+                            Price = 699.99m,
+                            UnitsInStock = 5000
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CategoryID = 2,
+                            Description = "Cotton casual t-shirt",
+                            Name = "T-Shirt",
+                            Price = 19.99m,
+                            UnitsInStock = 7500
+                        });
                 });
 
             modelBuilder.Entity("E_Commerce.Domain.Models.User", b =>
@@ -173,6 +249,9 @@ namespace E_Commerce.DA.Migrations
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime>("DateUpdated")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -182,6 +261,9 @@ namespace E_Commerce.DA.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsSignedInNow")
                         .HasColumnType("bit");
 
                     b.Property<DateTime?>("LastLoginDate")
@@ -195,16 +277,46 @@ namespace E_Commerce.DA.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
                     b.Property<string>("Username")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("status")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            DateCreated = new DateTime(2025, 5, 11, 3, 0, 0, 0, DateTimeKind.Local),
+                            DateUpdated = new DateTime(2025, 5, 11, 3, 0, 0, 0, DateTimeKind.Local),
+                            Email = "admin@admin.com",
+                            FirstName = "Admin",
+                            IsActive = true,
+                            IsSignedInNow = false,
+                            LastName = "Admin",
+                            PasswordHash = "AQAAAAIAAYagAAAAECtJWIRqgoBEDzcFOu4Kz0LCY/MSge+0SZns5va/p5u6Gg4O87dz1beHha+iyFbsHA==",
+                            Status = 0,
+                            Username = "AdminIbnAdmin"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            DateCreated = new DateTime(2025, 5, 11, 3, 0, 0, 0, DateTimeKind.Local),
+                            DateUpdated = new DateTime(2025, 5, 11, 3, 0, 0, 0, DateTimeKind.Local),
+                            Email = "user@user.com",
+                            FirstName = "User",
+                            IsActive = true,
+                            IsSignedInNow = false,
+                            LastName = "User",
+                            PasswordHash = "AQAAAAIAAYagAAAAEBHDiyLRTxpFa9qgoSrzKlEMb2TQjBd1itcvuGrwgvtx80k7zeKga6KPH7+QO+522w==",
+                            Status = 1,
+                            Username = "UserIbnUser"
+                        });
                 });
 
             modelBuilder.Entity("E_Commerce.Domain.Models.CartItem", b =>

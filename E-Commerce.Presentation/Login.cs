@@ -7,6 +7,7 @@ using System;
 using System.Windows.Forms;
 using FluentValidation;
 using E_Commerce.Domain.Enums;
+using System.Runtime.InteropServices;
 
 
 namespace E_Commerce.Presentation
@@ -16,6 +17,12 @@ namespace E_Commerce.Presentation
         private readonly IAccountServices accountServices;
         private readonly IValidator<LoginUserDto> validator;
 
+        [DllImport("user32.DLL", EntryPoint = "ReleaseCapture")]
+        private extern static void ReleaseCapture();
+
+        [DllImport("user32.DLL", EntryPoint = "SendMessage")]
+        private extern static void SendMessage(IntPtr hwnd, int wMsg, int wParam, int lParam);
+
         public Login(IAccountServices accountServices, IValidator<LoginUserDto> validator)
         {
             InitializeComponent();
@@ -23,8 +30,9 @@ namespace E_Commerce.Presentation
             this.validator = validator;
         }
 
-        public Login()
+        public Login(IAccountServices accountServices)
         {
+            this.accountServices = accountServices;
         }
 
         private void login_registerHere_Click(object sender, EventArgs e)
@@ -130,6 +138,12 @@ namespace E_Commerce.Presentation
         {
             Application.Exit();
 
+        }
+
+        private void Login_MouseDown(object sender, MouseEventArgs e)
+        {
+            ReleaseCapture();
+            SendMessage(this.Handle, 0x112, 0xf012, 0);
         }
 
         private void login_username_TextChanged(object sender, EventArgs e)

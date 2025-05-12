@@ -34,17 +34,16 @@
             label2 = new Label();
             label3 = new Label();
             panel2 = new Panel();
-            lnlOldPassword = new TextBox();
+            txtProfileFirstName = new TextBox();
             panel3 = new Panel();
-            lblNewPassword1 = new TextBox();
+            txtProfileLastName = new TextBox();
             panel4 = new Panel();
-            lblNewPassword2 = new TextBox();
+            txtProfileEmail = new TextBox();
             button1 = new Button();
-            button2 = new Button();
             panel1 = new Panel();
             button3 = new Button();
             panel5 = new Panel();
-            textBox1 = new TextBox();
+            txtProfileHiddenPassword = new TextBox();
             label4 = new Label();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panel2.SuspendLayout();
@@ -98,61 +97,58 @@
             // 
             panel2.BackColor = SystemColors.ControlLightLight;
             panel2.BorderStyle = BorderStyle.FixedSingle;
-            panel2.Controls.Add(lnlOldPassword);
+            panel2.Controls.Add(txtProfileFirstName);
             panel2.Location = new Point(54, 48);
             panel2.Name = "panel2";
             panel2.Size = new Size(344, 44);
             panel2.TabIndex = 6;
             // 
-            // lnlOldPassword
+            // txtProfileFirstName
             // 
-            lnlOldPassword.BorderStyle = BorderStyle.None;
-            lnlOldPassword.Location = new Point(17, 14);
-            lnlOldPassword.Name = "lnlOldPassword";
-            lnlOldPassword.PasswordChar = '*';
-            lnlOldPassword.PlaceholderText = "Enter Old Password";
-            lnlOldPassword.Size = new Size(315, 16);
-            lnlOldPassword.TabIndex = 5;
+            txtProfileFirstName.BorderStyle = BorderStyle.None;
+            txtProfileFirstName.Location = new Point(17, 14);
+            txtProfileFirstName.Name = "txtProfileFirstName";
+            txtProfileFirstName.PlaceholderText = "Enter First Name";
+            txtProfileFirstName.Size = new Size(315, 16);
+            txtProfileFirstName.TabIndex = 5;
             // 
             // panel3
             // 
             panel3.BackColor = SystemColors.ControlLightLight;
             panel3.BorderStyle = BorderStyle.FixedSingle;
-            panel3.Controls.Add(lblNewPassword1);
+            panel3.Controls.Add(txtProfileLastName);
             panel3.Location = new Point(54, 133);
             panel3.Name = "panel3";
             panel3.Size = new Size(344, 44);
             panel3.TabIndex = 7;
             // 
-            // lblNewPassword1
+            // txtProfileLastName
             // 
-            lblNewPassword1.BorderStyle = BorderStyle.None;
-            lblNewPassword1.Location = new Point(17, 14);
-            lblNewPassword1.Name = "lblNewPassword1";
-            lblNewPassword1.PasswordChar = '*';
-            lblNewPassword1.PlaceholderText = "Enter New Password";
-            lblNewPassword1.Size = new Size(315, 16);
-            lblNewPassword1.TabIndex = 5;
+            txtProfileLastName.BorderStyle = BorderStyle.None;
+            txtProfileLastName.Location = new Point(17, 14);
+            txtProfileLastName.Name = "txtProfileLastName";
+            txtProfileLastName.PlaceholderText = "Enter Last Name";
+            txtProfileLastName.Size = new Size(315, 16);
+            txtProfileLastName.TabIndex = 5;
             // 
             // panel4
             // 
             panel4.BackColor = SystemColors.ControlLightLight;
             panel4.BorderStyle = BorderStyle.FixedSingle;
-            panel4.Controls.Add(lblNewPassword2);
+            panel4.Controls.Add(txtProfileEmail);
             panel4.Location = new Point(54, 218);
             panel4.Name = "panel4";
             panel4.Size = new Size(344, 44);
             panel4.TabIndex = 8;
             // 
-            // lblNewPassword2
+            // txtProfileEmail
             // 
-            lblNewPassword2.BorderStyle = BorderStyle.None;
-            lblNewPassword2.Location = new Point(17, 14);
-            lblNewPassword2.Name = "lblNewPassword2";
-            lblNewPassword2.PasswordChar = '*';
-            lblNewPassword2.PlaceholderText = "Confirm New Password";
-            lblNewPassword2.Size = new Size(315, 16);
-            lblNewPassword2.TabIndex = 5;
+            txtProfileEmail.BorderStyle = BorderStyle.None;
+            txtProfileEmail.Location = new Point(17, 14);
+            txtProfileEmail.Name = "txtProfileEmail";
+            txtProfileEmail.PlaceholderText = "Enter Email Address";
+            txtProfileEmail.Size = new Size(315, 16);
+            txtProfileEmail.TabIndex = 5;
             // 
             // button1
             // 
@@ -162,29 +158,17 @@
             button1.ForeColor = Color.White;
             button1.Location = new Point(54, 399);
             button1.Name = "button1";
-            button1.Size = new Size(159, 49);
+            button1.Size = new Size(344, 49);
             button1.TabIndex = 9;
             button1.Text = "Save";
             button1.UseVisualStyleBackColor = false;
-            // 
-            // button2
-            // 
-            button2.FlatStyle = FlatStyle.Flat;
-            button2.Font = new Font("Segoe UI", 12F);
-            button2.ForeColor = Color.FromArgb(0, 120, 212);
-            button2.Location = new Point(239, 399);
-            button2.Name = "button2";
-            button2.Size = new Size(159, 49);
-            button2.TabIndex = 10;
-            button2.Text = "Cancel";
-            button2.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
             // 
             // panel1
             // 
             panel1.Controls.Add(button3);
             panel1.Controls.Add(panel5);
             panel1.Controls.Add(label4);
-            panel1.Controls.Add(button2);
             panel1.Controls.Add(button1);
             panel1.Controls.Add(panel4);
             panel1.Controls.Add(panel3);
@@ -215,21 +199,24 @@
             // 
             panel5.BackColor = SystemColors.ControlLightLight;
             panel5.BorderStyle = BorderStyle.FixedSingle;
-            panel5.Controls.Add(textBox1);
+            panel5.Controls.Add(txtProfileHiddenPassword);
             panel5.Location = new Point(54, 311);
             panel5.Name = "panel5";
             panel5.Size = new Size(344, 44);
             panel5.TabIndex = 10;
+            panel5.TabStop = true;
             // 
-            // textBox1
+            // txtProfileHiddenPassword
             // 
-            textBox1.BorderStyle = BorderStyle.None;
-            textBox1.Location = new Point(17, 14);
-            textBox1.Name = "textBox1";
-            textBox1.PasswordChar = '*';
-            textBox1.PlaceholderText = "******************";
-            textBox1.Size = new Size(315, 16);
-            textBox1.TabIndex = 5;
+            txtProfileHiddenPassword.BorderStyle = BorderStyle.None;
+            txtProfileHiddenPassword.Enabled = false;
+            txtProfileHiddenPassword.Location = new Point(17, 14);
+            txtProfileHiddenPassword.Name = "txtProfileHiddenPassword";
+            txtProfileHiddenPassword.PasswordChar = '*';
+            txtProfileHiddenPassword.PlaceholderText = "******************";
+            txtProfileHiddenPassword.ReadOnly = true;
+            txtProfileHiddenPassword.Size = new Size(315, 16);
+            txtProfileHiddenPassword.TabIndex = 100;
             // 
             // label4
             // 
@@ -273,17 +260,17 @@
         private Label label2;
         private Label label3;
         private Panel panel2;
-        private TextBox lnlOldPassword;
+        private TextBox txtProfileFirstName;
         private Panel panel3;
-        private TextBox lblNewPassword1;
+        private TextBox txtProfileLastName;
         private Panel panel4;
-        private TextBox lblNewPassword2;
+        private TextBox txtProfileEmail;
         private Button button1;
         private Button button2;
         private Panel panel1;
         private Button button3;
         private Panel panel5;
-        private TextBox textBox1;
+        private TextBox txtProfileHiddenPassword;
         private Label label4;
     }
 }

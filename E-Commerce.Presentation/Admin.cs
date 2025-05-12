@@ -153,6 +153,11 @@ namespace AdminTest
                 AddProductToPanel(productName, productPrice, unitsInStock, category);
             }
         }
+
+        private void guna2Button3_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 
     #region Old Code

@@ -70,6 +70,7 @@
             signup_confirmpassword.PasswordChar = '*';
             signup_confirmpassword.Size = new Size(267, 24);
             signup_confirmpassword.TabIndex = 26;
+            signup_confirmpassword.TextChanged += signup_confirmpassword_TextChanged;
             // 
             // label10
             // 
@@ -283,6 +284,7 @@
             Margin = new Padding(3, 2, 3, 2);
             Name = "Signup";
             Text = "Signup";
+            MouseDown += Signup_MouseDown;
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();

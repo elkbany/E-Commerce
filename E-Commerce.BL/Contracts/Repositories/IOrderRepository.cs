@@ -12,6 +12,7 @@ namespace E_Commerce.BL.Contracts.Repositories
     {
 
         public Task<IEnumerable<Order>> GetOrdersByStatusAsync(OrderStatus status);
+        Task<IEnumerable<Order>> GetOrdersByUserIdAsync(int userId);
     }
 
 

@@ -138,5 +138,11 @@ namespace E_Commerce.BL.Implementations
 
             await _orderRepository.CommitAsync();
         }
+
+        public async Task<IEnumerable<OrderDTO>> GetOrdersByUserId(int userId)
+        {
+            var orders = await _orderRepository.GetOrdersByUserIdAsync(userId);
+            return orders.Adapt<List<OrderDTO>>();
+        }
     }
 }

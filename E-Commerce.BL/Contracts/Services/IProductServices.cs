@@ -16,6 +16,11 @@ namespace E_Commerce.BL.Contracts.Services
         Task<ProductDTO> AddProductAsync(ProductDTO product);
         Task<ProductDTO> GetProductByIdAsync(int id);
         Task<IEnumerable<ProductDTO>> GetAllProductsAsync();
+       
+        Task<List<ProductDTO>> SearchProductsByName(string ProductName);
+
+        Task<List<ProductDTO>> GetAllProductsByCatigory(Category category);
+
         Task<ProductDTO> UpdateProductAsync(int id, ProductDTO productDTO);
         Task DeleteProductAsync(int id);
         Task<List<AvaliableProductDTO>> GetAvalibaleProducts();

@@ -194,6 +194,7 @@
             Name = "Login";
             Text = "Form1";
             Load += Login_Load;
+            MouseDown += Login_MouseDown;
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();

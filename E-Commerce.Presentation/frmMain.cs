@@ -2,13 +2,6 @@
 using E_Commerce.Domain.Models;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace E_Commerce.Presentation
@@ -19,6 +12,7 @@ namespace E_Commerce.Presentation
         private int userId;
         frmProducts products;
         frmProfile profile;
+        frmOrders orders;
 
         public frmMain(IAccountServices accountServices, int userId)
         {
@@ -26,9 +20,8 @@ namespace E_Commerce.Presentation
             this.accountServices = accountServices;
             this.userId = userId;
             LoadUserInfo();
-            //LoadHomeForm();
-
         }
+
         private void LoadHomeForm()
         {
             foreach (Form child in this.MdiChildren)
@@ -51,11 +44,9 @@ namespace E_Commerce.Presentation
             var userInfo = await accountServices.ViewProfile(userId);
             if (userInfo != null)
             {
-                // مثال: عرض الـ Username في Label (غيّر الـ Control حسب UI بتاعك)
-                labelUsername.Text = userInfo.Username; 
+                labelUsername.Text = userInfo.Username;
             }
         }
-
 
         bool sidebarExpand = true;
         private void sidebarTransition_Tick(object sender, EventArgs e)
@@ -67,13 +58,6 @@ namespace E_Commerce.Presentation
                 {
                     sidebarExpand = false;
                     sidebarTransition.Stop();
-
-
-                    //btnProducts.Width = sidebar.Width;
-                    //btnCart.Width = sidebar.Width;
-                    //btnOrders.Width = sidebar.Width;
-                    //btnProfile.Width = sidebar.Width;
-                    //btnLogout.Width = sidebar.Width;
                 }
             }
             else
@@ -83,14 +67,6 @@ namespace E_Commerce.Presentation
                 {
                     sidebarExpand = true;
                     sidebarTransition.Stop();
-
-                    //btnProducts.Width = sidebar.Width;
-                    //btnCart.Width = sidebar.Width;
-                    //btnOrders.Width = sidebar.Width;
-                    //btnProfile.Width = sidebar.Width;
-                    //btnLogout.Width = sidebar.Width;
-
-
                 }
             }
         }
@@ -102,12 +78,10 @@ namespace E_Commerce.Presentation
 
         private void frmMain_Load(object sender, EventArgs e)
         {
-
         }
 
         private void nightControlBox1_Click(object sender, EventArgs e)
         {
-
         }
 
         private void btnProducts_Click(object sender, EventArgs e)
@@ -116,7 +90,6 @@ namespace E_Commerce.Presentation
             {
                 products = new frmProducts(ServiceProviderContainer.ServiceProvider.GetRequiredService<IProductServices>(), userId);
                 products.FormClosed += home_FormClosed;
-
                 products.MdiParent = this;
                 products.Dock = DockStyle.Fill;
                 products.Show();
@@ -125,8 +98,8 @@ namespace E_Commerce.Presentation
             {
                 products.Activate();
             }
-
         }
+
         private void home_FormClosed(object sender, FormClosedEventArgs e)
         {
             products = null;
@@ -138,7 +111,6 @@ namespace E_Commerce.Presentation
             {
                 profile = new frmProfile(ServiceProviderContainer.ServiceProvider.GetRequiredService<IAccountServices>(), userId);
                 profile.FormClosed += profile_FormClosed;
-
                 profile.MdiParent = this;
                 profile.Dock = DockStyle.Fill;
                 profile.Show();
@@ -154,14 +126,42 @@ namespace E_Commerce.Presentation
             profile = null;
         }
 
-        private void btnLogout_Click(object sender, EventArgs e)
+        private void btnOrders_Click(object sender, EventArgs e)
         {
+            if (orders == null || orders.IsDisposed)
+            {
+                orders = new frmOrders(ServiceProviderContainer.ServiceProvider.GetRequiredService<IOrderServices>(), userId);
+                orders.FormClosed += orders_FormClosed;
+                orders.MdiParent = this;
+                orders.Dock = DockStyle.Fill;
+                orders.Show();
+            }
+            else
+            {
+                orders.Activate();
+            }
+        }
+
+        private void orders_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            orders = null;
+        }
+
+        private async void btnLogout_Click(object sender, EventArgs e)
+        {
+
+            var userInfo = await accountServices.ViewProfile(userId);  
+            await accountServices.LogoutUserAsync(userInfo.Username);
             Application.Exit();
+
         }
 
         private void labelUsername_Click(object sender, EventArgs e)
         {
+        }
 
+        private void nightControlBox1_Click_1(object sender, EventArgs e)
+        {
         }
     }
 }

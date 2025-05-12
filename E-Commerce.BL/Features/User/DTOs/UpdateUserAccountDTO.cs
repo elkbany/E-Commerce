@@ -8,7 +8,7 @@ namespace E_Commerce.BL.Features.User.DTOs
 {
     public class UpdateUserAccountDTO
     {
-        public string Password { get; set; }
+      
 
         public string Email { get; set; }
 

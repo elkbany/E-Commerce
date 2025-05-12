@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace E_Commerce.DA.Migrations
 {
     [DbContext(typeof(DBContext))]
-    [Migration("20250508213415_new")]
-    partial class @new
+    [Migration("20250512071206_orderseed")]
+    partial class orderseed
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -102,6 +102,25 @@ namespace E_Commerce.DA.Migrations
                     b.HasIndex("UserID");
 
                     b.ToTable("Orders");
+
+                    b.HasData(
+                        new
+                        {
+                            OrderID = 1,
+                            OrderDate = new DateTime(2025, 5, 11, 3, 0, 0, 0, DateTimeKind.Local),
+                            Status = 0,
+                            TotalAmount = 150.00m,
+                            UserID = 1
+                        },
+                        new
+                        {
+                            OrderID = 2,
+                            DateProcessed = new DateTime(2025, 5, 12, 5, 0, 0, 0, DateTimeKind.Local),
+                            OrderDate = new DateTime(2025, 5, 12, 3, 0, 0, 0, DateTimeKind.Local),
+                            Status = 1,
+                            TotalAmount = 275.50m,
+                            UserID = 2
+                        });
                 });
 
             modelBuilder.Entity("E_Commerce.Domain.Models.OrderDetail", b =>
@@ -201,16 +220,46 @@ namespace E_Commerce.DA.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
                     b.Property<string>("Username")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("status")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            DateCreated = new DateTime(2025, 5, 11, 3, 0, 0, 0, DateTimeKind.Local),
+                            DateUpdated = new DateTime(2025, 5, 11, 3, 0, 0, 0, DateTimeKind.Local),
+                            Email = "admin@admin.com",
+                            FirstName = "Admin",
+                            IsActive = true,
+                            IsSignedInNow = false,
+                            LastName = "Admin",
+                            PasswordHash = "AQAAAAIAAYagAAAAECtJWIRqgoBEDzcFOu4Kz0LCY/MSge+0SZns5va/p5u6Gg4O87dz1beHha+iyFbsHA==",
+                            Status = 0,
+                            Username = "AdminIbnAdmin"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            DateCreated = new DateTime(2025, 5, 11, 3, 0, 0, 0, DateTimeKind.Local),
+                            DateUpdated = new DateTime(2025, 5, 11, 3, 0, 0, 0, DateTimeKind.Local),
+                            Email = "user@user.com",
+                            FirstName = "User",
+                            IsActive = true,
+                            IsSignedInNow = false,
+                            LastName = "User",
+                            PasswordHash = "AQAAAAIAAYagAAAAEBHDiyLRTxpFa9qgoSrzKlEMb2TQjBd1itcvuGrwgvtx80k7zeKga6KPH7+QO+522w==",
+                            Status = 1,
+                            Username = "UserIbnUser"
+                        });
                 });
 
             modelBuilder.Entity("E_Commerce.Domain.Models.CartItem", b =>

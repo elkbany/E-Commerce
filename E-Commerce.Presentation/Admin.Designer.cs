@@ -83,7 +83,7 @@
             panel1.Location = new Point(0, 0);
             panel1.Margin = new Padding(3, 2, 3, 2);
             panel1.Name = "panel1";
-            panel1.Size = new Size(1902, 39);
+            panel1.Size = new Size(1386, 39);
             panel1.TabIndex = 0;
             // 
             // label1
@@ -120,7 +120,7 @@
             nightControlBox1.EnableMaximizeColor = Color.FromArgb(160, 160, 160);
             nightControlBox1.EnableMinimizeButton = true;
             nightControlBox1.EnableMinimizeColor = Color.FromArgb(160, 160, 160);
-            nightControlBox1.Location = new Point(1763, 0);
+            nightControlBox1.Location = new Point(1247, 0);
             nightControlBox1.MaximizeHoverColor = Color.FromArgb(15, 255, 255, 255);
             nightControlBox1.MaximizeHoverForeColor = Color.White;
             nightControlBox1.MinimizeHoverColor = Color.FromArgb(15, 255, 255, 255);
@@ -144,7 +144,7 @@
             sidebar.Margin = new Padding(0);
             sidebar.Name = "sidebar";
             sidebar.Padding = new Padding(0, 30, 0, 0);
-            sidebar.Size = new Size(287, 786);
+            sidebar.Size = new Size(287, 749);
             sidebar.TabIndex = 1;
             // 
             // panel2
@@ -280,6 +280,7 @@
             guna2Button3.TabIndex = 7;
             guna2Button3.Text = "     Profile";
             guna2Button3.TextAlign = HorizontalAlignment.Left;
+            guna2Button3.Click += guna2Button3_Click;
             // 
             // guna2Button4
             // 
