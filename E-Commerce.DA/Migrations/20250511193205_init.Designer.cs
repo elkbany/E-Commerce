@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace E_Commerce.DA.Migrations
 {
     [DbContext(typeof(DBContext))]
-    [Migration("20250510212428_newMigration")]
-    partial class newMigration
+    [Migration("20250511193205_init")]
+    partial class init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -211,6 +211,36 @@ namespace E_Commerce.DA.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            DateCreated = new DateTime(2025, 5, 11, 3, 0, 0, 0, DateTimeKind.Local),
+                            DateUpdated = new DateTime(2025, 5, 11, 3, 0, 0, 0, DateTimeKind.Local),
+                            Email = "admin@admin.com",
+                            FirstName = "Admin",
+                            IsActive = true,
+                            IsSignedInNow = false,
+                            LastName = "Admin",
+                            PasswordHash = "AQAAAAIAAYagAAAAEFrg5xB2kQ0uJ6n5sQ8iQ4e7jF0vP3K8L2N9mXy1Q3wZ7vA8pK5mL4oP6nR8sT9uQw ==",
+                            Status = 0,
+                            Username = "AdminIbnAdmin"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            DateCreated = new DateTime(2025, 5, 11, 3, 0, 0, 0, DateTimeKind.Local),
+                            DateUpdated = new DateTime(2025, 5, 11, 3, 0, 0, 0, DateTimeKind.Local),
+                            Email = "user@user.com",
+                            FirstName = "User",
+                            IsActive = true,
+                            IsSignedInNow = false,
+                            LastName = "User",
+                            PasswordHash = " AQAAAAIAAYagAAAAEKj8mN3pR4tL5oQ9sP7iX2c8jD0vQ6k3L1M8nXy2Q4wZ8vB9pK6nL5oP7nR9sT0uQw ==",
+                            Status = 1,
+                            Username = "UserIbnUser"
+                        });
                 });
 
             modelBuilder.Entity("E_Commerce.Domain.Models.CartItem", b =>

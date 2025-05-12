@@ -4,7 +4,10 @@ using System.Linq;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using E_Commerce.Domain.Enums;
 using E_Commerce.Domain.Models;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
@@ -12,10 +15,11 @@ namespace E_Commerce.DA.Context
 {
     public class DBContext : DbContext
     {
-
+       
 
         public DBContext(DbContextOptions<DBContext> options) : base(options)
         {
+           
 
             //options.UseSqlServer("Data Source=.;Initial Catalog=E-Commerce;Integrated Security=True;Trust Server Certificate=True;");
         }
@@ -79,8 +83,45 @@ namespace E_Commerce.DA.Context
                 entity.Property(e => e.Price)
                       .HasColumnType("decimal(18,2)"); // Precision 18, Scale 2
             });
-        
 
+          
+
+            //var seedDate = new DateTime(2025, 5, 11, 0, 0, 0, DateTimeKind.Utc);
+            modelBuilder.Entity<User>().HasData(
+                new User
+                {
+                    Id = 1,
+                    Username = "AdminIbnAdmin",
+                    Email = "admin@admin.com",
+                    FirstName = "Admin",
+                    LastName = "Admin",
+                    Status = UserStatus.Admin,
+                    IsActive = true,
+                    DateCreated = DateTime.Parse("2025-05-11T00:00:00Z"),
+                    DateUpdated = DateTime.Parse("2025-05-11T00:00:00Z"),
+                    //admin@123
+                    PasswordHash = "AQAAAAIAAYagAAAAECtJWIRqgoBEDzcFOu4Kz0LCY/MSge+0SZns5va/p5u6Gg4O87dz1beHha+iyFbsHA=="
+                }
+            );
+
+            // Seed user 2
+            modelBuilder.Entity<User>().HasData(
+                new User
+                {
+                    Id = 2,
+                    Username = "UserIbnUser",
+                    Email = "user@user.com",
+                    FirstName = "User",
+                    LastName = "User",
+                    Status = UserStatus.Client,
+                    IsActive = true,
+                    DateCreated = DateTime.Parse("2025-05-11T00:00:00Z"),
+                    DateUpdated = DateTime.Parse("2025-05-11T00:00:00Z"),
+                    //user@123
+                    PasswordHash = "AQAAAAIAAYagAAAAEBHDiyLRTxpFa9qgoSrzKlEMb2TQjBd1itcvuGrwgvtx80k7zeKga6KPH7+QO+522w=="
+                }
+                );
+                
         }
 
 

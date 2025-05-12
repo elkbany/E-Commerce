@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace E_Commerce.DA.Migrations
 {
     [DbContext(typeof(DBContext))]
-    [Migration("20250507143504_init")]
-    partial class init
+    [Migration("20250512061525_edit")]
+    partial class edit
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -173,6 +173,9 @@ namespace E_Commerce.DA.Migrations
                     b.Property<DateTime>("DateCreated")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime>("DateUpdated")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -182,6 +185,9 @@ namespace E_Commerce.DA.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("IsSignedInNow")
                         .HasColumnType("bit");
 
                     b.Property<DateTime?>("LastLoginDate")
@@ -195,16 +201,46 @@ namespace E_Commerce.DA.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
                     b.Property<string>("Username")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("status")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            DateCreated = new DateTime(2025, 5, 11, 3, 0, 0, 0, DateTimeKind.Local),
+                            DateUpdated = new DateTime(2025, 5, 11, 3, 0, 0, 0, DateTimeKind.Local),
+                            Email = "admin@admin.com",
+                            FirstName = "Admin",
+                            IsActive = true,
+                            IsSignedInNow = false,
+                            LastName = "Admin",
+                            PasswordHash = "AQAAAAIAAYagAAAAECtJWIRqgoBEDzcFOu4Kz0LCY/MSge+0SZns5va/p5u6Gg4O87dz1beHha+iyFbsHA==",
+                            Status = 0,
+                            Username = "AdminIbnAdmin"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            DateCreated = new DateTime(2025, 5, 11, 3, 0, 0, 0, DateTimeKind.Local),
+                            DateUpdated = new DateTime(2025, 5, 11, 3, 0, 0, 0, DateTimeKind.Local),
+                            Email = "user@user.com",
+                            FirstName = "User",
+                            IsActive = true,
+                            IsSignedInNow = false,
+                            LastName = "User",
+                            PasswordHash = "AQAAAAIAAYagAAAAEBHDiyLRTxpFa9qgoSrzKlEMb2TQjBd1itcvuGrwgvtx80k7zeKga6KPH7+QO+522w==",
+                            Status = 1,
+                            Username = "UserIbnUser"
+                        });
                 });
 
             modelBuilder.Entity("E_Commerce.Domain.Models.CartItem", b =>

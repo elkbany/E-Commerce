@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace E_Commerce.DA.Migrations
 {
     /// <inheritdoc />
@@ -36,10 +38,12 @@ namespace E_Commerce.DA.Migrations
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    status = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false),
                     DateCreated = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    LastLoginDate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                    DateUpdated = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    LastLoginDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    IsSignedInNow = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -145,6 +149,15 @@ namespace E_Commerce.DA.Migrations
                         principalTable: "Products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "Id", "DateCreated", "DateUpdated", "Email", "FirstName", "IsActive", "IsSignedInNow", "LastLoginDate", "LastName", "PasswordHash", "Status", "Username" },
+                values: new object[,]
+                {
+                    { 1, new DateTime(2025, 5, 11, 3, 0, 0, 0, DateTimeKind.Local), new DateTime(2025, 5, 11, 3, 0, 0, 0, DateTimeKind.Local), "admin@admin.com", "Admin", true, false, null, "Admin", "AQAAAAIAAYagAAAAEFrg5xB2kQ0uJ6n5sQ8iQ4e7jF0vP3K8L2N9mXy1Q3wZ7vA8pK5mL4oP6nR8sT9uQw ==", 0, "AdminIbnAdmin" },
+                    { 2, new DateTime(2025, 5, 11, 3, 0, 0, 0, DateTimeKind.Local), new DateTime(2025, 5, 11, 3, 0, 0, 0, DateTimeKind.Local), "user@user.com", "User", true, false, null, "User", " AQAAAAIAAYagAAAAEKj8mN3pR4tL5oQ9sP7iX2c8jD0vQ6k3L1M8nXy2Q4wZ8vB9pK6nL5oP7nR9sT0uQw ==", 1, "UserIbnUser" }
                 });
 
             migrationBuilder.CreateIndex(
