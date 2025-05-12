@@ -130,13 +130,16 @@
   <data name="3516854" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\3516854.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="icons8-bag-50" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="icons8-bag-501" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icons8-bag-50.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="draggable-32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\draggable-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="icons8-bag-501" type="System.Resources.ResXFileRef, System.Windows.Forms">
+  <data name="icons8-bag-50" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icons8-bag-50.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="6184159_3094352" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\6184159_3094352.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

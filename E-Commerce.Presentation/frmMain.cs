@@ -1,5 +1,4 @@
 ﻿using E_Commerce.BL.Contracts.Services;
-using E_Commerce.Domain.Models;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Windows.Forms;
@@ -9,18 +8,21 @@ namespace E_Commerce.Presentation
     public partial class frmMain : Form
     {
         private readonly IAccountServices accountServices;
+        private readonly IServiceProvider serviceProvider; // نضيف الـ DI container
         private int userId;
-        frmProducts products;
-        frmProfile profile;
-        frmOrders orders; // تم التصحيح هنا
+        private frmProducts products;
+        private frmProfile profile;
+        private frmOrders orders;
+        private frmCart cart; // نضيف frmCart
 
-        public frmMain(IAccountServices accountServices, int userId)
+        public frmMain(IAccountServices accountServices, IServiceProvider serviceProvider, int userId)
         {
             InitializeComponent();
             this.accountServices = accountServices;
+            this.serviceProvider = serviceProvider; // نخزّن الـ DI container
             this.userId = userId;
             LoadUserInfo();
-            //LoadHomeForm();
+            //LoadHomeForm(); // هنشغّلها لو عايزين المنتجات تفتح أول ما البرنامج يشتغل
         }
 
         private void LoadHomeForm()
@@ -30,22 +32,35 @@ namespace E_Commerce.Presentation
                 child.Close();
             }
 
-            var homeForm = new frmProducts(
-                ServiceProviderContainer.ServiceProvider.GetRequiredService<IProductServices>(),
+            products = new frmProducts(
+                serviceProvider.GetRequiredService<IProductServices>(),
+                serviceProvider.GetRequiredService<ICartItemServices>(),
+                serviceProvider.GetRequiredService<ICategoryServices>(),
                 userId)
             {
                 MdiParent = this,
-                WindowState = FormWindowState.Maximized
+                Dock = DockStyle.Fill
             };
-            homeForm.Show();
+            products.Show();
         }
 
         private async void LoadUserInfo()
         {
-            var userInfo = await accountServices.ViewProfile(userId);
-            if (userInfo != null)
+            try
             {
-                labelUsername.Text = userInfo.Username;
+                var userInfo = await accountServices.ViewProfile(userId);
+                if (userInfo != null)
+                {
+                    labelUsername.Text = userInfo.Username;
+                }
+                else
+                {
+                    MessageBox.Show("Failed to load user info.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading user info: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -77,22 +92,20 @@ namespace E_Commerce.Presentation
             sidebarTransition.Start();
         }
 
-        private void frmMain_Load(object sender, EventArgs e)
-        {
-        }
-
-        private void nightControlBox1_Click(object sender, EventArgs e)
-        {
-        }
-
         private void btnProducts_Click(object sender, EventArgs e)
         {
-            if (products == null)
+            if (products == null || products.IsDisposed)
             {
-                products = new frmProducts(ServiceProviderContainer.ServiceProvider.GetRequiredService<IProductServices>(), userId);
+                products = new frmProducts(
+                    serviceProvider.GetRequiredService<IProductServices>(),
+                    serviceProvider.GetRequiredService<ICartItemServices>(),
+                    serviceProvider.GetRequiredService<ICategoryServices>(),
+                    userId)
+                {
+                    MdiParent = this,
+                    Dock = DockStyle.Fill
+                };
                 products.FormClosed += home_FormClosed;
-                products.MdiParent = this;
-                products.Dock = DockStyle.Fill;
                 products.Show();
             }
             else
@@ -106,14 +119,24 @@ namespace E_Commerce.Presentation
             products = null;
         }
 
+
+        private void cart_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            cart = null;
+        }
+
         private void btnProfile_Click(object sender, EventArgs e)
         {
-            if (profile == null)
+            if (profile == null || profile.IsDisposed)
             {
-                profile = new frmProfile(ServiceProviderContainer.ServiceProvider.GetRequiredService<IAccountServices>(), userId);
+                profile = new frmProfile(
+                    serviceProvider.GetRequiredService<IAccountServices>(),
+                    userId)
+                {
+                    MdiParent = this,
+                    Dock = DockStyle.Fill
+                };
                 profile.FormClosed += profile_FormClosed;
-                profile.MdiParent = this;
-                profile.Dock = DockStyle.Fill;
                 profile.Show();
             }
             else
@@ -122,7 +145,7 @@ namespace E_Commerce.Presentation
             }
         }
 
-        private void profile_FormClosed(object? sender, FormClosedEventArgs e)
+        private void profile_FormClosed(object sender, FormClosedEventArgs e)
         {
             profile = null;
         }
@@ -131,10 +154,14 @@ namespace E_Commerce.Presentation
         {
             if (orders == null || orders.IsDisposed)
             {
-                orders = new frmOrders(ServiceProviderContainer.ServiceProvider.GetRequiredService<IOrderServices>(), userId);
+                orders = new frmOrders(
+                    serviceProvider.GetRequiredService<IOrderServices>(),
+                    userId)
+                {
+                    MdiParent = this,
+                    Dock = DockStyle.Fill
+                };
                 orders.FormClosed += orders_FormClosed;
-                orders.MdiParent = this;
-                orders.Dock = DockStyle.Fill;
                 orders.Show();
             }
             else
@@ -148,17 +175,48 @@ namespace E_Commerce.Presentation
             orders = null;
         }
 
-        private void btnLogout_Click(object sender, EventArgs e)
+        private async void btnLogout_Click(object sender, EventArgs e)
         {
-            Application.Exit();
+            try
+            {
+                var userInfo = await accountServices.ViewProfile(userId);
+                if (userInfo != null)
+                {
+                    bool loggedOut = await accountServices.LogoutUserAsync(userInfo.Username);
+                    if (loggedOut)
+                    {
+                        Application.Exit();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Failed to logout.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error logging out: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
-        private void labelUsername_Click(object sender, EventArgs e)
+        private void btnCart_Click_1(object sender, EventArgs e)
         {
-        }
-
-        private void nightControlBox1_Click_1(object sender, EventArgs e)
-        {
+            if (cart == null)
+            {
+                cart = new frmCart(
+                    serviceProvider.GetRequiredService<ICartItemServices>(),
+                    userId)
+                {
+                    MdiParent = this,
+                    Dock = DockStyle.Fill
+                };
+                cart.FormClosed += cart_FormClosed;
+                cart.Show();
+            }
+            else
+            {
+                cart.Activate();
+            }
         }
     }
 }

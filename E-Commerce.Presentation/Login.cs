@@ -53,12 +53,12 @@ namespace E_Commerce.Presentation
 
         }
 
-        private async void login_btn_Click_1(object sender, EventArgs e)
+        private async void btnLogin_Click(object sender, EventArgs e)
         {
             var loginUserDto = new LoginUserDto
             {
-                UsernameOrEmail = login_username.Text.Trim(),
-                Password = login_password.Text
+                UsernameOrEmail = txtUsername.Text.Trim(),
+                Password = txtPassword.Text
             };
 
             var validationResult = await validator.ValidateAsync(loginUserDto);
@@ -113,23 +113,23 @@ namespace E_Commerce.Presentation
 
         private void login_showPassword_CheckedChanged_1(object sender, EventArgs e)
         {
-            if (login_showPassword.Checked)
-            {
-                login_password.PasswordChar = '\0';
-            }
-            else
-            {
-                login_password.PasswordChar = '*';
-            }
+            //if (login_showPassword.Checked)
+            //{
+            //    login_password.PasswordChar = '\0';
+            //}
+            //else
+            //{
+            //    login_password.PasswordChar = '*';
+            //}
         }
 
-        private void login_registerHere_Click_1(object sender, EventArgs e)
-        {
-            var signUpForm = ServiceProviderContainer.ServiceProvider.GetRequiredService<Signup>();
-            signUpForm.ShowDialog(); // استخدم ShowDialog عشان يرجع لـ Login بعد الإغلاق
-        }
+        //private void login_registerHere_Click_1(object sender, EventArgs e)
+        //{
+        //    var signUpForm = ServiceProviderContainer.ServiceProvider.GetRequiredService<Signup>();
+        //    signUpForm.ShowDialog(); // استخدم ShowDialog عشان يرجع لـ Login بعد الإغلاق
+        //}
 
-        private void login_close_Click_1(object sender, EventArgs e)
+        private void btnClose_Click(object sender, EventArgs e)
         {
             Application.Exit();
 

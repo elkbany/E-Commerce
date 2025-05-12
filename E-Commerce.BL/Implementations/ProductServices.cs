@@ -18,7 +18,7 @@ namespace E_Commerce.BL.Implementations
 
         public ProductServices(IProductRepository productRepository)
         {
-            productRepository = productRepository;
+            this.productRepository = productRepository ?? throw new ArgumentNullException(nameof(productRepository));
         }
         public async Task<ProductDTO> AddProductAsync(ProductDTO product)
         {

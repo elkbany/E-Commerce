@@ -84,7 +84,6 @@
             nightControlBox1.Name = "nightControlBox1";
             nightControlBox1.Size = new Size(139, 31);
             nightControlBox1.TabIndex = 5;
-            nightControlBox1.Click += nightControlBox1_Click_1;
             // 
             // label1
             // 
@@ -152,7 +151,6 @@
             labelUsername.Size = new Size(63, 25);
             labelUsername.TabIndex = 9;
             labelUsername.Text = "label2";
-            labelUsername.Click += labelUsername_Click;
             // 
             // btnProducts
             // 
@@ -188,6 +186,7 @@
             btnCart.TabIndex = 6;
             btnCart.Text = "Cart";
             btnCart.UseVisualStyleBackColor = false;
+            btnCart.Click += btnCart_Click_1;
             // 
             // btnOrders
             // 
@@ -262,7 +261,6 @@
             IsMdiContainer = true;
             Name = "frmMain";
             Text = "frmMain";
-            Load += frmMain_Load;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)btnDrag).EndInit();

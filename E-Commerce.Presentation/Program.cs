@@ -50,6 +50,8 @@ namespace E_Commerce.Presentation
                    services.AddScoped<frmProducts>();
                    services.AddScoped<frmOrders>();
                    services.AddScoped<frmOrderDetails>();
+                   services.AddScoped<frmCart>();
+
 
                    // Register Repositories
                    services.AddScoped<IProductRepository, ProductRepository>();
@@ -67,6 +69,7 @@ namespace E_Commerce.Presentation
                    services.AddScoped<IOrderDetailServices, OrderDetailServices>();
                    services.AddScoped<ICartItemServices, CartItemServices>();
                    services.AddScoped<IAccountServices, AccountServices>();
+
 
                    // Register Validators
                    services.AddTransient<IValidator<RegisterUserDto>, RegisterUserDtoValidator>();

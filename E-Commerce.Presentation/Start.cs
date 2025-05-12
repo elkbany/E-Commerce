@@ -15,6 +15,7 @@ namespace E_Commerce.Presentation
     public partial class Start : Form
     {
 
+
         [DllImport("user32.DLL", EntryPoint = "ReleaseCapture")]
         private extern static void ReleaseCapture();
 
