@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 namespace E_Commerce.BL.Contracts.Repositories
 {
     public interface ICartItemRepository: IGenericRepository<CartItem>
-
     {
     }
 }
