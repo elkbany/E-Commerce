@@ -130,7 +130,7 @@
             // 
             // pictureBox1
             // 
-            pictureBox1.Image = Properties.Resources._6184159_3094352;
+            //pictureBox1.Image = Properties.Resources._6184159_3094352;
             pictureBox1.Location = new Point(58, 31);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(526, 407);
