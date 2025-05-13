@@ -11,8 +11,6 @@ namespace E_Commerce.BL.Contracts.Repositories
     public interface ICartItemRepository: IGenericRepository<CartItem>
 
     {
-
-        Task<CartItem> AddAsync(CartItem entity, IDbContextTransaction transaction);
     }
 }
 
