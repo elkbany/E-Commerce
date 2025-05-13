@@ -15,7 +15,6 @@
 
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Signup));
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges3 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
@@ -54,7 +53,7 @@
             // 
             // pictureBox1
             // 
-            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
+            pictureBox1.Image = Properties.Resources._5423351_Mobile_login;
             pictureBox1.Location = new Point(21, 101);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(400, 400);
