@@ -52,6 +52,7 @@ namespace E_Commerce.BL.Implementations
                 cartItem.DateAdded = DateTime.Now;
 
                 var addedItem = await _cartRepo.AddAsync(cartItem, transaction);
+                await _cartRepo.CommitAsync(); // تأكيد الحفظ
                 await _cartRepo.CommitAsync(transaction);
 
                 var result = (await _cartRepo.FirstOrDefaultAsync(x => x.Id == addedItem.Id, x => x.Product)).Adapt<CartItemDTO>();
