@@ -21,6 +21,8 @@ namespace E_Commerce.BL.Contracts.Services
         Task<CartItemDTO> UpdateProductQuantityAsync(int cartItemId, UpdateCartItemQuantityDTO quantityDto);
         Task DeleteFromCartAsync(int cartItemId);
         Task SubmitCartAsync(int userId);
+
+
     }
 
 

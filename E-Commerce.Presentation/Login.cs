@@ -28,8 +28,8 @@ namespace E_Commerce.Presentation
         {
             var loginUserDto = new LoginUserDto
             {
-                UsernameOrEmail = txtUsername.Text.Trim(), // عدّلنا هنا
-                Password = txtPassword.Text // عدّلنا هنا
+                UsernameOrEmail = txtUsername.Text.Trim(),
+                Password = txtPassword.Text
             };
 
             var validationResult = await validator.ValidateAsync(loginUserDto);
@@ -59,14 +59,14 @@ namespace E_Commerce.Presentation
                     {
                         var adminForm = ServiceProviderContainer.ServiceProvider.GetRequiredService<Admin>();
                         adminForm.Show();
-                        this.Close();
+                        this.Hide(); // عدّل من Close() لـ Hide()
                     }
                     else
                     {
                         var clientForm = ServiceProviderContainer.ServiceProvider.GetRequiredService<frmMain>();
-                        clientForm.SetUserId(userId); // لو فيه SetUserId
+                        clientForm.SetUserId(userId);
                         clientForm.Show();
-                        this.Close();
+                        this.Hide(); // عدّل من Close() لـ Hide()
                     }
                 }
                 else
@@ -79,10 +79,9 @@ namespace E_Commerce.Presentation
                 MessageBox.Show($"Unexpected error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
         private void btnClose_Click(object sender, EventArgs e)
         {
-            this.Close();
+            this.Hide(); // عدّل من Close() لـ Hide()
         }
 
         private void showPassword_CheckedChanged(object sender, EventArgs e)

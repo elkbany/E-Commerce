@@ -44,6 +44,11 @@
             btnOrders = new Button();
             btnProfile = new Button();
             btnLogout = new Button();
+            btnProducts.Margin = new Padding(0, 10, 3, 3);
+            btnCart.Margin = new Padding(0, 10, 3, 3);
+            btnOrders.Margin = new Padding(0, 10, 3, 3);
+            btnProfile.Margin = new Padding(0, 10, 3, 3);
+            btnLogout.Margin = new Padding(0, 10, 3, 3); // عدّل الـ Margin بتاع btnLogout
             sidebarTransition = new System.Windows.Forms.Timer(components);
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)btnDrag).BeginInit();

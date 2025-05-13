@@ -24,6 +24,7 @@ namespace E_Commerce.Presentation
             lblProductName.Text = name;
             lblPrice.Text = $"${price:F2}";
             lblCategory.Text = category ?? "Unknown";
+
             // Placeholder image (replace with real image later)
             //pictureBoxProduct.Image = Properties.Resources.placeholder_product;
         }
@@ -32,6 +33,18 @@ namespace E_Commerce.Presentation
         {
             try
             {
+                // تحقق إذا كان المنتج موجود بالفعل في الـ Cart
+                var userCartItems = await cartServices.GetCartItemsByUserIdAsync(userId);
+                if (userCartItems.Any(item => item.ProductID == productId))
+                {
+                    MessageBox.Show("This product is already in your cart!", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                // تعطيل الزر مؤقتًا
+                btnAddToCart.Enabled = false;
+                btnAddToCart.Text = "Adding...";
+
                 var cartItemDto = new AddCartItemDTO
                 {
                     UserId = userId,
@@ -51,6 +64,12 @@ namespace E_Commerce.Presentation
             catch (Exception ex)
             {
                 MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                // إعادة تفعيل الزر
+                btnAddToCart.Enabled = true;
+                btnAddToCart.Text = "Add to Cart";
             }
         }
     }

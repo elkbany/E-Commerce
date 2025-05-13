@@ -20,13 +20,14 @@ namespace E_Commerce.Presentation
         {
             try
             {
-                var orderService = ServiceProviderContainer.ServiceProvider.GetRequiredService<IOrderServices>();
-                var order = await orderService.GetOrdertByIdAsync(orderId);
+                var orderService = ServiceProviderContainer.ServiceProvider.GetRequiredService<IOrderDetailServices>();
+                var order = await orderService.GetOrderDetailByIdAsync(orderId);
 
                 if (order != null)
                 {
-                    lblOrderId.Text = $"Order #{order.OrderID} Details";
-                    dataGridViewOrderDetails.DataSource = order.OrderDetails; // تعرض OrderDetails
+                    lblOrderId.Text = $"Order #{order.OrderId} Details";
+                    dataGridViewOrderDetails.DataSource = order;
+                    //dataGridViewOrderDetails.DataSource = order.; // تعرض OrderDetails
                 }
                 else
                 {
@@ -40,6 +41,16 @@ namespace E_Commerce.Presentation
         }
 
         private void btnClose_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void frmOrderDetails_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void login_close_Click(object sender, EventArgs e)
         {
             this.Close();
         }

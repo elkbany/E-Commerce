@@ -50,9 +50,8 @@ namespace E_Commerce.BL.Implementations
 
         public async Task<IEnumerable<ProductDTO>> GetAllProductsAsync()
         {
-            var products = productRepository.GetAllAsync();
-            var proMap = products.Adapt<List<ProductDTO>>();
-            return proMap;
+            var products = await productRepository.GetAllAsync(null, p => p.Category);
+            return products.Adapt<List<ProductDTO>>();
         }
 
         public async Task<ProductDTO> UpdateProductAsync(int id,ProductDTO productDTO)
