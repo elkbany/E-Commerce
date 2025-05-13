@@ -1,86 +1,94 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.ComponentModel;
 
 namespace E_Commerce.Presentation
 {
     public partial class AddForm : Form
     {
-        private FlowLayoutPanel _flowLayoutPanel;
+        private FlowLayoutPanel targetPanel;
 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public string ProductName { get; set; }
+        public string ProductName { get; private set; }
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public decimal ProductPrice { get; set; }
+        public decimal ProductPrice { get; private set; }
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public int UnitsInStock { get; set; }
+        public int UnitsInStock { get; private set; }
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        public string Category { get; set; }
-        public AddForm(FlowLayoutPanel flowLayoutPanel)
+        public string Category { get; private set; }
+
+        public AddForm(FlowLayoutPanel panel)
         {
             InitializeComponent();
-            _flowLayoutPanel = flowLayoutPanel;
+            targetPanel = panel;
         }
-        #region Old Code
 
-        //[System.ComponentModel.Browsable(false)]
-        //[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        //public string ProductName { get; private set; }
-
-        //[System.ComponentModel.Browsable(false)]
-        //[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        //public decimal ProductPrice { get; private set; }
-
-        //[System.ComponentModel.Browsable(false)]
-        //[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        //public int UnitsInStock { get; private set; }
-
-        //[System.ComponentModel.Browsable(false)]
-        //[DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
-        //public string ProductCategory { get; private set; }
-        ////public string Category { get; internal set; }
-
-        //private void btnAddSave_Click(object sender, EventArgs e)
+        //private void btnSave_Click(object sender, EventArgs e)
         //{
-        //    ProductName = txtAddName.Text;
-        //    decimal.TryParse(txtAddPrice.Text, out decimal price);
-        //    int.TryParse(txtAddUnitsInStock.Text, out int units);
+        //    if (string.IsNullOrWhiteSpace(txtName.Text) || string.IsNullOrWhiteSpace(txtPrice.Text) ||
+        //        string.IsNullOrWhiteSpace(txtUnitsInStock.Text) || string.IsNullOrWhiteSpace(txtCategory.Text))
+        //    {
+        //        MessageBox.Show("Please fill all fields.");
+        //        return;
+        //    }
 
+        //    ProductName = txtName.Text;
+
+        //    if (!decimal.TryParse(txtPrice.Text, out decimal price))
+        //    {
+        //        MessageBox.Show("Please enter a valid price.");
+        //        return;
+        //    }
         //    ProductPrice = price;
+
+        //    if (!int.TryParse(txtUnitsInStock.Text, out int units))
+        //    {
+        //        MessageBox.Show("Please enter a valid number for units in stock.");
+        //        return;
+        //    }
         //    UnitsInStock = units;
-        //    ProductCategory = txtAddCategory.Text;
+
+        //    Category = txtCategory.Text;
 
         //    this.DialogResult = DialogResult.OK;
         //    this.Close();
         //}
 
-        //private void btnAddCancel_Click(object sender, EventArgs e)
+        //private void btnCancel_Click(object sender, EventArgs e)
         //{
         //    this.DialogResult = DialogResult.Cancel;
         //    this.Close();
-        //} 
-        #endregion
-
-
-       
+        //}
 
         private void btnAddSave_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrWhiteSpace(txtAddName.Text) || string.IsNullOrWhiteSpace(txtAddPrice.Text) ||
+                string.IsNullOrWhiteSpace(txtAddUnitsInStock.Text) || string.IsNullOrWhiteSpace(txtAddCategory.Text))
+            {
+                MessageBox.Show("Please fill all fields.");
+                return;
+            }
+
             ProductName = txtAddName.Text;
-            ProductPrice = decimal.Parse(txtAddPrice.Text);
-            UnitsInStock = int.Parse(txtAddUnitsInStock.Text);
+
+            if (!decimal.TryParse(txtAddPrice.Text, out decimal price))
+            {
+                MessageBox.Show("Please enter a valid price.");
+                return;
+            }
+            ProductPrice = price;
+
+            if (!int.TryParse(txtAddUnitsInStock.Text, out int units))
+            {
+                MessageBox.Show("Please enter a valid number for units in stock.");
+                return;
+            }
+            UnitsInStock = units;
+
             Category = txtAddCategory.Text;
 
-            // غلق الفورم بعد الحفظ
             this.DialogResult = DialogResult.OK;
             this.Close();
-
         }
 
         private void btnAddCancel_Click(object sender, EventArgs e)
@@ -89,4 +97,5 @@ namespace E_Commerce.Presentation
             this.Close();
         }
     }
+
 }
