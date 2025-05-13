@@ -30,7 +30,6 @@ namespace E_Commerce.Presentation
                 dataGridViewOrderDetails.DataSource = orderDetails;
 
                     // Customize column headers
-                    dataGridViewOrderDetails.Columns["Id"].Visible = false; // Hide Id column
                     dataGridViewOrderDetails.Columns["OrderId"].Visible = false; // Hide OrderId column
                     dataGridViewOrderDetails.Columns["ProductId"].Visible = false; // Hide ProductId column
                     dataGridViewOrderDetails.Columns["ProductName"].HeaderText = "Product Name";

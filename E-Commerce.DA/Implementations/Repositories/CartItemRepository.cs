@@ -34,18 +34,4 @@ public class CartItemRepository : GenericRepository<CartItem>, ICartItemReposito
         }
     }
 
-    public async Task<IDbContextTransaction> BeginTransactionAsync()
-    {
-        return await _context.Database.BeginTransactionAsync();
-    }
-
-    public async Task CommitTransactionAsync(IDbContextTransaction transaction)
-    {
-        await transaction.CommitAsync();
-    }
-
-    public async Task RollbackTransactionAsync(IDbContextTransaction transaction)
-    {
-        await transaction.RollbackAsync();
-    }
 }
