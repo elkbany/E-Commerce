@@ -22,12 +22,12 @@ namespace E_Commerce.Presentation
         {
             
                 // Fetch order details using the new method
-                var orderDetails = await _orderDetailServices.GetOrderDetailsByOrderIdAsync(orderId);
+                var orderDetails = await _orderDetailServices.GetOrderDetailByIdAsync(orderId);
 
-                if (orderDetails != null && orderDetails.Any())
+            if (orderDetails != null)
                 {
                     lblOrderId.Text = $"Order #{orderId} Details";
-                    dataGridViewOrderDetails.DataSource = orderDetails.ToList();
+                dataGridViewOrderDetails.DataSource = orderDetails;
 
                     // Customize column headers
                     dataGridViewOrderDetails.Columns["Id"].Visible = false; // Hide Id column
@@ -47,6 +47,16 @@ namespace E_Commerce.Presentation
         }
 
         private void btnClose_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void frmOrderDetails_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void login_close_Click(object sender, EventArgs e)
         {
             this.Close();
         }

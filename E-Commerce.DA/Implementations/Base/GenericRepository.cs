@@ -16,8 +16,8 @@ namespace E_Commerce.DA.Implementations.Base
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
-        protected readonly DBContext _context;
-        private readonly DbSet<T> _dbSet;
+        protected readonly DBContext _context; // تغيير من private لـ protected
+        protected readonly DbSet<T> _dbSet; // تغيير من private لـ protected
 
         public GenericRepository(DBContext context)
         {

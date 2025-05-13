@@ -53,6 +53,7 @@ namespace E_Commerce.Presentation
                     services.AddScoped<frmOrders>();
                     services.AddScoped<frmOrderDetails>();
                     services.AddScoped<frmCart>();
+                    services.AddScoped<DBContext>();
 
 
 

@@ -47,24 +47,34 @@ namespace E_Commerce.Presentation
             }
         }
 
+        private static readonly SemaphoreSlim _lock = new SemaphoreSlim(1, 1);
+
         private async void LoadProducts()
         {
             try
             {
+                await _lock.WaitAsync();
                 var products = await productServices.GetAllProductsAsync();
+                if (products == null || !products.Any())
+                {
+                    lblNoProducts.Visible = true;
+                    flowLayoutPanelProducts.Controls.Clear();
+                    return;
+                }
+
                 var selectedCategory = comboBoxCategory.SelectedItem as CategoryDTO;
                 string searchTerm = txtSearch.Text.Trim();
 
-                // Filter products
                 IEnumerable<ProductDTO> filteredProducts = products;
                 if (!string.IsNullOrEmpty(searchTerm))
                 {
-                    filteredProducts = filteredProducts.Where(p => p.Name.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ||
-                                                                 p.Description.Contains(searchTerm, StringComparison.OrdinalIgnoreCase));
+                    filteredProducts = filteredProducts.Where(p =>
+                        (p.Name?.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ?? false) ||
+                        (p.Description?.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ?? false));
                 }
-                else if (selectedCategory?.Name != "All")
+                if (selectedCategory?.Name != "All")
                 {
-                    filteredProducts = filteredProducts.Where(p => p.Category == selectedCategory.Name);
+                    filteredProducts = filteredProducts.Where(p => p.Category == selectedCategory.Name); // هنا التحقق
                 }
 
                 flowLayoutPanelProducts.Controls.Clear();
@@ -88,8 +98,11 @@ namespace E_Commerce.Presentation
             {
                 MessageBox.Show($"Error loading products: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            finally
+            {
+                _lock.Release();
+            }
         }
-
         private void comboBoxCategory_SelectedIndexChanged(object sender, EventArgs e)
         {
             LoadProducts();

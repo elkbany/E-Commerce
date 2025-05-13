@@ -1,5 +1,6 @@
 ﻿using E_Commerce.BL.Contracts.Services;
 using E_Commerce.BL.Features.CartItem.DTO;
+using E_Commerce.BL.Features.Category.DTOs;
 using System;
 using System.Windows.Forms;
 
@@ -18,20 +19,31 @@ namespace E_Commerce.Presentation
             this.userId = userId;
         }
 
-        public void SetProductData(int productId, string name, decimal price, string category)
+        public void SetProductData(int id, string name, decimal price, string category)
         {
-            this.productId = productId;
+            productId = id;
             lblProductName.Text = name;
-            lblPrice.Text = $"${price:F2}";
-            lblCategory.Text = category ?? "Unknown";
-            // Placeholder image (replace with real image later)
-            //pictureBoxProduct.Image = Properties.Resources.placeholder_product;
-        }
+            lblPrice.Text = $"${price}";
+            lblCategory.Text = category ?? "Unknown"; // عرض الـ Category كـ string مباشرةً
+                                                      // إعداد الصورة إذا كانت موجودة
 
+        }
         private async void btnAddToCart_Click(object sender, EventArgs e)
         {
             try
             {
+                // تحقق إذا كان المنتج موجود بالفعل في الـ Cart
+                var userCartItems = await cartServices.GetCartItemsByUserIdAsync(userId);
+                if (userCartItems.Any(item => item.ProductID == productId))
+                {
+                    MessageBox.Show("This product is already in your cart!", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
+                // تعطيل الزر مؤقتًا
+                btnAddToCart.Enabled = false;
+                btnAddToCart.Text = "Adding...";
+
                 var cartItemDto = new AddCartItemDTO
                 {
                     UserId = userId,
@@ -51,6 +63,12 @@ namespace E_Commerce.Presentation
             catch (Exception ex)
             {
                 MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                // إعادة تفعيل الزر
+                btnAddToCart.Enabled = true;
+                btnAddToCart.Text = "Add to Cart";
             }
         }
     }

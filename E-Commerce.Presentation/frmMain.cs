@@ -1,6 +1,8 @@
 ﻿using E_Commerce.BL.Contracts.Services;
+using E_Commerce.BL.Features.User.DTOs;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace E_Commerce.Presentation
@@ -9,49 +11,123 @@ namespace E_Commerce.Presentation
     {
         private readonly IAccountServices accountServices;
         private int userId;
-        private frmProducts products;
-        private frmProfile profile;
-        private frmOrders orders;
-        private frmCart cart;
-        private bool sidebarExpand = true; // أضفت المتغيّر ده عشان sidebarTransition_Tick
+        private UserIformationDTO userInfo;
+        private readonly Lazy<frmProducts> products;
+        private readonly Lazy<frmCart> cart;
+        private readonly Lazy<frmOrders> orders;
+        private readonly Lazy<frmProfile> profile;
+
+        private bool sidebarExpand = true;
+        private Button activeButton;
+
+        private Form currentForm; // تتبع الـ Form المفتوح حاليًا
+
+        private bool isDragging = false;
+        private Point lastLocation;
 
         public frmMain(IAccountServices accountServices)
         {
             InitializeComponent();
             this.accountServices = accountServices;
-        }
 
-        public void SetUserId(int userId)
-        {
-            this.userId = userId;
-            LoadUserInfo();
-            LoadHomeForm(); // هنضيف استدعاء LoadHomeForm هنا عشان المنتجات تظهر أول ما تفتح frmMain
-        }
-
-        private void LoadHomeForm()
-        {
-            foreach (Form child in this.MdiChildren)
-            {
-                child.Close();
-            }
-
-            products = new frmProducts(
+            products = new Lazy<frmProducts>(() => new frmProducts(
                 ServiceProviderContainer.ServiceProvider.GetRequiredService<IProductServices>(),
                 ServiceProviderContainer.ServiceProvider.GetRequiredService<ICartItemServices>(),
                 ServiceProviderContainer.ServiceProvider.GetRequiredService<ICategoryServices>(),
                 userId)
             {
                 MdiParent = this,
-                WindowState = FormWindowState.Maximized
-            };
-            products.Show();
+                Dock = DockStyle.Fill
+            });
+
+            cart = new Lazy<frmCart>(() => new frmCart(
+                ServiceProviderContainer.ServiceProvider.GetRequiredService<ICartItemServices>(),
+                userId)
+            {
+                MdiParent = this,
+                Dock = DockStyle.Fill
+            });
+
+            orders = new Lazy<frmOrders>(() => new frmOrders(
+                ServiceProviderContainer.ServiceProvider.GetRequiredService<IOrderServices>(),
+                userId)
+            {
+                MdiParent = this,
+                Dock = DockStyle.Fill
+            });
+
+            profile = new Lazy<frmProfile>(() => new frmProfile(
+                ServiceProviderContainer.ServiceProvider.GetRequiredService<IAccountServices>(),
+                userId)
+            {
+                MdiParent = this,
+                Dock = DockStyle.Fill
+            });
+
+            AddButtonEvents(btnProducts);
+            AddButtonEvents(btnCart);
+            AddButtonEvents(btnOrders);
+            AddButtonEvents(btnProfile);
+            AddButtonEvents(btnLogout);
+
+            panel1.MouseDown += Panel1_MouseDown;
+            panel1.MouseMove += Panel1_MouseMove;
+            panel1.MouseUp += Panel1_MouseUp;
+
+            //// ضبط الأبعاد بناءً على حجم الشاشة
+            //int screenWidth = Screen.PrimaryScreen.Bounds.Width;
+            //int screenHeight = Screen.PrimaryScreen.Bounds.Height;
+            //this.ClientSize = new Size((int)(screenWidth * 0.8), (int)(screenHeight * 0.9)); // 80% عرض و 90% ارتفاع الشاشة
+            //this.Resize += frmMain_Resize;
         }
 
+        public void SetUserId(int userId)
+        {
+            this.userId = userId;
+            LoadUserInfo();
+            LoadHomeForm();
+        }
+
+        private void LoadHomeForm()
+        {
+            ShowSingleForm(new Lazy<Form>(() => products.Value), btnProducts);
+        }
+
+        private void ShowSingleForm(Lazy<Form> formToShow, Button button)
+        {
+            if (currentForm != null && currentForm.IsHandleCreated && !currentForm.IsDisposed)
+            {
+                currentForm.Hide();
+            }
+
+            var form = formToShow.Value;
+            if (!form.IsHandleCreated || form.IsDisposed)
+            {
+                form.FormClosed += (s, e) => currentForm = null;
+                form.Show();
+            }
+            else
+            {
+                form.Activate();
+            }
+
+            currentForm = form;
+
+            // ضبط الـ Active Button
+            if (activeButton != null)
+                activeButton.BackColor = Color.FromArgb(0, 120, 212);
+            activeButton = button;
+            activeButton.BackColor = Color.FromArgb(50, 160, 252);
+        }
         private async void LoadUserInfo()
         {
             try
             {
-                var userInfo = await accountServices.ViewProfile(userId);
+                if (userInfo == null)
+                {
+                    userInfo = await accountServices.ViewProfile(userId);
+                }
+
                 if (userInfo != null)
                 {
                     labelUsername.Text = userInfo.Username;
@@ -69,22 +145,27 @@ namespace E_Commerce.Presentation
 
         private void sidebarTransition_Tick(object sender, EventArgs e)
         {
+            int minWidth = 66;
+            int maxWidth = 254;
+
             if (sidebarExpand)
             {
                 sidebar.Width -= 10;
-                if (sidebar.Width <= 66)
+                if (sidebar.Width <= minWidth)
                 {
                     sidebarExpand = false;
                     sidebarTransition.Stop();
+                    //btnDrag.Image = Properties.Resources.expand_icon;
                 }
             }
             else
             {
                 sidebar.Width += 10;
-                if (sidebar.Width >= 254)
+                if (sidebar.Width >= maxWidth)
                 {
                     sidebarExpand = true;
                     sidebarTransition.Stop();
+                    //btnDrag.Image = Properties.Resources.collapse_icon;
                 }
             }
         }
@@ -96,104 +177,44 @@ namespace E_Commerce.Presentation
 
         private void btnProducts_Click(object sender, EventArgs e)
         {
-            if (products == null || products.IsDisposed)
-            {
-                products = new frmProducts(
-                    ServiceProviderContainer.ServiceProvider.GetRequiredService<IProductServices>(),
-                    ServiceProviderContainer.ServiceProvider.GetRequiredService<ICartItemServices>(),
-                    ServiceProviderContainer.ServiceProvider.GetRequiredService<ICategoryServices>(),
-                    userId)
-                {
-                    MdiParent = this,
-                    Dock = DockStyle.Fill
-                };
-                products.FormClosed += home_FormClosed;
-                products.Show();
-            }
-            else
-            {
-                products.Activate();
-            }
+            ShowSingleForm(new Lazy<Form>(() => products.Value), btnProducts);
         }
 
         private void home_FormClosed(object sender, FormClosedEventArgs e)
         {
-            products = null;
+            // مافيش حاجة هنا دلوقتي لأن Lazy بيحتفظ بالـ Instance
         }
 
         private void btnCart_Click(object sender, EventArgs e)
         {
-            if (cart == null || cart.IsDisposed)
-            {
-                cart = new frmCart(
-                    ServiceProviderContainer.ServiceProvider.GetRequiredService<ICartItemServices>(),
-                    userId)
-                {
-                    MdiParent = this,
-                    Dock = DockStyle.Fill
-                };
-                cart.FormClosed += cart_FormClosed;
-                cart.Show();
-            }
-            else
-            {
-                cart.Activate();
-            }
+            ShowSingleForm(new Lazy<Form>(() => cart.Value), btnCart);
         }
 
         private void cart_FormClosed(object sender, FormClosedEventArgs e)
         {
-            cart = null;
+            // مافيش حاجة هنا دلوقتي
         }
 
         private void btnProfile_Click(object sender, EventArgs e)
         {
-            if (profile == null || profile.IsDisposed)
-            {
-                profile = new frmProfile(
-                    ServiceProviderContainer.ServiceProvider.GetRequiredService<IAccountServices>(),
-                    userId)
-                {
-                    MdiParent = this,
-                    Dock = DockStyle.Fill
-                };
-                profile.FormClosed += profile_FormClosed;
-                profile.Show();
-            }
-            else
-            {
-                profile.Activate();
-            }
+            ShowSingleForm(new Lazy<Form>(() => profile.Value), btnProfile);
         }
 
         private void profile_FormClosed(object sender, FormClosedEventArgs e)
         {
-            profile = null;
+            // مافيش حاجة هنا دلوقتي
         }
 
         private void btnOrders_Click(object sender, EventArgs e)
         {
-            if (orders == null || orders.IsDisposed)
-            {
-                orders = new frmOrders(
-                    ServiceProviderContainer.ServiceProvider.GetRequiredService<IOrderServices>(),
-                    userId)
-                {
-                    MdiParent = this,
-                    Dock = DockStyle.Fill
-                };
-                orders.FormClosed += orders_FormClosed;
-                orders.Show();
-            }
-            else
-            {
-                orders.Activate();
-            }
+            ShowSingleForm(new Lazy<Form>(() => orders.Value), btnOrders);
+
+
         }
 
         private void orders_FormClosed(object sender, FormClosedEventArgs e)
         {
-            orders = null;
+            // مافيش حاجة هنا دلوقتي
         }
 
         private async void btnLogout_Click(object sender, EventArgs e)
@@ -206,26 +227,106 @@ namespace E_Commerce.Presentation
                     bool loggedOut = await accountServices.LogoutUserAsync(userInfo.Username);
                     if (loggedOut)
                     {
-                        Application.Exit();
+                        if (products.Value.IsHandleCreated && !products.Value.IsDisposed) products.Value.Close();
+                        if (cart.Value.IsHandleCreated && !cart.Value.IsDisposed) cart.Value.Close();
+                        if (orders.Value.IsHandleCreated && !orders.Value.IsDisposed) orders.Value.Close();
+                        if (profile.Value.IsHandleCreated && !profile.Value.IsDisposed) profile.Value.Close();
+
+                        var loginForm = ServiceProviderContainer.ServiceProvider.GetRequiredService<Login>();
+                        loginForm.StartPosition = FormStartPosition.Manual;
+                        loginForm.Location = this.Location;
+                        loginForm.Show();
+
+                        this.Close();
                     }
                     else
                     {
+                        System.Diagnostics.Debug.WriteLine($"Failed to logout user with userId: {userId}");
                         MessageBox.Show("Failed to logout.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
             catch (Exception ex)
             {
+                System.Diagnostics.Debug.WriteLine($"Error logging out user with userId: {userId}. Message: {ex.Message}");
+                if (ex.InnerException != null)
+                {
+                    System.Diagnostics.Debug.WriteLine($"Inner Exception: {ex.InnerException.Message}");
+                }
                 MessageBox.Show($"Error logging out: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        private void labelUsername_Click(object sender, EventArgs e)
+        private void AddButtonEvents(Button button)
         {
+            button.MouseEnter += (s, e) =>
+            {
+                if (button != activeButton)
+                    button.BackColor = Color.FromArgb(30, 140, 232);
+            };
+            button.MouseLeave += (s, e) =>
+            {
+                if (button != activeButton)
+                    button.BackColor = Color.FromArgb(0, 120, 212);
+            };
+            button.Click += (s, e) =>
+            {
+                if (activeButton != null)
+                    activeButton.BackColor = Color.FromArgb(0, 120, 212);
+                activeButton = button;
+                activeButton.BackColor = Color.FromArgb(50, 160, 252);
+            };
         }
 
-        private void nightControlBox1_Click(object sender, EventArgs e)
+        private void PictureBox1_Paint(object sender, PaintEventArgs e)
         {
+            using (var pen = new Pen(Color.FromArgb(0, 120, 212), 3)) // Border باللون الأزرق بتاع الـ Sidebar
+            {
+                e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+                e.Graphics.DrawEllipse(pen, 1, 1, pictureBox1.Width - 4, pictureBox1.Height - 4);
+            }
         }
+        private void Panel1_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                isDragging = true;
+                lastLocation = e.Location;
+            }
+        }
+
+        private void Panel1_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (isDragging)
+            {
+                this.Location = new Point(
+                    (this.Location.X - lastLocation.X) + e.X,
+                    (this.Location.Y - lastLocation.Y) + e.Y);
+                this.Update();
+            }
+        }
+
+        private void Panel1_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                isDragging = false;
+            }
+        }
+
+        //private void frmMain_Resize(object sender, EventArgs e)
+        //{
+        //    int screenWidth = Screen.PrimaryScreen.Bounds.Width;
+        //    int screenHeight = Screen.PrimaryScreen.Bounds.Height;
+        //    this.ClientSize = new Size((int)(screenWidth * 0.8), (int)(screenHeight * 0.9));
+
+        //    // ضبط المواقع والأحجام النسبية للـ Controls
+        //    panel1.Width = this.ClientSize.Width;
+        //    sidebar.Width = (int)(this.ClientSize.Width * 0.2); // 20% من العرض
+        //    sidebar.Height = this.ClientSize.Height - panel1.Height;
+        //    sidebar.Location = new Point(0, panel1.Height);
+        //}
     }
+
+    
 }

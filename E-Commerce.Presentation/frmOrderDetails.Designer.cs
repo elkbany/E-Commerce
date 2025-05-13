@@ -28,11 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges3 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges4 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             dataGridViewOrderDetails = new DataGridView();
             lblOrderId = new Label();
             btnClose = new Guna.UI2.WinForms.Guna2Button();
+            login_close = new Label();
             ((System.ComponentModel.ISupportInitialize)dataGridViewOrderDetails).BeginInit();
             SuspendLayout();
             // 
@@ -40,6 +41,7 @@
             // 
             dataGridViewOrderDetails.AllowUserToAddRows = false;
             dataGridViewOrderDetails.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridViewOrderDetails.BackgroundColor = Color.White;
             dataGridViewOrderDetails.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridViewOrderDetails.Location = new Point(12, 50);
             dataGridViewOrderDetails.Name = "dataGridViewOrderDetails";
@@ -62,7 +64,7 @@
             // 
             btnClose.AutoRoundedCorners = true;
             btnClose.BorderRadius = 21;
-            btnClose.CustomizableEdges = customizableEdges1;
+            btnClose.CustomizableEdges = customizableEdges3;
             btnClose.DisabledState.BorderColor = Color.DarkGray;
             btnClose.DisabledState.CustomBorderColor = Color.DarkGray;
             btnClose.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
@@ -70,29 +72,43 @@
             btnClose.FillColor = Color.FromArgb(0, 120, 212);
             btnClose.Font = new Font("Segoe UI", 9F);
             btnClose.ForeColor = Color.White;
-            btnClose.Location = new Point(279, 456);
+            btnClose.Location = new Point(293, 472);
             btnClose.Name = "btnClose";
-            btnClose.ShadowDecoration.CustomizableEdges = customizableEdges2;
+            btnClose.ShadowDecoration.CustomizableEdges = customizableEdges4;
             btnClose.Size = new Size(180, 45);
             btnClose.TabIndex = 2;
-            btnClose.Text = "guna2Button1";
+            btnClose.Text = "Close";
             btnClose.Click += btnClose_Click;
+            // 
+            // login_close
+            // 
+            login_close.AutoSize = true;
+            login_close.Cursor = Cursors.Hand;
+            login_close.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            login_close.Location = new Point(770, 15);
+            login_close.Name = "login_close";
+            login_close.Size = new Size(18, 20);
+            login_close.TabIndex = 16;
+            login_close.Text = "X";
+            login_close.Click += login_close_Click;
             // 
             // frmOrderDetails
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
-            ClientSize = new Size(800, 500);
+            ClientSize = new Size(800, 529);
+            Controls.Add(login_close);
             Controls.Add(btnClose);
             Controls.Add(lblOrderId);
             Controls.Add(dataGridViewOrderDetails);
-            FormBorderStyle = FormBorderStyle.FixedDialog;
+            FormBorderStyle = FormBorderStyle.None;
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "frmOrderDetails";
             StartPosition = FormStartPosition.CenterParent;
             Text = "Order Details";
+            Load += frmOrderDetails_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridViewOrderDetails).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -103,5 +119,6 @@
         private DataGridView dataGridViewOrderDetails;
         private Label lblOrderId;
         private Guna.UI2.WinForms.Guna2Button btnClose;
+        private Label login_close;
     }
 }
