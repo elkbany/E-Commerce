@@ -17,6 +17,6 @@ namespace E_Commerce.BL.Contracts.Services
         Task<IEnumerable<OrderDetailDTO>> GetAllProductsAsync();
         Task<OrderDetailDTO> UpdateProductAsync(OrderDetail orderDetail);
         Task DeleteOrderDetailedAsync(int id);
-
+        Task<List<OrderDetailDTO>> GetOrderDetailsByOrderIdAsync(int orderId);
     }
 }
