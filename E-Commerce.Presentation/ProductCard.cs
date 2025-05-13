@@ -1,5 +1,6 @@
 ﻿using E_Commerce.BL.Contracts.Services;
 using E_Commerce.BL.Features.CartItem.DTO;
+using E_Commerce.BL.Features.Category.DTOs;
 using System;
 using System.Windows.Forms;
 
@@ -18,17 +19,15 @@ namespace E_Commerce.Presentation
             this.userId = userId;
         }
 
-        public void SetProductData(int productId, string name, decimal price, string category)
+        public void SetProductData(int id, string name, decimal price, string category)
         {
-            this.productId = productId;
+            productId = id;
             lblProductName.Text = name;
-            lblPrice.Text = $"${price:F2}";
-            lblCategory.Text = category ?? "Unknown";
+            lblPrice.Text = $"${price}";
+            lblCategory.Text = category ?? "Unknown"; // عرض الـ Category كـ string مباشرةً
+                                                      // إعداد الصورة إذا كانت موجودة
 
-            // Placeholder image (replace with real image later)
-            //pictureBoxProduct.Image = Properties.Resources.placeholder_product;
         }
-
         private async void btnAddToCart_Click(object sender, EventArgs e)
         {
             try
