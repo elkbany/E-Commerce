@@ -12,6 +12,6 @@ namespace E_Commerce.BL.Contracts.Repositories
     public interface IProductRepository : IGenericRepository<Product>
     {
         Product GetByName(string name);
-        Task<Product> GetByIdAsync(int id, IDbContextTransaction transaction = null); // دالة مع Transaction اختياري    }
+        public Task<IEnumerable<Product>> GetAllAsync(Expression<Func<Product, bool>>? filter = null, params Expression<Func<Product, object>>[] includes);
     }
 }

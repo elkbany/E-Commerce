@@ -1,10 +1,10 @@
 ﻿using E_Commerce.BL.Contracts.Services;
 using E_Commerce.BL.Features.Category.DTOs;
 using E_Commerce.BL.Features.Product.DTOs;
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace E_Commerce.Presentation
@@ -16,6 +16,7 @@ namespace E_Commerce.Presentation
         private readonly ICategoryServices categoryServices;
         private readonly int userId;
         private List<CategoryDTO> categories;
+        private readonly SemaphoreSlim _lock = new SemaphoreSlim(1, 1);
 
         public frmProducts(IProductServices productServices, ICartItemServices cartServices, ICategoryServices categoryServices, int userId)
         {
@@ -33,6 +34,11 @@ namespace E_Commerce.Presentation
             try
             {
                 categories = (await categoryServices.GetAllCategoryAsync()).ToList();
+                Console.WriteLine($"Categories loaded: {categories.Count}");
+                foreach (var cat in categories)
+                {
+                    Console.WriteLine($"Category: {cat.Name}");
+                }
                 comboBoxCategory.Items.Add(new CategoryDTO { Name = "All" });
                 foreach (var category in categories)
                 {
@@ -47,8 +53,6 @@ namespace E_Commerce.Presentation
             }
         }
 
-        private static readonly SemaphoreSlim _lock = new SemaphoreSlim(1, 1);
-
         private async void LoadProducts()
         {
             try
@@ -58,6 +62,7 @@ namespace E_Commerce.Presentation
                 if (products == null || !products.Any())
                 {
                     lblNoProducts.Visible = true;
+                    lblProductCount.Text = "Products: 0"; // إضافة: إظهار العدد 0 لو مفيش منتجات
                     flowLayoutPanelProducts.Controls.Clear();
                     return;
                 }
@@ -74,7 +79,7 @@ namespace E_Commerce.Presentation
                 }
                 if (selectedCategory?.Name != "All")
                 {
-                    filteredProducts = filteredProducts.Where(p => p.Category == selectedCategory.Name); // هنا التحقق
+                    filteredProducts = filteredProducts.Where(p => p.Category != null && p.Category.Equals(selectedCategory.Name, StringComparison.OrdinalIgnoreCase));
                 }
 
                 flowLayoutPanelProducts.Controls.Clear();
@@ -82,6 +87,7 @@ namespace E_Commerce.Presentation
                 if (filteredProducts.Any())
                 {
                     lblNoProducts.Visible = false;
+                    lblProductCount.Text = $"Products: {filteredProducts.Count()}"; // إضافة: إظهار عدد المنتجات
                     foreach (var product in filteredProducts)
                     {
                         var productCard = new ProductCard(cartServices, userId);
@@ -92,6 +98,7 @@ namespace E_Commerce.Presentation
                 else
                 {
                     lblNoProducts.Visible = true;
+                    lblProductCount.Text = "Products: 0"; // إضافة: إظهار العدد 0 لو مفيش منتجات بعد الفلترة
                 }
             }
             catch (Exception ex)
@@ -112,5 +119,6 @@ namespace E_Commerce.Presentation
         {
             LoadProducts();
         }
+
     }
 }

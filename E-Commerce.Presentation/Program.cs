@@ -1,4 +1,5 @@
 ﻿using AdminTest;
+using E_Commerce.BL.Configurations; // أضف Namespace ده لو فيه ملف ProductMappingConfig
 using E_Commerce.BL.Contracts.Repositories;
 using E_Commerce.BL.Contracts.Services;
 using E_Commerce.BL.Features.User.DTOs;
@@ -31,7 +32,6 @@ namespace E_Commerce.Presentation
             var startForm = ServiceProviderContainer.ServiceProvider.GetRequiredService<Start>();
             Application.Run(startForm);
         }
-        
 
         static IHostBuilder CreateHostBuilder() =>
             Host.CreateDefaultBuilder()
@@ -53,9 +53,6 @@ namespace E_Commerce.Presentation
                     services.AddScoped<frmOrders>();
                     services.AddScoped<frmOrderDetails>();
                     services.AddScoped<frmCart>();
-                    services.AddScoped<DBContext>();
-
-
 
                     // Register Repositories
                     services.AddScoped<IProductRepository, ProductRepository>();
@@ -78,8 +75,9 @@ namespace E_Commerce.Presentation
                     services.AddTransient<IValidator<RegisterUserDto>, RegisterUserDtoValidator>();
                     services.AddTransient<IValidator<LoginUserDto>, LoginUserDtoValidator>();
                     services.AddTransient<IValidator<int>, OrderIdValidator>();
+
+                    // Register Mapster Mapping Configuration
+                    ProductMappingConfig.Configure();
                 });
     }
-
-
 }
