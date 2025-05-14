@@ -76,6 +76,10 @@ namespace E_Commerce.Presentation
                     services.AddTransient<IValidator<LoginUserDto>, LoginUserDtoValidator>();
                     services.AddTransient<IValidator<int>, OrderIdValidator>();
                     services.AddTransient<frmMain>();
+                    //services.AddTransient<Login>();
+                    //services.AddTransient<Signup>();
+
+
                     // Register Mapster Mapping Configuration
                     ProductMappingConfig.Configure();
                 });

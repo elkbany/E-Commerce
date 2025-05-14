@@ -78,8 +78,16 @@ namespace E_Commerce.Presentation
 
         private void signup_showPassword_CheckedChanged_1(object sender, EventArgs e)
         {
-            signup_password.UseSystemPasswordChar = !signup_showPassword.Checked;
-            signup_confirmpassword.UseSystemPasswordChar = !signup_showPassword.Checked;
+            if (signup_showPassword.Checked)
+            {
+                signup_password.PasswordChar = '\0'; // إظهار الباسورد
+                signup_confirmpassword.PasswordChar = '\0'; // إظهار التأكيد
+            }
+            else
+            {
+                signup_password.PasswordChar = '●'; // إخفاء الباسورد
+                signup_confirmpassword.PasswordChar = '●'; // إخفاء التأكيد
+            }
         }
 
         private void Signup_MouseDown(object sender, MouseEventArgs e)

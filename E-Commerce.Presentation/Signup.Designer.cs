@@ -15,20 +15,21 @@
 
         private void InitializeComponent()
         {
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges15 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges16 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges17 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges18 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges19 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges20 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges21 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges22 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges23 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges24 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges25 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges26 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges27 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges28 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            components = new System.ComponentModel.Container();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges3 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges4 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges5 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges6 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges7 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges8 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges9 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges10 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges11 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges12 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges13 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges14 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             pictureBox1 = new PictureBox();
             lblTitle = new Label();
             lblFirstName = new Label();
@@ -48,15 +49,16 @@
             label4 = new Label();
             signup_loginHere = new Label();
             signup_close = new Label();
+            guna2BorderlessForm1 = new Guna.UI2.WinForms.Guna2BorderlessForm(components);
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
             // pictureBox1
             // 
             pictureBox1.Image = Properties.Resources._5423351_Mobile_login;
-            pictureBox1.Location = new Point(21, 101);
+            pictureBox1.Location = new Point(34, 92);
             pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(400, 400);
+            pictureBox1.Size = new Size(568, 469);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
@@ -65,7 +67,7 @@
             // 
             lblTitle.AutoSize = true;
             lblTitle.Font = new Font("Segoe UI", 20F, FontStyle.Bold);
-            lblTitle.Location = new Point(500, 30);
+            lblTitle.Location = new Point(678, 31);
             lblTitle.Name = "lblTitle";
             lblTitle.Size = new Size(117, 37);
             lblTitle.TabIndex = 1;
@@ -75,7 +77,7 @@
             // 
             lblFirstName.AutoSize = true;
             lblFirstName.Font = new Font("Segoe UI", 12F);
-            lblFirstName.Location = new Point(500, 80);
+            lblFirstName.Location = new Point(678, 81);
             lblFirstName.Name = "lblFirstName";
             lblFirstName.Size = new Size(86, 21);
             lblFirstName.TabIndex = 2;
@@ -84,15 +86,15 @@
             // signup_firstName
             // 
             signup_firstName.BorderRadius = 10;
-            signup_firstName.CustomizableEdges = customizableEdges15;
+            signup_firstName.CustomizableEdges = customizableEdges1;
             signup_firstName.DefaultText = "";
             signup_firstName.Font = new Font("Segoe UI", 12F);
-            signup_firstName.Location = new Point(500, 110);
+            signup_firstName.Location = new Point(678, 111);
             signup_firstName.Name = "signup_firstName";
             signup_firstName.PasswordChar = '\0';
             signup_firstName.PlaceholderText = "Enter first name";
             signup_firstName.SelectedText = "";
-            signup_firstName.ShadowDecoration.CustomizableEdges = customizableEdges16;
+            signup_firstName.ShadowDecoration.CustomizableEdges = customizableEdges2;
             signup_firstName.Size = new Size(300, 40);
             signup_firstName.TabIndex = 3;
             // 
@@ -100,7 +102,7 @@
             // 
             lblLastName.AutoSize = true;
             lblLastName.Font = new Font("Segoe UI", 12F);
-            lblLastName.Location = new Point(500, 160);
+            lblLastName.Location = new Point(678, 161);
             lblLastName.Name = "lblLastName";
             lblLastName.Size = new Size(84, 21);
             lblLastName.TabIndex = 4;
@@ -109,15 +111,15 @@
             // signup_lastName
             // 
             signup_lastName.BorderRadius = 10;
-            signup_lastName.CustomizableEdges = customizableEdges17;
+            signup_lastName.CustomizableEdges = customizableEdges3;
             signup_lastName.DefaultText = "";
             signup_lastName.Font = new Font("Segoe UI", 12F);
-            signup_lastName.Location = new Point(500, 190);
+            signup_lastName.Location = new Point(678, 191);
             signup_lastName.Name = "signup_lastName";
             signup_lastName.PasswordChar = '\0';
             signup_lastName.PlaceholderText = "Enter last name";
             signup_lastName.SelectedText = "";
-            signup_lastName.ShadowDecoration.CustomizableEdges = customizableEdges18;
+            signup_lastName.ShadowDecoration.CustomizableEdges = customizableEdges4;
             signup_lastName.Size = new Size(300, 40);
             signup_lastName.TabIndex = 5;
             // 
@@ -125,7 +127,7 @@
             // 
             lblUsername.AutoSize = true;
             lblUsername.Font = new Font("Segoe UI", 12F);
-            lblUsername.Location = new Point(500, 240);
+            lblUsername.Location = new Point(678, 241);
             lblUsername.Name = "lblUsername";
             lblUsername.Size = new Size(81, 21);
             lblUsername.TabIndex = 6;
@@ -134,15 +136,15 @@
             // signup_username
             // 
             signup_username.BorderRadius = 10;
-            signup_username.CustomizableEdges = customizableEdges19;
+            signup_username.CustomizableEdges = customizableEdges5;
             signup_username.DefaultText = "";
             signup_username.Font = new Font("Segoe UI", 12F);
-            signup_username.Location = new Point(500, 270);
+            signup_username.Location = new Point(678, 271);
             signup_username.Name = "signup_username";
             signup_username.PasswordChar = '\0';
             signup_username.PlaceholderText = "Enter username";
             signup_username.SelectedText = "";
-            signup_username.ShadowDecoration.CustomizableEdges = customizableEdges20;
+            signup_username.ShadowDecoration.CustomizableEdges = customizableEdges6;
             signup_username.Size = new Size(300, 40);
             signup_username.TabIndex = 7;
             // 
@@ -150,7 +152,7 @@
             // 
             lblEmail.AutoSize = true;
             lblEmail.Font = new Font("Segoe UI", 12F);
-            lblEmail.Location = new Point(500, 320);
+            lblEmail.Location = new Point(678, 321);
             lblEmail.Name = "lblEmail";
             lblEmail.Size = new Size(48, 21);
             lblEmail.TabIndex = 8;
@@ -159,15 +161,15 @@
             // signup_email
             // 
             signup_email.BorderRadius = 10;
-            signup_email.CustomizableEdges = customizableEdges21;
+            signup_email.CustomizableEdges = customizableEdges7;
             signup_email.DefaultText = "";
             signup_email.Font = new Font("Segoe UI", 12F);
-            signup_email.Location = new Point(500, 350);
+            signup_email.Location = new Point(678, 351);
             signup_email.Name = "signup_email";
             signup_email.PasswordChar = '\0';
             signup_email.PlaceholderText = "Enter email";
             signup_email.SelectedText = "";
-            signup_email.ShadowDecoration.CustomizableEdges = customizableEdges22;
+            signup_email.ShadowDecoration.CustomizableEdges = customizableEdges8;
             signup_email.Size = new Size(300, 40);
             signup_email.TabIndex = 9;
             // 
@@ -175,7 +177,7 @@
             // 
             lblPassword.AutoSize = true;
             lblPassword.Font = new Font("Segoe UI", 12F);
-            lblPassword.Location = new Point(500, 400);
+            lblPassword.Location = new Point(678, 401);
             lblPassword.Name = "lblPassword";
             lblPassword.Size = new Size(76, 21);
             lblPassword.TabIndex = 10;
@@ -184,24 +186,23 @@
             // signup_password
             // 
             signup_password.BorderRadius = 10;
-            signup_password.CustomizableEdges = customizableEdges23;
+            signup_password.CustomizableEdges = customizableEdges9;
             signup_password.DefaultText = "";
             signup_password.Font = new Font("Segoe UI", 12F);
-            signup_password.Location = new Point(500, 430);
+            signup_password.Location = new Point(678, 431);
             signup_password.Name = "signup_password";
             signup_password.PasswordChar = '●';
             signup_password.PlaceholderText = "Enter password";
             signup_password.SelectedText = "";
-            signup_password.ShadowDecoration.CustomizableEdges = customizableEdges24;
+            signup_password.ShadowDecoration.CustomizableEdges = customizableEdges10;
             signup_password.Size = new Size(300, 40);
             signup_password.TabIndex = 11;
-            signup_password.UseSystemPasswordChar = true;
             // 
             // lblConfirmPassword
             // 
             lblConfirmPassword.AutoSize = true;
             lblConfirmPassword.Font = new Font("Segoe UI", 12F);
-            lblConfirmPassword.Location = new Point(500, 480);
+            lblConfirmPassword.Location = new Point(678, 481);
             lblConfirmPassword.Name = "lblConfirmPassword";
             lblConfirmPassword.Size = new Size(137, 21);
             lblConfirmPassword.TabIndex = 12;
@@ -210,18 +211,17 @@
             // signup_confirmpassword
             // 
             signup_confirmpassword.BorderRadius = 10;
-            signup_confirmpassword.CustomizableEdges = customizableEdges25;
+            signup_confirmpassword.CustomizableEdges = customizableEdges11;
             signup_confirmpassword.DefaultText = "";
             signup_confirmpassword.Font = new Font("Segoe UI", 12F);
-            signup_confirmpassword.Location = new Point(500, 510);
+            signup_confirmpassword.Location = new Point(678, 511);
             signup_confirmpassword.Name = "signup_confirmpassword";
             signup_confirmpassword.PasswordChar = '●';
             signup_confirmpassword.PlaceholderText = "Confirm password";
             signup_confirmpassword.SelectedText = "";
-            signup_confirmpassword.ShadowDecoration.CustomizableEdges = customizableEdges26;
+            signup_confirmpassword.ShadowDecoration.CustomizableEdges = customizableEdges12;
             signup_confirmpassword.Size = new Size(300, 40);
             signup_confirmpassword.TabIndex = 13;
-            signup_confirmpassword.UseSystemPasswordChar = true;
             // 
             // signup_showPassword
             // 
@@ -229,7 +229,7 @@
             signup_showPassword.BackColor = Color.Transparent;
             signup_showPassword.Font = new Font("Segoe UI", 10F);
             signup_showPassword.ForeColor = Color.FromArgb(0, 120, 212);
-            signup_showPassword.Location = new Point(500, 560);
+            signup_showPassword.Location = new Point(678, 561);
             signup_showPassword.Name = "signup_showPassword";
             signup_showPassword.Size = new Size(123, 23);
             signup_showPassword.TabIndex = 14;
@@ -241,13 +241,13 @@
             // 
             signup_btn.AutoRoundedCorners = true;
             signup_btn.BorderRadius = 21;
-            signup_btn.CustomizableEdges = customizableEdges27;
+            signup_btn.CustomizableEdges = customizableEdges13;
             signup_btn.FillColor = Color.FromArgb(0, 120, 212);
             signup_btn.Font = new Font("Segoe UI", 12F);
             signup_btn.ForeColor = Color.White;
-            signup_btn.Location = new Point(500, 590);
+            signup_btn.Location = new Point(678, 591);
             signup_btn.Name = "signup_btn";
-            signup_btn.ShadowDecoration.CustomizableEdges = customizableEdges28;
+            signup_btn.ShadowDecoration.CustomizableEdges = customizableEdges14;
             signup_btn.Size = new Size(300, 45);
             signup_btn.TabIndex = 15;
             signup_btn.Text = "Sign Up";
@@ -258,7 +258,7 @@
             label4.AutoSize = true;
             label4.Font = new Font("Segoe UI", 9F);
             label4.ForeColor = SystemColors.ControlDarkDark;
-            label4.Location = new Point(500, 650);
+            label4.Location = new Point(678, 651);
             label4.Name = "label4";
             label4.Size = new Size(142, 15);
             label4.TabIndex = 16;
@@ -270,7 +270,7 @@
             signup_loginHere.Cursor = Cursors.Hand;
             signup_loginHere.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             signup_loginHere.ForeColor = Color.FromArgb(0, 120, 212);
-            signup_loginHere.Location = new Point(648, 650);
+            signup_loginHere.Location = new Point(826, 651);
             signup_loginHere.Name = "signup_loginHere";
             signup_loginHere.Size = new Size(66, 15);
             signup_loginHere.TabIndex = 17;
@@ -282,19 +282,30 @@
             signup_close.AutoSize = true;
             signup_close.Cursor = Cursors.Hand;
             signup_close.Font = new Font("Segoe UI", 10.8F);
-            signup_close.Location = new Point(830, 10);
+            signup_close.Location = new Point(1112, 9);
             signup_close.Name = "signup_close";
             signup_close.Size = new Size(18, 20);
             signup_close.TabIndex = 18;
             signup_close.Text = "X";
             signup_close.Click += signup_close_Click_2;
             // 
+            // guna2BorderlessForm1
+            // 
+            guna2BorderlessForm1.BorderRadius = 20;
+            guna2BorderlessForm1.ContainerControl = this;
+            guna2BorderlessForm1.DockIndicatorColor = Color.FromArgb(0, 120, 212);
+            guna2BorderlessForm1.DockIndicatorTransparencyValue = 1D;
+            guna2BorderlessForm1.DragStartTransparencyValue = 1D;
+            guna2BorderlessForm1.ResizeForm = false;
+            guna2BorderlessForm1.ShadowColor = Color.FromArgb(0, 120, 212);
+            guna2BorderlessForm1.TransparentWhileDrag = true;
+            // 
             // Signup
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
-            ClientSize = new Size(850, 700);
+            ClientSize = new Size(1142, 700);
             Controls.Add(signup_close);
             Controls.Add(signup_loginHere);
             Controls.Add(label4);
@@ -316,7 +327,7 @@
             Controls.Add(pictureBox1);
             FormBorderStyle = FormBorderStyle.None;
             Name = "Signup";
-            StartPosition = FormStartPosition.CenterScreen;
+            StartPosition = FormStartPosition.Manual;
             Text = "Signup";
             FormClosed += Signup_FormClosed;
             MouseDown += Signup_MouseDown;
@@ -344,5 +355,6 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label signup_loginHere;
         private System.Windows.Forms.Label signup_close;
+        private Guna.UI2.WinForms.Guna2BorderlessForm guna2BorderlessForm1;
     }
 }
