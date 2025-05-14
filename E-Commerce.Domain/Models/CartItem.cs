@@ -23,10 +23,10 @@ namespace E_Commerce.Domain.Models
 
 
         
-        public CartItem()
-        {
+        //public CartItem()
+        //{
            
-            DateAdded = DateTime.UtcNow;
-        }
+        //    DateAdded = DateTime.UtcNow;
+        //}
     }
 }
