@@ -30,13 +30,14 @@ namespace E_Commerce.BL.Implementations
             var cat = new Category
             {
                 Name = categoryDTO.Name,
-                Description = categoryDTO.Description
+              //  Description = categoryDTO.Description
             };
             #endregion
             var Cat = await categoryRepository.AddAsync(cat);
             var catMap = categoryDTO?.Adapt<CategoryDTO>();
             return catMap;
         }
+      
 
         public async Task DeleteCategoryAsync(int id)
         {
@@ -48,11 +49,12 @@ namespace E_Commerce.BL.Implementations
 
         }
 
-        public async Task<IEnumerable<CategoryDTO>> GetAllCategoryAsync()
+        public async Task<List<CategoryDTO>> GetAllCategoryAsync()
         {
             var cats = await categoryRepository.GetAllAsync();
             var catsMap = cats.Adapt<List<CategoryDTO>>();
             return catsMap;
+         
         }
 
         public async Task<CategoryDTO> GetCategoryByIdAsync(int id)
@@ -68,6 +70,11 @@ namespace E_Commerce.BL.Implementations
             var cat = await categoryRepository.Update(cateogry);
             var catMap = category?.Adapt<CategoryDTO>();
             return catMap;
-        }   
+        }
+        public async Task<CategoryDTO> GetCategoryByNameAsync(string name)
+        {
+            var cat = (await categoryRepository.GetAllAsync()).FirstOrDefault(c => c.Name == name);
+            return cat?.Adapt<CategoryDTO>();
+        }
     }
 }

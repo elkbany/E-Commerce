@@ -47,7 +47,7 @@ namespace E_Commerce.DA.Implementations.Base
         {
             return await _dbSet.FindAsync(id);
         }
-
+        
         public async Task CommitAsync()
         {
             try

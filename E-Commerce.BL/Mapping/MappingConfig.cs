@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using E_Commerce.Domain.Models;
+
 using E_Commerce.BL.Features.Order.DTOs;
 using E_Commerce.BL.Features.CartItem;
 using System.Xml.Serialization;
@@ -83,6 +83,11 @@ namespace E_Commerce.BL.Mapping
                 .Map(dest => dest.ProductID, src => src.ProductId)
                 .Map(dest => dest.Quantity, src => src.Quantity)
                 .Map(dest => dest.DateAdded, src => DateTime.UtcNow);
+
+
+            TypeAdapterConfig<Category, CategoryDTO>.NewConfig()
+               
+                .Map(dest => dest.Name, src => src.Name);
 
             //TypeAdapterConfig<OrderDetail, OrderDetailDTO>
             //    .NewConfig()

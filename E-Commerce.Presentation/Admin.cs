@@ -1,6 +1,7 @@
-using System;
+﻿using System;
 using System.Windows.Forms;
 using E_Commerce.Presentation;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace AdminTest
 {
@@ -9,7 +10,7 @@ namespace AdminTest
         private ProductsPage productsPage;
         private CategoriesPage categoriesPage;
         private UsersPage usersPage;
-        private ProfilePage profilePage; 
+        private ProfilePage profilePage;
         private SettingsPage settingsPage;
         private UserControl currentPage;
 
@@ -17,21 +18,21 @@ namespace AdminTest
         {
             InitializeComponent();
 
-            // ????? ???????
+            // تهيئة الصفحات باستخدام ServiceProvider
             productsPage = new ProductsPage();
-            categoriesPage = new CategoriesPage();
+            categoriesPage = ServiceProviderContainer.ServiceProvider.GetRequiredService<CategoriesPage>();
             usersPage = new UsersPage();
             profilePage = new ProfilePage();
             settingsPage = new SettingsPage();
 
-            // ????? ??????? ??? mainContentPanel
+            // إضافة الصفحات لـ mainContentPanel
             mainContentPanel.Controls.Add(productsPage);
             mainContentPanel.Controls.Add(categoriesPage);
             mainContentPanel.Controls.Add(usersPage);
             mainContentPanel.Controls.Add(profilePage);
             mainContentPanel.Controls.Add(settingsPage);
 
-            // ??? ???? Products ?????????
+            // عرض صفحة Products افتراضيًا
             ShowPage(productsPage);
         }
 
@@ -74,98 +75,35 @@ namespace AdminTest
             sidebarTransition.Start();
         }
 
-        // ????? ????? ??? Sidebar
-        //private void btnProducts_Click(object sender, EventArgs e)
-        //{
-        //    ShowPage(productsPage);
-        //}
         private void btnProducts_Click_1(object sender, EventArgs e)
         {
             ShowPage(productsPage);
         }
 
-        //private void btnCategories_Click(object sender, EventArgs e)
-        //{
-        //    ShowPage(categoriesPage);
-        //}
         private void btnCategories_Click_1(object sender, EventArgs e)
         {
             ShowPage(categoriesPage);
         }
 
-        //private void btnUsers_Click(object sender, EventArgs e)
-        //{
-        //    ShowPage(usersPage);
-        //}
         private void btnUsers_Click_1(object sender, EventArgs e)
         {
             ShowPage(usersPage);
         }
 
-        //private void btnProfile_Click(object sender, EventArgs e)
-        //{
-        //    ShowPage(profilePage);
-        //}
         private void btnProfile_Click_1(object sender, EventArgs e)
         {
             ShowPage(profilePage);
         }
 
-        //private void btnSettings_Click(object sender, EventArgs e)
-        //{
-        //    ShowPage(settingsPage);
-        //}
-
         private void btnSettings_Click_1(object sender, EventArgs e)
         {
             ShowPage(settingsPage);
         }
-        private void addNewItem_Click(object sender, EventArgs e)
+
+        private void guna2Button5_Click(object sender, EventArgs e)
         {
-            AddForm addForm = new AddForm(productsPage.flowLayoutPanelProducts);
-
-            if (addForm.ShowDialog() == DialogResult.OK)
-            {
-                string productName = addForm.ProductName;
-                decimal productPrice = addForm.ProductPrice;
-                int unitsInStock = addForm.UnitsInStock;
-                string category = addForm.Category;
-
-                productsPage.AddProductToPanel(productName, productPrice, unitsInStock, category);
-            }
+            MessageBox.Show("Logout functionality will be implemented soon.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
-        private void btnAddCategory_Click(object sender, EventArgs e)
-        {
-            AddForm addForm = new AddForm(categoriesPage.flowLayoutPanelCategories);
-
-            if (addForm.ShowDialog() == DialogResult.OK)
-            {
-                string categoryName = addForm.ProductName; // ???????? ProductName ???? ?????
-                decimal categoryPrice = addForm.ProductPrice;
-                int unitsInStock = addForm.UnitsInStock;
-                string category = addForm.Category;
-
-                categoriesPage.AddCategoryToPanel(categoryName);
-            }
-        }
-
-        private void btnAddUser_Click(object sender, EventArgs e)
-        {
-            AddUser addUser = new AddUser(usersPage.flowLayoutPanelUsers);
-
-            if (addUser.ShowDialog() == DialogResult.OK)
-            {
-                string userName = addUser.UserName; 
-                string userEmail = addUser.UserEmail;
-                string userPassword = addUser.UserPassword;
-                string userRole = addUser.UserStatus;
-
-                usersPage.AddUserToPanel(userName, userEmail, userPassword, userRole);
-            }
-        }
-
-        
     }
-
 }
