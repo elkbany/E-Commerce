@@ -22,8 +22,8 @@ namespace E_Commerce.BL.Mapping
         public void Configure()
         {
 
-            TypeAdapterConfig<Product,ProductDTO>.NewConfig()
-                .Map(dest => dest.Category, src => src.Category.Name);
+            TypeAdapterConfig<Product, ProductDTO>.NewConfig()
+            .Map(dest => dest.Category, src => src.Category != null ? src.Category.Name : null);
 
             #region User Mapping
             TypeAdapterConfig<User,UserDTO>.NewConfig()
