@@ -30,7 +30,16 @@ namespace E_Commerce.DA.Implementations.Base
 
         public async Task<T> Update(T entity)
         {
-            return _dbSet.Update(entity).Entity;
+            var tracked = _context.ChangeTracker.Entries<T>()
+                          .FirstOrDefault(e => e.Entity.Equals(entity));
+
+            if (tracked == null)
+            {
+                _dbSet.Attach(entity); // attach only if not already tracked
+            }
+
+            _context.Entry(entity).State = EntityState.Modified;
+            return entity;
         }
 
         public async Task<T> Delete(T entity)

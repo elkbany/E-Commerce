@@ -55,6 +55,7 @@ namespace E_Commerce.Presentation
 
         private async void LoadProducts()
         {
+            lblLoading.Visible = true;
             try
             {
                 await _lock.WaitAsync();
@@ -62,7 +63,7 @@ namespace E_Commerce.Presentation
                 if (products == null || !products.Any())
                 {
                     lblNoProducts.Visible = true;
-                    lblProductCount.Text = "Products: 0"; // إضافة: إظهار العدد 0 لو مفيش منتجات
+                    lblProductCount.Text = "Products: 0";
                     flowLayoutPanelProducts.Controls.Clear();
                     return;
                 }
@@ -70,24 +71,17 @@ namespace E_Commerce.Presentation
                 var selectedCategory = comboBoxCategory.SelectedItem as CategoryDTO;
                 string searchTerm = txtSearch.Text.Trim();
 
-                IEnumerable<ProductDTO> filteredProducts = products;
-                if (!string.IsNullOrEmpty(searchTerm))
-                {
-                    filteredProducts = filteredProducts.Where(p =>
-                        (p.Name?.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ?? false) ||
-                        (p.Description?.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ?? false));
-                }
-                if (selectedCategory?.Name != "All")
-                {
-                    filteredProducts = filteredProducts.Where(p => p.Category != null && p.Category.Equals(selectedCategory.Name, StringComparison.OrdinalIgnoreCase));
-                }
+                var filteredProducts = products.AsParallel().Where(p =>
+                    (string.IsNullOrEmpty(searchTerm) || (p.Name?.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ?? false) ||
+                     (p.Description?.Contains(searchTerm, StringComparison.OrdinalIgnoreCase) ?? false)) &&
+                    (selectedCategory?.Name == "All" || (p.Category != null && p.Category.Equals(selectedCategory.Name, StringComparison.OrdinalIgnoreCase))));
 
                 flowLayoutPanelProducts.Controls.Clear();
 
                 if (filteredProducts.Any())
                 {
                     lblNoProducts.Visible = false;
-                    lblProductCount.Text = $"Products: {filteredProducts.Count()}"; // إضافة: إظهار عدد المنتجات
+                    lblProductCount.Text = $"Products: {filteredProducts.Count()}";
                     foreach (var product in filteredProducts)
                     {
                         var productCard = new ProductCard(cartServices, userId);
@@ -98,7 +92,7 @@ namespace E_Commerce.Presentation
                 else
                 {
                     lblNoProducts.Visible = true;
-                    lblProductCount.Text = "Products: 0"; // إضافة: إظهار العدد 0 لو مفيش منتجات بعد الفلترة
+                    lblProductCount.Text = "Products: 0";
                 }
             }
             catch (Exception ex)
@@ -107,6 +101,7 @@ namespace E_Commerce.Presentation
             }
             finally
             {
+                lblLoading.Visible = false;
                 _lock.Release();
             }
         }

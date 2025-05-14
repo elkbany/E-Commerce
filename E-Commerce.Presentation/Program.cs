@@ -79,8 +79,6 @@ namespace E_Commerce.Presentation
                     services.AddTransient<IValidator<RegisterUserDto>, RegisterUserDtoValidator>();
                     services.AddTransient<IValidator<LoginUserDto>, LoginUserDtoValidator>();
                     services.AddTransient<IValidator<int>, OrderIdValidator>();
-                    services.AddTransient<IValidator<CategoryDTO>, CategoryDTOValidator>();
-                   
 
                     // Register Mapster Mapping Configuration
                     ProductMappingConfig.Configure();

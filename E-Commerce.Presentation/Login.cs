@@ -86,7 +86,14 @@ namespace E_Commerce.Presentation
 
         private void showPassword_CheckedChanged(object sender, EventArgs e)
         {
-            txtPassword.UseSystemPasswordChar = !showPassword.Checked;
+            if (showPassword.Checked)
+            {
+                txtPassword.PasswordChar = '\0'; // إظهار الباسورد (نص عادي)
+            }
+            else
+            {
+                txtPassword.PasswordChar = '●'; // إخفاء الباسورد (يظهر كنقاط)
+            }
         }
 
         private void Login_FormClosed(object sender, FormClosedEventArgs e)

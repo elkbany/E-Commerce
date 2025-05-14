@@ -2,6 +2,7 @@
 using E_Commerce.BL.Contracts.Services;
 using E_Commerce.BL.Features.CartItem.DTO;
 using E_Commerce.BL.Features.CartItem.Validators;
+using E_Commerce.BL.Features.Order.DTOs;
 using E_Commerce.Domain.Models;
 using Mapster;
 using System;
@@ -15,13 +16,15 @@ namespace E_Commerce.BL.Implementations
     public class CartItemServices : AppService, ICartItemServices
     {
         private readonly ICartItemRepository _cartRepo;
-        private readonly IProductRepository _productRepo;
+        private readonly IProductServices productServices;
+        //private readonly IProductRepository _productRepo;
         private readonly IOrderServices _orderService;
 
-        public CartItemServices(ICartItemRepository cartRepo, IProductRepository productRepo, IOrderServices orderService)
+        public CartItemServices(ICartItemRepository cartRepo,IProductServices productServices, IOrderServices orderService)
         {
             _cartRepo = cartRepo;
-            _productRepo = productRepo;
+            this.productServices = productServices;
+           // _productRepo = productRepo;
             _orderService = orderService;
         }
 
@@ -29,22 +32,40 @@ namespace E_Commerce.BL.Implementations
         {
             await DoValidationAsync<AddCartItemDTOValidator, AddCartItemDTO>(cartItemDto);
 
-            var product = await _productRepo.GetByIdAsync(cartItemDto.ProductId);
+            var product = await productServices.GetProductByIdAsync(cartItemDto.ProductId);
             if (product == null)
             {
                 throw new Exception($"Product with ID {cartItemDto.ProductId} not found.");
             }
+  
             if (product.UnitsInStock < cartItemDto.Quantity)
             {
                 throw new Exception($"Only {product.UnitsInStock} units available, but {cartItemDto.Quantity} requested.");
             }
 
-            var cartItem = cartItemDto.Adapt<CartItem>();
+            var cartItem = new CartItem
+            {
+                UserID = cartItemDto.UserId,
+                ProductID = cartItemDto.ProductId,
+                Quantity = cartItemDto.Quantity,
+              
+            };
             cartItem.DateAdded = DateTime.Now;
 
             var addedItem = await _cartRepo.AddAsync(cartItem);
-            var result = (await _cartRepo.FirstOrDefaultAsync(x => x.Id == addedItem.Id, x => x.Product)).Adapt<CartItemDTO>();
-            return result;
+            if (addedItem != null)
+            {
+                product.UnitsInStock -= cartItemDto.Quantity;
+                await productServices.UpdateProductAsync(cartItemDto.ProductId, product);
+
+               
+                var result = addedItem.Adapt<CartItemDTO>();
+                return result;
+            }
+            else
+            {
+                throw new Exception("Failed to add item to cart.");
+            }
         }
 
         public async Task<IEnumerable<CartItemDTO>> GetCartItemsByUserIdAsync(int userId)
