@@ -45,7 +45,7 @@
             btnProfile = new Button();
             btnLogout = new Button();
             sidebarTransition = new System.Windows.Forms.Timer(components);
-            guna2AnimateWindow1 = new Guna.UI2.WinForms.Guna2AnimateWindow(components);
+            guna2BorderlessForm1 = new Guna.UI2.WinForms.Guna2BorderlessForm(components);
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)btnDrag).BeginInit();
             sidebar.SuspendLayout();
@@ -162,9 +162,9 @@
             labelUsername.ForeColor = SystemColors.Control;
             labelUsername.Location = new Point(153, 32);
             labelUsername.Name = "labelUsername";
-            labelUsername.Size = new Size(63, 25);
+            labelUsername.Size = new Size(62, 25);
             labelUsername.TabIndex = 9;
-            labelUsername.Text = "label2";
+            labelUsername.Text = "Name";
             // 
             // btnProducts
             // 
@@ -262,6 +262,14 @@
             sidebarTransition.Interval = 10;
             sidebarTransition.Tick += sidebarTransition_Tick;
             // 
+            // guna2BorderlessForm1
+            // 
+            guna2BorderlessForm1.BorderRadius = 10;
+            guna2BorderlessForm1.ContainerControl = this;
+            guna2BorderlessForm1.DockIndicatorTransparencyValue = 0.6D;
+            guna2BorderlessForm1.ShadowColor = Color.FromArgb(0, 120, 212);
+            guna2BorderlessForm1.TransparentWhileDrag = true;
+            // 
             // frmMain
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -272,9 +280,11 @@
             Controls.Add(panel1);
             ForeColor = SystemColors.ControlText;
             FormBorderStyle = FormBorderStyle.None;
+            Icon = (Icon)resources.GetObject("$this.Icon");
             IsMdiContainer = true;
             Name = "frmMain";
             Text = "frmMain";
+            WindowState = FormWindowState.Maximized;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)btnDrag).EndInit();
@@ -302,6 +312,6 @@
         private Label label2;
         private ReaLTaiizor.Controls.NightControlBox nightControlBox1;
         private PictureBox pictureBox1;
-        private Guna.UI2.WinForms.Guna2AnimateWindow guna2AnimateWindow1;
+        private Guna.UI2.WinForms.Guna2BorderlessForm guna2BorderlessForm1;
     }
 }
