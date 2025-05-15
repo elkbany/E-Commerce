@@ -17,6 +17,10 @@ namespace E_Commerce.Presentation
         private FlowLayoutPanel targetPanel;
 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string FirstName { get; private set; }
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string LastName { get; private set; }
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public string UserName { get; private set; }
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public string UserEmail { get; private set; }
@@ -24,27 +28,36 @@ namespace E_Commerce.Presentation
         public string UserPassword { get; private set; }
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public string UserStatus { get; private set; }
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
+        public string IsActive { get; private set; }
+
         public AddUser(FlowLayoutPanel panel)
         {
             InitializeComponent();
-            targetPanel = panel;
+            targetPanel = panel ?? throw new ArgumentNullException(nameof(panel));
         }
 
         private void btnSave_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtUserName.Text) ||
+            if (string.IsNullOrWhiteSpace(txtFirstName.Text) ||
+                string.IsNullOrWhiteSpace(txtLastName.Text) ||
+                string.IsNullOrWhiteSpace(txtUserName.Text) ||
                 string.IsNullOrWhiteSpace(txtUserEmail.Text) ||
                 string.IsNullOrWhiteSpace(txtUserPassword.Text) ||
-                string.IsNullOrWhiteSpace(txtUserStatus.Text))
+                string.IsNullOrWhiteSpace(txtUserStatus.Text) ||
+                (!btnActive1.Checked && !btnActive2.Checked))
             {
                 MessageBox.Show("Please fill all fields.");
                 return;
             }
 
+            FirstName = txtFirstName.Text;
+            LastName = txtLastName.Text;
             UserName = txtUserName.Text;
             UserEmail = txtUserEmail.Text;
             UserPassword = txtUserPassword.Text;
             UserStatus = txtUserStatus.Text;
+            IsActive = btnActive1.Checked ? "Yes" : "No";
 
             this.DialogResult = DialogResult.OK;
             this.Close();
@@ -57,52 +70,3 @@ namespace E_Commerce.Presentation
         }
     }
 }
-
-
-//using System; using System.Windows.Forms;
-
-//namespace AdminTest
-//{
-//    public partial class AddNewUser : Form
-//    {
-//        private FlowLayoutPanel targetPanel;
-
-//        public string UserName { get; private set; }
-//        public string UserEmail { get; private set; }
-//        public string UserPassword { get; private set; }
-//        public string UserStatus { get; private set; }
-
-//        public AddNewUser(FlowLayoutPanel panel)
-//        {
-//            InitializeComponent();
-//            targetPanel = panel;
-//        }
-
-//        private void btnSave_Click(object sender, EventArgs e)
-//        {
-//            if (string.IsNullOrWhiteSpace(txtUserName.Text) ||
-//                string.IsNullOrWhiteSpace(txtUserEmail.Text) ||
-//                string.IsNullOrWhiteSpace(txtUserPassword.Text) ||
-//                string.IsNullOrWhiteSpace(txtUserStatus.Text))
-//            {
-//                MessageBox.Show("Please fill all fields.");
-//                return;
-//            }
-
-//            UserName = txtUserName.Text;
-//            UserEmail = txtUserEmail.Text;
-//            UserPassword = txtUserPassword.Text;
-//            UserStatus = txtUserStatus.Text;
-
-//            this.DialogResult = DialogResult.OK;
-//            this.Close();
-//        }
-
-//        private void btnCancel_Click(object sender, EventArgs e)
-//        {
-//            this.DialogResult = DialogResult.Cancel;
-//            this.Close();
-//        }
-//    }
-
-//}
