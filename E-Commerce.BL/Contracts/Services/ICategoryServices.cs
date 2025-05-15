@@ -17,6 +17,7 @@ namespace E_Commerce.BL.Contracts.Services
         Task DeleteCategoryAsync(int id);
         Task<List<CategoryDTO>> GetAllCategoryAsync();
         Task<CategoryDTO> GetCategoryByNameAsync(string name);
+        public  Task<Category> getCategoryIDByName(string name);
 
     }
 }

@@ -76,7 +76,7 @@ namespace E_Commerce.BL.Implementations
             var cat = (await categoryRepository.GetAllAsync()).FirstOrDefault(c => c.Name == name);
             return cat?.Adapt<CategoryDTO>();
         }
-        }
+        
         public async Task<Category> getCategoryIDByName(string name)
         {
             return await categoryRepository.FirstOrDefaultAsync(c => c.Name == name);
