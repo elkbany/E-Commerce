@@ -1,315 +1,155 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using E_Commerce.BL.Contracts.Services;
+using E_Commerce.BL.Features.Category.DTOs;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace E_Commerce.Presentation
 {
     public partial class CategoriesPage : UserControl
     {
+        private readonly ICategoryServices _categoryServices;
+
         public CategoriesPage()
         {
             InitializeComponent();
+            if (!DesignMode)
+            {
+                _categoryServices = ServiceProviderContainer.ServiceProvider.GetRequiredService<ICategoryServices>();
+                LoadCategoriesAsync();
+                btnAddCategory.Click += btnAddCategory_Click;
+            }
         }
 
-        public void AddCategoryToPanel(string categoryName)
+        private async Task LoadCategoriesAsync()
         {
-            Panel categoryPanel = new Panel();
-            categoryPanel.Size = new Size(1586, 50);
-            categoryPanel.BackColor = Color.White;
-            categoryPanel.BorderStyle = BorderStyle.None;
-            categoryPanel.Margin = new Padding(4);
+            try
+            {
+                var categories = await _categoryServices.GetAllCategoryAsync();
+                flowLayoutPanelCategories.Controls.Clear();
+                int index = 1;
+                foreach (var category in categories)
+                {
+                    AddCategoryToPanel(category, index++);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading categories: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
 
-            Label lblNumber = new Label();
-            lblNumber.Text = (flowLayoutPanelCategories.Controls.Count + 1).ToString();
-            lblNumber.Location = new Point(17, 19);
-            lblNumber.Size = new Size(30, 20);
-            lblNumber.Font = new Font("Arial", 10);
+        private void AddCategoryToPanel(CategoryDTO category, int index)
+        {
+            Panel categoryPanel = new Panel
+            {
+                Size = new Size(1569, 50),
+                BackColor = Color.White,
+                BorderStyle = BorderStyle.None,
+                Margin = new Padding(4),
+                Tag = category
+            };
+
+            Label lblNumber = new Label
+            {
+                Text = index.ToString(),
+                Location = new Point(27, 15),
+                Size = new Size(30, 20),
+                Font = new Font("Segoe UI", 10)
+            };
             categoryPanel.Controls.Add(lblNumber);
 
-            Label lblCategoryName = new Label();
-            lblCategoryName.Text = categoryName;
-            lblCategoryName.Location = new Point(91, 11);
-            lblCategoryName.Size = new Size(150, 20);
-            lblCategoryName.Font = new Font("Arial", 10);
+            Label lblCategoryName = new Label
+            {
+                Text = category.Name,
+                Location = new Point(90, 15),
+                Size = new Size(200, 20),
+                Font = new Font("Segoe UI", 10)
+            };
             categoryPanel.Controls.Add(lblCategoryName);
 
-            Button btnEdit = new Button();
-            btnEdit.Text = "";
-            btnEdit.Size = new Size(25, 25);
-            btnEdit.Location = new Point(1482, 7);
-            btnEdit.FlatStyle = FlatStyle.Flat;
-            btnEdit.BackColor = Color.Transparent;
-            btnEdit.FlatAppearance.BorderColor = Color.Cyan;
-            btnEdit.FlatAppearance.BorderSize = 1;
-            btnEdit.BackgroundImage = Image.FromFile(@"C:\Users\user\Downloads\edit_24dp_05E0E9_FILL0_wght400_GRAD0_opsz24.png");
-            btnEdit.BackgroundImageLayout = ImageLayout.Zoom;
-            btnEdit.Click += (sender, e) => {
-                AddCategory editForm = new AddCategory(flowLayoutPanelCategories);
-                editForm.txtCategoryName.Text = lblCategoryName.Text;
-
-                DialogResult result = editForm.ShowDialog();
-                if (result == DialogResult.OK)
-                {
-                    lblCategoryName.Text = editForm.CategoryName;
-                    MessageBox.Show("Category updated successfully!");
-                }
-                else if (result == DialogResult.Cancel)
-                {
-                    MessageBox.Show("Edit canceled.");
-                }
-                else
-                {
-                    MessageBox.Show("Unexpected dialog result: " + result.ToString());
-                }
+            // زر Delete
+            Guna.UI2.WinForms.Guna2Button btnDelete = new Guna.UI2.WinForms.Guna2Button
+            {
+                Text = "Delete",
+                Location = new Point(600, 10),
+                Size = new Size(80, 30),
+                FillColor = Color.FromArgb(229, 105, 151),
+                ForeColor = Color.White,
+                BorderRadius = 5
             };
-            categoryPanel.Controls.Add(btnEdit);
-
-            Button btnDelete = new Button();
-            btnDelete.Text = "";
-            btnDelete.Size = new Size(25, 25);
-            btnDelete.Location = new Point(1537, 7);
-            btnDelete.FlatStyle = FlatStyle.Flat;
-            btnDelete.BackColor = Color.Transparent;
-            btnDelete.FlatAppearance.BorderColor = Color.IndianRed;
-            btnDelete.FlatAppearance.BorderSize = 2;
-            btnDelete.BackgroundImage = Image.FromFile(@"C:\Users\user\Downloads\delete_24dp_FF2768_FILL0_wght400_GRAD0_opsz24.png");
-            btnDelete.BackgroundImageLayout = ImageLayout.Zoom;
-            btnDelete.Click += (sender, e) => { categoryPanel.Parent.Controls.Remove(categoryPanel); };
+            btnDelete.Click += (s, e) => btnDelete_Click(category);
             categoryPanel.Controls.Add(btnDelete);
+
+            // زر Edit
+            Guna.UI2.WinForms.Guna2Button btnEdit = new Guna.UI2.WinForms.Guna2Button
+            {
+                Text = "Edit",
+                Location = new Point(700, 10),
+                Size = new Size(80, 30),
+                FillColor = Color.FromArgb(102, 210, 214),
+                ForeColor = Color.White,
+                BorderRadius = 5
+            };
+            btnEdit.Click += (s, e) => btnEdit_Click(category);
+            categoryPanel.Controls.Add(btnEdit);
 
             flowLayoutPanelCategories.Controls.Add(categoryPanel);
         }
 
-        private void btnAddCategory_Click(object sender, EventArgs e)
+        private async void btnDelete_Click(CategoryDTO category)
         {
-            // 1. Get the CORRECT form from DI (AddCategory instead of AddForm)
-            var addForm = ServiceProviderContainer.ServiceProvider.GetRequiredService<AddForm>();
-
-            // 2. Pass the FlowLayoutPanel manually
-            addForm.SetCategoryPanel(flowLayoutPanelCategories);
-
-            // 3. Show dialog and process result
-            if (addForm.ShowDialog() == DialogResult.OK)
+            if (MessageBox.Show($"Are you sure you want to delete '{category.Name}'?", "Confirm Delete",
+                MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                //string categoryName = addForm.CategoryName;
-                //AddCategoryToPanel(categoryName);
+                try
+                {
+                    var cat = await _categoryServices.GetCategoryByNameAsync(category.Name);
+                    await _categoryServices.DeleteCategoryAsync(cat.Id);
+                    await LoadCategoriesAsync();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error deleting category: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
         }
 
+        private async void btnEdit_Click(CategoryDTO category)
+        {
+            using (var addCategoryForm = new AddCategory(flowLayoutPanelCategories))
+            {
+                addCategoryForm.txtCategoryName.Text = category.Name;
+                flowLayoutPanelCategories.Tag = new Action(async () => await LoadCategoriesAsync());
 
-        //public void AddCategoryToPanel(string name, decimal price, int unitsInStock, string category)
-        //{
-        //    Panel categoryPanel = new Panel();
-        //    categoryPanel.Size = new Size(1586, 50);
-        //    categoryPanel.BackColor = Color.White;
-        //    categoryPanel.BorderStyle = BorderStyle.None;
-        //    categoryPanel.Margin = new Padding(4);
+                if (addCategoryForm.ShowDialog() == DialogResult.OK)
+                {
+                    category.Name = addCategoryForm.txtCategoryName.Text;
+                    try
+                    {
+                        var cat=await _categoryServices.GetCategoryByNameAsync(category.Name);
+                        await _categoryServices.UpdateCategoryAsync(cat.Id, category);
+                        await LoadCategoriesAsync();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Error updating category: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+        }
 
-        //    Label lblNumber = new Label();
-        //    lblNumber.Text = "1";
-        //    lblNumber.Location = new Point(17, 19);
-        //    lblNumber.Size = new Size(30, 20);
-        //    lblNumber.Font = new Font("Arial", 10);
-        //    categoryPanel.Controls.Add(lblNumber);
-
-        //    Label lblName = new Label();
-        //    lblName.Text = name;
-        //    lblName.Location = new Point(91, 11);
-        //    lblName.Size = new Size(100, 20);
-        //    lblName.Font = new Font("Arial", 10);
-        //    categoryPanel.Controls.Add(lblName);
-
-        //    Label lblPrice = new Label();
-        //    lblPrice.Text = price.ToString("C");
-        //    lblPrice.Location = new Point(404, 11);
-        //    lblPrice.Size = new Size(100, 20);
-        //    lblPrice.Font = new Font("Arial", 10);
-        //    categoryPanel.Controls.Add(lblPrice);
-
-        //    Label lblUnitsInStock = new Label();
-        //    lblUnitsInStock.Text = unitsInStock.ToString();
-        //    lblUnitsInStock.Location = new Point(774, 11);
-        //    lblUnitsInStock.Size = new Size(100, 20);
-        //    lblUnitsInStock.Font = new Font("Arial", 10);
-        //    categoryPanel.Controls.Add(lblUnitsInStock);
-
-        //    Label lblCategory = new Label();
-        //    lblCategory.Text = category;
-        //    lblCategory.Location = new Point(1124, 11);
-        //    lblCategory.Size = new Size(100, 20);
-        //    lblCategory.Font = new Font("Arial", 10);
-        //    categoryPanel.Controls.Add(lblCategory);
-
-        //    Button btnEdit = new Button();
-        //    btnEdit.Text = "";
-        //    btnEdit.Size = new Size(25, 25);
-        //    btnEdit.Location = new Point(1482, 7);
-        //    btnEdit.FlatStyle = FlatStyle.Flat;
-        //    btnEdit.BackColor = Color.Transparent;
-        //    btnEdit.FlatAppearance.BorderColor = Color.Cyan;
-        //    btnEdit.FlatAppearance.BorderSize = 1;
-        //    btnEdit.BackgroundImage = Image.FromFile(@"C:\Users\user\Downloads\edit_24dp_05E0E9_FILL0_wght400_GRAD0_opsz24.png");
-        //    btnEdit.BackgroundImageLayout = ImageLayout.Zoom;
-        //    btnEdit.Click += (sender, e) => {
-        //        decimal priceValue;
-        //        decimal.TryParse(lblPrice.Text.Replace("$", ""), out priceValue);
-        //        int unitsValue;
-        //        int.TryParse(lblUnitsInStock.Text, out unitsValue);
-
-        //        EditForm editForm = new EditForm(lblName.Text, priceValue, unitsValue, lblCategory.Text);
-        //        DialogResult result = editForm.ShowDialog();
-        //        if (result == DialogResult.OK)
-        //        {
-        //            lblName.Text = editForm.ProductName;
-        //            lblPrice.Text = editForm.ProductPrice.ToString("C");
-        //            lblUnitsInStock.Text = editForm.UnitsInStock.ToString();
-        //            lblCategory.Text = editForm.Category;
-        //            MessageBox.Show("Category updated successfully!");
-        //        }
-        //        else if (result == DialogResult.Cancel)
-        //        {
-        //            MessageBox.Show("Edit canceled.");
-        //        }
-        //        else
-        //        {
-        //            MessageBox.Show("Unexpected dialog result: " + result.ToString());
-        //        }
-        //    };
-        //    categoryPanel.Controls.Add(btnEdit);
-
-        //    Button btnDelete = new Button();
-        //    btnDelete.Text = "";
-        //    btnDelete.Size = new Size(25, 25);
-        //    btnDelete.Location = new Point(1537, 7);
-        //    btnDelete.FlatStyle = FlatStyle.Flat;
-        //    btnDelete.BackColor = Color.Transparent;
-        //    btnDelete.FlatAppearance.BorderColor = Color.IndianRed;
-        //    btnDelete.FlatAppearance.BorderSize = 2;
-        //    btnDelete.BackgroundImage = Image.FromFile(@"C:\Users\user\Downloads\delete_24dp_FF2768_FILL0_wght400_GRAD0_opsz24.png");
-        //    btnDelete.BackgroundImageLayout = ImageLayout.Zoom;
-        //    btnDelete.Click += (sender, e) => { categoryPanel.Parent.Controls.Remove(categoryPanel); };
-        //    categoryPanel.Controls.Add(btnDelete);
-
-        //    flowLayoutPanelCategories.Controls.Add(categoryPanel);
-        //}
-
-        //private void btnAddCategory_Click(object sender, EventArgs e)
-        //{
-        //    AddForm addForm = new AddForm(flowLayoutPanelCategories);
-        //    if (addForm.ShowDialog() == DialogResult.OK)
-        //    {
-        //        string categoryName = addForm.ProductName;
-        //        decimal categoryPrice = addForm.ProductPrice;
-        //        int unitsInStock = addForm.UnitsInStock;
-        //        string category = addForm.Category;
-
-        //        AddCategoryToPanel(categoryName, categoryPrice, unitsInStock, category);
-        //    }
-        //}
-
-        //public void AddCategoryToPanel(string name, decimal price, int unitsInStock, string category)
-        //{
-        //    Panel categoryPanel = new Panel();
-        //    categoryPanel.Size = new Size(1586, 50);
-        //    categoryPanel.BackColor = Color.White;
-        //    categoryPanel.BorderStyle = BorderStyle.None;
-        //    categoryPanel.Margin = new Padding(4);
-
-        //    Label lblNumber = new Label();
-        //    lblNumber.Text = "1";
-        //    lblNumber.Location = new Point(17, 19);
-        //    lblNumber.Size = new Size(30, 20);
-        //    lblNumber.Font = new Font("Arial", 10);
-        //    categoryPanel.Controls.Add(lblNumber);
-
-        //    Label lblName = new Label();
-        //    lblName.Text = name;
-        //    lblName.Location = new Point(91, 11);
-        //    lblName.Size = new Size(100, 20);
-        //    lblName.Font = new Font("Arial", 10);
-        //    categoryPanel.Controls.Add(lblName);
-
-        //    Label lblPrice = new Label();
-        //    lblPrice.Text = price.ToString("C");
-        //    lblPrice.Location = new Point(404, 11);
-        //    lblPrice.Size = new Size(100, 20);
-        //    lblPrice.Font = new Font("Arial", 10);
-        //    categoryPanel.Controls.Add(lblPrice);
-
-        //    Label lblUnitsInStock = new Label();
-        //    lblUnitsInStock.Text = unitsInStock.ToString();
-        //    lblUnitsInStock.Location = new Point(774, 11);
-        //    lblUnitsInStock.Size = new Size(100, 20);
-        //    lblUnitsInStock.Font = new Font("Arial", 10);
-        //    categoryPanel.Controls.Add(lblUnitsInStock);
-
-        //    Label lblCategory = new Label();
-        //    lblCategory.Text = category;
-        //    lblCategory.Location = new Point(1124, 11);
-        //    lblCategory.Size = new Size(100, 20);
-        //    lblCategory.Font = new Font("Arial", 10);
-        //    categoryPanel.Controls.Add(lblCategory);
-
-        //    Button btnEdit = new Button();
-        //    btnEdit.Text = "";
-        //    btnEdit.Size = new Size(25, 25);
-        //    btnEdit.Location = new Point(1482, 7);
-        //    btnEdit.FlatStyle = FlatStyle.Flat;
-        //    btnEdit.BackColor = Color.Transparent;
-        //    btnEdit.FlatAppearance.BorderColor = Color.Cyan;
-        //    btnEdit.FlatAppearance.BorderSize = 1;
-        //    btnEdit.BackgroundImage = Image.FromFile(@"C:\Users\user\Downloads\edit_24dp_05E0E9_FILL0_wght400_GRAD0_opsz24.png");
-        //    btnEdit.BackgroundImageLayout = ImageLayout.Zoom;
-        //    btnEdit.Click += (sender, e) =>
-        //    {
-        //        decimal priceValue;
-        //        decimal.TryParse(lblPrice.Text.Replace("$", ""), out priceValue);
-        //        int unitsValue;
-        //        int.TryParse(lblUnitsInStock.Text, out unitsValue);
-
-        //        E_Commerce.Presentation.EditForm editForm = new E_Commerce.Presentation.EditForm(lblName.Text, priceValue, unitsValue, lblCategory.Text);
-        //        DialogResult result = editForm.ShowDialog();
-        //        if (result == DialogResult.OK)
-        //        {
-        //            lblName.Text = editForm.ProductName;
-        //            lblPrice.Text = editForm.ProductPrice.ToString("C");
-        //            lblUnitsInStock.Text = editForm.UnitsInStock.ToString();
-        //            lblCategory.Text = editForm.Category;
-        //            MessageBox.Show("Category updated successfully!");
-        //        }
-        //        else if (result == DialogResult.Cancel)
-        //        {
-        //            MessageBox.Show("Edit canceled.");
-        //        }
-        //        else
-        //        {
-        //            MessageBox.Show("Unexpected dialog result: " + result.ToString());
-        //        }
-        //    };
-        //    categoryPanel.Controls.Add(btnEdit);
-
-        //    Button btnDelete = new Button();
-        //    btnDelete.Text = "";
-        //    btnDelete.Size = new Size(25, 25);
-        //    btnDelete.Location = new Point(1537, 7);
-        //    btnDelete.FlatStyle = FlatStyle.Flat;
-        //    btnDelete.BackColor = Color.Transparent;
-        //    btnDelete.FlatAppearance.BorderColor = Color.IndianRed;
-        //    btnDelete.FlatAppearance.BorderSize = 2;
-        //    btnDelete.BackgroundImage = Image.FromFile(@"C:\Users\user\Downloads\delete_24dp_FF2768_FILL0_wght400_GRAD0_opsz24.png");
-        //    btnDelete.BackgroundImageLayout = ImageLayout.Zoom;
-        //    btnDelete.Click += (sender, e) => { categoryPanel.Parent.Controls.Remove(categoryPanel); };
-        //    categoryPanel.Controls.Add(btnDelete);
-
-        //    flowLayoutPanelCategories.Controls.Add(categoryPanel);
-        //}
-
+        private void btnAddCategory_Click(object sender, EventArgs e)
+        {
+            using (var addCategoryForm = new AddCategory(flowLayoutPanelCategories))
+            {
+                flowLayoutPanelCategories.Tag = new Action(async () => await LoadCategoriesAsync());
+                if (addCategoryForm.ShowDialog() == DialogResult.OK)
+                {
+                }
+            }
+        }
     }
 }

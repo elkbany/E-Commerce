@@ -186,7 +186,6 @@
             btnProducts.TabIndex = 2;
             btnProducts.Text = "     Products";
             btnProducts.TextAlign = HorizontalAlignment.Left;
-            btnProducts.Click += btnProducts_Click_1;
             // 
             // btnCategories
             // 
@@ -215,7 +214,6 @@
             btnCategories.TabIndex = 5;
             btnCategories.Text = "     Categories";
             btnCategories.TextAlign = HorizontalAlignment.Left;
-            btnCategories.Click += btnCategories_Click_1;
             // 
             // btnUsers
             // 
@@ -244,7 +242,6 @@
             btnUsers.TabIndex = 6;
             btnUsers.Text = "     Users";
             btnUsers.TextAlign = HorizontalAlignment.Left;
-            btnUsers.Click += btnUsers_Click_1;
             // 
             // btnProfile
             // 
@@ -273,7 +270,6 @@
             btnProfile.TabIndex = 7;
             btnProfile.Text = "     Profile";
             btnProfile.TextAlign = HorizontalAlignment.Left;
-            btnProfile.Click += btnProfile_Click_1;
             // 
             // btnSettings
             // 
@@ -302,7 +298,6 @@
             btnSettings.TabIndex = 8;
             btnSettings.Text = "     Settings";
             btnSettings.TextAlign = HorizontalAlignment.Left;
-            btnSettings.Click += btnSettings_Click_1;
             // 
             // guna2Button5
             // 

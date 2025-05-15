@@ -62,10 +62,20 @@ namespace E_Commerce.BL.Implementations
 
         public async Task<ProductDTO> UpdateProductAsync(int id,ProductDTO productDTO)
         {
-            var product = await productRepository.GetByIdAsync(id);
-            var pro = await productRepository.Update(product);
-            var proMap = product?.Adapt<ProductDTO>();
-            return proMap;
+            var existing = await productRepository.GetByIdAsync(id);
+            if (existing == null)
+                throw new Exception($"Product with ID {id} not found.");
+
+          
+            existing.Name = productDTO.Name;
+            existing.Description = productDTO.Description;
+            existing.Price = productDTO.Price;
+            existing.UnitsInStock = productDTO.UnitsInStock;
+
+            //await  productRepository.Update(existing); 
+            await productRepository.CommitAsync(); 
+
+            return existing.Adapt<ProductDTO>(); 
         }
 
         public async Task DeleteProductAsync(int id)

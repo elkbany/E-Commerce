@@ -1,6 +1,7 @@
 ﻿using E_Commerce.BL.Contracts.Services;
 using E_Commerce.BL.Features.User.DTOs;
 using Microsoft.Extensions.DependencyInjection;
+
 using System;
 using System.Drawing;
 using System.Windows.Forms;
@@ -17,10 +18,12 @@ namespace E_Commerce.Presentation
         private readonly Lazy<frmOrders> orders;
         private readonly Lazy<frmProfile> profile;
 
+
+
         private bool sidebarExpand = true;
         private Button activeButton;
 
-        private Form currentForm; // تتبع الـ Form المفتوح حاليًا
+        private Form currentForm;
 
         private bool isDragging = false;
         private Point lastLocation;
@@ -74,17 +77,20 @@ namespace E_Commerce.Presentation
             panel1.MouseMove += Panel1_MouseMove;
             panel1.MouseUp += Panel1_MouseUp;
 
-            //// ضبط الأبعاد بناءً على حجم الشاشة
-            //int screenWidth = Screen.PrimaryScreen.Bounds.Width;
-            //int screenHeight = Screen.PrimaryScreen.Bounds.Height;
-            //this.ClientSize = new Size((int)(screenWidth * 0.8), (int)(screenHeight * 0.9)); // 80% عرض و 90% ارتفاع الشاشة
-            //this.Resize += frmMain_Resize;
+
         }
 
         public void SetUserId(int userId)
         {
             this.userId = userId;
             LoadUserInfo();
+            // إعادة تهيئة الـ Lazy مع الـ userId الجديد
+            var products = new Lazy<frmProducts>(() => new frmProducts(
+                ServiceProviderContainer.ServiceProvider.GetRequiredService<IProductServices>(),
+                ServiceProviderContainer.ServiceProvider.GetRequiredService<ICartItemServices>(),
+                ServiceProviderContainer.ServiceProvider.GetRequiredService<ICategoryServices>(),
+                this.userId)
+            { MdiParent = this, Dock = DockStyle.Fill });
             LoadHomeForm();
         }
 
@@ -227,36 +233,23 @@ namespace E_Commerce.Presentation
                     bool loggedOut = await accountServices.LogoutUserAsync(userInfo.Username);
                     if (loggedOut)
                     {
-                        if (products.Value.IsHandleCreated && !products.Value.IsDisposed) products.Value.Close();
-                        if (cart.Value.IsHandleCreated && !cart.Value.IsDisposed) cart.Value.Close();
-                        if (orders.Value.IsHandleCreated && !orders.Value.IsDisposed) orders.Value.Close();
-                        if (profile.Value.IsHandleCreated && !profile.Value.IsDisposed) profile.Value.Close();
-
-                        var loginForm = ServiceProviderContainer.ServiceProvider.GetRequiredService<Login>();
-                        loginForm.StartPosition = FormStartPosition.Manual;
-                        loginForm.Location = this.Location;
-                        loginForm.Show();
-
+                        MessageBox.Show("Logged out successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         this.Close();
+                        var loginForm = ServiceProviderContainer.ServiceProvider.GetRequiredService<Login>();
+                        loginForm.Show();
                     }
                     else
                     {
-                        System.Diagnostics.Debug.WriteLine($"Failed to logout user with userId: {userId}");
-                        MessageBox.Show("Failed to logout.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("Failed to log out.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
+
             }
             catch (Exception ex)
             {
-                System.Diagnostics.Debug.WriteLine($"Error logging out user with userId: {userId}. Message: {ex.Message}");
-                if (ex.InnerException != null)
-                {
-                    System.Diagnostics.Debug.WriteLine($"Inner Exception: {ex.InnerException.Message}");
-                }
                 MessageBox.Show($"Error logging out: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
         private void AddButtonEvents(Button button)
         {
             button.MouseEnter += (s, e) =>
@@ -314,18 +307,6 @@ namespace E_Commerce.Presentation
             }
         }
 
-        //private void frmMain_Resize(object sender, EventArgs e)
-        //{
-        //    int screenWidth = Screen.PrimaryScreen.Bounds.Width;
-        //    int screenHeight = Screen.PrimaryScreen.Bounds.Height;
-        //    this.ClientSize = new Size((int)(screenWidth * 0.8), (int)(screenHeight * 0.9));
-
-        //    // ضبط المواقع والأحجام النسبية للـ Controls
-        //    panel1.Width = this.ClientSize.Width;
-        //    sidebar.Width = (int)(this.ClientSize.Width * 0.2); // 20% من العرض
-        //    sidebar.Height = this.ClientSize.Height - panel1.Height;
-        //    sidebar.Location = new Point(0, panel1.Height);
-        //}
     }
 
     

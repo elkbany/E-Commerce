@@ -20,11 +20,6 @@ namespace E_Commerce.Domain.Models
             public ICollection<CartItem> CartItems { get; set; }
             public ICollection<OrderDetail> OrderDetails { get; set; }
 
-
-
-
-
-
     }
 }
 
