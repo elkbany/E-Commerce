@@ -34,6 +34,20 @@ namespace E_Commerce.BL.Implementations
             await _userRepository.CommitAsync();
             return newUser?.Adapt<UserDTO>();
         }
+        public async Task<AddUserDTO> AddUserByAdminAsync(AddUserDTO user)
+        {
+            var newUser = new User
+            {
+                Username = user.Username,
+                PasswordHash = user.Password,
+                Email = user.Email,
+                Status = (UserStatus)Enum.Parse(typeof(UserStatus), user.status),
+                // Status = user.status,
+            };
+            var AddUser = _userRepository.AddAsync(newUser);
+            await _userRepository.CommitAsync();
+            return newUser?.Adapt<AddUserDTO>();
+        }
 
         public async Task<UserDTO> getUserById(int ID)
         {

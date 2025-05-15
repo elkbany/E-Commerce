@@ -1,16 +1,21 @@
-using System;
+﻿using System;
+using System.Configuration;
 using System.Windows.Forms;
+using E_Commerce.BL.Implementations;
 using E_Commerce.Presentation;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace AdminTest
 {
     public partial class Admin : Form
     {
-        private ProductsPage productsPage;
-        private CategoriesPage categoriesPage;
+        private ProductsPage productsPage; 
+        private CategoriesPage categoriesPage; 
         private UsersPage usersPage;
-        private ProfilePage profilePage; 
-        private SettingsPage settingsPage;
+        public ProfilePage profilePage;
+        //private AdminChangePassword adminChangePassword;
+        //private SettingsPage settingsPage;
+        private OurTeam ourTeam;
         private UserControl currentPage;
 
         public Admin()
@@ -19,23 +24,25 @@ namespace AdminTest
 
             // ????? ???????
             productsPage = new ProductsPage();
-            categoriesPage = new CategoriesPage();
+            categoriesPage = ServiceProviderContainer.ServiceProvider.GetRequiredService<CategoriesPage>();
             usersPage = new UsersPage();
             profilePage = new ProfilePage();
-            settingsPage = new SettingsPage();
+            //changePasswordPage = new ChangePasswordPage(this);
+            ourTeam = new OurTeam();
 
             // ????? ??????? ??? mainContentPanel
             mainContentPanel.Controls.Add(productsPage);
             mainContentPanel.Controls.Add(categoriesPage);
             mainContentPanel.Controls.Add(usersPage);
             mainContentPanel.Controls.Add(profilePage);
-            mainContentPanel.Controls.Add(settingsPage);
+            //mainContentPanel.Controls.Add(changePasswordPage);
+            mainContentPanel.Controls.Add(ourTeam);
 
             // ??? ???? Products ?????????
             ShowPage(productsPage);
         }
 
-        private void ShowPage(UserControl page)
+        public void ShowPage(UserControl page)
         {
             if (currentPage != null)
             {
@@ -47,7 +54,7 @@ namespace AdminTest
         }
 
         bool sidebarExpand = true;
-        private void sidebarTransition_Tick(object sender, EventArgs e)
+        private void sidebarTransition_Tick_1(object sender, EventArgs e)
         {
             if (sidebarExpand)
             {
@@ -69,60 +76,39 @@ namespace AdminTest
             }
         }
 
-        private void btnSide_Click(object sender, EventArgs e)
+        private void btnSide_Click_1(object sender, EventArgs e)
         {
             sidebarTransition.Start();
         }
 
-        // ????? ????? ??? Sidebar
-        //private void btnProducts_Click(object sender, EventArgs e)
-        //{
-        //    ShowPage(productsPage);
-        //}
         private void btnProducts_Click_1(object sender, EventArgs e)
         {
             ShowPage(productsPage);
         }
 
-        //private void btnCategories_Click(object sender, EventArgs e)
-        //{
-        //    ShowPage(categoriesPage);
-        //}
         private void btnCategories_Click_1(object sender, EventArgs e)
         {
             ShowPage(categoriesPage);
         }
 
-        //private void btnUsers_Click(object sender, EventArgs e)
-        //{
-        //    ShowPage(usersPage);
-        //}
         private void btnUsers_Click_1(object sender, EventArgs e)
         {
             ShowPage(usersPage);
         }
 
-        //private void btnProfile_Click(object sender, EventArgs e)
-        //{
-        //    ShowPage(profilePage);
-        //}
         private void btnProfile_Click_1(object sender, EventArgs e)
         {
             ShowPage(profilePage);
         }
 
-        //private void btnSettings_Click(object sender, EventArgs e)
-        //{
-        //    ShowPage(settingsPage);
-        //}
-
         private void btnSettings_Click_1(object sender, EventArgs e)
         {
-            ShowPage(settingsPage);
+            ShowPage(ourTeam);
         }
+
         private void addNewItem_Click(object sender, EventArgs e)
         {
-            AddForm addForm = new AddForm(productsPage.flowLayoutPanelProducts);
+            var addForm = ServiceProviderContainer.ServiceProvider.GetRequiredService<AddForm>();
 
             if (addForm.ShowDialog() == DialogResult.OK)
             {
@@ -135,37 +121,53 @@ namespace AdminTest
             }
         }
 
-        private void btnAddCategory_Click(object sender, EventArgs e)
-        {
-            AddForm addForm = new AddForm(categoriesPage.flowLayoutPanelCategories);
+        //private void btnAddCategory_Click(object sender, EventArgs e)
+        //{
+        //    AddForm addForm = new AddForm(categoriesPage.flowLayoutPanelCategories);
+        //    if (addForm.ShowDialog() == DialogResult.OK)
+        //    {
+        //        string categoryName = addForm.ProductName; // ???????? ProductName ???? ?????
+        //        decimal categoryPrice = addForm.ProductPrice;
+        //        int unitsInStock = addForm.UnitsInStock;
+        //        string category = addForm.Category;
+
+        //        categoriesPage.AddCategoryToPanel(categoryName);
+        //    }
+        //}
+
+        //private void btnAddCategory_Click(object sender, EventArgs e) //this i fix it
+        //{
+        //    // Get form from DI
+        //    var addForm = ServiceProviderContainer.ServiceProvider.GetRequiredService<AddForm>();
 
             if (addForm.ShowDialog() == DialogResult.OK)
             {
-                string categoryName = addForm.ProductName; // ???????? ProductName ???? ?????
+                string categoryName = addForm.ProductName;
                 decimal categoryPrice = addForm.ProductPrice;
                 int unitsInStock = addForm.UnitsInStock;
                 string category = addForm.Category;
 
-                categoriesPage.AddCategoryToPanel(categoryName);
-            }
-        }
+        //    if (addForm.ShowDialog() == DialogResult.OK)
+        //    {
+        //        string categoryName = addForm.ProductName;
+        //        categoriesPage.AddCategoryToPanel(categoryName);
+        //    }
+        //}
 
-        private void btnAddUser_Click(object sender, EventArgs e)
-        {
-            AddUser addUser = new AddUser(usersPage.flowLayoutPanelUsers);
+
 
             if (addUser.ShowDialog() == DialogResult.OK)
             {
-                string userName = addUser.UserName; 
+                string firstName = addUser.FirstName;
+                string lastName = addUser.LastName;
+                string userName = addUser.UserName;
                 string userEmail = addUser.UserEmail;
                 string userPassword = addUser.UserPassword;
                 string userRole = addUser.UserStatus;
+                string isActive = addUser.IsActive;
 
-                usersPage.AddUserToPanel(userName, userEmail, userPassword, userRole);
+                usersPage.AddUserToPanel(firstName, lastName, userName, userEmail, userPassword, userRole, isActive);
             }
         }
-
-        
     }
-
 }

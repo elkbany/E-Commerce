@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges3 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges5 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UsersPage));
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges4 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges6 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             flowLayoutPanelUsers = new FlowLayoutPanel();
             btnAddUser = new Guna.UI2.WinForms.Guna2Button();
             label3 = new Label();
@@ -40,6 +40,9 @@
             label6 = new Label();
             label5 = new Label();
             label4 = new Label();
+            label1 = new Label();
+            label2 = new Label();
+            label10 = new Label();
             SuspendLayout();
             // 
             // flowLayoutPanelUsers
@@ -53,7 +56,7 @@
             // btnAddUser
             // 
             btnAddUser.BorderRadius = 15;
-            btnAddUser.CustomizableEdges = customizableEdges3;
+            btnAddUser.CustomizableEdges = customizableEdges5;
             btnAddUser.DisabledState.BorderColor = Color.DarkGray;
             btnAddUser.DisabledState.CustomBorderColor = Color.DarkGray;
             btnAddUser.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
@@ -65,7 +68,7 @@
             btnAddUser.IndicateFocus = true;
             btnAddUser.Location = new Point(1393, 13);
             btnAddUser.Name = "btnAddUser";
-            btnAddUser.ShadowDecoration.CustomizableEdges = customizableEdges4;
+            btnAddUser.ShadowDecoration.CustomizableEdges = customizableEdges6;
             btnAddUser.Size = new Size(181, 44);
             btnAddUser.TabIndex = 13;
             btnAddUser.Text = "Add New User";
@@ -97,7 +100,7 @@
             label8.AutoSize = true;
             label8.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
             label8.ForeColor = Color.Gray;
-            label8.Location = new Point(1112, 103);
+            label8.Location = new Point(1109, 103);
             label8.Name = "label8";
             label8.Size = new Size(103, 21);
             label8.TabIndex = 28;
@@ -108,7 +111,7 @@
             label7.AutoSize = true;
             label7.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
             label7.ForeColor = Color.Gray;
-            label7.Location = new Point(776, 103);
+            label7.Location = new Point(893, 103);
             label7.Name = "label7";
             label7.Size = new Size(79, 21);
             label7.TabIndex = 27;
@@ -119,7 +122,7 @@
             label6.AutoSize = true;
             label6.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
             label6.ForeColor = Color.Gray;
-            label6.Location = new Point(410, 103);
+            label6.Location = new Point(689, 103);
             label6.Name = "label6";
             label6.Size = new Size(48, 21);
             label6.TabIndex = 26;
@@ -130,11 +133,11 @@
             label5.AutoSize = true;
             label5.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
             label5.ForeColor = Color.Gray;
-            label5.Location = new Point(95, 103);
+            label5.Location = new Point(475, 103);
             label5.Name = "label5";
-            label5.Size = new Size(53, 21);
+            label5.Size = new Size(90, 21);
             label5.TabIndex = 25;
-            label5.Text = "Name";
+            label5.Text = "User Name";
             // 
             // label4
             // 
@@ -145,10 +148,46 @@
             label4.TabIndex = 24;
             label4.Text = "#";
             // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
+            label1.ForeColor = Color.Gray;
+            label1.Location = new Point(72, 103);
+            label1.Name = "label1";
+            label1.Size = new Size(88, 21);
+            label1.TabIndex = 31;
+            label1.Text = "First Name";
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
+            label2.ForeColor = Color.Gray;
+            label2.Location = new Point(290, 103);
+            label2.Name = "label2";
+            label2.Size = new Size(86, 21);
+            label2.TabIndex = 32;
+            label2.Text = "Last Name";
+            // 
+            // label10
+            // 
+            label10.AutoSize = true;
+            label10.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
+            label10.ForeColor = Color.Gray;
+            label10.Location = new Point(1299, 103);
+            label10.Name = "label10";
+            label10.Size = new Size(75, 21);
+            label10.TabIndex = 33;
+            label10.Text = "IsActive?";
+            // 
             // UsersPage
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(label10);
+            Controls.Add(label2);
+            Controls.Add(label1);
             Controls.Add(label3);
             Controls.Add(label9);
             Controls.Add(label8);
@@ -175,5 +214,8 @@
         private Label label6;
         private Label label5;
         private Label label4;
+        private Label label1;
+        private Label label2;
+        private Label label10;
     }
 }

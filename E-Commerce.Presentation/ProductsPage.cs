@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace E_Commerce.Presentation
 {
@@ -118,7 +119,13 @@ namespace E_Commerce.Presentation
 
         private void btnAddProduct_Click(object sender, EventArgs e)
         {
-            AddForm addForm = new AddForm(flowLayoutPanelProducts);
+            // 1. Get AddForm from DI
+            var addForm = ServiceProviderContainer.ServiceProvider.GetRequiredService<AddForm>();
+
+            // 2. Pass the FlowLayoutPanel manually
+            addForm.SetProductPanel(flowLayoutPanelProducts);
+
+            // 3. Show dialog and process result
             if (addForm.ShowDialog() == DialogResult.OK)
             {
                 string productName = addForm.ProductName;
@@ -129,7 +136,21 @@ namespace E_Commerce.Presentation
                 AddProductToPanel(productName, productPrice, unitsInStock, category);
             }
         }
-       
+        //private void btnAddProduct_Click(object sender, EventArgs e)
+        //{
+        //    AddForm addForm = new AddForm(flowLayoutPanelProducts);
+        //    if (addForm.ShowDialog() == DialogResult.OK)
+        //    {
+        //        string productName = addForm.ProductName;
+        //        decimal productPrice = addForm.ProductPrice;
+        //        int unitsInStock = addForm.UnitsInStock;
+        //        string category = addForm.Category;
+
+        //        AddProductToPanel(productName, productPrice, unitsInStock, category);
+        //    }
+        //}
+
+
 
         //public void AddProductToPanel(string name, decimal price, int unitsInStock, string category)
         //{

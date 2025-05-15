@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using E_Commerce.Domain.Models;
+
 using E_Commerce.BL.Features.Order.DTOs;
 using E_Commerce.BL.Features.CartItem;
 using System.Xml.Serialization;
@@ -44,6 +44,13 @@ namespace E_Commerce.BL.Mapping
                .Map(dest => dest.LastName, src => src.LastName)
                .Map(dest => dest.Email, src => src.Email)
                .Map(dest => dest.Username, src => src.Username);
+
+            TypeAdapterConfig<AddUserDTO, User>.NewConfig()
+              .Map(dest => dest.Username, src => src.Username)
+              .Map(dest => dest.Email, src => src.Email)
+              .Map(dest => dest.PasswordHash, src => src.Password)
+              .Map(dest => dest.Status, src => src.status);
+
             #endregion
 
             #region Product Mapping
@@ -54,6 +61,18 @@ namespace E_Commerce.BL.Mapping
               .Map(dest => dest.Description, src => src.Description)
               .Map(dest => dest.UnitsInStock, src => src.UnitsInStock)
               .Map(dest => dest.Category, src => src.Category.Name);
+
+
+            TypeAdapterConfig<AddProductDTO, Product>.NewConfig()
+    .Ignore(dest => dest.Category)
+    .Map(dest => dest.Name, src => src.Name)
+    .Map(dest => dest.Price, src => src.Price)
+    .Map(dest => dest.UnitsInStock, src => src.UnitsInStock);
+    
+           
+
+
+
             #endregion
 
 
@@ -83,6 +102,11 @@ namespace E_Commerce.BL.Mapping
                 .Map(dest => dest.ProductID, src => src.ProductId)
                 .Map(dest => dest.Quantity, src => src.Quantity)
                 .Map(dest => dest.DateAdded, src => DateTime.UtcNow);
+
+
+            TypeAdapterConfig<Category, CategoryDTO>.NewConfig()
+               
+                .Map(dest => dest.Name, src => src.Name);
 
             //TypeAdapterConfig<OrderDetail, OrderDetailDTO>
             //    .NewConfig()
