@@ -140,34 +140,34 @@ namespace AdminTest
         //    // Get form from DI
         //    var addForm = ServiceProviderContainer.ServiceProvider.GetRequiredService<AddForm>();
 
-            if (addForm.ShowDialog() == DialogResult.OK)
-            {
-                string categoryName = addForm.ProductName;
-                decimal categoryPrice = addForm.ProductPrice;
-                int unitsInStock = addForm.UnitsInStock;
-                string category = addForm.Category;
-
         //    if (addForm.ShowDialog() == DialogResult.OK)
         //    {
         //        string categoryName = addForm.ProductName;
-        //        categoriesPage.AddCategoryToPanel(categoryName);
+        //        decimal categoryPrice = addForm.ProductPrice;
+        //        int unitsInStock = addForm.UnitsInStock;
+        //        string category = addForm.Category;
+
+        //        if (addForm.ShowDialog() == DialogResult.OK)
+        //        {
+        //            string categoryName = addForm.ProductName;
+        //            categoriesPage.AddCategoryToPanel(categoryName);
+        //        }
+        //    }
+
+
+
+        //    if (addUser.ShowDialog() == DialogResult.OK)
+        //    {
+        //        string firstName = addUser.FirstName;
+        //        string lastName = addUser.LastName;
+        //        string userName = addUser.UserName;
+        //        string userEmail = addUser.UserEmail;
+        //        string userPassword = addUser.UserPassword;
+        //        string userRole = addUser.UserStatus;
+        //        string isActive = addUser.IsActive;
+
+        //        usersPage.AddUserToPanel(firstName, lastName, userName, userEmail, userPassword, userRole, isActive);
         //    }
         //}
-
-
-
-            if (addUser.ShowDialog() == DialogResult.OK)
-            {
-                string firstName = addUser.FirstName;
-                string lastName = addUser.LastName;
-                string userName = addUser.UserName;
-                string userEmail = addUser.UserEmail;
-                string userPassword = addUser.UserPassword;
-                string userRole = addUser.UserStatus;
-                string isActive = addUser.IsActive;
-
-                usersPage.AddUserToPanel(firstName, lastName, userName, userEmail, userPassword, userRole, isActive);
-            }
-        }
     }
 }

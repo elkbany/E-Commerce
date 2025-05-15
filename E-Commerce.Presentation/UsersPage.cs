@@ -156,15 +156,15 @@ namespace E_Commerce.Presentation
             // 3. Show dialog and process result
             if (addForm.ShowDialog() == DialogResult.OK)
             {
-                string firstName = addForm.FirstName;
-                string lastName = addForm.LastName;
-                string username = addForm.UserName;
-                string email = addForm.UserEmail;
-                string password = addForm.UserPassword;
-                string status = addForm.UserStatus;
-                string isActive = addForm.IsActive;
+                //string firstName = addForm.FirstName;
+                //string lastName = addForm.LastName;
+                //string username = addForm.UserName;
+                //string email = addForm.UserEmail;
+                //string password = addForm.UserPassword;
+                //string status = addForm.UserStatus;
+                //string isActive = addForm.IsActive;
 
-                AddUserToPanel(firstName, lastName, username, email, password, status, isActive);
+                //AddUserToPanel(firstName, lastName, username, email, password, status, isActive);
             }
         }
     }
