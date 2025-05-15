@@ -6,18 +6,14 @@ using System.Threading.Tasks;
 using E_Commerce.DA.Context;
 using Microsoft.EntityFrameworkCore;
 using E_Commerce.BL.Contracts.Repositories;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Linq.Expressions;
-using Microsoft.EntityFrameworkCore.Metadata;
-
-
 
 namespace E_Commerce.DA.Implementations.Base
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : class
     {
-        protected readonly DBContext _context; // تغيير من private لـ protected
-        protected readonly DbSet<T> _dbSet; // تغيير من private لـ protected
+        protected readonly DBContext _context;
+        protected readonly DbSet<T> _dbSet;
 
         public GenericRepository(DBContext context)
         {
@@ -28,11 +24,22 @@ namespace E_Commerce.DA.Implementations.Base
         public async Task<T> AddAsync(T entity)
         {
             await _dbSet.AddAsync(entity);
+            await _context.SaveChangesAsync();
             return entity;
         }
+
         public async Task<T> Update(T entity)
         {
-            return _dbSet.Update(entity).Entity;
+            var tracked = _context.ChangeTracker.Entries<T>()
+                          .FirstOrDefault(e => e.Entity.Equals(entity));
+
+            if (tracked == null)
+            {
+                _dbSet.Attach(entity); // attach only if not already tracked
+            }
+
+            _context.Entry(entity).State = EntityState.Modified;
+            return entity;
         }
 
         public async Task<T> Delete(T entity)
@@ -49,7 +56,7 @@ namespace E_Commerce.DA.Implementations.Base
         {
             return await _dbSet.FindAsync(id);
         }
-
+        
         public async Task CommitAsync()
         {
             try
@@ -58,25 +65,24 @@ namespace E_Commerce.DA.Implementations.Base
             }
             catch (DbUpdateConcurrencyException ex)
             {
-                // Handle concurrency exception
                 throw new Exception("Concurrency error occurred while saving changes.", ex);
             }
             catch (DbUpdateException ex)
             {
-                // Handle update exception
                 throw new Exception("An error occurred while updating the database.", ex);
             }
             catch (Exception ex)
             {
-                // Handle other exceptions
                 throw new Exception("An unexpected error occurred.", ex);
             }
         }
+
         public async Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> criteria, params Expression<Func<T, object>>[] includes)
         {
             var query = GetWhere(criteria, includes);
             return await query.FirstOrDefaultAsync();
         }
+
         public async Task<List<T>> GetAllAsync(params Expression<Func<T, object>>[] includes)
         {
             IQueryable<T> query = _dbSet;
@@ -88,14 +94,14 @@ namespace E_Commerce.DA.Implementations.Base
 
             return await query.ToListAsync();
         }
+
         public async Task<List<T>> GetAllAsync(int skip, int take, params Expression<Func<T, object>>[] includes)
         {
             var query = Includes(_dbSet, includes);
-
             var items = await query.Skip(skip).Take(take).ToListAsync();
-
             return query.ToList();
         }
+
         public async Task<List<T>> GetAllAsync(Expression<Func<T, bool>>? criteria, int? skip, int? take, params Expression<Func<T, object>>[] includes)
         {
             IQueryable<T> query = _dbSet;
@@ -113,6 +119,7 @@ namespace E_Commerce.DA.Implementations.Base
 
             return await query.ToListAsync();
         }
+
         public async Task<List<T>> GetAllAsync(Expression<Func<T, bool>>? criteria = null, params Expression<Func<T, object>>[] includes)
         {
             IQueryable<T> query = _dbSet;
@@ -124,20 +131,17 @@ namespace E_Commerce.DA.Implementations.Base
 
             return await query.ToListAsync();
         }
-       
-        //public Task<T> GetByIdAsync(int id, params Expression<Func<T, object>>[] includes)
-        //{
-        //    var query = Includes(_dbSet, includes);
-        //    return query.FirstOrDefaultAsync(e => e==id);
-        //}
+
         public async Task<bool> AnyAsync(Expression<Func<T, bool>>? criteria = null)
         {
             return criteria == null ? await _dbSet.AnyAsync() : await _dbSet.AnyAsync(criteria);
         }
-        public  async Task<int> CountAsync(Expression<Func<T, bool>>? criteria = null)
+
+        public async Task<int> CountAsync(Expression<Func<T, bool>>? criteria = null)
         {
             return criteria == null ? await _dbSet.CountAsync() : await _dbSet.CountAsync(criteria);
         }
+
         private IQueryable<T> Includes(IQueryable<T> query, params Expression<Func<T, object>>[] includes)
         {
             if (includes != null)
@@ -146,10 +150,10 @@ namespace E_Commerce.DA.Implementations.Base
 
             return query;
         }
+
         private IQueryable<T> GetWhere(Expression<Func<T, bool>> criteria, params Expression<Func<T, object>>[] includes)
         {
             var query = Includes(_dbSet, includes);
-
             return query.Where(criteria);
         }
     }

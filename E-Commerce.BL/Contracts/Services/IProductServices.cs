@@ -13,7 +13,7 @@ namespace E_Commerce.BL.Contracts.Services
 {
     public interface IProductServices
     {
-        Task<ProductDTO> AddProductAsync(ProductDTO product);
+        Task<AddProductDTO> AddProductAsync(AddProductDTO product);
         Task<ProductDTO> GetProductByIdAsync(int id);
         Task<IEnumerable<ProductDTO>> GetAllProductsAsync();
        

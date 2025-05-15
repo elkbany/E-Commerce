@@ -44,12 +44,8 @@
             btnOrders = new Button();
             btnProfile = new Button();
             btnLogout = new Button();
-            btnProducts.Margin = new Padding(0, 10, 3, 3);
-            btnCart.Margin = new Padding(0, 10, 3, 3);
-            btnOrders.Margin = new Padding(0, 10, 3, 3);
-            btnProfile.Margin = new Padding(0, 10, 3, 3);
-            btnLogout.Margin = new Padding(0, 10, 3, 3); // عدّل الـ Margin بتاع btnLogout
             sidebarTransition = new System.Windows.Forms.Timer(components);
+            guna2AnimateWindow1 = new Guna.UI2.WinForms.Guna2AnimateWindow(components);
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)btnDrag).BeginInit();
             sidebar.SuspendLayout();
@@ -83,7 +79,7 @@
             nightControlBox1.EnableMaximizeColor = Color.FromArgb(160, 160, 160);
             nightControlBox1.EnableMinimizeButton = true;
             nightControlBox1.EnableMinimizeColor = Color.FromArgb(160, 160, 160);
-            nightControlBox1.Location = new Point(1144, 4);
+            nightControlBox1.Location = new Point(1150, 0);
             nightControlBox1.MaximizeHoverColor = Color.FromArgb(15, 255, 255, 255);
             nightControlBox1.MaximizeHoverForeColor = Color.White;
             nightControlBox1.MinimizeHoverColor = Color.FromArgb(15, 255, 255, 255);
@@ -306,5 +302,6 @@
         private Label label2;
         private ReaLTaiizor.Controls.NightControlBox nightControlBox1;
         private PictureBox pictureBox1;
+        private Guna.UI2.WinForms.Guna2AnimateWindow guna2AnimateWindow1;
     }
 }

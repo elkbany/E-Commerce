@@ -9,7 +9,7 @@ namespace E_Commerce.Domain.Models
             public int Id  { get; set; }  
             public string Name { get; set; }
 
-            public string Description { get; set; }
+            public string? Description { get; set; }
 
             public decimal Price { get; set; }
 
@@ -19,11 +19,6 @@ namespace E_Commerce.Domain.Models
             public Category? Category { get; set; }
             public ICollection<CartItem> CartItems { get; set; }
             public ICollection<OrderDetail> OrderDetails { get; set; }
-
-
-
-
-
 
     }
 }

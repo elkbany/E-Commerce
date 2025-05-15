@@ -1,12 +1,23 @@
 ﻿using System;
 using System.Windows.Forms;
 using System.ComponentModel;
+using E_Commerce.BL.Contracts.Services;
+using E_Commerce.BL.Features.Product.DTOs;
+using E_Commerce.BL.Implementations;
+using System.ComponentModel.DataAnnotations;
+using System.Threading.Tasks;
+using FluentValidation;
 
 namespace E_Commerce.Presentation
 {
     public partial class AddForm : Form
     {
-        private FlowLayoutPanel targetPanel;
+        private FlowLayoutPanel _productPanel;
+        private FlowLayoutPanel _categoryPanel;
+        private FlowLayoutPanel _userPanel;
+        private IProductServices _ProductServices;
+        private ICategoryServices _CategoryServices;
+        private readonly IValidator<AddProductDTO> _validator;
 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public string ProductName { get; private set; }
@@ -17,10 +28,24 @@ namespace E_Commerce.Presentation
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public string Category { get; private set; }
 
-        public AddForm(FlowLayoutPanel panel)
+        public AddForm( IProductServices ProductServices, ICategoryServices CategoryServices, IValidator<AddProductDTO> validator)
         {
             InitializeComponent();
-            targetPanel = panel;
+            _ProductServices = ProductServices;
+            _CategoryServices = CategoryServices;
+            _validator = validator;
+        }
+        public void SetCategoryPanel(FlowLayoutPanel panel)
+        {
+            _categoryPanel = panel;
+        }
+        public void SetProductPanel(FlowLayoutPanel panel)
+        {
+            _productPanel = panel;
+        }
+        public void SetUserPanel(FlowLayoutPanel panel)
+        {
+            _userPanel = panel;
         }
 
         //private void btnSave_Click(object sender, EventArgs e)
@@ -60,35 +85,72 @@ namespace E_Commerce.Presentation
         //    this.Close();
         //}
 
-        private void btnAddSave_Click(object sender, EventArgs e)
+        private async void btnAddSave_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(txtAddName.Text) || string.IsNullOrWhiteSpace(txtAddPrice.Text) ||
-                string.IsNullOrWhiteSpace(txtAddUnitsInStock.Text) || string.IsNullOrWhiteSpace(txtAddCategory.Text))
+           // var category =await _CategoryServices.getCategoryIDByName(txtAddCategory.Text);
+            var product = new AddProductDTO
             {
-                MessageBox.Show("Please fill all fields.");
+
+                Name = txtAddName.Text,
+                Category = txtAddCategory.Text,
+                Price = decimal.Parse(txtAddPrice.Text),
+                UnitsInStock = int.Parse(txtAddUnitsInStock.Text)
+
+            };
+            // var validator = await validator.ValidateAsync(product);
+            var validationResult = await _validator.ValidateAsync(product);
+            if (!validationResult.IsValid)
+            {
+                MessageBox.Show(string.Join("\n", validationResult.Errors.Select(x => x.ErrorMessage)),
+                              "Validation Errors",
+                MessageBoxButtons.OK,
+                              MessageBoxIcon.Error);
                 return;
             }
-
-            ProductName = txtAddName.Text;
-
-            if (!decimal.TryParse(txtAddPrice.Text, out decimal price))
+           var show= await _ProductServices.AddProductAsync(product);
+           
+            MessageBox.Show("Product added successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            // Assuming you have a method to add the product to the panel
+            if (_productPanel != null && show != null)
             {
-                MessageBox.Show("Please enter a valid price.");
-                return;
+                // Assuming you have access to the panel
+                ////////AddProductToPanel(
+                ////////    show.Name,
+                ////////    show.Price,
+                ////////    show.UnitsInStock,
+                ////////    show.Category
+                ////////);
             }
-            ProductPrice = price;
 
-            if (!int.TryParse(txtAddUnitsInStock.Text, out int units))
-            {
-                MessageBox.Show("Please enter a valid number for units in stock.");
-                return;
-            }
-            UnitsInStock = units;
-
-            Category = txtAddCategory.Text;
-
-            this.DialogResult = DialogResult.OK;
             this.Close();
+            
+            //if (string.IsNullOrWhiteSpace(txtAddName.Text) || string.IsNullOrWhiteSpace(txtAddPrice.Text) ||
+            //    string.IsNullOrWhiteSpace(txtAddUnitsInStock.Text) || string.IsNullOrWhiteSpace(txtAddCategory.Text))
+            //{
+            //    MessageBox.Show("Please fill all fields.");
+            //    return;
+            //}
+
+            //ProductName = txtAddName.Text;
+
+            //if (!decimal.TryParse(txtAddPrice.Text, out decimal price))
+            //{
+            //    MessageBox.Show("Please enter a valid price.");
+            //    return;
+            //}
+            //ProductPrice = price;
+
+            //if (!int.TryParse(txtAddUnitsInStock.Text, out int units))
+            //{
+            //    MessageBox.Show("Please enter a valid number for units in stock.");
+            //    return;
+            //}
+            //UnitsInStock = units;
+
+            //Category = txtAddCategory.Text;
+
+            //this.DialogResult = DialogResult.OK;
+            //this.Close();
         }
 
         private void btnAddCancel_Click(object sender, EventArgs e)

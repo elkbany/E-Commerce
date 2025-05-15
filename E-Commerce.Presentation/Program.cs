@@ -1,4 +1,5 @@
 ﻿using AdminTest;
+using E_Commerce.BL.Configurations; // أضف Namespace ده لو فيه ملف ProductMappingConfig
 using E_Commerce.BL.Contracts.Repositories;
 using E_Commerce.BL.Contracts.Services;
 using E_Commerce.BL.Features.User.DTOs;
@@ -13,6 +14,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System.Windows.Forms;
 using Microsoft.Extensions.Logging;
+using E_Commerce.BL.Features.Product.DTOs;
+using E_Commerce.BL.Features.Product.Validators;
+using E_Commerce.BL.Features.Category.DTOs;
+using E_Commerce.BL.Features.Category.Validators;
+using E_Commerce.BL.Mapping;
 
 namespace E_Commerce.Presentation
 {
@@ -31,7 +37,6 @@ namespace E_Commerce.Presentation
             var startForm = ServiceProviderContainer.ServiceProvider.GetRequiredService<Start>();
             Application.Run(startForm);
         }
-        
 
         static IHostBuilder CreateHostBuilder() =>
             Host.CreateDefaultBuilder()
@@ -53,7 +58,8 @@ namespace E_Commerce.Presentation
                     services.AddScoped<frmOrders>();
                     services.AddScoped<frmOrderDetails>();
                     services.AddScoped<frmCart>();
-                    services.AddScoped<DBContext>();
+                    services.AddScoped<CategoriesPage>();
+                    services.AddScoped<AddForm>();
 
 
 
@@ -78,8 +84,13 @@ namespace E_Commerce.Presentation
                     services.AddTransient<IValidator<RegisterUserDto>, RegisterUserDtoValidator>();
                     services.AddTransient<IValidator<LoginUserDto>, LoginUserDtoValidator>();
                     services.AddTransient<IValidator<int>, OrderIdValidator>();
+                    services.AddTransient<IValidator<AddProductDTO>, ProductDTOValidator>();
+
+                    // Register Mapster Mapping Configuration
+                    ProductMappingConfig.Configure();
+                    CategoryMappingConfig.Configure();
+
+
                 });
     }
-
-
 }

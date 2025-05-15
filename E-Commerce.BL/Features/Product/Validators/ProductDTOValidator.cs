@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace E_Commerce.BL.Features.Product.Validators
 {
-    public class ProductDTOValidator : AbstractValidator<ProductDTO>
+    public class ProductDTOValidator : AbstractValidator<AddProductDTO>
     {
         public ProductDTOValidator()
         {

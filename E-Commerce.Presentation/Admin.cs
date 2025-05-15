@@ -1,8 +1,9 @@
-using System;
+﻿using System;
 using System.Configuration;
 using System.Windows.Forms;
 using E_Commerce.BL.Implementations;
 using E_Commerce.Presentation;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace AdminTest
 {
@@ -21,13 +22,15 @@ namespace AdminTest
         {
             InitializeComponent();
 
+            // ????? ???????
             productsPage = new ProductsPage();
-            categoriesPage = new CategoriesPage();
+            categoriesPage = ServiceProviderContainer.ServiceProvider.GetRequiredService<CategoriesPage>();
             usersPage = new UsersPage();
             profilePage = new ProfilePage();
             //changePasswordPage = new ChangePasswordPage(this);
             ourTeam = new OurTeam();
 
+            // ????? ??????? ??? mainContentPanel
             mainContentPanel.Controls.Add(productsPage);
             mainContentPanel.Controls.Add(categoriesPage);
             mainContentPanel.Controls.Add(usersPage);
@@ -35,6 +38,7 @@ namespace AdminTest
             //mainContentPanel.Controls.Add(changePasswordPage);
             mainContentPanel.Controls.Add(ourTeam);
 
+            // ??? ???? Products ?????????
             ShowPage(productsPage);
         }
 
@@ -104,7 +108,7 @@ namespace AdminTest
 
         private void addNewItem_Click(object sender, EventArgs e)
         {
-            AddForm addForm = new AddForm(productsPage.flowLayoutPanelProducts);
+            var addForm = ServiceProviderContainer.ServiceProvider.GetRequiredService<AddForm>();
 
             if (addForm.ShowDialog() == DialogResult.OK)
             {
@@ -117,9 +121,24 @@ namespace AdminTest
             }
         }
 
-        private void btnAddCategory_Click(object sender, EventArgs e)
-        {
-            AddForm addForm = new AddForm(categoriesPage.flowLayoutPanelCategories);
+        //private void btnAddCategory_Click(object sender, EventArgs e)
+        //{
+        //    AddForm addForm = new AddForm(categoriesPage.flowLayoutPanelCategories);
+        //    if (addForm.ShowDialog() == DialogResult.OK)
+        //    {
+        //        string categoryName = addForm.ProductName; // ???????? ProductName ???? ?????
+        //        decimal categoryPrice = addForm.ProductPrice;
+        //        int unitsInStock = addForm.UnitsInStock;
+        //        string category = addForm.Category;
+
+        //        categoriesPage.AddCategoryToPanel(categoryName);
+        //    }
+        //}
+
+        //private void btnAddCategory_Click(object sender, EventArgs e) //this i fix it
+        //{
+        //    // Get form from DI
+        //    var addForm = ServiceProviderContainer.ServiceProvider.GetRequiredService<AddForm>();
 
             if (addForm.ShowDialog() == DialogResult.OK)
             {
@@ -128,13 +147,14 @@ namespace AdminTest
                 int unitsInStock = addForm.UnitsInStock;
                 string category = addForm.Category;
 
-                categoriesPage.AddCategoryToPanel(categoryName);
-            }
-        }
+        //    if (addForm.ShowDialog() == DialogResult.OK)
+        //    {
+        //        string categoryName = addForm.ProductName;
+        //        categoriesPage.AddCategoryToPanel(categoryName);
+        //    }
+        //}
 
-        private void btnAddUser_Click(object sender, EventArgs e)
-        {
-            AddUser addUser = new AddUser(usersPage.flowLayoutPanelUsers);
+
 
             if (addUser.ShowDialog() == DialogResult.OK)
             {
@@ -150,5 +170,4 @@ namespace AdminTest
             }
         }
     }
-
 }

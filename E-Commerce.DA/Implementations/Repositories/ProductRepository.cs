@@ -18,7 +18,7 @@ namespace E_Commerce.DA.Implementations.Repositories
     {
         public ProductRepository(DBContext context) : base(context)
         {
-            
+
         }
         public Product GetByName(string name)
         {
@@ -27,7 +27,19 @@ namespace E_Commerce.DA.Implementations.Repositories
         public async Task<Product> GetByIdAsync(int id, IDbContextTransaction transaction = null)
         {
             return await _dbSet.AsNoTracking().FirstOrDefaultAsync(p => p.Id == id);
-            // مفيش حاجة نعملها مع الـ Transaction هنا لأن الـ SaveChanges هيتم من الـ Service
+        }
+        public async Task<IEnumerable<Product>> GetAllAsync(Expression<Func<Product, bool>>? filter = null, params Expression<Func<Product, object>>[] includes)
+        {
+            IQueryable<Product> query = _context.Products;
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+            foreach (var include in includes)
+            {
+                query = query.Include(include);
+            }
+            return await query.ToListAsync();
         }
     }
 }

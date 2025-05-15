@@ -40,11 +40,11 @@
             SuspendLayout();
             // 
             // flowLayoutPanelCategories
-            // 
+            flowLayoutPanelCategories.Size = new Size(1000, 613); // تقليل العرض
             flowLayoutPanelCategories.AutoScroll = true;
             flowLayoutPanelCategories.Location = new Point(3, 144);
             flowLayoutPanelCategories.Name = "flowLayoutPanelCategories";
-            flowLayoutPanelCategories.Size = new Size(1569, 613);
+          //  flowLayoutPanelCategories.Size = new Size(1569, 613);
             flowLayoutPanelCategories.TabIndex = 0;
             // 
             // btnAddCategory
@@ -60,7 +60,7 @@
             btnAddCategory.ForeColor = Color.White;
             btnAddCategory.Image = (Image)resources.GetObject("btnAddCategory.Image");
             btnAddCategory.IndicateFocus = true;
-            btnAddCategory.Location = new Point(1393, 13);
+            btnAddCategory.Location = new Point(200, 50); // موقع أوضح بالقرب من الزاوية العلوية اليسرى
             btnAddCategory.Name = "btnAddCategory";
             btnAddCategory.ShadowDecoration.CustomizableEdges = customizableEdges8;
             btnAddCategory.Size = new Size(181, 44);

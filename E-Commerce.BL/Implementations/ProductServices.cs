@@ -15,29 +15,35 @@ namespace E_Commerce.BL.Implementations
     public class ProductServices : AppService, IProductServices
     {
         private readonly IProductRepository productRepository;
+        private readonly ICategoryServices categoryServices;
 
-        public ProductServices(IProductRepository productRepository)
+        public ProductServices(IProductRepository _productRepository, ICategoryServices _categoryServices)
         {
-            this.productRepository = productRepository ?? throw new ArgumentNullException(nameof(productRepository));
+            this.productRepository = _productRepository; //?? throw new ArgumentNullException(nameof(productRepository));
+            categoryServices = _categoryServices;
         }
-        public async Task<ProductDTO> AddProductAsync(ProductDTO product)
+        public async Task<AddProductDTO> AddProductAsync(AddProductDTO product)
         {
+            var category = await categoryServices.getCategoryIDByName(product.Category);
             #region Validations
-            await DoValidationAsync<ProductDTOValidator, ProductDTO>(product);
+            await DoValidationAsync<ProductDTOValidator, AddProductDTO>(product);
             //var category = 
             var pro = new Product
             {
-                Name = product.Name,
-                Description = product.Description,
+                Name = product.Name,               
                 Price = product.Price,
                 UnitsInStock = product.UnitsInStock,
+               CategoryID = category.Id,
+                Description = string.Empty,
 
-            }; 
+            };
             #endregion
-                
-            var Pro =await productRepository.AddAsync(pro);
-            var proMap = product?.Adapt<ProductDTO>();
-          // await productRepository.GetAllAsync(p=>p.UnitsInStock>0);
+
+            var ProductAdded = await productRepository.AddAsync(pro);
+           await productRepository.CommitAsync();
+
+            var proMap = ProductAdded?.Adapt<AddProductDTO>();
+            // await productRepository.GetAllAsync(p=>p.UnitsInStock>0);
             return proMap;
         }
 
@@ -56,10 +62,20 @@ namespace E_Commerce.BL.Implementations
 
         public async Task<ProductDTO> UpdateProductAsync(int id,ProductDTO productDTO)
         {
-            var product = await productRepository.GetByIdAsync(id);
-            var pro = await productRepository.Update(product);
-            var proMap = product?.Adapt<ProductDTO>();
-            return proMap;
+            var existing = await productRepository.GetByIdAsync(id);
+            if (existing == null)
+                throw new Exception($"Product with ID {id} not found.");
+
+          
+            existing.Name = productDTO.Name;
+            existing.Description = productDTO.Description;
+            existing.Price = productDTO.Price;
+            existing.UnitsInStock = productDTO.UnitsInStock;
+
+            //await  productRepository.Update(existing); 
+            await productRepository.CommitAsync(); 
+
+            return existing.Adapt<ProductDTO>(); 
         }
 
         public async Task DeleteProductAsync(int id)
