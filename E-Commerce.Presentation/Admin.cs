@@ -1,6 +1,7 @@
 using System;
 using System.Windows.Forms;
 using E_Commerce.Presentation;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace AdminTest
 {
@@ -122,7 +123,7 @@ namespace AdminTest
         }
         private void addNewItem_Click(object sender, EventArgs e)
         {
-            AddForm addForm = new AddForm(productsPage.flowLayoutPanelProducts);
+            var addForm = ServiceProviderContainer.ServiceProvider.GetRequiredService<AddForm>();
 
             if (addForm.ShowDialog() == DialogResult.OK)
             {
@@ -135,35 +136,51 @@ namespace AdminTest
             }
         }
 
-        private void btnAddCategory_Click(object sender, EventArgs e)
-        {
-            AddForm addForm = new AddForm(categoriesPage.flowLayoutPanelCategories);
+        //private void btnAddCategory_Click(object sender, EventArgs e)
+        //{
+        //    AddForm addForm = new AddForm(categoriesPage.flowLayoutPanelCategories);
+        //    if (addForm.ShowDialog() == DialogResult.OK)
+        //    {
+        //        string categoryName = addForm.ProductName; // ???????? ProductName ???? ?????
+        //        decimal categoryPrice = addForm.ProductPrice;
+        //        int unitsInStock = addForm.UnitsInStock;
+        //        string category = addForm.Category;
 
-            if (addForm.ShowDialog() == DialogResult.OK)
-            {
-                string categoryName = addForm.ProductName; // ???????? ProductName ???? ?????
-                decimal categoryPrice = addForm.ProductPrice;
-                int unitsInStock = addForm.UnitsInStock;
-                string category = addForm.Category;
+        //        categoriesPage.AddCategoryToPanel(categoryName);
+        //    }
+        //}
 
-                categoriesPage.AddCategoryToPanel(categoryName);
-            }
-        }
+        //private void btnAddCategory_Click(object sender, EventArgs e) //this i fix it
+        //{
+        //    // Get form from DI
+        //    var addForm = ServiceProviderContainer.ServiceProvider.GetRequiredService<AddForm>();
 
-        private void btnAddUser_Click(object sender, EventArgs e)
-        {
-            AddUser addUser = new AddUser(usersPage.flowLayoutPanelUsers);
+        //    // Pass UI dependency
+        //    addForm.SetCategoryPanel(categoriesPage.flowLayoutPanelCategories);
 
-            if (addUser.ShowDialog() == DialogResult.OK)
-            {
-                string userName = addUser.UserName; 
-                string userEmail = addUser.UserEmail;
-                string userPassword = addUser.UserPassword;
-                string userRole = addUser.UserStatus;
+        //    if (addForm.ShowDialog() == DialogResult.OK)
+        //    {
+        //        string categoryName = addForm.ProductName;
+        //        categoriesPage.AddCategoryToPanel(categoryName);
+        //    }
+        //}
 
-                usersPage.AddUserToPanel(userName, userEmail, userPassword, userRole);
-            }
-        }
+
+
+        //private void btnAddUser_Click(object sender, EventArgs e)
+        //{
+        //    AddUser addUser = new AddUser(usersPage.flowLayoutPanelUsers);
+
+        //    if (addUser.ShowDialog() == DialogResult.OK)
+        //    {
+        //        string userName = addUser.UserName; 
+        //        string userEmail = addUser.UserEmail;
+        //        string userPassword = addUser.UserPassword;
+        //        string userRole = addUser.UserStatus;
+
+        //        usersPage.AddUserToPanel(userName, userEmail, userPassword, userRole);
+        //    }
+        //}
 
         
     }

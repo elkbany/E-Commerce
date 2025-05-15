@@ -68,6 +68,11 @@ namespace E_Commerce.BL.Implementations
             var cat = await categoryRepository.Update(cateogry);
             var catMap = category?.Adapt<CategoryDTO>();
             return catMap;
-        }   
+        }
+        public async Task<Category> getCategoryIDByName(string name)
+        {
+            return await categoryRepository.FirstOrDefaultAsync(c => c.Name == name);
+  
+        }
     }
 }

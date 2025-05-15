@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace E_Commerce.Presentation
 {
@@ -88,13 +89,20 @@ namespace E_Commerce.Presentation
 
         private void btnAddCategory_Click(object sender, EventArgs e)
         {
-            AddCategory addForm = new AddCategory(flowLayoutPanelCategories);
+            // 1. Get the CORRECT form from DI (AddCategory instead of AddForm)
+            var addForm = ServiceProviderContainer.ServiceProvider.GetRequiredService<AddForm>();
+
+            // 2. Pass the FlowLayoutPanel manually
+            addForm.SetCategoryPanel(flowLayoutPanelCategories);
+
+            // 3. Show dialog and process result
             if (addForm.ShowDialog() == DialogResult.OK)
             {
-                string categoryName = addForm.CategoryName;
-                AddCategoryToPanel(categoryName);
+                //string categoryName = addForm.CategoryName;
+                //AddCategoryToPanel(categoryName);
             }
         }
+
 
         //public void AddCategoryToPanel(string name, decimal price, int unitsInStock, string category)
         //{

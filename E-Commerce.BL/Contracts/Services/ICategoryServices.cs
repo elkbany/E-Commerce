@@ -15,5 +15,6 @@ namespace E_Commerce.BL.Contracts.Services
         Task<IEnumerable<CategoryDTO>> GetAllCategoryAsync();
         Task<CategoryDTO> GetCategoryByIdAsync(int id);
         Task DeleteCategoryAsync(int id);
+        Task<Category> getCategoryIDByName(string name);
     }
 }

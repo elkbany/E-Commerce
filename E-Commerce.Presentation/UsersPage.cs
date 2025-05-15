@@ -7,15 +7,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace E_Commerce.Presentation
 {
     public partial class UsersPage : UserControl
     {
+      
         public UsersPage()
         {
             InitializeComponent();
         }
+       
 
         public void AddUserToPanel(string username, string email, string password, string status)
         {
@@ -115,15 +118,21 @@ namespace E_Commerce.Presentation
 
         private void btnAddUser_Click(object sender, EventArgs e)
         {
-            AddUser addForm = new AddUser(flowLayoutPanelUsers);
+            // 1. Get AddUser from DI container
+            var addForm = ServiceProviderContainer.ServiceProvider.GetRequiredService<AddForm>();
+
+            // 2. Pass the FlowLayoutPanel manually
+            addForm.SetUserPanel(flowLayoutPanelUsers);
+
+            // 3. Show dialog and process result
             if (addForm.ShowDialog() == DialogResult.OK)
             {
-                string username = addForm.UserName;
-                string email = addForm.UserEmail;
-                string password = addForm.UserPassword;
-                string status = addForm.UserStatus;
+                //string username = addForm.UserName;
+                //string email = addForm.UserEmail;
+                //string password = addForm.UserPassword;
+                //string status = addForm.UserStatus;
 
-                AddUserToPanel(username, email, password, status);
+                //AddUserToPanel(username, email, password, status);
             }
         }
 
