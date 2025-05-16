@@ -10,6 +10,6 @@ namespace E_Commerce.BL.Contracts.Repositories
 {
     public interface ICategoryRepository : IGenericRepository<Category>
     {
-        
+         Task<Category> Update(Category entity);
     }
 }

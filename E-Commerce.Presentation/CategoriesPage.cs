@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Drawing;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using E_Commerce.BL.Contracts.Services;
@@ -18,6 +18,7 @@ namespace E_Commerce.Presentation
             if (!DesignMode)
             {
                 _categoryServices = ServiceProviderContainer.ServiceProvider.GetRequiredService<ICategoryServices>();
+                Console.WriteLine("[CategoriesPage] Constructor called, loading categories...");
                 LoadCategoriesAsync();
                 btnAddCategory.Click += btnAddCategory_Click;
             }
@@ -27,22 +28,74 @@ namespace E_Commerce.Presentation
         {
             try
             {
+                Console.WriteLine("[CategoriesPage] Loading categories...");
                 var categories = await _categoryServices.GetAllCategoryAsync();
-                flowLayoutPanelCategories.Controls.Clear();
-                int index = 1;
-                foreach (var category in categories)
+                Console.WriteLine($"[CategoriesPage] Retrieved {categories.Count} categories.");
+
+                if (flowLayoutPanelCategories.InvokeRequired)
                 {
-                    AddCategoryToPanel(category, index++);
+                    Console.WriteLine("[CategoriesPage] Invoke required for UI update.");
+                    flowLayoutPanelCategories.Invoke(new Action(() =>
+                    {
+                        flowLayoutPanelCategories.Controls.Clear();
+                        Console.WriteLine("[CategoriesPage] Cleared flowLayoutPanelCategories controls.");
+                        int index = 1;
+                        foreach (var category in categories)
+                        {
+                            AddCategoryToPanel(category, index++);
+                        }
+                    }));
+                }
+                else
+                {
+                    Console.WriteLine("[CategoriesPage] No invoke required for UI update.");
+                    flowLayoutPanelCategories.Controls.Clear();
+                    Console.WriteLine("[CategoriesPage] Cleared flowLayoutPanelCategories controls.");
+                    int index = 1;
+                    foreach (var category in categories)
+                    {
+                        AddCategoryToPanel(category, index++);
+                    }
                 }
             }
             catch (Exception ex)
             {
+                Console.WriteLine($"[CategoriesPage] Error loading categories: {ex.Message}\nStackTrace: {ex.StackTrace}");
                 MessageBox.Show($"Error loading categories: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void AddCategoryToPanel(CategoryDTO category, int index)
         {
+            if (flowLayoutPanelCategories.InvokeRequired)
+            {
+                flowLayoutPanelCategories.Invoke(new Action(() =>
+                {
+                    AddCategoryToPanelInternal(category, index);
+                }));
+                return;
+            }
+            AddCategoryToPanelInternal(category, index);
+        }
+
+        private void AddCategoryToPanelInternal(CategoryDTO category, int index)
+        {
+            Console.WriteLine($"[CategoriesPage] Adding category to panel: Id={category.Id}, Name={category.Name}, Description={category.Description}");
+            foreach (Control control in flowLayoutPanelCategories.Controls)
+            {
+                if (control is Panel panel && panel.Tag is CategoryDTO tag && tag.Id == category.Id)
+                {
+                    Console.WriteLine($"[CategoriesPage] Category with Id={category.Id} already exists in panel, updating instead.");
+                    foreach (Control child in panel.Controls)
+                    {
+                        if (child is Label lbl && lbl.Location.X == 90) lbl.Text = category.Name ?? "";
+                        if (child is Label desc && desc.Location.X == 190) desc.Text = category.Description ?? "";
+                    }
+                    panel.Tag = category;
+                    return;
+                }
+            }
+
             Panel categoryPanel = new Panel
             {
                 Size = new Size(1569, 50),
@@ -52,34 +105,15 @@ namespace E_Commerce.Presentation
                 Tag = category
             };
 
-            Label lblNumber = new Label
-            {
-                Text = index.ToString(),
-                Location = new Point(27, 15),
-                Size = new Size(30, 20),
-                Font = new Font("Segoe UI", 10)
-            };
+            Label lblNumber = new Label { Text = index.ToString(), Location = new Point(27, 15), Size = new Size(30, 20), Font = new Font("Segoe UI", 10) };
             categoryPanel.Controls.Add(lblNumber);
 
-            Label lblCategoryName = new Label
-            {
-                Text = category.Name,
-                Location = new Point(90, 15),
-                Size = new Size(200, 20),
-                Font = new Font("Segoe UI", 10)
-            };
+            Label lblCategoryName = new Label { Text = category.Name ?? "", Location = new Point(90, 15), Size = new Size(200, 20), Font = new Font("Segoe UI", 10) };
             categoryPanel.Controls.Add(lblCategoryName);
 
-            Label lblCategoryDescription = new Label
-            {
-                Text = category.Name,
-                Location = new Point(190, 15),
-                Size = new Size(200, 20),
-                Font = new Font("Segoe UI", 10)
-            };
-            categoryPanel.Controls.Add(lblCategoryName);
+            Label lblCategoryDescription = new Label { Text = category.Description ?? "", Location = new Point(190, 15), Size = new Size(200, 20), Font = new Font("Segoe UI", 10) };
+            categoryPanel.Controls.Add(lblCategoryDescription);
 
-            // زر Delete
             Guna.UI2.WinForms.Guna2Button btnDelete = new Guna.UI2.WinForms.Guna2Button
             {
                 Text = "Delete",
@@ -89,10 +123,13 @@ namespace E_Commerce.Presentation
                 ForeColor = Color.White,
                 BorderRadius = 5
             };
-            btnDelete.Click += (s, e) => btnDelete_Click(category);
+            btnDelete.Click += async (s, e) =>
+            {
+                Console.WriteLine($"[CategoriesPage] Delete clicked for category: Id={category.Id}, Name={category.Name}");
+                await HandleDeleteClick(category);
+            };
             categoryPanel.Controls.Add(btnDelete);
 
-            // زر Edit
             Guna.UI2.WinForms.Guna2Button btnEdit = new Guna.UI2.WinForms.Guna2Button
             {
                 Text = "Edit",
@@ -102,62 +139,90 @@ namespace E_Commerce.Presentation
                 ForeColor = Color.White,
                 BorderRadius = 5
             };
-            btnEdit.Click += (s, e) => btnEdit_Click(category);
+            btnEdit.Click += async (s, e) =>
+            {
+                Console.WriteLine($"[CategoriesPage] Edit clicked for category: Id={category.Id}, Name={category.Name}");
+                await HandleEditClick(category);
+            };
             categoryPanel.Controls.Add(btnEdit);
 
             flowLayoutPanelCategories.Controls.Add(categoryPanel);
         }
 
-        private async void btnDelete_Click(CategoryDTO category)
+        private async void btnAddCategory_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show($"Are you sure you want to delete '{category.Name}'?", "Confirm Delete",
-                MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            try
             {
-                try
+                Console.WriteLine("[CategoriesPage] Add category button clicked.");
+                using (var addCategoryForm = new AddCategory(flowLayoutPanelCategories))
                 {
-                    var cat = await _categoryServices.GetCategoryByNameAsync(category.Name);
-                    await _categoryServices.DeleteCategoryAsync(cat.Id);
-                    await LoadCategoriesAsync();
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Error deleting category: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-        }
-
-        private async void btnEdit_Click(CategoryDTO category)
-        {
-            using (var addCategoryForm = new AddCategory(flowLayoutPanelCategories))
-            {
-                addCategoryForm.txtCategoryName.Text = category.Name;
-                flowLayoutPanelCategories.Tag = new Action(async () => await LoadCategoriesAsync());
-
-                if (addCategoryForm.ShowDialog() == DialogResult.OK)
-                {
-                    category.Name = addCategoryForm.txtCategoryName.Text;
-                    try
+                    flowLayoutPanelCategories.Tag = new Action(async () => await LoadCategoriesAsync());
+                    if (addCategoryForm.ShowDialog() == DialogResult.OK)
                     {
-                        var cat=await _categoryServices.GetCategoryByNameAsync(category.Name);
-                        await _categoryServices.UpdateCategoryAsync(cat.Id, category);
+                        Console.WriteLine("[CategoriesPage] Add category dialog OK, reloading categories...");
                         await LoadCategoriesAsync();
                     }
-                    catch (Exception ex)
+                    else
                     {
-                        MessageBox.Show($"Error updating category: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        Console.WriteLine("[CategoriesPage] Add category dialog cancelled.");
                     }
                 }
             }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[CategoriesPage] Error in btnAddCategory_Click: {ex.Message}\nStackTrace: {ex.StackTrace}");
+                MessageBox.Show($"Error adding category: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
-        private void btnAddCategory_Click(object sender, EventArgs e)
+        private async Task HandleEditClick(CategoryDTO category)
         {
-            using (var addCategoryForm = new AddCategory(flowLayoutPanelCategories))
+            try
             {
-                flowLayoutPanelCategories.Tag = new Action(async () => await LoadCategoriesAsync());
-                if (addCategoryForm.ShowDialog() == DialogResult.OK)
+                Console.WriteLine($"[CategoriesPage] Handling edit for category: Id={category.Id}, Name={category.Name}");
+                using (var addCategoryForm = new AddCategory(flowLayoutPanelCategories, category))
                 {
+                    flowLayoutPanelCategories.Tag = new Action(async () => await LoadCategoriesAsync());
+                    if (addCategoryForm.ShowDialog() == DialogResult.OK)
+                    {
+                        Console.WriteLine("[CategoriesPage] Edit category dialog OK, reloading categories...");
+                        await LoadCategoriesAsync();
+                    }
+                    else
+                    {
+                        Console.WriteLine("[CategoriesPage] Edit category dialog cancelled.");
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[CategoriesPage] Error in HandleEditClick: {ex.Message}\nStackTrace: {ex.StackTrace}");
+                MessageBox.Show($"Error editing category: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private async Task HandleDeleteClick(CategoryDTO category)
+        {
+            try
+            {
+                Console.WriteLine($"[CategoriesPage] Handling delete for category: Id={category.Id}, Name={category.Name}");
+                if (MessageBox.Show($"Are you sure you want to delete '{category.Name}'?", "Confirm Delete",
+                    MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    Console.WriteLine($"[CategoriesPage] Delete confirmed for category: Id={category.Id}, Name={category.Name}");
+                    await _categoryServices.DeleteCategoryAsync(category.Id);
+                    Console.WriteLine("[CategoriesPage] Delete successful, reloading categories...");
+                    await LoadCategoriesAsync();
+                }
+                else
+                {
+                    Console.WriteLine("[CategoriesPage] Delete cancelled by user.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[CategoriesPage] Error in HandleDeleteClick: {ex.Message}\nStackTrace: {ex.StackTrace}");
+                MessageBox.Show($"Error deleting category: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }
