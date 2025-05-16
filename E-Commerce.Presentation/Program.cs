@@ -1,5 +1,4 @@
-﻿using AdminTest;
-using E_Commerce.BL.Configurations; // أضف Namespace ده لو فيه ملف ProductMappingConfig
+﻿using E_Commerce.BL.Configurations;
 using E_Commerce.BL.Contracts.Repositories;
 using E_Commerce.BL.Contracts.Services;
 using E_Commerce.BL.Features.User.DTOs;
@@ -24,9 +23,6 @@ namespace E_Commerce.Presentation
 {
     internal static class Program
     {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
         [STAThread]
         static void Main()
         {
@@ -44,7 +40,8 @@ namespace E_Commerce.Presentation
                 {
                     // Register DbContext with SQL Server
                     services.AddDbContext<DBContext>(options =>
-                        options.UseSqlServer("Data Source=.;Initial Catalog=E-Commerce;Integrated Security=True;Trust Server Certificate=True;MultipleActiveResultSets=true"));
+                        options.UseSqlServer("Data Source=.;Initial Catalog=E-Commerce;Integrated Security=True;Trust Server Certificate=True;MultipleActiveResultSets=true"),
+                        ServiceLifetime.Scoped);
 
                     // Register Forms
                     services.AddScoped<Start>();
@@ -61,7 +58,12 @@ namespace E_Commerce.Presentation
                     services.AddScoped<CategoriesPage>();
                     services.AddScoped<AddForm>();
 
-
+                    // Logging
+                    services.AddLogging(logging =>
+                    {
+                        logging.AddConsole();
+                        logging.AddDebug();
+                    });
 
                     // Register Repositories
                     services.AddScoped<IProductRepository, ProductRepository>();
@@ -85,12 +87,13 @@ namespace E_Commerce.Presentation
                     services.AddTransient<IValidator<LoginUserDto>, LoginUserDtoValidator>();
                     services.AddTransient<IValidator<int>, OrderIdValidator>();
                     services.AddTransient<IValidator<AddProductDTO>, ProductDTOValidator>();
+                    services.AddTransient<frmMain>();
+
 
                     // Register Mapster Mapping Configuration
+                    new MappingConfig().Configure();
                     ProductMappingConfig.Configure();
                     CategoryMappingConfig.Configure();
-
-
                 });
     }
 }

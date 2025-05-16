@@ -105,6 +105,7 @@
             // btnLogin
             // 
             btnLogin.AutoRoundedCorners = true;
+            btnLogin.BackColor = Color.Transparent;
             btnLogin.BorderRadius = 21;
             btnLogin.CustomizableEdges = customizableEdges5;
             btnLogin.FillColor = Color.FromArgb(0, 120, 212);
@@ -207,6 +208,7 @@
             Controls.Add(lblUsername);
             Controls.Add(lblTitle);
             FormBorderStyle = FormBorderStyle.None;
+            KeyPreview = true;
             Name = "Login";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Login";
