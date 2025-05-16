@@ -72,12 +72,12 @@ namespace E_Commerce.Presentation
 
             Label lblCategoryDescription = new Label
             {
-                Text = category.Name,
+                Text = category.Description ?? string.Empty, // استخدام Description بدل Name
                 Location = new Point(190, 15),
                 Size = new Size(200, 20),
                 Font = new Font("Segoe UI", 10)
             };
-            categoryPanel.Controls.Add(lblCategoryName);
+            categoryPanel.Controls.Add(lblCategoryDescription);
 
             // زر Delete
             Guna.UI2.WinForms.Guna2Button btnDelete = new Guna.UI2.WinForms.Guna2Button
@@ -89,7 +89,7 @@ namespace E_Commerce.Presentation
                 ForeColor = Color.White,
                 BorderRadius = 5
             };
-            btnDelete.Click += (s, e) => btnDelete_Click(category);
+            btnDelete.Click += (s, e) => DeleteItem(category);
             categoryPanel.Controls.Add(btnDelete);
 
             // زر Edit
@@ -108,16 +108,16 @@ namespace E_Commerce.Presentation
             flowLayoutPanelCategories.Controls.Add(categoryPanel);
         }
 
-        private async void btnDelete_Click(CategoryDTO category)
+        private async void DeleteItem(CategoryDTO category)
         {
-            if (MessageBox.Show($"Are you sure you want to delete '{category.Name}'?", "Confirm Delete",
-                MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            DialogResult result = MessageBox.Show($"Are you sure you want to delete '{category.Name}'?", "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (result == DialogResult.Yes)
             {
                 try
                 {
-                    var cat = await _categoryServices.GetCategoryByNameAsync(category.Name);
-                    await _categoryServices.DeleteCategoryAsync(cat.Id);
+                    await _categoryServices.DeleteCategoryAsync(category.Id);
                     await LoadCategoriesAsync();
+                    MessageBox.Show("Category deleted successfully!");
                 }
                 catch (Exception ex)
                 {
@@ -138,7 +138,7 @@ namespace E_Commerce.Presentation
                     category.Name = addCategoryForm.txtCategoryName.Text;
                     try
                     {
-                        var cat=await _categoryServices.GetCategoryByNameAsync(category.Name);
+                        var cat = await _categoryServices.GetCategoryByNameAsync(category.Name);
                         await _categoryServices.UpdateCategoryAsync(cat.Id, category);
                         await LoadCategoriesAsync();
                     }
@@ -161,4 +161,5 @@ namespace E_Commerce.Presentation
             }
         }
     }
+
 }

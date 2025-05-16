@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Configuration;
 using System.Windows.Forms;
+using E_Commerce.BL.Contracts.Services;
 using E_Commerce.BL.Implementations;
 using E_Commerce.Presentation;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,7 +21,7 @@ namespace E_Commerce.Presentation
         {
             InitializeComponent();
 
-            productsPage = new ProductsPage();
+            productsPage = new ProductsPage(ServiceProviderContainer.ServiceProvider.GetRequiredService<IProductServices>());
             categoriesPage = ServiceProviderContainer.ServiceProvider.GetRequiredService<CategoriesPage>();
             usersPage = new UsersPage();
             profilePage = new ProfilePage();
@@ -47,6 +48,16 @@ namespace E_Commerce.Presentation
             currentPage.Dock = DockStyle.Fill;
             currentPage.Size = mainContentPanel.Size;
             Console.WriteLine($"Showing page: {currentPage.GetType().Name}, Visible: {currentPage.Visible}");
+
+            //New Code Here
+            if (page == productsPage)
+            {
+                productsPage.LoadProducts();
+            }
+            else if (page == categoriesPage)
+            {
+                // CategoriesPage بتعمل LoadCategoriesAsync لوحدها في الـ Constructor
+            }
         }
 
         bool sidebarExpand = true;
