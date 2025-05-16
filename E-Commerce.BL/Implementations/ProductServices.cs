@@ -84,6 +84,7 @@ namespace E_Commerce.BL.Implementations
             if (product != null)
             {
                 await productRepository.Delete(product);
+                await productRepository.CommitAsync();
             }
         }
         //public async Task<List<Product>> GetAllp()

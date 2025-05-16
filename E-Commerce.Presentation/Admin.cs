@@ -20,8 +20,8 @@ namespace AdminTest
         {
             InitializeComponent();
 
-            // إعداد الصفحات
-            productsPage = new ProductsPage();
+            // تهيئة الصفحات باستخدام ServiceProvider
+            productsPage = ServiceProviderContainer.ServiceProvider.GetRequiredService<ProductsPage>();//new ProductsPage();
             categoriesPage = ServiceProviderContainer.ServiceProvider.GetRequiredService<CategoriesPage>();
             usersPage = new UsersPage();
             profilePage = new ProfilePage();
@@ -121,15 +121,62 @@ namespace AdminTest
         {
             var addForm = ServiceProviderContainer.ServiceProvider.GetRequiredService<AddForm>();
 
-            if (addForm.ShowDialog() == DialogResult.OK)
+            // Subscribe to the ProductAdded event
+            addForm.ProductAdded += (s, args) =>
             {
-                string productName = addForm.ProductName;
-                decimal productPrice = addForm.ProductPrice;
-                int unitsInStock = addForm.UnitsInStock;
-                string category = addForm.Category;
+                // This will trigger the ProductsPage to refresh
+                productsPage.LoadProducts();
+            };
 
-                productsPage.AddProductToPanel(productName, productPrice, unitsInStock, category);
-            }
+            addForm.ShowDialog();
         }
+
+
+        //private void btnAddCategory_Click(object sender, EventArgs e)
+        //{
+        //    AddForm addForm = new AddForm(categoriesPage.flowLayoutPanelCategories);
+        //    if (addForm.ShowDialog() == DialogResult.OK)
+        //    {
+        //        string categoryName = addForm.ProductName; // ???????? ProductName ???? ?????
+        //        decimal categoryPrice = addForm.ProductPrice;
+        //        int unitsInStock = addForm.UnitsInStock;
+        //        string category = addForm.Category;
+
+        //        categoriesPage.AddCategoryToPanel(categoryName);
+        //    }
+        //}
+
+        //private void btnAddCategory_Click(object sender, EventArgs e) //this i fix it
+        //{
+        //    // Get form from DI
+        //    var addForm = ServiceProviderContainer.ServiceProvider.GetRequiredService<AddForm>();
+
+        //    // Pass UI dependency
+        //    addForm.SetCategoryPanel(categoriesPage.flowLayoutPanelCategories);
+
+        //    if (addForm.ShowDialog() == DialogResult.OK)
+        //    {
+        //        string categoryName = addForm.ProductName;
+        //        categoriesPage.AddCategoryToPanel(categoryName);
+        //    }
+        //}
+
+
+
+        //private void btnAddUser_Click(object sender, EventArgs e)
+        //{
+        //    AddUser addUser = new AddUser(usersPage.flowLayoutPanelUsers);
+
+        //    if (addUser.ShowDialog() == DialogResult.OK)
+        //    {
+        //        string userName = addUser.UserName; 
+        //        string userEmail = addUser.UserEmail;
+        //        string userPassword = addUser.UserPassword;
+        //        string userRole = addUser.UserStatus;
+
+        //        usersPage.AddUserToPanel(userName, userEmail, userPassword, userRole);
+        //    }
+        //}
+
     }
 }
