@@ -113,9 +113,9 @@ namespace E_Commerce.Presentation
 
             Label lblCategoryDescription = new Label
             {
-                Text = category.Description ?? string.Empty, // استخدام Description بدل Name
+                Text = category.Description ?? string.Empty,
                 Location = new Point(190, 15),
-                Size = new Size(200, 20),
+                Size = new Size(300, 20), // زيادة الحجم عشان نتأكد إن الـ Description مش بيتقطع
                 Font = new Font("Segoe UI", 10)
             };
             categoryPanel.Controls.Add(lblCategoryDescription);
@@ -129,7 +129,10 @@ namespace E_Commerce.Presentation
                 ForeColor = Color.White,
                 BorderRadius = 5
             };
-            btnDelete.Click += (s, e) => DeleteItem(category);
+            btnDelete.Click += async (s, e) =>
+            {
+                await DeleteItem(category);
+            };
             categoryPanel.Controls.Add(btnDelete);
 
             Guna.UI2.WinForms.Guna2Button btnEdit = new Guna.UI2.WinForms.Guna2Button
@@ -151,38 +154,77 @@ namespace E_Commerce.Presentation
             flowLayoutPanelCategories.Controls.Add(categoryPanel);
         }
 
-        private async void DeleteItem(CategoryDTO category)
+        private async void btnAddCategory_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Console.WriteLine("[CategoriesPage] Add category button clicked.");
+                using (var addCategoryForm = new AddCategory(flowLayoutPanelCategories))
+                {
+                    flowLayoutPanelCategories.Tag = new Action(async () => await LoadCategoriesAsync());
+                    if (addCategoryForm.ShowDialog() == DialogResult.OK)
+                    {
+                        Console.WriteLine("[CategoriesPage] Add category dialog OK, reloading categories...");
+                        await LoadCategoriesAsync();
+                    }
+                    else
+                    {
+                        Console.WriteLine("[CategoriesPage] Add category dialog cancelled.");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[CategoriesPage] Error in btnAddCategory_Click: {ex.Message}\nStackTrace: {ex.StackTrace}");
+                MessageBox.Show($"Error adding category: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private async Task DeleteItem(CategoryDTO category)
         {
             DialogResult result = MessageBox.Show($"Are you sure you want to delete '{category.Name}'?", "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (result == DialogResult.Yes)
             {
                 try
                 {
+                    Console.WriteLine($"[CategoriesPage] Delete confirmed for category: Id={category.Id}, Name={category.Name}");
                     await _categoryServices.DeleteCategoryAsync(category.Id);
+                    Console.WriteLine("[CategoriesPage] Delete successful, reloading categories...");
                     await LoadCategoriesAsync();
                     MessageBox.Show("Category deleted successfully!");
                 }
                 catch (Exception ex)
                 {
+                    Console.WriteLine($"[CategoriesPage] Error in DeleteItem: {ex.Message}\nStackTrace: {ex.StackTrace}");
                     MessageBox.Show($"Error deleting category: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+            }
+            else
+            {
+                Console.WriteLine("[CategoriesPage] Delete cancelled by user.");
             }
         }
 
         private async Task HandleEditClick(CategoryDTO category)
         {
-            using (var addCategoryForm = new AddCategory(flowLayoutPanelCategories))
+            try
             {
-                addCategoryForm.txtCategoryName.Text = category.Name;
-                flowLayoutPanelCategories.Tag = new Action(async () => await LoadCategoriesAsync());
-
-                if (addCategoryForm.ShowDialog() == DialogResult.OK)
+                Console.WriteLine($"[CategoriesPage] Handling edit for category: Id={category.Id}, Name={category.Name}, Description={category.Description}");
+                using (var addCategoryForm = new AddCategory(flowLayoutPanelCategories, category)) // استخدام الـ Edit mode constructor
                 {
-                    category.Name = addCategoryForm.txtCategoryName.Text;
-                    try
+                    // الـ AddCategory form هيحمل الـ Name و Description تلقائيًا في الـ Edit mode
+                    flowLayoutPanelCategories.Tag = new Action(async () => await LoadCategoriesAsync());
+                    if (addCategoryForm.ShowDialog() == DialogResult.OK)
                     {
-                        var cat = await _categoryServices.GetCategoryByNameAsync(category.Name);
-                        await _categoryServices.UpdateCategoryAsync(cat.Id, category);
+                        // جلب القيم الجديدة من الـ form
+                        var updatedCategory = new CategoryDTO
+                        {
+                            Id = category.Id,
+                            Name = addCategoryForm.txtCategoryName.Text,
+                            Description = addCategoryForm.txtCategoryDesc.Text
+                        };
+                        Console.WriteLine($"[CategoriesPage] Edit category dialog OK, updating category: Id={updatedCategory.Id}, Name={updatedCategory.Name}, Description={updatedCategory.Description}");
+                        await _categoryServices.UpdateCategoryAsync(category.Id, updatedCategory);
                         await LoadCategoriesAsync();
                     }
                     else
@@ -223,5 +265,4 @@ namespace E_Commerce.Presentation
             }
         }
     }
-
 }

@@ -35,12 +35,12 @@ namespace E_Commerce.Presentation
 
         public AddCategory(FlowLayoutPanel panel, CategoryDTO categoryToEdit) : this(panel)
         {
-            Console.WriteLine($"[AddCategory] Edit Mode Constructor called for category: Id={categoryToEdit.Id}, Name={categoryToEdit.Name}");
+            Console.WriteLine($"[AddCategory] Edit Mode Constructor called for category: Id={categoryToEdit.Id}, Name={categoryToEdit.Name}, Description={categoryToEdit.Description}");
             _isEditMode = true;
             _categoryToEdit = categoryToEdit;
             label1.Text = "Edit Category";
             txtCategoryName.Text = categoryToEdit.Name;
-            txtCategoryDesc.Text = categoryToEdit.Description ?? "";
+            txtCategoryDesc.Text = categoryToEdit.Description ?? ""; // التأكد إن الـ Description بيتحمل
         }
 
         private async void btnSave_Click_1(object sender, EventArgs e)
