@@ -13,7 +13,7 @@ namespace E_Commerce.Presentation
 {
     public partial class UsersPage : UserControl
     {
-      
+        //private FlowLayoutPanel targetPanel;
         public UsersPage()
         {
             InitializeComponent();
@@ -148,11 +148,13 @@ namespace E_Commerce.Presentation
         private void btnAddUser_Click(object sender, EventArgs e)
         {
             // 1. Get AddUser from DI container
-            var addForm = ServiceProviderContainer.ServiceProvider.GetRequiredService<AddForm>();
+            //var addForm = ServiceProviderContainer.ServiceProvider.GetRequiredService<AddUser>();
 
             // 2. Pass the FlowLayoutPanel manually
-            addForm.SetUserPanel(flowLayoutPanelUsers);
+            //addForm.SetUserPanel(flowLayoutPanelUsers);
 
+
+            AddUser addForm = new AddUser(flowLayoutPanelUsers);
             // 3. Show dialog and process result
             if (addForm.ShowDialog() == DialogResult.OK)
             {

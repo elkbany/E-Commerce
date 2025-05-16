@@ -19,7 +19,7 @@
             }
             base.Dispose(disposing);
         }
-             
+
         #region Windows Form Designer generated code
 
         /// <summary>
@@ -46,12 +46,12 @@
             label4 = new Label();
             label5 = new Label();
             txtUnitsInStock = new Guna.UI2.WinForms.Guna2TextBox();
-            txtCategory = new Guna.UI2.WinForms.Guna2TextBox();
             panel1 = new Panel();
             btnSave = new Guna.UI2.WinForms.Guna2Button();
             btnCancel = new Guna.UI2.WinForms.Guna2Button();
             txtPrice = new Guna.UI2.WinForms.Guna2TextBox();
             txtName = new Guna.UI2.WinForms.Guna2TextBox();
+            txtCategory = new Guna.UI2.WinForms.Guna2ComboBox();
             panel1.SuspendLayout();
             SuspendLayout();
             // 
@@ -126,26 +126,6 @@
             txtUnitsInStock.Size = new Size(250, 28);
             txtUnitsInStock.TabIndex = 11;
             // 
-            // txtCategory
-            // 
-            txtCategory.BorderRadius = 12;
-            txtCategory.CustomizableEdges = customizableEdges3;
-            txtCategory.DefaultText = "";
-            txtCategory.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
-            txtCategory.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
-            txtCategory.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
-            txtCategory.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
-            txtCategory.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
-            txtCategory.Font = new Font("Segoe UI", 9F);
-            txtCategory.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-            txtCategory.Location = new Point(189, 318);
-            txtCategory.Name = "txtCategory";
-            txtCategory.PlaceholderText = "";
-            txtCategory.SelectedText = "";
-            txtCategory.ShadowDecoration.CustomizableEdges = customizableEdges4;
-            txtCategory.Size = new Size(250, 28);
-            txtCategory.TabIndex = 12;
-            // 
             // panel1
             // 
             panel1.BackColor = Color.FromArgb(0, 59, 115);
@@ -160,7 +140,7 @@
             // btnSave
             // 
             btnSave.BorderRadius = 6;
-            btnSave.CustomizableEdges = customizableEdges5;
+            btnSave.CustomizableEdges = customizableEdges3;
             btnSave.DisabledState.BorderColor = Color.DarkGray;
             btnSave.DisabledState.CustomBorderColor = Color.DarkGray;
             btnSave.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
@@ -171,7 +151,7 @@
             btnSave.Location = new Point(303, 408);
             btnSave.Margin = new Padding(3, 2, 3, 2);
             btnSave.Name = "btnSave";
-            btnSave.ShadowDecoration.CustomizableEdges = customizableEdges6;
+            btnSave.ShadowDecoration.CustomizableEdges = customizableEdges4;
             btnSave.Size = new Size(98, 32);
             btnSave.TabIndex = 14;
             btnSave.Text = "Save";
@@ -180,7 +160,7 @@
             // btnCancel
             // 
             btnCancel.BorderRadius = 6;
-            btnCancel.CustomizableEdges = customizableEdges7;
+            btnCancel.CustomizableEdges = customizableEdges5;
             btnCancel.DisabledState.BorderColor = Color.DarkGray;
             btnCancel.DisabledState.CustomBorderColor = Color.DarkGray;
             btnCancel.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
@@ -191,7 +171,7 @@
             btnCancel.Location = new Point(425, 408);
             btnCancel.Margin = new Padding(3, 2, 3, 2);
             btnCancel.Name = "btnCancel";
-            btnCancel.ShadowDecoration.CustomizableEdges = customizableEdges8;
+            btnCancel.ShadowDecoration.CustomizableEdges = customizableEdges6;
             btnCancel.Size = new Size(98, 32);
             btnCancel.TabIndex = 15;
             btnCancel.Text = "Cancel";
@@ -200,7 +180,7 @@
             // txtPrice
             // 
             txtPrice.BorderRadius = 12;
-            txtPrice.CustomizableEdges = customizableEdges9;
+            txtPrice.CustomizableEdges = customizableEdges7;
             txtPrice.DefaultText = "";
             txtPrice.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
             txtPrice.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
@@ -213,14 +193,14 @@
             txtPrice.Name = "txtPrice";
             txtPrice.PlaceholderText = "";
             txtPrice.SelectedText = "";
-            txtPrice.ShadowDecoration.CustomizableEdges = customizableEdges10;
+            txtPrice.ShadowDecoration.CustomizableEdges = customizableEdges8;
             txtPrice.Size = new Size(250, 28);
             txtPrice.TabIndex = 17;
             // 
             // txtName
             // 
             txtName.BorderRadius = 12;
-            txtName.CustomizableEdges = customizableEdges11;
+            txtName.CustomizableEdges = customizableEdges9;
             txtName.DefaultText = "";
             txtName.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
             txtName.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
@@ -233,9 +213,27 @@
             txtName.Name = "txtName";
             txtName.PlaceholderText = "";
             txtName.SelectedText = "";
-            txtName.ShadowDecoration.CustomizableEdges = customizableEdges12;
+            txtName.ShadowDecoration.CustomizableEdges = customizableEdges10;
             txtName.Size = new Size(250, 28);
             txtName.TabIndex = 18;
+            // 
+            // txtCategory
+            // 
+            txtCategory.BackColor = Color.Transparent;
+            txtCategory.BorderRadius = 12;
+            txtCategory.CustomizableEdges = customizableEdges11;
+            txtCategory.DrawMode = DrawMode.OwnerDrawFixed;
+            txtCategory.DropDownStyle = ComboBoxStyle.DropDownList;
+            txtCategory.FocusedColor = Color.FromArgb(94, 148, 255);
+            txtCategory.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
+            txtCategory.Font = new Font("Segoe UI", 10F);
+            txtCategory.ForeColor = Color.FromArgb(68, 88, 112);
+            txtCategory.ItemHeight = 30;
+            txtCategory.Location = new Point(189, 319);
+            txtCategory.Name = "txtCategory";
+            txtCategory.ShadowDecoration.CustomizableEdges = customizableEdges12;
+            txtCategory.Size = new Size(250, 36);
+            txtCategory.TabIndex = 19;
             // 
             // EditForm
             // 
@@ -243,12 +241,12 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(191, 215, 237);
             ClientSize = new Size(564, 478);
+            Controls.Add(txtCategory);
             Controls.Add(txtName);
             Controls.Add(txtPrice);
             Controls.Add(btnCancel);
             Controls.Add(btnSave);
             Controls.Add(panel1);
-            Controls.Add(txtCategory);
             Controls.Add(txtUnitsInStock);
             Controls.Add(label5);
             Controls.Add(label4);
@@ -281,6 +279,6 @@
         public Guna.UI2.WinForms.Guna2TextBox txtPrice;
         public Guna.UI2.WinForms.Guna2TextBox txtName;
         public Guna.UI2.WinForms.Guna2TextBox txtUnitsInStock;
-        public Guna.UI2.WinForms.Guna2TextBox txtCategory;
+        private Guna.UI2.WinForms.Guna2ComboBox txtCategory;
     }
 }

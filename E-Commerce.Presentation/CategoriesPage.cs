@@ -70,6 +70,15 @@ namespace E_Commerce.Presentation
             };
             categoryPanel.Controls.Add(lblCategoryName);
 
+            Label lblCategoryDescription = new Label
+            {
+                Text = category.Name,
+                Location = new Point(190, 15),
+                Size = new Size(200, 20),
+                Font = new Font("Segoe UI", 10)
+            };
+            categoryPanel.Controls.Add(lblCategoryName);
+
             // زر Delete
             Guna.UI2.WinForms.Guna2Button btnDelete = new Guna.UI2.WinForms.Guna2Button
             {

@@ -31,7 +31,8 @@ namespace E_Commerce.Presentation
             {
                 var categoryDTO = new CategoryDTO
                 {
-                    Name = txtCategoryName.Text
+                    Name = txtCategoryName.Text,
+                    Description = txtCategoryDesc.Text
                 };
 
                 // Validate the CategoryDTO
