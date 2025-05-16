@@ -13,8 +13,6 @@ namespace E_Commerce.Presentation
         private CategoriesPage categoriesPage;
         private UsersPage usersPage;
         public ProfilePage profilePage;
-        //private AdminChangePassword adminChangePassword;
-        //private SettingsPage settingsPage;
         private OurTeam ourTeam;
         private UserControl currentPage;
 
@@ -26,14 +24,12 @@ namespace E_Commerce.Presentation
             categoriesPage = ServiceProviderContainer.ServiceProvider.GetRequiredService<CategoriesPage>();
             usersPage = new UsersPage();
             profilePage = new ProfilePage();
-            //changePasswordPage = new ChangePasswordPage(this);
             ourTeam = new OurTeam();
 
             mainContentPanel.Controls.Add(productsPage);
             mainContentPanel.Controls.Add(categoriesPage);
             mainContentPanel.Controls.Add(usersPage);
             mainContentPanel.Controls.Add(profilePage);
-            //mainContentPanel.Controls.Add(changePasswordPage);
             mainContentPanel.Controls.Add(ourTeam);
 
             ShowPage(productsPage);
@@ -44,10 +40,13 @@ namespace E_Commerce.Presentation
             if (currentPage != null)
             {
                 currentPage.Visible = false;
+                Console.WriteLine($"Hiding page: {currentPage.GetType().Name}");
             }
             currentPage = page;
             currentPage.Visible = true;
             currentPage.Dock = DockStyle.Fill;
+            currentPage.Size = mainContentPanel.Size;
+            Console.WriteLine($"Showing page: {currentPage.GetType().Name}, Visible: {currentPage.Visible}");
         }
 
         bool sidebarExpand = true;
@@ -80,26 +79,31 @@ namespace E_Commerce.Presentation
 
         private void btnProducts_Click(object sender, EventArgs e)
         {
+            Console.WriteLine("btnProducts clicked");
             ShowPage(productsPage);
         }
 
         private void btnCategories_Click(object sender, EventArgs e)
         {
+            Console.WriteLine("btnCategories clicked");
             ShowPage(categoriesPage);
         }
 
         private void btnUsers_Click(object sender, EventArgs e)
         {
+            Console.WriteLine("btnUsers clicked");
             ShowPage(usersPage);
         }
 
         private void btnProfile_Click(object sender, EventArgs e)
         {
+            Console.WriteLine("btnProfile clicked");
             ShowPage(profilePage);
         }
 
         private void btnSettings_Click(object sender, EventArgs e)
         {
+            Console.WriteLine("btnSettings clicked");
             ShowPage(ourTeam);
         }
 
@@ -107,15 +111,14 @@ namespace E_Commerce.Presentation
         {
             var addForm = ServiceProviderContainer.ServiceProvider.GetRequiredService<AddForm>();
 
-            if (addForm.ShowDialog() == DialogResult.OK)
+            // Subscribe to the ProductAdded event
+            addForm.ProductAdded += (s, args) =>
             {
-                string productName = addForm.ProductName;
-                decimal productPrice = addForm.ProductPrice;
-                int unitsInStock = addForm.UnitsInStock;
-                string category = addForm.Category;
+                // This will trigger the ProductsPage to refresh
+                productsPage.LoadProducts();
+            };
 
-                productsPage.AddProductToPanel(productName, productPrice, unitsInStock, category);
-            }
+            addForm.ShowDialog();
         }
 
         
@@ -155,6 +158,12 @@ namespace E_Commerce.Presentation
 //}
     
 
+        //    if (addUser.ShowDialog() == DialogResult.OK)
+        //    {
+        //        string userName = addUser.UserName; 
+        //        string userEmail = addUser.UserEmail;
+        //        string userPassword = addUser.UserPassword;
+        //        string userRole = addUser.UserStatus;
 
 //            if (addUser.ShowDialog() == DialogResult.OK)
 //            {
@@ -169,4 +178,4 @@ namespace E_Commerce.Presentation
 //                usersPage.AddUserToPanel(firstName, lastName, userName, userEmail, userPassword, userRole, isActive);
 //            }
 //        }
-//    }
+//    }}

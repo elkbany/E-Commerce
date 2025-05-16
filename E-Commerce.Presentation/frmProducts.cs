@@ -62,7 +62,6 @@ namespace E_Commerce.Presentation
                 var products = await productServices.GetAllProductsAsync();
                 if (products == null || !products.Any())
                 {
-                    lblNoProducts.Visible = true;
                     lblProductCount.Text = "Products: 0";
                     flowLayoutPanelProducts.Controls.Clear();
                     return;
@@ -80,7 +79,6 @@ namespace E_Commerce.Presentation
 
                 if (filteredProducts.Any())
                 {
-                    lblNoProducts.Visible = false;
                     lblProductCount.Text = $"Products: {filteredProducts.Count()}";
                     foreach (var product in filteredProducts)
                     {
@@ -91,7 +89,6 @@ namespace E_Commerce.Presentation
                 }
                 else
                 {
-                    lblNoProducts.Visible = true;
                     lblProductCount.Text = "Products: 0";
                 }
             }
