@@ -1,5 +1,4 @@
-﻿using AdminTest;
-using E_Commerce.BL.Configurations; // أضف Namespace ده لو فيه ملف ProductMappingConfig
+﻿using E_Commerce.BL.Configurations; // أضف Namespace ده لو فيه ملف ProductMappingConfig
 using E_Commerce.BL.Contracts.Repositories;
 using E_Commerce.BL.Contracts.Services;
 using E_Commerce.BL.Features.User.DTOs;

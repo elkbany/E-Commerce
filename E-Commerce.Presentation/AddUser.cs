@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace E_Commerce.Presentation
 {
@@ -68,5 +69,10 @@ namespace E_Commerce.Presentation
             this.DialogResult = DialogResult.Cancel;
             this.Close();
         }
+
+        //public void SetUserPanel(FlowLayoutPanel panel)
+        //{
+        //    targetPanel = panel;
+        //}
     }
 }

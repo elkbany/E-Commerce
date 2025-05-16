@@ -1,4 +1,4 @@
-﻿namespace AdminTest
+﻿namespace E_Commerce.Presentation
 {
     partial class Admin
     {
@@ -187,6 +187,7 @@
             btnProducts.TabIndex = 2;
             btnProducts.Text = "     Products";
             btnProducts.TextAlign = HorizontalAlignment.Left;
+            btnProducts.Click += btnProducts_Click;
             // 
             // btnCategories
             // 
@@ -215,6 +216,7 @@
             btnCategories.TabIndex = 5;
             btnCategories.Text = "     Categories";
             btnCategories.TextAlign = HorizontalAlignment.Left;
+            btnCategories.Click += btnCategories_Click;
             // 
             // btnUsers
             // 
@@ -243,6 +245,7 @@
             btnUsers.TabIndex = 6;
             btnUsers.Text = "     Users";
             btnUsers.TextAlign = HorizontalAlignment.Left;
+            btnUsers.Click += btnUsers_Click;
             // 
             // btnProfile
             // 
@@ -271,6 +274,7 @@
             btnProfile.TabIndex = 7;
             btnProfile.Text = "     Profile";
             btnProfile.TextAlign = HorizontalAlignment.Left;
+            btnProfile.Click += btnProfile_Click;
             // 
             // btnSettings
             // 
@@ -299,6 +303,7 @@
             btnSettings.TabIndex = 8;
             btnSettings.Text = "     Our Team";
             btnSettings.TextAlign = HorizontalAlignment.Left;
+            btnSettings.Click += btnSettings_Click;
             // 
             // guna2Button5
             // 

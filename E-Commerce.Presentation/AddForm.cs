@@ -43,10 +43,10 @@ namespace E_Commerce.Presentation
         {
             _productPanel = panel;
         }
-        public void SetUserPanel(FlowLayoutPanel panel)
-        {
-            _userPanel = panel;
-        }
+        //public void SetUserPanel(FlowLayoutPanel panel)
+        //{
+        //    _userPanel = panel;
+        //}
 
         //private void btnSave_Click(object sender, EventArgs e)
         //{

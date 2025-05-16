@@ -28,29 +28,30 @@
         /// </summary>
         private void InitializeComponent()
         {
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges7 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CategoriesPage));
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges8 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             flowLayoutPanelCategories = new FlowLayoutPanel();
             btnAddCategory = new Guna.UI2.WinForms.Guna2Button();
             label3 = new Label();
             label5 = new Label();
             label4 = new Label();
             label1 = new Label();
+            label2 = new Label();
             SuspendLayout();
             // 
             // flowLayoutPanelCategories
-            flowLayoutPanelCategories.Size = new Size(1000, 613); // تقليل العرض
+            // 
             flowLayoutPanelCategories.AutoScroll = true;
             flowLayoutPanelCategories.Location = new Point(3, 144);
             flowLayoutPanelCategories.Name = "flowLayoutPanelCategories";
-          //  flowLayoutPanelCategories.Size = new Size(1569, 613);
+            flowLayoutPanelCategories.Size = new Size(1000, 613);
             flowLayoutPanelCategories.TabIndex = 0;
             // 
             // btnAddCategory
             // 
             btnAddCategory.BorderRadius = 15;
-            btnAddCategory.CustomizableEdges = customizableEdges7;
+            btnAddCategory.CustomizableEdges = customizableEdges1;
             btnAddCategory.DisabledState.BorderColor = Color.DarkGray;
             btnAddCategory.DisabledState.CustomBorderColor = Color.DarkGray;
             btnAddCategory.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
@@ -60,9 +61,9 @@
             btnAddCategory.ForeColor = Color.White;
             btnAddCategory.Image = (Image)resources.GetObject("btnAddCategory.Image");
             btnAddCategory.IndicateFocus = true;
-            btnAddCategory.Location = new Point(200, 50); // موقع أوضح بالقرب من الزاوية العلوية اليسرى
+            btnAddCategory.Location = new Point(1370, 20);
             btnAddCategory.Name = "btnAddCategory";
-            btnAddCategory.ShadowDecoration.CustomizableEdges = customizableEdges8;
+            btnAddCategory.ShadowDecoration.CustomizableEdges = customizableEdges2;
             btnAddCategory.Size = new Size(181, 44);
             btnAddCategory.TabIndex = 12;
             btnAddCategory.Text = "Add New Category";
@@ -109,10 +110,22 @@
             label1.TabIndex = 24;
             label1.Text = "Operations";
             // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
+            label2.ForeColor = Color.Gray;
+            label2.Location = new Point(262, 105);
+            label2.Name = "label2";
+            label2.Size = new Size(94, 21);
+            label2.TabIndex = 25;
+            label2.Text = "Description";
+            // 
             // CategoriesPage
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            Controls.Add(label2);
             Controls.Add(label1);
             Controls.Add(label3);
             Controls.Add(label5);
@@ -137,5 +150,6 @@
         private Label label5;
         private Label label4;
         private Label label1;
+        private Label label2;
     }
 }
