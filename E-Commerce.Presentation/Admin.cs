@@ -19,7 +19,7 @@ namespace AdminTest
             InitializeComponent();
 
             // تهيئة الصفحات باستخدام ServiceProvider
-            productsPage = new ProductsPage();
+            productsPage = ServiceProviderContainer.ServiceProvider.GetRequiredService<ProductsPage>();//new ProductsPage();
             categoriesPage = ServiceProviderContainer.ServiceProvider.GetRequiredService<CategoriesPage>();
             usersPage = new UsersPage();
             profilePage = new ProfilePage();
@@ -99,20 +99,21 @@ namespace AdminTest
         {
             ShowPage(settingsPage);
         }
+
         private void addNewItem_Click(object sender, EventArgs e)
         {
             var addForm = ServiceProviderContainer.ServiceProvider.GetRequiredService<AddForm>();
 
-            if (addForm.ShowDialog() == DialogResult.OK)
+            // Subscribe to the ProductAdded event
+            addForm.ProductAdded += (s, args) =>
             {
-                string productName = addForm.ProductName;
-                decimal productPrice = addForm.ProductPrice;
-                int unitsInStock = addForm.UnitsInStock;
-                string category = addForm.Category;
+                // This will trigger the ProductsPage to refresh
+                productsPage.LoadProducts();
+            };
 
-                productsPage.AddProductToPanel(productName, productPrice, unitsInStock, category);
-            }
+            addForm.ShowDialog();
         }
+
 
         //private void btnAddCategory_Click(object sender, EventArgs e)
         //{
