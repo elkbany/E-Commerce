@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Configuration;
 using System.Windows.Forms;
+using E_Commerce.BL.Contracts.Services;
 using E_Commerce.BL.Implementations;
 using E_Commerce.Presentation;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace AdminTest
+namespace E_Commerce.Presentation
 {
     public partial class Admin : Form
     {
@@ -20,28 +21,18 @@ namespace AdminTest
         {
             InitializeComponent();
 
-            // تهيئة الصفحات باستخدام ServiceProvider
-            productsPage = ServiceProviderContainer.ServiceProvider.GetRequiredService<ProductsPage>();//new ProductsPage();
+            productsPage = new ProductsPage(ServiceProviderContainer.ServiceProvider.GetRequiredService<IProductServices>());
             categoriesPage = ServiceProviderContainer.ServiceProvider.GetRequiredService<CategoriesPage>();
             usersPage = new UsersPage();
             profilePage = new ProfilePage();
             ourTeam = new OurTeam();
 
-            // إضافة الصفحات إلى mainContentPanel
             mainContentPanel.Controls.Add(productsPage);
             mainContentPanel.Controls.Add(categoriesPage);
             mainContentPanel.Controls.Add(usersPage);
             mainContentPanel.Controls.Add(profilePage);
             mainContentPanel.Controls.Add(ourTeam);
 
-            // إعداد أحداث الأزرار يدويًا
-            btnProducts.Click += btnProducts_Click_1;
-            btnCategories.Click += btnCategories_Click_1;
-            btnUsers.Click += btnUsers_Click_1;
-            btnProfile.Click += btnProfile_Click_1;
-            btnSettings.Click += btnSettings_Click_1;
-
-            // عرض صفحة Products افتراضيًا
             ShowPage(productsPage);
         }
 
@@ -57,6 +48,16 @@ namespace AdminTest
             currentPage.Dock = DockStyle.Fill;
             currentPage.Size = mainContentPanel.Size;
             Console.WriteLine($"Showing page: {currentPage.GetType().Name}, Visible: {currentPage.Visible}");
+
+            //New Code Here
+            if (page == productsPage)
+            {
+                productsPage.LoadProducts();
+            }
+            else if (page == categoriesPage)
+            {
+                // CategoriesPage بتعمل LoadCategoriesAsync لوحدها في الـ Constructor
+            }
         }
 
         bool sidebarExpand = true;
@@ -87,31 +88,31 @@ namespace AdminTest
             sidebarTransition.Start();
         }
 
-        private void btnProducts_Click_1(object sender, EventArgs e)
+        private void btnProducts_Click(object sender, EventArgs e)
         {
             Console.WriteLine("btnProducts clicked");
             ShowPage(productsPage);
         }
 
-        private void btnCategories_Click_1(object sender, EventArgs e)
+        private void btnCategories_Click(object sender, EventArgs e)
         {
             Console.WriteLine("btnCategories clicked");
             ShowPage(categoriesPage);
         }
 
-        private void btnUsers_Click_1(object sender, EventArgs e)
+        private void btnUsers_Click(object sender, EventArgs e)
         {
             Console.WriteLine("btnUsers clicked");
             ShowPage(usersPage);
         }
 
-        private void btnProfile_Click_1(object sender, EventArgs e)
+        private void btnProfile_Click(object sender, EventArgs e)
         {
             Console.WriteLine("btnProfile clicked");
             ShowPage(profilePage);
         }
 
-        private void btnSettings_Click_1(object sender, EventArgs e)
+        private void btnSettings_Click(object sender, EventArgs e)
         {
             Console.WriteLine("btnSettings clicked");
             ShowPage(ourTeam);
@@ -131,7 +132,9 @@ namespace AdminTest
             addForm.ShowDialog();
         }
 
-
+        
+    }
+}
         //private void btnAddCategory_Click(object sender, EventArgs e)
         //{
         //    AddForm addForm = new AddForm(categoriesPage.flowLayoutPanelCategories);
@@ -151,21 +154,20 @@ namespace AdminTest
         //    // Get form from DI
         //    var addForm = ServiceProviderContainer.ServiceProvider.GetRequiredService<AddForm>();
 
-        //    // Pass UI dependency
-        //    addForm.SetCategoryPanel(categoriesPage.flowLayoutPanelCategories);
+//            if(addForm.ShowDialog() == DialogResult.OK)
+//            {
+//                string categoryName = addForm.ProductName;
+//        decimal categoryPrice = addForm.ProductPrice;
+//        int unitsInStock = addForm.UnitsInStock;
+//        string category = addForm.Category;
 
-        //    if (addForm.ShowDialog() == DialogResult.OK)
-        //    {
-        //        string categoryName = addForm.ProductName;
-        //        categoriesPage.AddCategoryToPanel(categoryName);
-        //    }
-        //}
-
-
-
-        //private void btnAddUser_Click(object sender, EventArgs e)
-        //{
-        //    AddUser addUser = new AddUser(usersPage.flowLayoutPanelUsers);
+//            if(addForm.ShowDialog() == DialogResult.OK)
+//            {
+//                string categoryName = addForm.ProductName;
+//        categoriesPage.AddCategoryToPanel(categoryName);
+//            }
+//}
+    
 
         //    if (addUser.ShowDialog() == DialogResult.OK)
         //    {
@@ -174,9 +176,17 @@ namespace AdminTest
         //        string userPassword = addUser.UserPassword;
         //        string userRole = addUser.UserStatus;
 
-        //        usersPage.AddUserToPanel(userName, userEmail, userPassword, userRole);
-        //    }
-        //}
+//            if (addUser.ShowDialog() == DialogResult.OK)
+//            {
+//                string firstName = addUser.FirstName;
+//                string lastName = addUser.LastName;
+//                string userName = addUser.UserName;
+//                string userEmail = addUser.UserEmail;
+//                string userPassword = addUser.UserPassword;
+//                string userRole = addUser.UserStatus;
+//                string isActive = addUser.IsActive;
 
-    }
-}
+//                usersPage.AddUserToPanel(firstName, lastName, userName, userEmail, userPassword, userRole, isActive);
+//            }
+//        }
+//    }}

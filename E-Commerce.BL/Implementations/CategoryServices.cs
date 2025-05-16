@@ -16,36 +16,53 @@ namespace E_Commerce.BL.Implementations
     public class CategoryServices : AppService, ICategoryServices
     {
         private readonly ICategoryRepository categoryRepository;
+        private readonly IProductRepository productRepository;
 
-        public CategoryServices(ICategoryRepository categoryRepository)
+        public CategoryServices(ICategoryRepository categoryRepository, IProductRepository productRepository)
         {
-            this.categoryRepository = categoryRepository; 
+            this.categoryRepository = categoryRepository;
+            this.productRepository = productRepository;
         }
 
         public async Task<CategoryDTO> AddCategoryAsync(CategoryDTO categoryDTO)
         {
-            #region Validations
-            await DoValidationAsync<CategoryDTOValidator, CategoryDTO>(categoryDTO);
-
-            var cat = new Category
+            try
             {
-                Name = categoryDTO.Name,
-              //  Description = categoryDTO.Description
-            };
-            #endregion
-            var Cat = await categoryRepository.AddAsync(cat);
-            var catMap = categoryDTO?.Adapt<CategoryDTO>();
-            return catMap;
+                Console.WriteLine($"[CategoryServices] AddCategoryAsync called for Name={categoryDTO.Name}");
+                await DoValidationAsync<CategoryDTOValidator, CategoryDTO>(categoryDTO);
+
+                var cat = new Category
+                {
+                    Name = categoryDTO.Name,
+                    Description = categoryDTO.Description 
+                };
+                var addedCat = await categoryRepository.AddAsync(cat);
+                categoryRepository.CommitAsync();
+                Console.WriteLine($"[CategoryServices] Category added: Id={addedCat.Id}, Name={addedCat.Name}");
+                return addedCat.Adapt<CategoryDTO>();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[CategoryServices] Error in AddCategoryAsync: {ex.Message}\nStackTrace: {ex.StackTrace}");
+                throw;
+            }
         }
-      
+
 
         public async Task DeleteCategoryAsync(int id)
         {
-            var cat = await categoryRepository.GetByIdAsync(id);
-            if(cat != null)
+            var category = await categoryRepository.GetByIdAsync(id);
+            if (category == null) throw new Exception("Category not found.");
+
+            
+            var products = await productRepository.GetAllAsync(p => p.CategoryID == id);
+            if (products.Any())
             {
-                await categoryRepository.Delete(cat);
+                throw new Exception("Cannot delete category. It has associated products.");
             }
+
+            await categoryRepository.Delete(category);
+            categoryRepository.CommitAsync();
 
         }
 
@@ -66,11 +83,39 @@ namespace E_Commerce.BL.Implementations
 
         public async Task<CategoryDTO> UpdateCategoryAsync(int id, CategoryDTO category)
         {
-            var cateogry = await categoryRepository.GetByIdAsync(id); 
-            var cat = await categoryRepository.Update(cateogry);
-            var catMap = category?.Adapt<CategoryDTO>();
-            return catMap;
+            try
+            {
+                Console.WriteLine($"[CategoryServices] UpdateCategoryAsync called for Id={id}, Name={category.Name}");
+                var existing = await categoryRepository.GetByIdAsync(id);
+                if (existing == null)
+                {
+                    Console.WriteLine("[CategoryServices] Category not found.");
+                    throw new Exception("Category not found.");
+                }
+
+                existing.Name = category.Name;
+                existing.Description = category.Description;
+                await categoryRepository.Update(existing);
+                Console.WriteLine($"[CategoryServices] Category updated: Id={existing.Id}, Name={existing.Name}");
+
+                
+                var updatedCat = await categoryRepository.GetByIdAsync(id);
+                if (updatedCat == null || updatedCat.Name != category.Name || updatedCat.Description != category.Description)
+                {
+                    Console.WriteLine("[CategoryServices] Update did not reflect in database immediately.");
+                    throw new Exception("Update did not reflect in database immediately.");
+                }
+                Console.WriteLine($"[CategoryServices] Confirmed update in database: Id={updatedCat.Id}, Name={updatedCat.Name}");
+
+                return updatedCat.Adapt<CategoryDTO>();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[CategoryServices] Error in UpdateCategoryAsync: {ex.Message}\nStackTrace: {ex.StackTrace}");
+                throw;
+            }
         }
+
         public async Task<CategoryDTO> GetCategoryByNameAsync(string name)
         {
             var cat = (await categoryRepository.GetAllAsync()).FirstOrDefault(c => c.Name == name);

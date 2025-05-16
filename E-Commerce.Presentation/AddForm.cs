@@ -40,11 +40,14 @@ namespace E_Commerce.Presentation
         {
             _categoryPanel = panel;
         }
-       
-        public void SetUserPanel(FlowLayoutPanel panel)
+        public void SetProductPanel(FlowLayoutPanel panel)
         {
-            _userPanel = panel;
+            _productPanel = panel;
         }
+        //public void SetUserPanel(FlowLayoutPanel panel)
+        //{
+        //    _userPanel = panel;
+        //}
 
         
 

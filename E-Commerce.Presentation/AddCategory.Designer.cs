@@ -34,12 +34,16 @@
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges4 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges5 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges6 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges7 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges8 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             txtCategoryName = new Guna.UI2.WinForms.Guna2TextBox();
             btnCancel = new Guna.UI2.WinForms.Guna2Button();
             btnSave = new Guna.UI2.WinForms.Guna2Button();
             panel1 = new Panel();
             label1 = new Label();
             label2 = new Label();
+            txtCategoryDesc = new Guna.UI2.WinForms.Guna2TextBox();
+            label3 = new Label();
             panel1.SuspendLayout();
             SuspendLayout();
             // 
@@ -74,7 +78,7 @@
             btnCancel.FillColor = Color.FromArgb(229, 105, 151);
             btnCancel.Font = new Font("Segoe UI", 10.2F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnCancel.ForeColor = Color.White;
-            btnCancel.Location = new Point(425, 188);
+            btnCancel.Location = new Point(425, 250);
             btnCancel.Margin = new Padding(3, 2, 3, 2);
             btnCancel.Name = "btnCancel";
             btnCancel.ShadowDecoration.CustomizableEdges = customizableEdges4;
@@ -94,7 +98,7 @@
             btnSave.FillColor = Color.FromArgb(102, 210, 214);
             btnSave.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
             btnSave.ForeColor = Color.White;
-            btnSave.Location = new Point(303, 188);
+            btnSave.Location = new Point(172, 250);
             btnSave.Margin = new Padding(3, 2, 3, 2);
             btnSave.Name = "btnSave";
             btnSave.ShadowDecoration.CustomizableEdges = customizableEdges6;
@@ -135,11 +139,43 @@
             label2.TabIndex = 42;
             label2.Text = "CategoryName:";
             // 
+            // txtCategoryDesc
+            // 
+            txtCategoryDesc.BorderRadius = 12;
+            txtCategoryDesc.CustomizableEdges = customizableEdges7;
+            txtCategoryDesc.DefaultText = "";
+            txtCategoryDesc.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
+            txtCategoryDesc.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
+            txtCategoryDesc.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
+            txtCategoryDesc.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
+            txtCategoryDesc.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
+            txtCategoryDesc.Font = new Font("Segoe UI", 9F);
+            txtCategoryDesc.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
+            txtCategoryDesc.Location = new Point(189, 166);
+            txtCategoryDesc.Name = "txtCategoryDesc";
+            txtCategoryDesc.PlaceholderText = "";
+            txtCategoryDesc.SelectedText = "";
+            txtCategoryDesc.ShadowDecoration.CustomizableEdges = customizableEdges8;
+            txtCategoryDesc.Size = new Size(250, 28);
+            txtCategoryDesc.TabIndex = 53;
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Font = new Font("Segoe UI", 10.8F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label3.Location = new Point(28, 175);
+            label3.Name = "label3";
+            label3.Size = new Size(93, 20);
+            label3.TabIndex = 52;
+            label3.Text = "Description:";
+            // 
             // AddCategory
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(564, 249);
+            ClientSize = new Size(564, 315);
+            Controls.Add(txtCategoryDesc);
+            Controls.Add(label3);
             Controls.Add(txtCategoryName);
             Controls.Add(btnCancel);
             Controls.Add(btnSave);
@@ -161,5 +197,7 @@
         private Panel panel1;
         private Label label1;
         private Label label2;
+        public Guna.UI2.WinForms.Guna2TextBox txtCategoryDesc;
+        private Label label3;
     }
 }

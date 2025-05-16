@@ -1,5 +1,4 @@
-﻿using AdminTest;
-using E_Commerce.BL.Configurations; // أضف Namespace ده لو فيه ملف ProductMappingConfig
+﻿using E_Commerce.BL.Configurations; // أضف Namespace ده لو فيه ملف ProductMappingConfig
 using E_Commerce.BL.Contracts.Repositories;
 using E_Commerce.BL.Contracts.Services;
 using E_Commerce.BL.Features.User.DTOs;
@@ -86,10 +85,11 @@ namespace E_Commerce.Presentation
                     services.AddTransient<IValidator<LoginUserDto>, LoginUserDtoValidator>();
                     services.AddTransient<IValidator<int>, OrderIdValidator>();
                     services.AddTransient<IValidator<AddProductDTO>, ProductDTOValidator>();
+                    services.AddTransient<IValidator<CategoryDTO>, CategoryDTOValidator>();
 
                     // Register Mapster Mapping Configuration
                     ProductMappingConfig.Configure();
-                    CategoryMappingConfig.Configure();
+                  
 
 
                 });

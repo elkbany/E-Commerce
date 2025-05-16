@@ -46,12 +46,12 @@
             btnAddSave = new Guna.UI2.WinForms.Guna2Button();
             panel1 = new Panel();
             label1 = new Label();
-            txtAddCategory = new Guna.UI2.WinForms.Guna2TextBox();
             txtAddUnitsInStock = new Guna.UI2.WinForms.Guna2TextBox();
             label5 = new Label();
             label4 = new Label();
             label3 = new Label();
             label2 = new Label();
+            txtAddCategory = new Guna.UI2.WinForms.Guna2ComboBox();
             panel1.SuspendLayout();
             SuspendLayout();
             // 
@@ -157,30 +157,10 @@
             label1.TabIndex = 0;
             label1.Text = "Add New Item";
             // 
-            // txtAddCategory
-            // 
-            txtAddCategory.BorderRadius = 12;
-            txtAddCategory.CustomizableEdges = customizableEdges9;
-            txtAddCategory.DefaultText = "";
-            txtAddCategory.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
-            txtAddCategory.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
-            txtAddCategory.DisabledState.ForeColor = Color.FromArgb(138, 138, 138);
-            txtAddCategory.DisabledState.PlaceholderForeColor = Color.FromArgb(138, 138, 138);
-            txtAddCategory.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
-            txtAddCategory.Font = new Font("Segoe UI", 9F);
-            txtAddCategory.HoverState.BorderColor = Color.FromArgb(94, 148, 255);
-            txtAddCategory.Location = new Point(189, 338);
-            txtAddCategory.Name = "txtAddCategory";
-            txtAddCategory.PlaceholderText = "";
-            txtAddCategory.SelectedText = "";
-            txtAddCategory.ShadowDecoration.CustomizableEdges = customizableEdges10;
-            txtAddCategory.Size = new Size(250, 28);
-            txtAddCategory.TabIndex = 24;
-            // 
             // txtAddUnitsInStock
             // 
             txtAddUnitsInStock.BorderRadius = 12;
-            txtAddUnitsInStock.CustomizableEdges = customizableEdges11;
+            txtAddUnitsInStock.CustomizableEdges = customizableEdges9;
             txtAddUnitsInStock.DefaultText = "";
             txtAddUnitsInStock.DisabledState.BorderColor = Color.FromArgb(208, 208, 208);
             txtAddUnitsInStock.DisabledState.FillColor = Color.FromArgb(226, 226, 226);
@@ -193,7 +173,7 @@
             txtAddUnitsInStock.Name = "txtAddUnitsInStock";
             txtAddUnitsInStock.PlaceholderText = "";
             txtAddUnitsInStock.SelectedText = "";
-            txtAddUnitsInStock.ShadowDecoration.CustomizableEdges = customizableEdges12;
+            txtAddUnitsInStock.ShadowDecoration.CustomizableEdges = customizableEdges10;
             txtAddUnitsInStock.Size = new Size(250, 28);
             txtAddUnitsInStock.TabIndex = 23;
             // 
@@ -237,18 +217,36 @@
             label2.TabIndex = 19;
             label2.Text = "Name:";
             // 
+            // txtAddCategory
+            // 
+            txtAddCategory.BackColor = Color.Transparent;
+            txtAddCategory.BorderRadius = 12;
+            txtAddCategory.CustomizableEdges = customizableEdges11;
+            txtAddCategory.DrawMode = DrawMode.OwnerDrawFixed;
+            txtAddCategory.DropDownStyle = ComboBoxStyle.DropDownList;
+            txtAddCategory.FocusedColor = Color.FromArgb(94, 148, 255);
+            txtAddCategory.FocusedState.BorderColor = Color.FromArgb(94, 148, 255);
+            txtAddCategory.Font = new Font("Segoe UI", 10F);
+            txtAddCategory.ForeColor = Color.FromArgb(68, 88, 112);
+            txtAddCategory.ItemHeight = 30;
+            txtAddCategory.Location = new Point(189, 338);
+            txtAddCategory.Name = "txtAddCategory";
+            txtAddCategory.ShadowDecoration.CustomizableEdges = customizableEdges12;
+            txtAddCategory.Size = new Size(250, 36);
+            txtAddCategory.TabIndex = 30;
+            // 
             // AddForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(191, 215, 237);
             ClientSize = new Size(564, 478);
+            Controls.Add(txtAddCategory);
             Controls.Add(txtAddName);
             Controls.Add(txtAddPrice);
             Controls.Add(btnAddCancel);
             Controls.Add(btnAddSave);
             Controls.Add(panel1);
-            Controls.Add(txtAddCategory);
             Controls.Add(txtAddUnitsInStock);
             Controls.Add(label5);
             Controls.Add(label4);
@@ -286,7 +284,7 @@
         public Guna.UI2.WinForms.Guna2TextBox txtAddPrice;
         public Guna.UI2.WinForms.Guna2Button btnAddCancel;
         public Guna.UI2.WinForms.Guna2Button btnAddSave;
-        public Guna.UI2.WinForms.Guna2TextBox txtAddCategory;
         public Guna.UI2.WinForms.Guna2TextBox txtAddUnitsInStock;
+        private Guna.UI2.WinForms.Guna2ComboBox txtAddCategory;
     }
 }
