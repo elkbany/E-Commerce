@@ -90,11 +90,15 @@ namespace E_Commerce.Presentation
                     services.AddTransient<IValidator<AddProductDTO>, ProductDTOValidator>();
                     services.AddTransient<frmMain>();
 
+                    services.AddTransient<IValidator<CategoryDTO>, CategoryDTOValidator>();
 
                     // Register Mapster Mapping Configuration
                     new MappingConfig().Configure();
                     ProductMappingConfig.Configure();
                     CategoryMappingConfig.Configure();
+                  
+
+
                 });
     }
 }

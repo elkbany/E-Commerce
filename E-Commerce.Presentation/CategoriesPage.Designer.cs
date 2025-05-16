@@ -61,7 +61,7 @@
             btnAddCategory.ForeColor = Color.White;
             btnAddCategory.Image = (Image)resources.GetObject("btnAddCategory.Image");
             btnAddCategory.IndicateFocus = true;
-            btnAddCategory.Location = new Point(1370, 20);
+            btnAddCategory.Location = new Point(839, 43);
             btnAddCategory.Name = "btnAddCategory";
             btnAddCategory.ShadowDecoration.CustomizableEdges = customizableEdges2;
             btnAddCategory.Size = new Size(181, 44);
