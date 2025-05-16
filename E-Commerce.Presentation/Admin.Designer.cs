@@ -95,6 +95,7 @@
             btnSide.SizeMode = PictureBoxSizeMode.CenterImage;
             btnSide.TabIndex = 1;
             btnSide.TabStop = false;
+            btnSide.Click += btnSide_Click_1;
             // 
             // nightControlBox1
             // 
@@ -183,7 +184,7 @@
             btnProducts.Margin = new Padding(0, 67, 0, 0);
             btnProducts.Name = "btnProducts";
             btnProducts.ShadowDecoration.CustomizableEdges = customizableEdges2;
-            btnProducts.Size = new Size(325, 75);
+            btnProducts.Size = new Size(284, 56);
             btnProducts.TabIndex = 2;
             btnProducts.Text = "     Products";
             btnProducts.TextAlign = HorizontalAlignment.Left;
@@ -211,7 +212,7 @@
             btnCategories.Margin = new Padding(0, 20, 0, 0);
             btnCategories.Name = "btnCategories";
             btnCategories.ShadowDecoration.CustomizableEdges = customizableEdges4;
-            btnCategories.Size = new Size(325, 75);
+            btnCategories.Size = new Size(284, 56);
             btnCategories.TabIndex = 5;
             btnCategories.Text = "     Categories";
             btnCategories.TextAlign = HorizontalAlignment.Left;
@@ -239,7 +240,7 @@
             btnUsers.Margin = new Padding(0, 20, 0, 0);
             btnUsers.Name = "btnUsers";
             btnUsers.ShadowDecoration.CustomizableEdges = customizableEdges6;
-            btnUsers.Size = new Size(325, 75);
+            btnUsers.Size = new Size(284, 56);
             btnUsers.TabIndex = 6;
             btnUsers.Text = "     Users";
             btnUsers.TextAlign = HorizontalAlignment.Left;
@@ -267,7 +268,7 @@
             btnProfile.Margin = new Padding(0, 20, 0, 0);
             btnProfile.Name = "btnProfile";
             btnProfile.ShadowDecoration.CustomizableEdges = customizableEdges8;
-            btnProfile.Size = new Size(325, 75);
+            btnProfile.Size = new Size(284, 56);
             btnProfile.TabIndex = 7;
             btnProfile.Text = "     Profile";
             btnProfile.TextAlign = HorizontalAlignment.Left;
@@ -295,9 +296,9 @@
             btnSettings.Margin = new Padding(0, 20, 0, 0);
             btnSettings.Name = "btnSettings";
             btnSettings.ShadowDecoration.CustomizableEdges = customizableEdges10;
-            btnSettings.Size = new Size(325, 75);
+            btnSettings.Size = new Size(284, 56);
             btnSettings.TabIndex = 8;
-            btnSettings.Text = "     Settings";
+            btnSettings.Text = "     Our Team";
             btnSettings.TextAlign = HorizontalAlignment.Left;
             // 
             // guna2Button5
@@ -321,7 +322,7 @@
             guna2Button5.Margin = new Padding(0, 667, 0, 0);
             guna2Button5.Name = "guna2Button5";
             guna2Button5.ShadowDecoration.CustomizableEdges = customizableEdges12;
-            guna2Button5.Size = new Size(325, 75);
+            guna2Button5.Size = new Size(284, 56);
             guna2Button5.TabIndex = 9;
             guna2Button5.Text = "     Logout";
             guna2Button5.TextAlign = HorizontalAlignment.Left;
@@ -329,6 +330,7 @@
             // sidebarTransition
             // 
             sidebarTransition.Interval = 10;
+            sidebarTransition.Tick += sidebarTransition_Tick_1;
             // 
             // mainContentPanel
             // 

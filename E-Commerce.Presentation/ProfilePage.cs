@@ -7,11 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using AdminTest;
 
 namespace E_Commerce.Presentation
 {
-    public partial class ProfilePage: UserControl
+    public partial class ProfilePage : UserControl
     {
+        private Admin adminForm;
+        
         public ProfilePage()
         {
             InitializeComponent();
@@ -22,7 +25,11 @@ namespace E_Commerce.Presentation
             this.Controls.Add(lbl);
         }
 
-
+        //private void button3_Click(object sender, EventArgs e)
+        //{
+        //    AdminChangePassword changePasswordPage = new AdminChangePassword(adminForm);
+        //    adminForm.ShowPage(changePasswordPage);
+        //}
     }
 }
 

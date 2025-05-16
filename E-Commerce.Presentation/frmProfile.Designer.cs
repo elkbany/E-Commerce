@@ -55,6 +55,7 @@
             // 
             // pictureBox1
             // 
+            pictureBox1.Anchor = AnchorStyles.None;
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
             pictureBox1.Location = new Point(58, 156);
             pictureBox1.Name = "pictureBox1";
@@ -166,6 +167,7 @@
             // 
             // panel1
             // 
+            panel1.Anchor = AnchorStyles.None;
             panel1.Controls.Add(button3);
             panel1.Controls.Add(panel5);
             panel1.Controls.Add(label4);
@@ -232,8 +234,9 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            AutoSize = true;
             BackColor = Color.White;
-            ClientSize = new Size(1229, 618);
+            ClientSize = new Size(1130, 618);
             Controls.Add(panel1);
             Controls.Add(pictureBox1);
             FormBorderStyle = FormBorderStyle.None;
