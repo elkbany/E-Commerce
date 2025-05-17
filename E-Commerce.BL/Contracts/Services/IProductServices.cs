@@ -25,6 +25,9 @@ namespace E_Commerce.BL.Contracts.Services
         Task DeleteProductAsync(int id);
         Task<List<AvaliableProductDTO>> GetAvalibaleProducts();
         Task<ProductDetailesDTO> ProductDetailes(string name);
-       
+        Task<Product> GetProductByName(string name);
+        Task<AddProductDTO> UpdateProductByAdminAsync(int id, AddProductDTO addProductDTO);
+
+
     }
 }

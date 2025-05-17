@@ -10,6 +10,8 @@ namespace E_Commerce.Presentation
         private readonly ICartItemServices cartServices;
         private int cartItemId;
         private decimal unitPrice;
+        private bool isUpdating = false; // Flag لمنع التكرار
+        public int CartItemId => cartItemId;
 
         public event EventHandler CartUpdated;
 
@@ -33,8 +35,11 @@ namespace E_Commerce.Presentation
 
         private async void numericQuantity_ValueChanged(object sender, EventArgs e)
         {
+            if (isUpdating) return; // منع التكرار
+
             try
             {
+                isUpdating = true;
                 int newQuantity = (int)numericQuantity.Value;
                 if (newQuantity <= 0)
                 {
@@ -57,6 +62,10 @@ namespace E_Commerce.Presentation
             catch (Exception ex)
             {
                 MessageBox.Show($"Error: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                isUpdating = false;
             }
         }
 

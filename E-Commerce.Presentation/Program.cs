@@ -1,4 +1,4 @@
-﻿using E_Commerce.BL.Configurations; // أضف Namespace ده لو فيه ملف ProductMappingConfig
+﻿using E_Commerce.BL.Configurations;
 using E_Commerce.BL.Contracts.Repositories;
 using E_Commerce.BL.Contracts.Services;
 using E_Commerce.BL.Features.User.DTOs;
@@ -18,14 +18,12 @@ using E_Commerce.BL.Features.Product.Validators;
 using E_Commerce.BL.Features.Category.DTOs;
 using E_Commerce.BL.Features.Category.Validators;
 using E_Commerce.BL.Mapping;
+using E_Commerce.DA.Implementations.Base;
 
 namespace E_Commerce.Presentation
 {
     internal static class Program
     {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
         [STAThread]
         static void Main()
         {
@@ -41,9 +39,10 @@ namespace E_Commerce.Presentation
             Host.CreateDefaultBuilder()
                 .ConfigureServices((context, services) =>
                 {
-                    // Register DbContext with SQL Server
+                    // Register DbContext with SQL Server as Transient
                     services.AddDbContext<DBContext>(options =>
-                        options.UseSqlServer("Data Source=.;Initial Catalog=E-Commerce;Integrated Security=True;Trust Server Certificate=True;MultipleActiveResultSets=true"));
+                        options.UseSqlServer("Data Source=.;Initial Catalog=E-Commerce;Integrated Security=True;Trust Server Certificate=True;MultipleActiveResultSets=true"),
+                        ServiceLifetime.Transient); // تغيير من Scoped إلى Transient
 
                     // Register Forms
                     services.AddScoped<Start>();
@@ -60,8 +59,14 @@ namespace E_Commerce.Presentation
                     services.AddScoped<CategoriesPage>();
                     services.AddTransient<ProductsPage>();
                     services.AddTransient<AddForm>();
+                    services.AddTransient<UsersPage>();
 
-
+                    // Logging
+                    services.AddLogging(logging =>
+                    {
+                        logging.AddConsole();
+                        logging.AddDebug();
+                    });
 
                     // Register Repositories
                     services.AddScoped<IProductRepository, ProductRepository>();
@@ -85,13 +90,13 @@ namespace E_Commerce.Presentation
                     services.AddTransient<IValidator<LoginUserDto>, LoginUserDtoValidator>();
                     services.AddTransient<IValidator<int>, OrderIdValidator>();
                     services.AddTransient<IValidator<AddProductDTO>, ProductDTOValidator>();
+                    services.AddTransient<frmMain>();
                     services.AddTransient<IValidator<CategoryDTO>, CategoryDTOValidator>();
 
+
                     // Register Mapster Mapping Configuration
+                    new MappingConfig().Configure();
                     ProductMappingConfig.Configure();
-                  
-
-
                 });
     }
 }

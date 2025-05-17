@@ -7,6 +7,7 @@ using E_Commerce.BL.Implementations;
 using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using FluentValidation;
+using E_Commerce.Domain.Models;
 
 namespace E_Commerce.Presentation
 {
@@ -29,12 +30,21 @@ namespace E_Commerce.Presentation
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)]
         public string Category { get; private set; }
 
-        public AddForm( IProductServices ProductServices, ICategoryServices CategoryServices, IValidator<AddProductDTO> validator)
+        public AddForm(IProductServices ProductServices, ICategoryServices CategoryServices, IValidator<AddProductDTO> validator, string initialCategory = null)
         {
             InitializeComponent();
             _ProductServices = ProductServices;
             _CategoryServices = CategoryServices;
             _validator = validator;
+
+            this.Load += async (s, e) =>
+            {
+                await LoadCategoriesAsync();
+                if (!string.IsNullOrEmpty(initialCategory))
+                {
+                    SelectCategoryByName(initialCategory);
+                }
+            };
         }
         public void SetCategoryPanel(FlowLayoutPanel panel)
         {
@@ -58,7 +68,7 @@ namespace E_Commerce.Presentation
                 var product = new AddProductDTO
                 {
                     Name = txtAddName.Text,
-                    Category = txtAddCategory.Text,
+                    Category = txtAddCategory.SelectedItem.ToString(),
                     Price = decimal.Parse(txtAddPrice.Text),
                     UnitsInStock = int.Parse(txtAddUnitsInStock.Text)
                 };
@@ -90,6 +100,34 @@ namespace E_Commerce.Presentation
             this.DialogResult = DialogResult.Cancel;
             this.Close();  // Correct - closes the current form
         }
+
+        private async Task LoadCategoriesAsync()
+        {
+            var categories = await _CategoryServices.GetAllCategoryAsync();
+            if (txtAddCategory is ComboBox combo)
+            {
+                combo.Items.Clear();
+                foreach (var category in categories)
+                {
+                    combo.Items.Add(category.Name);
+                }
+            }
+        }
+
+        private void SelectCategoryByName(string categoryName)
+        {
+            if (txtAddCategory is ComboBox combo)
+            {
+                int index = combo.Items.IndexOf(categoryName);
+                if (index >= 0)
+                {
+                    combo.SelectedIndex = index;
+                }
+            }
+        }
+
+
+
     }
 
 

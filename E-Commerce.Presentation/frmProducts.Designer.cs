@@ -25,8 +25,12 @@
             lblLoading = new Label();
             lblProductCount = new Label();
             panel1 = new Panel();
+            panel3 = new Panel();
+            panel2 = new Panel();
             flowLayoutPanelProducts = new FlowLayoutPanel();
             panel1.SuspendLayout();
+            panel3.SuspendLayout();
+            panel2.SuspendLayout();
             flowLayoutPanelProducts.SuspendLayout();
             SuspendLayout();
             // 
@@ -38,14 +42,13 @@
             lblTitle.Location = new Point(0, 0);
             lblTitle.Margin = new Padding(0);
             lblTitle.Name = "lblTitle";
-            lblTitle.Padding = new Padding(20, 10, 0, 0);
-            lblTitle.Size = new Size(126, 40);
+            lblTitle.Padding = new Padding(20, 8, 0, 0);
+            lblTitle.Size = new Size(126, 38);
             lblTitle.TabIndex = 1;
             lblTitle.Text = "Products";
             // 
             // comboBoxCategory
             // 
-            comboBoxCategory.Anchor = AnchorStyles.None;
             comboBoxCategory.BackColor = Color.Transparent;
             comboBoxCategory.BorderRadius = 10;
             comboBoxCategory.CustomizableEdges = customizableEdges1;
@@ -56,7 +59,7 @@
             comboBoxCategory.Font = new Font("Segoe UI", 10F);
             comboBoxCategory.ForeColor = Color.FromArgb(68, 88, 112);
             comboBoxCategory.ItemHeight = 30;
-            comboBoxCategory.Location = new Point(968, 6);
+            comboBoxCategory.Location = new Point(500, 5);
             comboBoxCategory.Name = "comboBoxCategory";
             comboBoxCategory.ShadowDecoration.CustomizableEdges = customizableEdges2;
             comboBoxCategory.Size = new Size(216, 36);
@@ -70,13 +73,13 @@
             txtSearch.CustomizableEdges = customizableEdges3;
             txtSearch.DefaultText = "";
             txtSearch.Font = new Font("Segoe UI", 10F);
-            txtSearch.Location = new Point(368, 6);
+            txtSearch.Location = new Point(52, 5);
             txtSearch.Name = "txtSearch";
             txtSearch.PasswordChar = '\0';
             txtSearch.PlaceholderText = "Search products...";
             txtSearch.SelectedText = "";
             txtSearch.ShadowDecoration.CustomizableEdges = customizableEdges4;
-            txtSearch.Size = new Size(575, 36);
+            txtSearch.Size = new Size(397, 36);
             txtSearch.TabIndex = 4;
             txtSearch.TextChanged += txtSearch_TextChanged;
             // 
@@ -97,7 +100,7 @@
             lblProductCount.AutoSize = true;
             lblProductCount.Font = new Font("Segoe UI", 10F);
             lblProductCount.ForeColor = Color.FromArgb(68, 88, 112);
-            lblProductCount.Location = new Point(213, 13);
+            lblProductCount.Location = new Point(153, 17);
             lblProductCount.Name = "lblProductCount";
             lblProductCount.Size = new Size(78, 19);
             lblProductCount.TabIndex = 5;
@@ -105,15 +108,33 @@
             // 
             // panel1
             // 
-            panel1.Controls.Add(lblTitle);
-            panel1.Controls.Add(lblProductCount);
-            panel1.Controls.Add(comboBoxCategory);
-            panel1.Controls.Add(txtSearch);
+            panel1.Controls.Add(panel3);
+            panel1.Controls.Add(panel2);
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
             panel1.Size = new Size(1214, 47);
             panel1.TabIndex = 6;
+            // 
+            // panel3
+            // 
+            panel3.Controls.Add(lblTitle);
+            panel3.Controls.Add(lblProductCount);
+            panel3.Dock = DockStyle.Left;
+            panel3.Location = new Point(0, 0);
+            panel3.Name = "panel3";
+            panel3.Size = new Size(243, 47);
+            panel3.TabIndex = 7;
+            // 
+            // panel2
+            // 
+            panel2.Controls.Add(txtSearch);
+            panel2.Controls.Add(comboBoxCategory);
+            panel2.Dock = DockStyle.Right;
+            panel2.Location = new Point(419, 0);
+            panel2.Name = "panel2";
+            panel2.Size = new Size(795, 47);
+            panel2.TabIndex = 6;
             // 
             // flowLayoutPanelProducts
             // 
@@ -137,7 +158,9 @@
             Name = "frmProducts";
             Text = "Browse Products";
             panel1.ResumeLayout(false);
-            panel1.PerformLayout();
+            panel3.ResumeLayout(false);
+            panel3.PerformLayout();
+            panel2.ResumeLayout(false);
             flowLayoutPanelProducts.ResumeLayout(false);
             flowLayoutPanelProducts.PerformLayout();
             ResumeLayout(false);
@@ -150,5 +173,7 @@
         private System.Windows.Forms.Label lblProductCount; // إضافة التعريف للـ Label
         private Panel panel1;
         private FlowLayoutPanel flowLayoutPanelProducts;
+        private Panel panel2;
+        private Panel panel3;
     }
 }

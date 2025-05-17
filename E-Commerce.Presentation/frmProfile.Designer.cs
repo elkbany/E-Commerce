@@ -232,8 +232,7 @@
             // 
             // frmProfile
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
+            AutoScaleMode = AutoScaleMode.None;
             AutoSize = true;
             BackColor = Color.White;
             ClientSize = new Size(1130, 618);

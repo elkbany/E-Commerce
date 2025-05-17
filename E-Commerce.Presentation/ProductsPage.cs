@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Extensions.DependencyInjection;
 using E_Commerce.BL.Contracts.Services;
+using E_Commerce.BL.Features.Product.DTOs;
+using FluentValidation;
 
 namespace E_Commerce.Presentation
 {
@@ -92,7 +94,16 @@ namespace E_Commerce.Presentation
                 int unitsValue;
                 int.TryParse(lblUnitsInStock.Text, out unitsValue);
 
-                EditForm editForm = new EditForm(lblName.Text, priceValue, unitsValue, lblCategory.Text);
+                // Pass the required dependencies to the EditForm constructor
+                EditForm editForm = new EditForm(
+                    lblName.Text,
+                    priceValue,
+                    unitsValue,
+                    lblCategory.Text,
+                    _productServices,
+                    ServiceProviderContainer.ServiceProvider.GetRequiredService<IValidator<AddProductDTO>>(),
+                    ServiceProviderContainer.ServiceProvider.GetRequiredService<ICategoryServices>()
+                );
 
                 DialogResult result = editForm.ShowDialog();
                 if (result == DialogResult.OK)
