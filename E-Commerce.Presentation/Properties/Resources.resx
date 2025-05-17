@@ -118,17 +118,17 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="User_white" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\User_white.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="account1" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\account.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Screenshot 2025-02-21 210207" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Screenshot 2025-02-21 210207.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="35168541" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\3516854.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Screenshot 2025-02-21 210207" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Screenshot 2025-02-21 210207.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="icons8-bag-501" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\icons8-bag-50.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="lock" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\lock.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="product-29" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\product-29.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -139,22 +139,28 @@
   <data name="6184159_3094352" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\6184159_3094352.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="icons8-bag-501" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\icons8-bag-50.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
   <data name="social-media-marketing-mobile-phone-concept" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\social-media-marketing-mobile-phone-concept.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="account" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\account.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="User_white" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\User_white.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="icons8-bag-50" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\icons8-bag-50.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="5423351_Mobile-login" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\5423351_Mobile-login.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="account1" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\account.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="draggable-32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\draggable-32.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="5423351_Mobile-login" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\5423351_Mobile-login.jpg;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Eyehidden" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Eyehidden.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

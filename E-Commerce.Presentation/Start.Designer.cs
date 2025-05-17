@@ -91,6 +91,7 @@
             // 
             // login
             // 
+            login.Animated = true;
             login.AutoRoundedCorners = true;
             login.BorderRadius = 24;
             login.CustomizableEdges = customizableEdges1;

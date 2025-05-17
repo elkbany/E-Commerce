@@ -31,13 +31,13 @@ namespace E_Commerce.Presentation
                 Password = txtPassword.Text
             };
 
-            var validationResult = await validator.ValidateAsync(loginUserDto);
-            if (!validationResult.IsValid)
-            {
-                MessageBox.Show(string.Join("\n", validationResult.Errors.Select(e => e.ErrorMessage)),
-                                "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
+            //var validationResult = await validator.ValidateAsync(loginUserDto);
+            //if (!validationResult.IsValid)
+            //{
+            //    MessageBox.Show(string.Join("\n", validationResult.Errors.Select(e => e.ErrorMessage)),
+            //                    "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            //    return;
+            //}
 
             try
             {
@@ -58,14 +58,14 @@ namespace E_Commerce.Presentation
                     {
                         var adminForm = ServiceProviderContainer.ServiceProvider.GetRequiredService<Admin>();
                         adminForm.Show();
-                        this.Hide(); // عدّل من Close() لـ Hide()
+                        this.Hide();
                     }
                     else
                     {
                         var clientForm = ServiceProviderContainer.ServiceProvider.GetRequiredService<frmMain>();
                         clientForm.SetUserId(userId);
                         clientForm.Show();
-                        this.Hide(); // عدّل من Close() لـ Hide()
+                        this.Hide();
                     }
                 }
                 else
@@ -80,18 +80,18 @@ namespace E_Commerce.Presentation
         }
         private void btnClose_Click(object sender, EventArgs e)
         {
-            this.Hide(); // عدّل من Close() لـ Hide()
+            this.Hide();
         }
 
         private void showPassword_CheckedChanged(object sender, EventArgs e)
         {
             if (showPassword.Checked)
             {
-                txtPassword.PasswordChar = '\0'; // إظهار الباسورد (نص عادي)
+                txtPassword.PasswordChar = '\0';
             }
             else
             {
-                txtPassword.PasswordChar = '●'; // إخفاء الباسورد (يظهر كنقاط)
+                txtPassword.PasswordChar = '●';
             }
         }
 
@@ -118,6 +118,11 @@ namespace E_Commerce.Presentation
         }
 
         private void login_username_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtPassword_TextChanged(object sender, EventArgs e)
         {
 
         }

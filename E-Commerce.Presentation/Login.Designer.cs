@@ -24,6 +24,7 @@
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges3 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Login));
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges4 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges5 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges6 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
@@ -68,13 +69,14 @@
             txtUsername.CustomizableEdges = customizableEdges1;
             txtUsername.DefaultText = "";
             txtUsername.Font = new Font("Segoe UI", 12F);
+            txtUsername.IconLeft = Properties.Resources.account;
             txtUsername.Location = new Point(708, 293);
             txtUsername.Name = "txtUsername";
             txtUsername.PasswordChar = '\0';
             txtUsername.PlaceholderText = "Enter username or email";
             txtUsername.SelectedText = "";
             txtUsername.ShadowDecoration.CustomizableEdges = customizableEdges2;
-            txtUsername.Size = new Size(300, 40);
+            txtUsername.Size = new Size(339, 40);
             txtUsername.TabIndex = 2;
             // 
             // lblPassword
@@ -93,17 +95,22 @@
             txtPassword.CustomizableEdges = customizableEdges3;
             txtPassword.DefaultText = "";
             txtPassword.Font = new Font("Segoe UI", 12F);
+            txtPassword.IconLeft = (Image)resources.GetObject("txtPassword.IconLeft");
+            txtPassword.IconRight = Properties.Resources.Eyehidden;
+            txtPassword.IconRightCursor = Cursors.Hand;
             txtPassword.Location = new Point(708, 367);
             txtPassword.Name = "txtPassword";
             txtPassword.PasswordChar = '●';
             txtPassword.PlaceholderText = "Enter password";
             txtPassword.SelectedText = "";
             txtPassword.ShadowDecoration.CustomizableEdges = customizableEdges4;
-            txtPassword.Size = new Size(300, 40);
+            txtPassword.Size = new Size(339, 40);
             txtPassword.TabIndex = 4;
+            txtPassword.TextChanged += txtPassword_TextChanged;
             // 
             // btnLogin
             // 
+            btnLogin.Animated = true;
             btnLogin.AutoRoundedCorners = true;
             btnLogin.BackColor = Color.Transparent;
             btnLogin.BorderRadius = 21;
@@ -114,7 +121,7 @@
             btnLogin.Location = new Point(708, 463);
             btnLogin.Name = "btnLogin";
             btnLogin.ShadowDecoration.CustomizableEdges = customizableEdges6;
-            btnLogin.Size = new Size(300, 45);
+            btnLogin.Size = new Size(339, 45);
             btnLogin.TabIndex = 5;
             btnLogin.Text = "Login";
             btnLogin.Click += btnLogin_Click;

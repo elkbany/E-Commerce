@@ -18,6 +18,7 @@ using E_Commerce.BL.Features.Product.Validators;
 using E_Commerce.BL.Features.Category.DTOs;
 using E_Commerce.BL.Features.Category.Validators;
 using E_Commerce.BL.Mapping;
+using E_Commerce.DA.Implementations.Base;
 
 namespace E_Commerce.Presentation
 {
@@ -38,10 +39,10 @@ namespace E_Commerce.Presentation
             Host.CreateDefaultBuilder()
                 .ConfigureServices((context, services) =>
                 {
-                    // Register DbContext with SQL Server
+                    // Register DbContext with SQL Server as Transient
                     services.AddDbContext<DBContext>(options =>
                         options.UseSqlServer("Data Source=.;Initial Catalog=E-Commerce;Integrated Security=True;Trust Server Certificate=True;MultipleActiveResultSets=true"),
-                        ServiceLifetime.Scoped);
+                        ServiceLifetime.Transient); // تغيير من Scoped إلى Transient
 
                     // Register Forms
                     services.AddScoped<Start>();
@@ -89,16 +90,12 @@ namespace E_Commerce.Presentation
                     services.AddTransient<IValidator<int>, OrderIdValidator>();
                     services.AddTransient<IValidator<AddProductDTO>, ProductDTOValidator>();
                     services.AddTransient<frmMain>();
-
                     services.AddTransient<IValidator<CategoryDTO>, CategoryDTOValidator>();
+
 
                     // Register Mapster Mapping Configuration
                     new MappingConfig().Configure();
                     ProductMappingConfig.Configure();
-                    CategoryMappingConfig.Configure();
-                  
-
-
                 });
     }
 }

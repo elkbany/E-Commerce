@@ -70,8 +70,4 @@
     </EmbeddedResource>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="ClientForms\" />
-  </ItemGroup>
-
 </Project>
