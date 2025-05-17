@@ -14,8 +14,9 @@ namespace E_Commerce.Presentation
         private CategoriesPage categoriesPage;
         private UsersPage usersPage;
         public ProfilePage profilePage;
-        private OurTeam ourTeam;
+        //private OurTeam ourTeam;
         private UserControl currentPage;
+        private OrdersPage ordersPage;
 
         public Admin()
         {
@@ -25,13 +26,15 @@ namespace E_Commerce.Presentation
             categoriesPage = ServiceProviderContainer.ServiceProvider.GetRequiredService<CategoriesPage>();
             usersPage = new UsersPage();
             profilePage = new ProfilePage();
-            ourTeam = new OurTeam();
+            ordersPage = new OrdersPage();
+            //ourTeam = new OurTeam();
 
             mainContentPanel.Controls.Add(productsPage);
             mainContentPanel.Controls.Add(categoriesPage);
             mainContentPanel.Controls.Add(usersPage);
+            mainContentPanel.Controls.Add(ordersPage);
             mainContentPanel.Controls.Add(profilePage);
-            mainContentPanel.Controls.Add(ourTeam);
+            //mainContentPanel.Controls.Add(ourTeam);
 
             ShowPage(productsPage);
         }
@@ -57,6 +60,10 @@ namespace E_Commerce.Presentation
             else if (page == categoriesPage)
             {
                 // CategoriesPage بتعمل LoadCategoriesAsync لوحدها في الـ Constructor
+            }
+            else if (page == ordersPage)
+            {
+                //ordersPage.LoadOrders(); // تحميل الطلبات عند فتح الصفحة
             }
         }
 
@@ -112,11 +119,16 @@ namespace E_Commerce.Presentation
             ShowPage(profilePage);
         }
 
-        private void btnSettings_Click(object sender, EventArgs e)
+        private void btnOrders_Click(object sender, EventArgs e)
         {
-            Console.WriteLine("btnSettings clicked");
-            ShowPage(ourTeam);
+            ShowPage(ordersPage);
         }
+
+        //private void btnSettings_Click(object sender, EventArgs e)
+        //{
+        //    Console.WriteLine("btnSettings clicked");
+        //    ShowPage(ourTeam);
+        //}
 
         private void addNewItem_Click(object sender, EventArgs e)
         {
@@ -132,7 +144,6 @@ namespace E_Commerce.Presentation
             addForm.ShowDialog();
         }
 
-        
     }
 }
         //private void btnAddCategory_Click(object sender, EventArgs e)

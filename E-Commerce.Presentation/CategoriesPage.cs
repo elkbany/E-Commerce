@@ -20,7 +20,7 @@ namespace E_Commerce.Presentation
                 _categoryServices = ServiceProviderContainer.ServiceProvider.GetRequiredService<ICategoryServices>();
                 Console.WriteLine("[CategoriesPage] Constructor called, loading categories...");
                 LoadCategoriesAsync();
-                btnAddCategory.Click += btnAddCategory_Click;
+                btnAddCategory.Click += btnAddCategory_click;
             }
         }
 
@@ -185,18 +185,19 @@ namespace E_Commerce.Presentation
                         await _categoryServices.UpdateCategoryAsync(cat.Id, category);
                         await LoadCategoriesAsync();
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        Console.WriteLine("[CategoriesPage] Edit category dialog cancelled.");
+                        Console.WriteLine($"[CategoriesPage] Error in HandleEditClick: {ex.Message}\nStackTrace: {ex.StackTrace}");
+                        MessageBox.Show($"Error editing category: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"[CategoriesPage] Error in HandleEditClick: {ex.Message}\nStackTrace: {ex.StackTrace}");
-                MessageBox.Show($"Error editing category: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                else
+                {
+                    Console.WriteLine("[CategoriesPage] Edit category dialog cancelled.");
+                }
             }
         }
+
 
         private async Task HandleDeleteClick(CategoryDTO category)
         {
@@ -222,6 +223,8 @@ namespace E_Commerce.Presentation
                 MessageBox.Show($"Error deleting category: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        
     }
 
 }
