@@ -220,13 +220,14 @@ namespace E_Commerce.Presentation
                         var updatedCategory = new CategoryDTO
                         {
                             Id = category.Id,
-                            Name = addCategoryForm.txtCategoryName.Text,
-                            Description = addCategoryForm.txtCategoryDesc.Text
+                            Name = addCategoryForm.txtCategoryName.Text
+                            //Description = addCategoryForm.txtCategoryDesc.Text
                         };
                         Console.WriteLine($"[CategoriesPage] Edit category dialog OK, updating category: Id={updatedCategory.Id}, Name={updatedCategory.Name}, Description={updatedCategory.Description}");
                         await _categoryServices.UpdateCategoryAsync(category.Id, updatedCategory);
                         await LoadCategoriesAsync();
                     }
+
                     else
                     {
                         Console.WriteLine("[CategoriesPage] Edit category dialog cancelled.");
@@ -238,31 +239,36 @@ namespace E_Commerce.Presentation
                 Console.WriteLine($"[CategoriesPage] Error in HandleEditClick: {ex.Message}\nStackTrace: {ex.StackTrace}");
                 MessageBox.Show($"Error editing category: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }
 
-        private async Task HandleDeleteClick(CategoryDTO category)
-        {
-            try
-            {
-                Console.WriteLine($"[CategoriesPage] Handling delete for category: Id={category.Id}, Name={category.Name}");
-                if (MessageBox.Show($"Are you sure you want to delete '{category.Name}'?", "Confirm Delete",
-                    MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                {
-                    Console.WriteLine($"[CategoriesPage] Delete confirmed for category: Id={category.Id}, Name={category.Name}");
-                    await _categoryServices.DeleteCategoryAsync(category.Id);
-                    Console.WriteLine("[CategoriesPage] Delete successful, reloading categories...");
-                    await LoadCategoriesAsync();
-                }
-                else
-                {
-                    Console.WriteLine("[CategoriesPage] Delete cancelled by user.");
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"[CategoriesPage] Error in HandleDeleteClick: {ex.Message}\nStackTrace: {ex.StackTrace}");
-                MessageBox.Show($"Error deleting category: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
         }
+        
+
+
+        //private async Task HandleDeleteClick(CategoryDTO category)
+        //{
+        //    try
+        //    {
+        //        Console.WriteLine($"[CategoriesPage] Handling delete for category: Id={category.Id}, Name={category.Name}");
+        //        if (MessageBox.Show($"Are you sure you want to delete '{category.Name}'?", "Confirm Delete",
+        //            MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+        //        {
+        //            Console.WriteLine($"[CategoriesPage] Delete confirmed for category: Id={category.Id}, Name={category.Name}");
+        //            await _categoryServices.DeleteCategoryAsync(category.Id);
+        //            Console.WriteLine("[CategoriesPage] Delete successful, reloading categories...");
+        //            await LoadCategoriesAsync();
+        //        }
+        //        else
+        //        {
+        //            Console.WriteLine("[CategoriesPage] Delete cancelled by user.");
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Console.WriteLine($"[CategoriesPage] Error in HandleDeleteClick: {ex.Message}\nStackTrace: {ex.StackTrace}");
+        //        MessageBox.Show($"Error deleting category: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //    }
+        //}
+
+        
     }
 }
