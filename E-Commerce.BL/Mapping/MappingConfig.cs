@@ -64,10 +64,10 @@ namespace E_Commerce.BL.Mapping
 
 
             TypeAdapterConfig<AddProductDTO, Product>.NewConfig()
-    .Ignore(dest => dest.Category)
-    .Map(dest => dest.Name, src => src.Name)
-    .Map(dest => dest.Price, src => src.Price)
-    .Map(dest => dest.UnitsInStock, src => src.UnitsInStock);
+                .Ignore(dest => dest.Category)
+                .Map(dest => dest.Name, src => src.Name)
+                .Map(dest => dest.Price, src => src.Price)
+                .Map(dest => dest.UnitsInStock, src => src.UnitsInStock);
     
            
 

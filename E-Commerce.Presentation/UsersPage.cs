@@ -7,14 +7,29 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Extensions.DependencyInjection;
+using E_Commerce.BL.Contracts.Services;
+using E_Commerce.BL.Features.User.DTOs;
+using E_Commerce.Domain.Enums;
+using E_Commerce.BL.Implementations;
 
 namespace E_Commerce.Presentation
 {
     public partial class UsersPage : UserControl
     {
-        public UsersPage() { InitializeComponent(); }
+        private readonly IUserServices userServices;
 
-        public void AddUserToPanel(string firstName, string lastName, string username, string email, string password, string status, string isActive)
+        public UsersPage(IUserServices userServices)
+        {
+            InitializeComponent();
+            this.userServices = userServices;
+            if (!DesignMode)
+            {
+                LoadUsersAsync();
+                btnAddUser.Click += btnAddUser_Click;
+            }
+        }
+
+        public void AddUserToPanel(string firstName, string lastName, string username, string email, string password, string status, string isActive,int index)
         {
             Panel userPanel = new Panel
             {
@@ -26,7 +41,7 @@ namespace E_Commerce.Presentation
 
             Label lblNumber = new Label
             {
-                Text = (flowLayoutPanelUsers.Controls.Count + 1).ToString(),
+                Text = index.ToString(),
                 Location = new Point(17, 19),
                 Size = new Size(30, 20),
                 Font = new Font("Arial", 10)
@@ -106,7 +121,7 @@ namespace E_Commerce.Presentation
                 BackColor = Color.Transparent,
                 FlatAppearance = { BorderColor = Color.Cyan, BorderSize = 1 }
             };
-            btnEdit.BackgroundImage = Image.FromFile(@"C:\Users\user\Downloads\edit_24dp_05E0E9_FILL0_wght400_GRAD0_opsz24.png");
+           // btnEdit.BackgroundImage = Image.FromFile(@"C:\Users\user\Downloads\edit_24dp_05E0E9_FILL0_wght400_GRAD0_opsz24.png");
             btnEdit.BackgroundImageLayout = ImageLayout.Zoom;
             btnEdit.Click += (sender, e) => {
                 AddUser editForm = new AddUser(flowLayoutPanelUsers);
@@ -160,32 +175,101 @@ namespace E_Commerce.Presentation
             flowLayoutPanelUsers.Controls.Add(userPanel);
         }
 
-        private void DeleteItem(Panel panel, string username)
+        private async void DeleteItem(Panel panel, string username)
         {
             DialogResult result = MessageBox.Show($"Are you sure you want to delete the user '{username}'?", "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (result == DialogResult.Yes)
             {
                 // هنا هيحصل الحذف من قاعدة البيانات في المستقبل
                 // مثلاً: DeleteFromDatabase(username);
-                panel.Parent.Controls.Remove(panel); // حذف الصف من الواجهة
-                MessageBox.Show("User deleted successfully!");
+                try
+                {
+                    var user = await userServices.Delete(username);
+                    panel.Parent.Controls.Remove(panel); // حذف الصف من الواجهة
+                    MessageBox.Show("User deleted successfully!");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error deleting user: {ex.Message}");
+                    return;
+                }
+                    
+            }
+        }
+        private async Task LoadUsersAsync()
+        {
+            try
+            {
+                var users = await userServices.getAllClient();
+
+                if (flowLayoutPanelUsers.InvokeRequired)
+                {
+                    flowLayoutPanelUsers.Invoke(new Action(() =>
+                    {
+                        flowLayoutPanelUsers.Controls.Clear();
+                        int index = 1;
+                        foreach (var u in users)
+                        {
+                            AddUserToPanel(u.FirstName,u.LastName,u.Username,u.Email,u.Password,u.Status,u.IsActive,index++);
+                        }
+                    }));
+                }
+                else
+                {
+                    flowLayoutPanelUsers.Controls.Clear();
+                    int index = 1;
+                    foreach (var u in users)
+                    {
+                        AddUserToPanel(u.FirstName, u.LastName, u.Username, u.Email, u.Password, u.Status, u.IsActive,index++);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading users: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        private void btnAddUser_Click(object sender, EventArgs e)
+        private async void btnAddUser_Click(object sender, EventArgs e)
         {
             AddUser addForm = new AddUser(flowLayoutPanelUsers);
             if (addForm.ShowDialog() == DialogResult.OK)
             {
-                string firstName = addForm.FirstName;
-                string lastName = addForm.LastName;
-                string username = addForm.UserName;
-                string email = addForm.UserEmail;
-                string password = addForm.UserPassword;
-                string status = addForm.UserStatus;
-                string isActive = addForm.IsActive;
 
-                AddUserToPanel(firstName, lastName, username, email, password, status, isActive);
+                //string isActive = addForm.IsActive;
+                try
+                {
+                    // Extract form data
+                    string firstName = addForm.FirstName;
+                    string lastName = addForm.LastName;
+                    string username = addForm.UserName;
+                    string email = addForm.UserEmail;
+                    string password = addForm.UserPassword;
+                    string status = addForm.UserStatus=="User"?"Client":"Admin";
+                    string isActive = addForm.IsActive;
+
+                    // Call AddUserAsync and unpack the tuple
+                    var (user, ActiveStatus) = await userServices.AddUserAsync(new UserDTO
+                    {
+                        FirstName = firstName,
+                        LastName = lastName,
+                        Username = username,
+                        Email = email,
+                        Password = password,
+                        status = (UserStatus)Enum.Parse(typeof(UserStatus), status)
+                        // Note: IsActive is set in the service, not passed here
+                    });
+                    var count = userServices.getAllClient().Result.Count;
+                    // Add the user to the panel using the returned user data
+                    AddUserToPanel(user.FirstName, user.LastName, user.Username, user.Email, user.Password, user.status.ToString(), ActiveStatus.ToString(),count++);
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error adding user: {ex.Message}");
+                    return;
+                }
+
             }
         }
     }

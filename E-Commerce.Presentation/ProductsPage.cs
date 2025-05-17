@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Extensions.DependencyInjection;
 using E_Commerce.BL.Contracts.Services;
+using E_Commerce.BL.Features.Product.DTOs;
+using FluentValidation;
 
 namespace E_Commerce.Presentation
 {
@@ -86,15 +88,24 @@ namespace E_Commerce.Presentation
             btnEdit.BackColor = Color.Transparent;
             btnEdit.FlatAppearance.BorderColor = Color.Cyan;
             btnEdit.FlatAppearance.BorderSize = 1;
-           // btnEdit.BackgroundImage = Image.FromFile(@"C:\Users\user\Downloads\edit_24dp_05E0E9_FILL0_wght400_GRAD0_opsz24.png");
-           // btnEdit.BackgroundImageLayout = ImageLayout.Zoom;
+            // btnEdit.BackgroundImage = Image.FromFile(@"C:\Users\user\Downloads\edit_24dp_05E0E9_FILL0_wght400_GRAD0_opsz24.png");
+            // btnEdit.BackgroundImageLayout = ImageLayout.Zoom;
             btnEdit.Click += (sender, e) => {
                 decimal priceValue;
                 decimal.TryParse(lblPrice.Text.Replace("$", ""), out priceValue);
                 int unitsValue;
                 int.TryParse(lblUnitsInStock.Text, out unitsValue);
 
-                EditForm editForm = new EditForm(lblName.Text, priceValue, unitsValue, lblCategory.Text);
+                // Pass the required dependencies to the EditForm constructor
+                EditForm editForm = new EditForm(
+                    lblName.Text,
+                    priceValue,
+                    unitsValue,
+                    lblCategory.Text,
+                    _productServices,
+                    ServiceProviderContainer.ServiceProvider.GetRequiredService<IValidator<AddProductDTO>>(),
+                    ServiceProviderContainer.ServiceProvider.GetRequiredService<ICategoryServices>()
+                );
 
                 DialogResult result = editForm.ShowDialog();
                 if (result == DialogResult.OK)

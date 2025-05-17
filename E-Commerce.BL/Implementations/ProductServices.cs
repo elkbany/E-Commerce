@@ -60,23 +60,40 @@ namespace E_Commerce.BL.Implementations
             return products.Adapt<List<ProductDTO>>();
         }
 
-        public async Task<ProductDTO> UpdateProductAsync(int id,ProductDTO productDTO)
+        public async Task<ProductDTO> UpdateProductAsync(int id, ProductDTO addProductDTO)
         {
             var existing = await productRepository.GetByIdAsync(id);
             if (existing == null)
                 throw new Exception($"Product with ID {id} not found.");
 
           
-            existing.Name = productDTO.Name;
-            existing.Description = productDTO.Description;
-            existing.Price = productDTO.Price;
-            existing.UnitsInStock = productDTO.UnitsInStock;
+            existing.Name = addProductDTO.Name;
+            existing.Price = addProductDTO.Price;
+            existing.UnitsInStock = addProductDTO.UnitsInStock;
 
             //await  productRepository.Update(existing); 
             await productRepository.CommitAsync(); 
 
             return existing.Adapt<ProductDTO>(); 
         }
+        public async Task<AddProductDTO> UpdateProductByAdminAsync(int id, AddProductDTO addProductDTO)
+        {
+            var category = await categoryServices.getCategoryIDByName(addProductDTO.Category);
+            var existing = await productRepository.GetByIdAsync(id);
+            if (existing == null)
+                throw new Exception($"Product with ID {id} not found.");
+
+            existing.Name = addProductDTO.Name;
+            existing.Price = addProductDTO.Price;
+            existing.UnitsInStock = addProductDTO.UnitsInStock;
+            existing.CategoryID = category.Id;
+
+            productRepository.Update(existing);
+            await productRepository.CommitAsync();
+
+            return existing.Adapt<AddProductDTO>();
+        }
+
 
         public async Task DeleteProductAsync(int id)
         {
@@ -137,12 +154,19 @@ namespace E_Commerce.BL.Implementations
                
                 var products = await productRepository.GetAllAsync(p => p.Name != null && p.Name.ToLower().Contains(ProductName.ToLower()));
                 return products.Adapt<List<ProductDTO>>();
-            
-           
-                
-            
+                         
         }
+        public async Task<Product> GetProductByName(string name)
+        {
+            //var product = await productRepository.GetAllAsync(p => p.Name == name);
 
+            //    return product.FirstOrDefault();
+            return await productRepository.FirstOrDefaultAsync(p => p.Name == name);
+
+            
+
+
+        }
     }
 }
 

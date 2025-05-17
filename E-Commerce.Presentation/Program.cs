@@ -59,6 +59,7 @@ namespace E_Commerce.Presentation
                     services.AddScoped<CategoriesPage>();
                     services.AddTransient<ProductsPage>();
                     services.AddTransient<AddForm>();
+                    services.AddTransient<UsersPage>();
 
                     // Logging
                     services.AddLogging(logging =>
