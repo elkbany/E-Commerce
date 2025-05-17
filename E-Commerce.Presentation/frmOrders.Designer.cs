@@ -80,6 +80,7 @@
             flowLayoutPanelOrders.Padding = new Padding(20, 0, 0, 0);
             flowLayoutPanelOrders.Size = new Size(1214, 634);
             flowLayoutPanelOrders.TabIndex = 5;
+            flowLayoutPanelOrders.Paint += flowLayoutPanelOrders_Paint_1;
             // 
             // frmOrders
             // 

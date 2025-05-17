@@ -43,7 +43,7 @@ namespace E_Commerce.BL.Implementations
            await productRepository.CommitAsync();
 
             var proMap = ProductAdded?.Adapt<AddProductDTO>();
-            // await productRepository.GetAllAsync(p=>p.UnitsInStock>0);
+          
             return proMap;
         }
 
@@ -70,9 +70,9 @@ namespace E_Commerce.BL.Implementations
             existing.Name = productDTO.Name;
             existing.Description = productDTO.Description;
             existing.Price = productDTO.Price;
-            existing.UnitsInStock = productDTO.UnitsInStock;
+            existing.UnitsInStock = productDTO.UnitsInStock != existing.UnitsInStock ? productDTO.UnitsInStock : existing.UnitsInStock;
 
-            //await  productRepository.Update(existing); 
+            await  productRepository.Update(existing); 
             await productRepository.CommitAsync(); 
 
             return existing.Adapt<ProductDTO>(); 
@@ -102,7 +102,7 @@ namespace E_Commerce.BL.Implementations
         public async Task<ProductDetailesDTO> ProductDetailes(string name)
         {
             var product = productRepository.GetByName(name);
-            return product?.Adapt<ProductDetailesDTO>();/////if no product no output
+            return product?.Adapt<ProductDetailesDTO>();
         }
 
         public async Task<List<ProductDTO>> GetAllProductsByCatigory(Category category)

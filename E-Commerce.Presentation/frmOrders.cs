@@ -68,12 +68,11 @@ namespace E_Commerce.Presentation
 
         private void flowLayoutPanelOrders_Paint(object sender, PaintEventArgs e)
         {
-
+            
         }
-
         private void flowLayoutPanelOrders_Paint_1(object sender, PaintEventArgs e)
         {
-
+            
         }
     }
 }

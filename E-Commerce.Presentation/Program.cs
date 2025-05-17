@@ -58,8 +58,8 @@ namespace E_Commerce.Presentation
                     services.AddScoped<frmOrderDetails>();
                     services.AddScoped<frmCart>();
                     services.AddScoped<CategoriesPage>();
-                    services.AddTransient<ProductsPage>();
-                    services.AddTransient<AddForm>();
+                    services.AddScoped<ProductsPage>();
+                    services.AddScoped<AddForm>();
 
 
 

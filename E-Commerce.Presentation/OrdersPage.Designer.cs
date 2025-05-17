@@ -53,9 +53,9 @@
             label5.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
             label5.Location = new Point(93, 12);
             label5.Name = "label5";
-            label5.Size = new Size(98, 21);
+            label5.Size = new Size(113, 21);
             label5.TabIndex = 4;
-            label5.Text = "Order Name";
+            label5.Text = "Order Number";
             // 
             // panel1
             // 
@@ -93,6 +93,7 @@
             Controls.Add(panel1);
             Name = "OrdersPage";
             Size = new Size(1631, 642);
+            Load += OrdersPage_Load;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             ResumeLayout(false);

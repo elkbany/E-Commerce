@@ -55,10 +55,7 @@ namespace E_Commerce.BL.Implementations
             var addedItem = await _cartRepo.AddAsync(cartItem);
             if (addedItem != null)
             {
-                product.UnitsInStock -= cartItemDto.Quantity;
-                await productServices.UpdateProductAsync(cartItemDto.ProductId, product);
 
-               
                 var result = addedItem.Adapt<CartItemDTO>();
                 return result;
             }
