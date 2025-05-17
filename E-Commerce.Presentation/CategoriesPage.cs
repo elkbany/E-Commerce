@@ -20,7 +20,7 @@ namespace E_Commerce.Presentation
                 _categoryServices = ServiceProviderContainer.ServiceProvider.GetRequiredService<ICategoryServices>();
                 Console.WriteLine("[CategoriesPage] Constructor called, loading categories...");
                 LoadCategoriesAsync();
-                btnAddCategory.Click += btnAddCategory_click;
+                //btnAddCategory.Click += btnAddCategory_click;
             }
         }
 
@@ -227,16 +227,16 @@ namespace E_Commerce.Presentation
                         await _categoryServices.UpdateCategoryAsync(category.Id, updatedCategory);
                         await LoadCategoriesAsync();
                     }
-                    catch (Exception ex)
+                    else
                     {
-                        Console.WriteLine($"[CategoriesPage] Error in HandleEditClick: {ex.Message}\nStackTrace: {ex.StackTrace}");
-                        MessageBox.Show($"Error editing category: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        Console.WriteLine("[CategoriesPage] Edit category dialog cancelled.");
                     }
                 }
-                else
-                {
-                    Console.WriteLine("[CategoriesPage] Edit category dialog cancelled.");
-                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[CategoriesPage] Error in HandleEditClick: {ex.Message}\nStackTrace: {ex.StackTrace}");
+                MessageBox.Show($"Error editing category: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -266,6 +266,5 @@ namespace E_Commerce.Presentation
             }
         }
 
-        
     }
 }
