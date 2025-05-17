@@ -9,14 +9,14 @@ namespace E_Commerce.Presentation
 {
     public partial class frmOrders : Form
     {
-        private readonly IOrderServices orderServices;
-        private readonly int userId;
+        private readonly IOrderServices _orderServices;
+        private readonly int _userId;
 
         public frmOrders(IOrderServices orderServices, int userId)
         {
             InitializeComponent();
-            this.orderServices = orderServices;
-            this.userId = userId;
+            _orderServices = orderServices;
+            _userId = userId;
             LoadOrders();
         }
 
@@ -28,13 +28,13 @@ namespace E_Commerce.Presentation
 
                 if (statusFilter == "All")
                 {
-                    orders = await orderServices.GetOrdersByUserId(userId);
+                    orders = await _orderServices.GetOrdersByUserId(_userId);
                 }
                 else
                 {
                     var status = (OrderStatus)Enum.Parse(typeof(OrderStatus), statusFilter);
-                    orders = await orderServices.FilterOrdersByStatusAsync(status);
-                    orders = orders.Where(o => o.UserID == userId); // فلترة حسب اليوزر
+                    orders = await _orderServices.GetOrdersByUserId(_userId);
+                    orders = orders.Where(o => o.Status == status);
                 }
 
                 flowLayoutPanelOrders.Controls.Clear();
@@ -64,6 +64,16 @@ namespace E_Commerce.Presentation
         {
             var selectedStatus = comboBoxStatusFilter.SelectedItem.ToString();
             LoadOrders(selectedStatus);
+        }
+
+        private void flowLayoutPanelOrders_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void flowLayoutPanelOrders_Paint_1(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }
