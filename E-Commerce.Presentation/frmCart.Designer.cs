@@ -58,14 +58,14 @@
             // 
             // panelSummary
             // 
-            panelSummary.BackColor = Color.Red;
+            panelSummary.BackColor = Color.White;
             panelSummary.Controls.Add(btnCheckout);
             panelSummary.Controls.Add(panel2);
             panelSummary.Dock = DockStyle.Bottom;
             panelSummary.Location = new Point(0, 535);
             panelSummary.Name = "panelSummary";
             panelSummary.Padding = new Padding(0, 0, 0, 50);
-            panelSummary.Size = new Size(1214, 69);
+            panelSummary.Size = new Size(1071, 69);
             panelSummary.TabIndex = 3;
             // 
             // btnCheckout
@@ -77,7 +77,7 @@
             btnCheckout.FillColor = Color.FromArgb(0, 120, 212);
             btnCheckout.Font = new Font("Segoe UI", 12F);
             btnCheckout.ForeColor = Color.White;
-            btnCheckout.Location = new Point(794, 12);
+            btnCheckout.Location = new Point(809, 12);
             btnCheckout.Name = "btnCheckout";
             btnCheckout.ShadowDecoration.CustomizableEdges = customizableEdges2;
             btnCheckout.Size = new Size(180, 45);
@@ -90,7 +90,7 @@
             panel2.Anchor = AnchorStyles.None;
             panel2.Controls.Add(lblTotalLabel);
             panel2.Controls.Add(lblTotal);
-            panel2.Location = new Point(112, 23);
+            panel2.Location = new Point(40, 23);
             panel2.Name = "panel2";
             panel2.Size = new Size(156, 24);
             panel2.TabIndex = 3;
@@ -122,16 +122,17 @@
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(1214, 47);
+            panel1.Size = new Size(1071, 47);
             panel1.TabIndex = 4;
             // 
             // flowLayoutPanelCart
             // 
+            flowLayoutPanelCart.AutoScroll = true;
             flowLayoutPanelCart.Dock = DockStyle.Fill;
             flowLayoutPanelCart.Location = new Point(0, 47);
             flowLayoutPanelCart.Name = "flowLayoutPanelCart";
             flowLayoutPanelCart.Padding = new Padding(20, 0, 0, 0);
-            flowLayoutPanelCart.Size = new Size(1214, 488);
+            flowLayoutPanelCart.Size = new Size(1071, 488);
             flowLayoutPanelCart.TabIndex = 5;
             // 
             // frmCart
@@ -139,7 +140,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
-            ClientSize = new Size(1214, 604);
+            ClientSize = new Size(1071, 604);
             Controls.Add(flowLayoutPanelCart);
             Controls.Add(panel1);
             Controls.Add(panelSummary);

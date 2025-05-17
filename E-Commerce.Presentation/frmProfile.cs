@@ -45,9 +45,9 @@ namespace E_Commerce.Presentation
 
 
 
-       
-            private async void button1_Click(object sender, EventArgs e) // Save (تغيير إلى async void)
-             {
+
+        private async void button1_Click(object sender, EventArgs e) // Save (تغيير إلى async void)
+        {
             try
             {
                 var updateDto = new UpdateUserAccountDTO
@@ -74,8 +74,8 @@ namespace E_Commerce.Presentation
                 MessageBox.Show($"Error updating profile: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-       // MessageBox.Show("Save functionality will be added later.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        
+        // MessageBox.Show("Save functionality will be added later.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
 
         private void button2_Click(object sender, EventArgs e) // Cancel
         {
@@ -99,6 +99,21 @@ namespace E_Commerce.Presentation
 
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
+        }
+
+        private void frmProfile_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void panel1_Paint_1(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

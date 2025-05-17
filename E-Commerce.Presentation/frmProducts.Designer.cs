@@ -138,6 +138,7 @@
             // 
             // flowLayoutPanelProducts
             // 
+            flowLayoutPanelProducts.AutoScroll = true;
             flowLayoutPanelProducts.Controls.Add(lblLoading);
             flowLayoutPanelProducts.Dock = DockStyle.Fill;
             flowLayoutPanelProducts.Location = new Point(0, 47);
