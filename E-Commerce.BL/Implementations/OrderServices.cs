@@ -6,28 +6,19 @@ using E_Commerce.Domain.Models;
 using FluentValidation;
 using Mapster;
 using System.Linq.Expressions;
-using System.Security.Principal;
 
 namespace E_Commerce.BL.Implementations
 {
     public class OrderServices : AppService, IOrderServices
     {
-        private readonly  IOrderRepository _orderRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly IValidator<int> _orderValidator;
-        private readonly IUserRepository _userRepository;
-        private readonly IOrderDetailRepository _orderDetailRepository;
-        private readonly IProductRepository _productRepository;
 
-        public OrderServices(IOrderRepository orderRepository, IValidator<int> orderValidator, IOrderDetailRepository orderDetailRepository,IProductRepository productRepository)
+        public OrderServices(IUnitOfWork unitOfWork, IValidator<int> orderValidator)
         {
-            _orderRepository = orderRepository;
+            _unitOfWork = unitOfWork;
             _orderValidator = orderValidator;
-            _orderDetailRepository = orderDetailRepository;
-            _productRepository = productRepository;
-
         }
-
-       
 
         public async Task<OrderDTO> AddOrderAsync(OrderDTO orderDTO)
         {
@@ -36,48 +27,48 @@ namespace E_Commerce.BL.Implementations
                 UserID = orderDTO.UserID,
                 OrderDate = orderDTO.OrderDate,
                 TotalAmount = orderDTO.TotalAmount,
-                Status = orderDTO.Status = OrderStatus.Pending
+                Status = OrderStatus.Pending
             };
-            await _orderRepository.AddAsync(order);
+            await _unitOfWork.Orders.AddAsync(order);
+            await _unitOfWork.CommitAsync();
             return orderDTO;
         }
 
         public async Task DeleteOrderAsync(int id)
         {
-            var order = await _orderRepository.GetByIdAsync(id);
+            var order = await _unitOfWork.Orders.GetByIdAsync(id);
             if (order != null)
             {
-                await _orderRepository.Delete(order);
+                await _unitOfWork.Orders.Delete(order);
+                await _unitOfWork.CommitAsync();
             }
         }
 
         public async Task<IEnumerable<OrderDTO>> FilterOrdersByStatusAsync(OrderStatus status)
         {
-            var filteredOrders = await _orderRepository.GetOrdersByStatusAsync(status);
+            var filteredOrders = await _unitOfWork.Orders.GetOrdersByStatusAsync(status);
             return filteredOrders.Adapt<List<OrderDTO>>();
         }
 
         public async Task<IEnumerable<OrderDTO>> GetAllOrdersAsync()
         {
-            var orders = await _orderRepository.GetAllAsync();
-            var orderMap = orders.Adapt<List<OrderDTO>>();
-            return orderMap;
+            var orders = await _unitOfWork.Orders.GetAllAsync();
+            return orders.Adapt<List<OrderDTO>>();
         }
 
         public async Task<OrderDTO> GetOrdertByIdAsync(int id)
         {
-            var order = await _orderRepository.GetByIdAsync(id);
-
-            var orderMap = order?.Adapt<OrderDTO>();
-            return orderMap;
+            var order = await _unitOfWork.Orders.GetByIdAsync(id);
+            return order?.Adapt<OrderDTO>();
         }
 
         public async Task<OrderDTO> UpdateOrderAsync(Order order)
         {
-            var ord = await _orderRepository.Update(order);
-            var ordMapping = ord?.Adapt<OrderDTO>();
-            return ordMapping;
+            var updatedOrder = await _unitOfWork.Orders.Update(order);
+            await _unitOfWork.CommitAsync();
+            return updatedOrder?.Adapt<OrderDTO>();
         }
+
         public async Task<(bool Success, string Message, OrderDTO Data)> ApproveOrderAsync(int orderId)
         {
             var validationResult = await _orderValidator.ValidateAsync(orderId);
@@ -87,7 +78,7 @@ namespace E_Commerce.BL.Implementations
                 return (false, errorMessage, null);
             }
 
-            var order = await _orderRepository.FirstOrDefaultAsync(
+            var order = await _unitOfWork.Orders.FirstOrDefaultAsync(
                 o => o.OrderID == orderId,
                 o => o.OrderDetails);
             if (order == null)
@@ -96,28 +87,26 @@ namespace E_Commerce.BL.Implementations
             if (order.Status != OrderStatus.Pending)
                 return (false, "Only pending orders can be approved.", null);
 
-            var orderDetails = await _orderDetailRepository.GetAllAsync(
+            var orderDetails = await _unitOfWork.OrderDetails.GetAllAsync(
                 od => od.OrderID == orderId,
                 od => od.Product);
 
-           
             foreach (var detail in orderDetails)
             {
                 var product = detail.Product;
                 if (product.UnitsInStock < detail.Quantity)
                     return (false, $"Not enough stock for product {product.Name}.", null);
 
-                product.UnitsInStock = product.UnitsInStock-detail.Quantity;
-                await _productRepository.Update(product);
+                product.UnitsInStock -= detail.Quantity;
+                await _unitOfWork.Products.Update(product);
             }
 
             order.Status = OrderStatus.Approved;
             order.DateProcessed = DateTime.UtcNow;
-            await _orderRepository.Update(order);
-            await _orderRepository.CommitAsync();
+            await _unitOfWork.Orders.Update(order);
+            await _unitOfWork.CommitAsync();
 
-            var orderDTO = order.Adapt<OrderDTO>();
-            return (true, "Order approved successfully.", orderDTO);
+            return (true, "Order approved successfully.", order.Adapt<OrderDTO>());
         }
 
         public async Task<(bool Success, string Message, OrderDTO Data)> DenyOrderAsync(int orderId)
@@ -129,7 +118,7 @@ namespace E_Commerce.BL.Implementations
                 return (false, errorMessage, null);
             }
 
-            var order = await _orderRepository.FirstOrDefaultAsync(
+            var order = await _unitOfWork.Orders.FirstOrDefaultAsync(
                 o => o.OrderID == orderId,
                 o => o.OrderDetails);
             if (order == null)
@@ -138,42 +127,40 @@ namespace E_Commerce.BL.Implementations
             if (order.Status != OrderStatus.Pending)
                 return (false, "Only pending orders can be denied.", null);
 
-            var orderDetails = await _orderDetailRepository.GetAllAsync(
+            var orderDetails = await _unitOfWork.OrderDetails.GetAllAsync(
                 od => od.OrderID == orderId,
                 od => od.Product);
 
             foreach (var detail in orderDetails)
             {
                 var product = detail.Product;
-                product.UnitsInStock = product.UnitsInStock+detail.Quantity;
-                await _productRepository.Update(product);
+                product.UnitsInStock += detail.Quantity;
+                await _unitOfWork.Products.Update(product);
             }
 
             order.Status = OrderStatus.Denied;
             order.DateProcessed = DateTime.UtcNow;
-            await _orderRepository.Update(order);
-            await _orderRepository.CommitAsync();
+            await _unitOfWork.Orders.Update(order);
+            await _unitOfWork.CommitAsync();
 
-            var orderDTO = order.Adapt<OrderDTO>();
-            return (true, "Order denied successfully.", orderDTO);
+            return (true, "Order denied successfully.", order.Adapt<OrderDTO>());
         }
+
         public async Task CreateOrderFromCartItemsAsync(int userId, List<CartItem> cartItems)
         {
-          
             foreach (var cartItem in cartItems)
             {
-                var product = await _productRepository.GetByIdAsync(cartItem.ProductID);
+                var product = await _unitOfWork.Products.GetByIdAsync(cartItem.ProductID);
                 if (product == null || product.UnitsInStock < cartItem.Quantity)
                 {
                     throw new Exception($"Not enough stock for product ID {cartItem.ProductID}. Available: {product?.UnitsInStock ?? 0}, Requested: {cartItem.Quantity}");
                 }
             }
 
-            
             decimal totalAmount = 0;
             foreach (var cartItem in cartItems)
             {
-                var product = await _productRepository.GetByIdAsync(cartItem.ProductID);
+                var product = await _unitOfWork.Products.GetByIdAsync(cartItem.ProductID);
                 totalAmount += product.Price * cartItem.Quantity;
             }
 
@@ -181,12 +168,11 @@ namespace E_Commerce.BL.Implementations
             {
                 UserID = userId,
                 OrderDate = DateTime.UtcNow,
-                TotalAmount = totalAmount, 
+                TotalAmount = totalAmount,
                 Status = OrderStatus.Pending
             };
 
-            await _orderRepository.AddAsync(order);
-            await _orderRepository.CommitAsync();
+            await _unitOfWork.Orders.AddAsync(order);
 
             foreach (var cartItem in cartItems)
             {
@@ -196,24 +182,25 @@ namespace E_Commerce.BL.Implementations
                     ProductID = cartItem.ProductID,
                     Quantity = cartItem.Quantity
                 };
-                await _orderDetailRepository.AddAsync(orderDetail);
+                await _unitOfWork.OrderDetails.AddAsync(orderDetail);
             }
 
-            await _orderRepository.CommitAsync();
+            await _unitOfWork.CommitAsync();
         }
 
         public async Task<IEnumerable<OrderDTO>> GetOrdersByUserId(int userId)
         {
-            var orders = await _orderRepository.GetOrdersByUserIdAsync(userId);
+            var orders = await _unitOfWork.Orders.GetOrdersByUserIdAsync(userId);
             return orders.Adapt<List<OrderDTO>>();
         }
+
         public async Task<IEnumerable<OrderDTO>> GetOrdersByUserIdAndStatusAsync(int userId, OrderStatus? status = null)
         {
             Expression<Func<Order, bool>> criteria = o => o.UserID == userId;
             if (status.HasValue)
                 criteria = o => o.UserID == userId && o.Status == status.Value;
 
-            var orders = await _orderRepository.GetAllAsync(
+            var orders = await _unitOfWork.Orders.GetAllAsync(
                 criteria,
                 o => o.User,
                 o => o.OrderDetails);

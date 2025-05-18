@@ -11,7 +11,7 @@ namespace E_Commerce.BL.Contracts.Services
 {
     public interface IUserServices
     {
-        public Task<(UserDTO, bool IsActive)> AddUserAsync(UserDTO user);
+        public Task<(UserDTO User, bool IsActive)> AddUserAsync(UserDTO user);
         Task<UserDTO> getUserById(int ID);
         //Task<List<UserDTO>> getAllUser();
         Task<List<UserIformationDTO>> getAllClient();
