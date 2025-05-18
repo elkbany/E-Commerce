@@ -126,5 +126,23 @@ namespace E_Commerce.Presentation
         {
 
         }
+         bool isPasswordShow = false;
+        private void txtPassword_IconRightClick(object sender, EventArgs e)
+        {
+            isPasswordShow = !isPasswordShow;
+            if (isPasswordShow)
+            {
+                txtPassword.PasswordChar = '\0';
+                txtPassword.IconRight = Properties.Resources.Eye;
+            }
+            else
+            {
+                txtPassword.PasswordChar = '●';
+                txtPassword.IconRight = Properties.Resources.Eyehidden;
+            }
+
+
+
+        }
     }
 }

@@ -13,8 +13,6 @@
             base.Dispose(disposing);
         }
 
-        private CheckBox showPassword; // أضف دي مع الـ Fields
-
         private Label lblNoAccount; // أضف الـ Fields
         private Label lblSignUpHere;
 
@@ -36,7 +34,6 @@
             btnLogin = new Guna.UI2.WinForms.Guna2Button();
             btnClose = new Label();
             pictureBox1 = new PictureBox();
-            showPassword = new CheckBox();
             lblNoAccount = new Label();
             lblSignUpHere = new Label();
             guna2BorderlessForm1 = new Guna.UI2.WinForms.Guna2BorderlessForm(components);
@@ -96,7 +93,7 @@
             txtPassword.DefaultText = "";
             txtPassword.Font = new Font("Segoe UI", 12F);
             txtPassword.IconLeft = (Image)resources.GetObject("txtPassword.IconLeft");
-            txtPassword.IconRight = Properties.Resources.Eyehidden;
+            txtPassword.IconRight = Properties.Resources.Eyehidden2;
             txtPassword.IconRightCursor = Cursors.Hand;
             txtPassword.Location = new Point(708, 367);
             txtPassword.Name = "txtPassword";
@@ -106,6 +103,7 @@
             txtPassword.ShadowDecoration.CustomizableEdges = customizableEdges4;
             txtPassword.Size = new Size(339, 40);
             txtPassword.TabIndex = 4;
+            txtPassword.IconRightClick += txtPassword_IconRightClick;
             txtPassword.TextChanged += txtPassword_TextChanged;
             // 
             // btnLogin
@@ -118,7 +116,7 @@
             btnLogin.FillColor = Color.FromArgb(0, 120, 212);
             btnLogin.Font = new Font("Segoe UI", 12F);
             btnLogin.ForeColor = Color.White;
-            btnLogin.Location = new Point(708, 463);
+            btnLogin.Location = new Point(708, 424);
             btnLogin.Name = "btnLogin";
             btnLogin.ShadowDecoration.CustomizableEdges = customizableEdges6;
             btnLogin.Size = new Size(339, 45);
@@ -148,26 +146,12 @@
             pictureBox1.TabIndex = 7;
             pictureBox1.TabStop = false;
             // 
-            // showPassword
-            // 
-            showPassword.AutoSize = true;
-            showPassword.BackColor = Color.Transparent;
-            showPassword.Font = new Font("Segoe UI", 10F);
-            showPassword.ForeColor = Color.FromArgb(0, 120, 212);
-            showPassword.Location = new Point(716, 426);
-            showPassword.Name = "showPassword";
-            showPassword.Size = new Size(123, 23);
-            showPassword.TabIndex = 8;
-            showPassword.Text = "Show Password";
-            showPassword.UseVisualStyleBackColor = false;
-            showPassword.CheckedChanged += showPassword_CheckedChanged;
-            // 
             // lblNoAccount
             // 
             lblNoAccount.AutoSize = true;
             lblNoAccount.Font = new Font("Segoe UI", 9F);
             lblNoAccount.ForeColor = SystemColors.ControlDarkDark;
-            lblNoAccount.Location = new Point(708, 523);
+            lblNoAccount.Location = new Point(708, 484);
             lblNoAccount.Name = "lblNoAccount";
             lblNoAccount.Size = new Size(131, 15);
             lblNoAccount.TabIndex = 9;
@@ -179,7 +163,7 @@
             lblSignUpHere.Cursor = Cursors.Hand;
             lblSignUpHere.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             lblSignUpHere.ForeColor = Color.FromArgb(0, 120, 212);
-            lblSignUpHere.Location = new Point(850, 523);
+            lblSignUpHere.Location = new Point(850, 484);
             lblSignUpHere.Name = "lblSignUpHere";
             lblSignUpHere.Size = new Size(77, 15);
             lblSignUpHere.TabIndex = 10;
@@ -205,7 +189,6 @@
             ClientSize = new Size(1142, 700);
             Controls.Add(lblSignUpHere);
             Controls.Add(lblNoAccount);
-            Controls.Add(showPassword);
             Controls.Add(pictureBox1);
             Controls.Add(btnClose);
             Controls.Add(btnLogin);
