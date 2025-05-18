@@ -181,8 +181,27 @@ namespace E_Commerce.Presentation
             flowLayoutPanelProducts.Controls.Add(productPanel);
         }
 
-        private void DeleteProduct(Panel productPanel, string productName)
+        //private void DeleteProduct(Panel productPanel, string productName)
+        //{
+        //    DialogResult result = MessageBox.Show(
+        //        $"Are you sure you want to delete the product '{productName}'?",
+        //        "Confirm Delete",
+        //        MessageBoxButtons.YesNo,
+        //        MessageBoxIcon.Warning
+        //    );
+
+        //    if (result == DialogResult.Yes)
+        //    {
+        //        // هنا هيحصل الحذف من قاعدة البيانات في المستقبل
+        //        // مثلاً: await _productServices.DeleteProductAsync(productId);
+        //        productPanel.Parent.Controls.Remove(productPanel); // حذف المنتج من الواجهة
+        //        MessageBox.Show("Product deleted successfully!");
+        //    }
+        //}
+        private async void DeleteProduct(Panel productPanel, string productName)
         {
+            var product = await _productServices.GetProductByName(productName);
+            var productId = product.Id; 
             DialogResult result = MessageBox.Show(
                 $"Are you sure you want to delete the product '{productName}'?",
                 "Confirm Delete",
@@ -196,6 +215,23 @@ namespace E_Commerce.Presentation
                 // مثلاً: await _productServices.DeleteProductAsync(productId);
                 productPanel.Parent.Controls.Remove(productPanel);
                 MessageBox.Show("Product deleted successfully!");
+            }
+                try
+                {
+                    // First delete from database
+                    await _productServices.DeleteProductAsync(productId);
+
+                    // Then remove from UI
+                    productPanel.Parent.Controls.Remove(productPanel);
+                    MessageBox.Show("Product deleted successfully!");
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error deleting product: {ex.Message}",
+                                   "Error",
+                                   MessageBoxButtons.OK,
+                                   MessageBoxIcon.Error);
+                }
             }
         }
 
