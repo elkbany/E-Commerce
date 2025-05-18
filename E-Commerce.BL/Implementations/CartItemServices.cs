@@ -9,26 +9,29 @@ using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace E_Commerce.BL.Implementations
 {
     public class CartItemServices : AppService, ICartItemServices
     {
-        private readonly ICartItemRepository _cartRepo;
+        private readonly IUnitOfWork unitOfWork;
         private readonly IProductServices productServices;
-        //private readonly IProductRepository _productRepo;
-        private readonly IOrderServices _orderService;
-        private readonly ILogger<CartItemServices> _logger;
-        public event EventHandler<int> CartUpdated; // Event بيتنادى لما الـ Cart يتغير (UserId هو الـ Parameter)
+        private readonly IOrderServices orderService;
+        private readonly ILogger<CartItemServices> logger;
 
-        public CartItemServices(ICartItemRepository cartRepo, IProductServices productServices, IOrderServices orderService, ILogger<CartItemServices> logger)
+        public event EventHandler<int> CartUpdated;
+
+        public CartItemServices(
+            IUnitOfWork unitOfWork,
+            IProductServices productServices,
+            IOrderServices orderService,
+            ILogger<CartItemServices> logger)
         {
-            _cartRepo = cartRepo;
+            this.unitOfWork = unitOfWork;
             this.productServices = productServices;
-            _orderService = orderService;
-            _logger = logger;
+            this.orderService = orderService;
+            this.logger = logger;
         }
 
         public async Task<CartItemDTO> AddToCartAsync(AddCartItemDTO cartItemDto)
@@ -37,42 +40,36 @@ namespace E_Commerce.BL.Implementations
 
             var product = await productServices.GetProductByIdAsync(cartItemDto.ProductId);
             if (product == null)
-            {
                 throw new Exception($"Product with ID {cartItemDto.ProductId} not found.");
-            }
-  
+
             if (product.UnitsInStock < cartItemDto.Quantity)
-            {
                 throw new Exception($"Only {product.UnitsInStock} units available, but {cartItemDto.Quantity} requested.");
-            }
 
             var cartItem = new CartItem
             {
                 UserID = cartItemDto.UserId,
                 ProductID = cartItemDto.ProductId,
                 Quantity = cartItemDto.Quantity,
-              
+                DateAdded = DateTime.Now
             };
-            cartItem.DateAdded = DateTime.Now;
 
-            var addedItem = await _cartRepo.AddAsync(cartItem);
+            var addedItem = await unitOfWork.CartItems.AddAsync(cartItem);
+            await unitOfWork.CommitAsync();
+
             if (addedItem != null)
             {
-
                 var result = addedItem.Adapt<CartItemDTO>();
-                CartUpdated?.Invoke(this, cartItemDto.UserId); // استدعاء الـ Event بعد الإضافة
+                CartUpdated?.Invoke(this, cartItemDto.UserId);
                 return result;
             }
-            else
-            {
-                throw new Exception("Failed to add item to cart.");
-            }
+
+            throw new Exception("Failed to add item to cart.");
         }
 
         public async Task<IEnumerable<CartItemDTO>> GetCartItemsByUserIdAsync(int userId)
         {
-            _logger.LogInformation($"Fetching cart items for user {userId}");
-            var cartItems = await _cartRepo.GetAllAsync(x => x.UserID == userId, x => x.Product);
+            logger.LogInformation($"Fetching cart items for user {userId}");
+            var cartItems = await unitOfWork.CartItems.GetAllAsync(x => x.UserID == userId, x => x.Product);
             return cartItems.Adapt<List<CartItemDTO>>();
         }
 
@@ -80,41 +77,42 @@ namespace E_Commerce.BL.Implementations
         {
             await DoValidationAsync<UpdateCartItemQuantityDTOValidator, UpdateCartItemQuantityDTO>(quantityDto);
 
-            var cartItem = await _cartRepo.FirstOrDefaultAsync(x => x.Id == cartItemId, x => x.Product);
+            var cartItem = await unitOfWork.CartItems.FirstOrDefaultAsync(x => x.Id == cartItemId, x => x.Product);
             if (cartItem == null)
                 throw new Exception("Cart item not found.");
+
             if (cartItem.Product.UnitsInStock < quantityDto.Quantity)
                 throw new Exception("Requested quantity exceeds available stock.");
 
             cartItem.Quantity = quantityDto.Quantity;
-            await _cartRepo.Update(cartItem);
-            await _cartRepo.CommitAsync();
+            await unitOfWork.CartItems.Update(cartItem);
+            await unitOfWork.CommitAsync();
 
             return cartItem.Adapt<CartItemDTO>();
         }
 
         public async Task DeleteFromCartAsync(int cartItemId)
         {
-            var cartItem = await _cartRepo.FirstOrDefaultAsync(x => x.Id == cartItemId);
+            var cartItem = await unitOfWork.CartItems.FirstOrDefaultAsync(x => x.Id == cartItemId);
             if (cartItem == null)
                 throw new Exception("Cart item not found.");
 
-            await _cartRepo.Delete(cartItem);
-            await _cartRepo.CommitAsync();
+            await unitOfWork.CartItems.Delete(cartItem);
+            await unitOfWork.CommitAsync();
         }
 
         public async Task SubmitCartAsync(int userId)
         {
-            var cartItems = await _cartRepo.GetAllAsync(x => x.UserID == userId, x => x.Product);
+            var cartItems = await unitOfWork.CartItems.GetAllAsync(x => x.UserID == userId, x => x.Product);
             if (!cartItems.Any())
                 throw new Exception("Cart is empty.");
 
-            await _orderService.CreateOrderFromCartItemsAsync(userId, cartItems);
+            await orderService.CreateOrderFromCartItemsAsync(userId, cartItems);
 
             foreach (var item in cartItems)
-                await _cartRepo.Delete(item);
+                await unitOfWork.CartItems.Delete(item);
 
-            await _cartRepo.CommitAsync();
+            await unitOfWork.CommitAsync();
         }
     }
 }

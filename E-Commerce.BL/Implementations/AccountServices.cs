@@ -12,16 +12,16 @@ namespace E_Commerce.BL.Implementations
 {
     public class AccountServices : AppService, IAccountServices
     {
-        private readonly IUserRepository userRepository;
+        private readonly IUnitOfWork unitOfWork;
 
-        public AccountServices(IUserRepository userRepository)
+        public AccountServices(IUnitOfWork unitOfWork)
         {
-            this.userRepository = userRepository;
+            this.unitOfWork = unitOfWork;
         }
 
         public async Task<bool> RegisterUser(RegisterUserDto registerUserDto)
         {
-            await DoValidationAsync<RegisterUserDtoValidator, RegisterUserDto>(registerUserDto, userRepository);
+            await DoValidationAsync<RegisterUserDtoValidator, RegisterUserDto>(registerUserDto, unitOfWork.Users);
             var hasher = new PasswordHasher<User>();
             var user = new User
             {
@@ -34,15 +34,15 @@ namespace E_Commerce.BL.Implementations
                 IsSignedInNow = false
             };
             user.PasswordHash = hasher.HashPassword(user, registerUserDto.Password);
-            var userReg = await userRepository.AddAsync(user);
-            await userRepository.CommitAsync();
+            var userReg = await unitOfWork.Users.AddAsync(user);
+            await unitOfWork.CommitAsync();
             return userReg != null;
         }
 
         public async Task<bool> LoginUserAsync(LoginUserDto loginUserDto)
         {
             await DoValidationAsync<LoginUserDtoValidator, LoginUserDto>(loginUserDto);
-            var user = await userRepository.FirstOrDefaultAsync(u => u.Username == loginUserDto.UsernameOrEmail || u.Email == loginUserDto.UsernameOrEmail);
+            var user = await unitOfWork.Users.FirstOrDefaultAsync(u => u.Username == loginUserDto.UsernameOrEmail || u.Email == loginUserDto.UsernameOrEmail);
             if (user == null || !user.IsActive)
                 return false;
 
@@ -53,8 +53,8 @@ namespace E_Commerce.BL.Implementations
             {
                 user.IsSignedInNow = true;
                 user.LastLoginDate = DateTime.UtcNow;
-                await userRepository.Update(user);
-                await userRepository.CommitAsync();
+                await unitOfWork.Users.Update(user);
+                await unitOfWork.CommitAsync();
                 return true;
             }
             return false;
@@ -62,14 +62,14 @@ namespace E_Commerce.BL.Implementations
 
         public async Task<bool> LogoutUserAsync(string usernameOrEmail)
         {
-            var user = await userRepository.FirstOrDefaultAsync(u => u.Username == usernameOrEmail || u.Email == usernameOrEmail);
+            var user = await unitOfWork.Users.FirstOrDefaultAsync(u => u.Username == usernameOrEmail || u.Email == usernameOrEmail);
             if (user == null || !user.IsSignedInNow)
                 return false;
 
             user.IsSignedInNow = false;
             user.LastLoginDate = DateTime.UtcNow;
-            var result = await userRepository.Update(user);
-            await userRepository.CommitAsync();
+            var result = await unitOfWork.Users.Update(user);
+            await unitOfWork.CommitAsync();
             return result != null;
         }
 
@@ -79,7 +79,7 @@ namespace E_Commerce.BL.Implementations
             {
                 await DoValidationAsync<UpdateUserAccountDTOValidator, UpdateUserAccountDTO>(dto);
 
-                var user = await userRepository.FirstOrDefaultAsync(u => u.Id == userId);
+                var user = await unitOfWork.Users.FirstOrDefaultAsync(u => u.Id == userId);
                 if (user == null || !user.IsSignedInNow)
                     return false;
 
@@ -90,10 +90,10 @@ namespace E_Commerce.BL.Implementations
                 user.Email = dto.Email;
                 user.DateUpdated = DateTime.UtcNow;
 
-                await userRepository.Update(user);
-                await userRepository.CommitAsync();
+                await unitOfWork.Users.Update(user);
+                await unitOfWork.CommitAsync();
 
-                var updatedUser = await userRepository.GetByIdAsync(userId);
+                var updatedUser = await unitOfWork.Users.GetByIdAsync(userId);
                 if (updatedUser != null &&
                     (updatedUser.FirstName == dto.FirstName || updatedUser.LastName == dto.LastName || updatedUser.Email == dto.Email) &&
                     updatedUser.DateUpdated > oldDateUpdated)
@@ -109,7 +109,7 @@ namespace E_Commerce.BL.Implementations
                 {
                     System.Diagnostics.Debug.WriteLine($"Inner Exception: {ex.InnerException.Message}");
                 }
-                throw; 
+                throw;
             }
         }
 
@@ -117,18 +117,16 @@ namespace E_Commerce.BL.Implementations
         {
             try
             {
-                var user = await userRepository.FirstOrDefaultAsync(u => u.Id == dto.Id);
+                var user = await unitOfWork.Users.FirstOrDefaultAsync(u => u.Id == dto.Id);
                 if (user == null || !user.IsSignedInNow)
                     return false;
 
                 var oldDateUpdated = user.DateUpdated;
-                string newPassword = dto.Password; 
+                string newPassword = dto.Password;
 
-                
                 if (!string.IsNullOrWhiteSpace(dto.FirstName)) user.FirstName = dto.FirstName;
                 if (!string.IsNullOrWhiteSpace(dto.LastName)) user.LastName = dto.LastName;
 
-                
                 bool isPasswordUpdated = false;
                 if (!string.IsNullOrWhiteSpace(dto.Password))
                 {
@@ -139,25 +137,20 @@ namespace E_Commerce.BL.Implementations
 
                 user.DateUpdated = DateTime.UtcNow;
 
-                await userRepository.Update(user);
-                await userRepository.CommitAsync();
+                await unitOfWork.Users.Update(user);
+                await unitOfWork.CommitAsync();
 
-                
-                var updatedUser = await userRepository.GetByIdAsync(dto.Id);
+                var updatedUser = await unitOfWork.Users.GetByIdAsync(dto.Id);
                 if (updatedUser != null)
                 {
-                   
                     bool isDataUpdated = true;
                     if (!string.IsNullOrWhiteSpace(dto.FirstName) && updatedUser.FirstName != dto.FirstName) isDataUpdated = false;
                     if (!string.IsNullOrWhiteSpace(dto.LastName) && updatedUser.LastName != dto.LastName) isDataUpdated = false;
 
-                    
                     bool isPasswordVerified = isPasswordUpdated ? await VerifyPasswordAsync(dto.Id, newPassword) : true;
 
-                   
                     bool isDateUpdated = updatedUser.DateUpdated > oldDateUpdated;
 
-                    
                     return (isDataUpdated || isPasswordVerified) && isDateUpdated;
                 }
                 return false;
@@ -175,25 +168,25 @@ namespace E_Commerce.BL.Implementations
 
         public async Task<UserIformationDTO> ViewProfile(int id)
         {
-            var user = await userRepository.GetByIdAsync(id);
+            var user = await unitOfWork.Users.GetByIdAsync(id);
             return user.Adapt<UserIformationDTO>();
         }
 
         public async Task<int> GetUserIdByUsernameOrEmailAsync(string usernameOrEmail)
         {
-            var user = await userRepository.FirstOrDefaultAsync(u => u.Username == usernameOrEmail || u.Email == usernameOrEmail);
+            var user = await unitOfWork.Users.FirstOrDefaultAsync(u => u.Username == usernameOrEmail || u.Email == usernameOrEmail);
             return user?.Id ?? -1;
         }
 
         public async Task<UserStatus> GetUserStatusAsync(int userId)
         {
-            var user = await userRepository.GetByIdAsync(userId);
+            var user = await unitOfWork.Users.GetByIdAsync(userId);
             return user?.Status ?? UserStatus.Client;
         }
 
         public async Task<bool> VerifyPasswordAsync(int userId, string password)
         {
-            var user = await userRepository.GetByIdAsync(userId);
+            var user = await unitOfWork.Users.GetByIdAsync(userId);
             if (user == null) return false;
             var hasher = new PasswordHasher<User>();
             return hasher.VerifyHashedPassword(user, user.PasswordHash, password) == PasswordVerificationResult.Success;

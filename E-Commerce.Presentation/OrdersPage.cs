@@ -28,9 +28,10 @@ namespace E_Commerce.Presentation
             _orderDetailServices = ServiceProviderContainer.ServiceProvider.GetRequiredService<IOrderDetailServices>();
             _productServices = ServiceProviderContainer.ServiceProvider.GetRequiredService<IProductServices>();
 
+            // إعداد ComboBox للفلتر
             comboBoxStatusFilter = new ComboBox
             {
-                Location = new Point(20, 20),
+                Location = new Point(270, 60), // تحت panel1
                 Size = new Size(200, 30),
                 DropDownStyle = ComboBoxStyle.DropDownList
             };
@@ -39,11 +40,12 @@ namespace E_Commerce.Presentation
             comboBoxStatusFilter.SelectedIndexChanged += ComboBoxStatusFilter_SelectedIndexChanged;
             Controls.Add(comboBoxStatusFilter);
 
+            // إعداد FlowLayoutPanel
             flowLayoutPanelOrders = new FlowLayoutPanel
             {
                 Dock = DockStyle.Fill,
                 AutoScroll = true,
-                Padding = new Padding(0, 50, 0, 0)
+                Padding = new Padding(0, 100, 0, 0) // مكان للـ ComboBox
             };
             Controls.Add(flowLayoutPanelOrders);
 
@@ -120,14 +122,14 @@ namespace E_Commerce.Presentation
             };
             orderPanel.Controls.Add(lblNumber);
 
-            Label lblOrderName = new Label
-            {
-                Text = $"{order.OrderID}",
-                Location = new Point(91, 11),
-                Size = new Size(200, 20),
-                Font = new Font("Segoe UI", 10)
-            };
-            orderPanel.Controls.Add(lblOrderName);
+            //Label lblOrderName = new Label
+            //{
+            //    Text = $"{order.OrderID}",
+            //    Location = new Point(91, 11),
+            //    Size = new Size(200, 20),
+            //    Font = new Font("Segoe UI", 10)
+            //};
+            //orderPanel.Controls.Add(lblOrderName);
 
             Label lblStatus = new Label
             {
@@ -137,7 +139,8 @@ namespace E_Commerce.Presentation
                 Font = new Font("Segoe UI", 10),
                 ForeColor = order.Status == OrderStatus.Approved ? Color.Green :
                             order.Status == OrderStatus.Pending ? Color.Orange :
-                            order.Status == OrderStatus.Denied ? Color.Red : Color.Blue
+                            order.Status == OrderStatus.Denied ? Color.Red :
+                            order.Status == OrderStatus.Shipped ? Color.Blue : Color.Black
             };
             orderPanel.Controls.Add(lblStatus);
 
@@ -158,7 +161,6 @@ namespace E_Commerce.Presentation
 
         private async void ShowOrderDetails(OrderDTO order)
         {
-            
             var orderDetails = await _orderDetailServices.GetOrderDetailsByOrderIdAsync(order.OrderID);
             order.OrderDetails = orderDetails?.ToList();
 
@@ -304,9 +306,10 @@ namespace E_Commerce.Presentation
                 innerPanel.Controls.Add(lblNoDetails);
             }
 
+            // زراري Approve وDeny لو الطلب Pending
             if (order.Status.ToString().Equals("Pending", StringComparison.OrdinalIgnoreCase))
             {
-                int yPosition = dataGridViewDetails != null ? dataGridViewDetails.Bottom + 20 : 190; 
+                int yPosition = dataGridViewDetails != null ? dataGridViewDetails.Bottom + 20 : 190;
                 Button btnApproved = new Button
                 {
                     Text = "Approve",
@@ -371,7 +374,49 @@ namespace E_Commerce.Presentation
                 };
                 innerPanel.Controls.Add(btnDeny);
 
-               
+                if (yPosition + 50 > orderViewForm.Height)
+                {
+                    orderViewForm.Height = yPosition + 70;
+                    innerPanel.Height = orderViewForm.Height - 10;
+                }
+            }
+
+            // زر Ship لو الطلب Approved
+            if (order.Status.ToString().Equals("Approved", StringComparison.OrdinalIgnoreCase))
+            {
+                int yPosition = dataGridViewDetails != null ? dataGridViewDetails.Bottom + 20 : 190;
+                Button btnShip = new Button
+                {
+                    Text = "Ship",
+                    Location = new Point(350, yPosition),
+                    Size = new Size(80, 30),
+                    BackColor = Color.Blue,
+                    ForeColor = Color.White,
+                    FlatStyle = FlatStyle.Flat
+                };
+                btnShip.Click += async (s, e) =>
+                {
+                    try
+                    {
+                        var result = await _orderServices.UpdateOrderStatusAsync(order.OrderID, OrderStatus.Shipped);
+                        if (result.Success)
+                        {
+                            orderViewForm.Close();
+                            LoadOrders(comboBoxStatusFilter.SelectedItem.ToString());
+                            MessageBox.Show("Order shipped successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                        else
+                        {
+                            MessageBox.Show(result.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Error shipping order: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                };
+                innerPanel.Controls.Add(btnShip);
+
                 if (yPosition + 50 > orderViewForm.Height)
                 {
                     orderViewForm.Height = yPosition + 70;
@@ -390,6 +435,4 @@ namespace E_Commerce.Presentation
         {
         }
     }
-
-   
 }

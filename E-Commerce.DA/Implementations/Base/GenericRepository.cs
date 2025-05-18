@@ -45,7 +45,7 @@ namespace E_Commerce.DA.Implementations.Base
         public async Task<T> Delete(T entity)
         {
             var ent= _dbSet.Remove(entity).Entity;
-            await _context.SaveChangesAsync();
+           // await _context.SaveChangesAsync();
             return ent;
         }
 
