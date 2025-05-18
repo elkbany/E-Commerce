@@ -189,13 +189,13 @@ namespace E_Commerce.BL.Implementations
         }
         public async Task<(bool Success, string Message, OrderDTO Data)> UpdateOrderStatusAsync(int orderId, OrderStatus newStatus)
         {
-            var order = await _orderRepository.FirstOrDefaultAsync(o => o.OrderID == orderId);
+            var order = await _unitOfWork.Orders.FirstOrDefaultAsync(o => o.OrderID == orderId);
             if (order == null)
                 return (false, "Order not found.", null);
 
             order.Status = newStatus;
-            await _orderRepository.Update(order);
-            await _orderRepository.CommitAsync();
+            await _unitOfWork.Orders.Update(order);
+            await _unitOfWork.Orders.CommitAsync();
 
             var orderDTO = order.Adapt<OrderDTO>();
             return (true, "Order status updated successfully.", orderDTO);
