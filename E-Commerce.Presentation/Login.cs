@@ -83,18 +83,6 @@ namespace E_Commerce.Presentation
             this.Hide();
         }
 
-        private void showPassword_CheckedChanged(object sender, EventArgs e)
-        {
-            if (showPassword.Checked)
-            {
-                txtPassword.PasswordChar = '\0';
-            }
-            else
-            {
-                txtPassword.PasswordChar = '●';
-            }
-        }
-
         private void Login_FormClosed(object sender, FormClosedEventArgs e)
         {
             if (_startForm != null && !_startForm.IsDisposed)
@@ -124,6 +112,24 @@ namespace E_Commerce.Presentation
 
         private void txtPassword_TextChanged(object sender, EventArgs e)
         {
+
+        }
+         bool isPasswordShow = false;
+        private void txtPassword_IconRightClick(object sender, EventArgs e)
+        {
+            isPasswordShow = !isPasswordShow;
+            if (isPasswordShow)
+            {
+                txtPassword.PasswordChar = '\0';
+                txtPassword.IconRight = Properties.Resources.Eye;
+            }
+            else
+            {
+                txtPassword.PasswordChar = '●';
+                txtPassword.IconRight = Properties.Resources.Eyehidden;
+            }
+
+
 
         }
     }
