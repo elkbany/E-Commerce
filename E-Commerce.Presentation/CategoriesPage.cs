@@ -22,6 +22,51 @@ namespace E_Commerce.Presentation
                 LoadCategoriesAsync();
                 btnAddCategory.Click += btnAddCategory_Click;
             }
+
+            this.Resize += (s, e) => RefreshPanels();
+        }
+
+        private void RefreshPanels()
+        {
+            foreach (Control control in flowLayoutPanelCategories.Controls)
+            {
+                if (control is Panel categoryPanel)
+                {
+                    // ضبط العرض بناءً على عرض الـ FlowLayoutPanel
+                    int availableWidth = flowLayoutPanelCategories.ClientSize.Width -
+                        (flowLayoutPanelCategories.Padding.Left + flowLayoutPanelCategories.Padding.Right +
+                         categoryPanel.Margin.Left + categoryPanel.Margin.Right);
+
+                    categoryPanel.Width = availableWidth;
+
+                    // تعديل مواقع العناصر بناءً على العرض الجديد
+                    foreach (Control child in categoryPanel.Controls)
+                    {
+                        if (child is Label lblNumber && lblNumber.Name == "lblNumber")
+                        {
+                            lblNumber.Location = new Point(27, 15);
+                        }
+                        else if (child is Label lblCategoryName && lblCategoryName.Name == "lblCategoryName")
+                        {
+                            lblCategoryName.Location = new Point((int)(categoryPanel.Width * 0.057), 15); // نسبة 90/1569
+                            lblCategoryName.Size = new Size((int)(categoryPanel.Width * 0.127), 20); // نسبة 200/1569
+                        }
+                        else if (child is Label lblCategoryDescription && lblCategoryDescription.Name == "lblCategoryDescription")
+                        {
+                            lblCategoryDescription.Location = new Point((int)(categoryPanel.Width * 0.223), 15); // نسبة 350/1569
+                            lblCategoryDescription.Size = new Size((int)(categoryPanel.Width * 0.35), 20); // نسبة 550/1569
+                        }
+                        else if (child is Guna.UI2.WinForms.Guna2Button btnEdit && btnEdit.Text == "Edit")
+                        {
+                            btnEdit.Location = new Point(categoryPanel.Width - 190, 10); // نسبة 1380/1569
+                        }
+                        else if (child is Guna.UI2.WinForms.Guna2Button btnDelete && btnDelete.Text == "Delete")
+                        {
+                            btnDelete.Location = new Point(categoryPanel.Width - 90, 10); // نسبة 1470/1569
+                        }
+                    }
+                }
+            }
         }
 
         private async Task LoadCategoriesAsync()
@@ -88,8 +133,8 @@ namespace E_Commerce.Presentation
                     Console.WriteLine($"[CategoriesPage] Category with Id={category.Id} already exists in panel, updating instead.");
                     foreach (Control child in panel.Controls)
                     {
-                        if (child is Label lbl && lbl.Location.X == 90) lbl.Text = category.Name ?? "";
-                        if (child is Label desc && desc.Location.X == 190) desc.Text = category.Description ?? "";
+                        if (child is Label lbl && lbl.Location.X == (int)(panel.Width * 0.057)) lbl.Text = category.Name ?? "";
+                        if (child is Label desc && desc.Location.X == (int)(panel.Width * 0.223)) desc.Text = category.Description ?? "";
                     }
                     panel.Tag = category;
                     return;
@@ -98,47 +143,54 @@ namespace E_Commerce.Presentation
 
             Panel categoryPanel = new Panel
             {
-                Size = new Size(1569, 50),
+                Height = 50,
                 BackColor = Color.White,
                 BorderStyle = BorderStyle.None,
                 Margin = new Padding(4),
                 Tag = category
             };
 
-            Label lblNumber = new Label { Text = index.ToString(), Location = new Point(27, 15), Size = new Size(30, 20), Font = new Font("Segoe UI", 10) };
+            // ضبط العرض بناءً على عرض الـ FlowLayoutPanel
+            int availableWidth = flowLayoutPanelCategories.ClientSize.Width -
+                (flowLayoutPanelCategories.Padding.Left + flowLayoutPanelCategories.Padding.Right +
+                 categoryPanel.Margin.Left + categoryPanel.Margin.Right);
+
+            categoryPanel.Width = availableWidth;
+
+            Label lblNumber = new Label
+            {
+                Name = "lblNumber",
+                Text = index.ToString(),
+                Location = new Point(27, 15),
+                Size = new Size(30, 20),
+                Font = new Font("Segoe UI", 10)
+            };
             categoryPanel.Controls.Add(lblNumber);
 
-            Label lblCategoryName = new Label { Text = category.Name ?? "", Location = new Point(90, 15), Size = new Size(200, 20), Font = new Font("Segoe UI", 10) };
+            Label lblCategoryName = new Label
+            {
+                Name = "lblCategoryName",
+                Text = category.Name ?? "",
+                Location = new Point((int)(categoryPanel.Width * 0.057), 15), // نسبة 90/1569
+                Size = new Size((int)(categoryPanel.Width * 0.127), 20), // نسبة 200/1569
+                Font = new Font("Segoe UI", 10)
+            };
             categoryPanel.Controls.Add(lblCategoryName);
 
             Label lblCategoryDescription = new Label
             {
+                Name = "lblCategoryDescription",
                 Text = category.Description ?? string.Empty,
-                Location = new Point(190, 15),
-                Size = new Size(300, 20), // زيادة الحجم عشان نتأكد إن الـ Description مش بيتقطع
+                Location = new Point((int)(categoryPanel.Width * 0.223), 15), // نسبة 350/1569
+                Size = new Size((int)(categoryPanel.Width * 0.35), 20), // نسبة 550/1569
                 Font = new Font("Segoe UI", 10)
             };
             categoryPanel.Controls.Add(lblCategoryDescription);
 
-            Guna.UI2.WinForms.Guna2Button btnDelete = new Guna.UI2.WinForms.Guna2Button
-            {
-                Text = "Delete",
-                Location = new Point(600, 10),
-                Size = new Size(80, 30),
-                FillColor = Color.FromArgb(229, 105, 151),
-                ForeColor = Color.White,
-                BorderRadius = 5
-            };
-            btnDelete.Click += async (s, e) =>
-            {
-                await DeleteItem(category);
-            };
-            categoryPanel.Controls.Add(btnDelete);
-
             Guna.UI2.WinForms.Guna2Button btnEdit = new Guna.UI2.WinForms.Guna2Button
             {
                 Text = "Edit",
-                Location = new Point(700, 10),
+                Location = new Point(categoryPanel.Width - 190, 10), // نسبة 1380/1569
                 Size = new Size(80, 30),
                 FillColor = Color.FromArgb(102, 210, 214),
                 ForeColor = Color.White,
@@ -150,6 +202,21 @@ namespace E_Commerce.Presentation
                 await HandleEditClick(category);
             };
             categoryPanel.Controls.Add(btnEdit);
+
+            Guna.UI2.WinForms.Guna2Button btnDelete = new Guna.UI2.WinForms.Guna2Button
+            {
+                Text = "Delete",
+                Location = new Point(categoryPanel.Width - 90, 10), // نسبة 1470/1569
+                Size = new Size(80, 30),
+                FillColor = Color.FromArgb(229, 105, 151),
+                ForeColor = Color.White,
+                BorderRadius = 5
+            };
+            btnDelete.Click += async (s, e) =>
+            {
+                await DeleteItem(category);
+            };
+            categoryPanel.Controls.Add(btnDelete);
 
             flowLayoutPanelCategories.Controls.Add(categoryPanel);
         }
@@ -212,11 +279,9 @@ namespace E_Commerce.Presentation
                 Console.WriteLine($"[CategoriesPage] Handling edit for category: Id={category.Id}, Name={category.Name}, Description={category.Description}");
                 using (var addCategoryForm = new AddCategory(flowLayoutPanelCategories, category)) // استخدام الـ Edit mode constructor
                 {
-                    // الـ AddCategory form هيحمل الـ Name و Description تلقائيًا في الـ Edit mode
                     flowLayoutPanelCategories.Tag = new Action(async () => await LoadCategoriesAsync());
                     if (addCategoryForm.ShowDialog() == DialogResult.OK)
                     {
-                        // جلب القيم الجديدة من الـ form
                         var updatedCategory = new CategoryDTO
                         {
                             Id = category.Id,
@@ -227,7 +292,6 @@ namespace E_Commerce.Presentation
                         await _categoryServices.UpdateCategoryAsync(category.Id, updatedCategory);
                         await LoadCategoriesAsync();
                     }
-
                     else
                     {
                         Console.WriteLine("[CategoriesPage] Edit category dialog cancelled.");
@@ -239,36 +303,6 @@ namespace E_Commerce.Presentation
                 Console.WriteLine($"[CategoriesPage] Error in HandleEditClick: {ex.Message}\nStackTrace: {ex.StackTrace}");
                 MessageBox.Show($"Error editing category: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
         }
-        
-
-
-        //private async Task HandleDeleteClick(CategoryDTO category)
-        //{
-        //    try
-        //    {
-        //        Console.WriteLine($"[CategoriesPage] Handling delete for category: Id={category.Id}, Name={category.Name}");
-        //        if (MessageBox.Show($"Are you sure you want to delete '{category.Name}'?", "Confirm Delete",
-        //            MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-        //        {
-        //            Console.WriteLine($"[CategoriesPage] Delete confirmed for category: Id={category.Id}, Name={category.Name}");
-        //            await _categoryServices.DeleteCategoryAsync(category.Id);
-        //            Console.WriteLine("[CategoriesPage] Delete successful, reloading categories...");
-        //            await LoadCategoriesAsync();
-        //        }
-        //        else
-        //        {
-        //            Console.WriteLine("[CategoriesPage] Delete cancelled by user.");
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Console.WriteLine($"[CategoriesPage] Error in HandleDeleteClick: {ex.Message}\nStackTrace: {ex.StackTrace}");
-        //        MessageBox.Show($"Error deleting category: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        //    }
-        //}
-
-        
     }
 }

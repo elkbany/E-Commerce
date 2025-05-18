@@ -1,16 +1,11 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Extensions.DependencyInjection;
 using E_Commerce.BL.Contracts.Services;
 using E_Commerce.BL.Features.User.DTOs;
 using E_Commerce.Domain.Enums;
-using E_Commerce.BL.Implementations;
 
 namespace E_Commerce.Presentation
 {
@@ -27,111 +22,166 @@ namespace E_Commerce.Presentation
                 LoadUsersAsync();
                 btnAddUser.Click += btnAddUser_Click;
             }
+            this.Resize += (s, e) => RefreshPanels();
         }
 
-        public void AddUserToPanel(string firstName, string lastName, string username, string email, string password, string status, string isActive,int index)
+        private void RefreshPanels()
+        {
+            foreach (Control control in flowLayoutPanelUsers.Controls)
+            {
+                if (control is Panel userPanel)
+                {
+                    int availableWidth = flowLayoutPanelUsers.ClientSize.Width -
+                        (flowLayoutPanelUsers.Padding.Left + flowLayoutPanelUsers.Padding.Right +
+                         userPanel.Margin.Left + userPanel.Margin.Right);
+                    userPanel.Width = availableWidth;
+
+                    foreach (Control child in userPanel.Controls)
+                    {
+                        if (child is Label lblNumber && lblNumber.Text == userPanel.Controls[0].Text)
+                            lblNumber.Location = new Point(17, 19);
+                        else if (child is Label lblFirstName && lblFirstName.Text == userPanel.Controls[1].Text)
+                        {
+                            lblFirstName.Location = new Point((int)(userPanel.Width * 0.045), 11);
+                            lblFirstName.Size = new Size((int)(userPanel.Width * 0.063), 20);
+                        }
+                        else if (child is Label lblLastName && lblLastName.Text == userPanel.Controls[2].Text)
+                        {
+                            lblLastName.Location = new Point((int)(userPanel.Width * 0.183), 11);
+                            lblLastName.Size = new Size((int)(userPanel.Width * 0.063), 20);
+                        }
+                        else if (child is Label lblUsername && lblUsername.Text == userPanel.Controls[3].Text)
+                        {
+                            lblUsername.Location = new Point((int)(userPanel.Width * 0.299), 11);
+                            lblUsername.Size = new Size((int)(userPanel.Width * 0.063), 20);
+                        }
+                        else if (child is Label lblEmail && lblEmail.Text == userPanel.Controls[4].Text)
+                        {
+                            lblEmail.Location = new Point((int)(userPanel.Width * 0.435), 11);
+                            lblEmail.Size = new Size((int)(userPanel.Width * 0.126), 20);
+                        }
+                        else if (child is Label lblPassword && lblPassword.Text == userPanel.Controls[5].Text)
+                        {
+                            lblPassword.Location = new Point((int)(userPanel.Width * 0.565), 11);
+                            lblPassword.Size = new Size((int)(userPanel.Width * 0.095), 20);
+                        }
+                        else if (child is Label lblStatus && lblStatus.Text == userPanel.Controls[6].Text)
+                        {
+                            lblStatus.Location = new Point((int)(userPanel.Width * 0.699), 11);
+                            lblStatus.Size = new Size((int)(userPanel.Width * 0.063), 20);
+                        }
+                        else if (child is Label lblIsActive && lblIsActive.Text == userPanel.Controls[7].Text)
+                        {
+                            lblIsActive.Location = new Point((int)(userPanel.Width * 0.819), 11);
+                            lblIsActive.Size = new Size((int)(userPanel.Width * 0.032), 20);
+                        }
+                        else if (child is Guna.UI2.WinForms.Guna2Button btnEdit && btnEdit.Text == "Edit")
+                            btnEdit.Location = new Point(userPanel.Width - 170, 10);
+                        else if (child is Guna.UI2.WinForms.Guna2Button btnDelete && btnDelete.Text == "Delete")
+                            btnDelete.Location = new Point(userPanel.Width - 90, 10);
+                    }
+                }
+            }
+        }
+
+        public void AddUserToPanel(string firstName, string lastName, string username, string email, string password, string status, string isActive, int index)
         {
             Panel userPanel = new Panel
             {
-                Size = new Size(1586, 50),
+                Height = 50,
                 BackColor = Color.White,
                 BorderStyle = BorderStyle.None,
                 Margin = new Padding(4)
             };
 
-            Label lblNumber = new Label
+            int availableWidth = flowLayoutPanelUsers.ClientSize.Width -
+                (flowLayoutPanelUsers.Padding.Left + flowLayoutPanelUsers.Padding.Right +
+                 userPanel.Margin.Left + userPanel.Margin.Right);
+            userPanel.Width = availableWidth;
+
+            userPanel.Controls.Add(new Label
             {
                 Text = index.ToString(),
                 Location = new Point(17, 19),
                 Size = new Size(30, 20),
                 Font = new Font("Arial", 10)
-            };
-            userPanel.Controls.Add(lblNumber);
+            });
 
-            Label lblFirstName = new Label
+            userPanel.Controls.Add(new Label
             {
                 Text = firstName,
-                Location = new Point(72, 11),
-                Size = new Size(100, 20),
+                Location = new Point((int)(userPanel.Width * 0.045), 11),
+                Size = new Size((int)(userPanel.Width * 0.063), 20),
                 Font = new Font("Arial", 10)
-            };
-            userPanel.Controls.Add(lblFirstName);
+            });
 
-            Label lblLastName = new Label
+            userPanel.Controls.Add(new Label
             {
                 Text = lastName,
-                Location = new Point(290, 11),
-                Size = new Size(100, 20),
+                Location = new Point((int)(userPanel.Width * 0.180), 11),
+                Size = new Size((int)(userPanel.Width * 0.063), 20),
                 Font = new Font("Arial", 10)
-            };
-            userPanel.Controls.Add(lblLastName);
+            });
 
-            Label lblUsername = new Label
+            userPanel.Controls.Add(new Label
             {
                 Text = username,
-                Location = new Point(475, 11),
-                Size = new Size(100, 20),
+                Location = new Point((int)(userPanel.Width * 0.299), 11),
+                Size = new Size((int)(userPanel.Width * 0.063), 20),
                 Font = new Font("Arial", 10)
-            };
-            userPanel.Controls.Add(lblUsername);
+            });
 
-            Label lblEmail = new Label
+            userPanel.Controls.Add(new Label
             {
                 Text = email,
-                Location = new Point(690, 11),
-                Size = new Size(200, 20),
+                Location = new Point((int)(userPanel.Width * 0.435), 11),
+                Size = new Size((int)(userPanel.Width * 0.126), 20),
                 Font = new Font("Arial", 10)
-            };
-            userPanel.Controls.Add(lblEmail);
+            });
 
-            Label lblPassword = new Label
+            userPanel.Controls.Add(new Label
             {
                 Text = password,
-                Location = new Point(895, 11),
-                Size = new Size(150, 20),
+                Location = new Point((int)(userPanel.Width * 0.565), 11),
+                Size = new Size((int)(userPanel.Width * 0.095), 20),
                 Font = new Font("Arial", 10)
-            };
-            userPanel.Controls.Add(lblPassword);
+            });
 
-            Label lblStatus = new Label
+            userPanel.Controls.Add(new Label
             {
                 Text = status,
-                Location = new Point(1110, 11),
-                Size = new Size(100, 20),
+                Location = new Point((int)(userPanel.Width * 0.699), 11),
+                Size = new Size((int)(userPanel.Width * 0.063), 20),
                 Font = new Font("Arial", 10)
-            };
-            userPanel.Controls.Add(lblStatus);
+            });
 
-            Label lblIsActive = new Label
+            userPanel.Controls.Add(new Label
             {
                 Text = isActive,
-                Location = new Point(1300, 11),
-                Size = new Size(50, 20),
+                Location = new Point((int)(userPanel.Width * 0.819), 11),
+                Size = new Size((int)(userPanel.Width * 0.032), 20),
                 Font = new Font("Arial", 10)
-            };
-            userPanel.Controls.Add(lblIsActive);
+            });
 
-            // زر Edit
-            Button btnEdit = new Button
+            Guna.UI2.WinForms.Guna2Button btnEdit = new Guna.UI2.WinForms.Guna2Button
             {
-                Text = "",
-                Size = new Size(25, 25),
-                Location = new Point(1482, 7),
-                FlatStyle = FlatStyle.Flat,
-                BackColor = Color.Transparent,
-                FlatAppearance = { BorderColor = Color.Cyan, BorderSize = 1 }
+                Text = "Edit",
+                Location = new Point(userPanel.Width - 170, 10),
+                Size = new Size(75, 30),
+                FillColor = Color.FromArgb(102, 210, 214),
+                ForeColor = Color.White,
+                BorderRadius = 5
             };
-           // btnEdit.BackgroundImage = Image.FromFile(@"C:\Users\user\Downloads\edit_24dp_05E0E9_FILL0_wght400_GRAD0_opsz24.png");
-            btnEdit.BackgroundImageLayout = ImageLayout.Zoom;
-            btnEdit.Click += (sender, e) => {
+            btnEdit.Click += (sender, e) =>
+            {
                 AddUser editForm = new AddUser(flowLayoutPanelUsers);
-                editForm.txtFirstName.Text = lblFirstName.Text;
-                editForm.txtLastName.Text = lblLastName.Text;
-                editForm.txtUserName.Text = lblUsername.Text;
-                editForm.txtUserEmail.Text = lblEmail.Text;
-                editForm.txtUserPassword.Text = lblPassword.Text;
-                editForm.txtUserStatus.Text = lblStatus.Text;
-                if (lblIsActive.Text == "Yes")
+                editForm.txtFirstName.Text = firstName;
+                editForm.txtLastName.Text = lastName;
+                editForm.txtUserName.Text = username;
+                editForm.txtUserEmail.Text = email;
+                editForm.txtUserPassword.Text = password;
+                editForm.txtUserStatus.Text = status;
+                if (isActive == "Yes")
                     editForm.btnActive1.Checked = true;
                 else
                     editForm.btnActive2.Checked = true;
@@ -139,32 +189,27 @@ namespace E_Commerce.Presentation
                 DialogResult result = editForm.ShowDialog();
                 if (result == DialogResult.OK)
                 {
-                    lblFirstName.Text = editForm.FirstName;
-                    lblLastName.Text = editForm.LastName;
-                    lblUsername.Text = editForm.UserName;
-                    lblEmail.Text = editForm.UserEmail;
-                    lblPassword.Text = editForm.UserPassword;
-                    lblStatus.Text = editForm.UserStatus;
-                    lblIsActive.Text = editForm.IsActive;
+                    userPanel.Controls[1].Text = editForm.FirstName;
+                    userPanel.Controls[2].Text = editForm.LastName;
+                    userPanel.Controls[3].Text = editForm.UserName;
+                    userPanel.Controls[4].Text = editForm.UserEmail;
+                    userPanel.Controls[5].Text = editForm.UserPassword;
+                    userPanel.Controls[6].Text = editForm.UserStatus;
+                    userPanel.Controls[7].Text = editForm.IsActive;
                     MessageBox.Show("User updated successfully!");
                 }
                 else if (result == DialogResult.Cancel)
-                {
                     MessageBox.Show("Edit canceled.");
-                }
                 else
-                {
                     MessageBox.Show("Unexpected dialog result: " + result.ToString());
-                }
             };
             userPanel.Controls.Add(btnEdit);
 
-            // زر Delete
             Guna.UI2.WinForms.Guna2Button btnDelete = new Guna.UI2.WinForms.Guna2Button
             {
                 Text = "Delete",
-                Location = new Point(1537, 10),
-                Size = new Size(80, 30),
+                Location = new Point(userPanel.Width - 90, 10),
+                Size = new Size(75, 30),
                 FillColor = Color.FromArgb(229, 105, 151),
                 ForeColor = Color.White,
                 BorderRadius = 5
@@ -180,28 +225,24 @@ namespace E_Commerce.Presentation
             DialogResult result = MessageBox.Show($"Are you sure you want to delete the user '{username}'?", "Confirm Delete", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (result == DialogResult.Yes)
             {
-                // هنا هيحصل الحذف من قاعدة البيانات في المستقبل
-                // مثلاً: DeleteFromDatabase(username);
                 try
                 {
-                    var user = await userServices.Delete(username);
-                    panel.Parent.Controls.Remove(panel); // حذف الصف من الواجهة
+                    await userServices.Delete(username);
+                    panel.Parent.Controls.Remove(panel);
                     MessageBox.Show("User deleted successfully!");
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show($"Error deleting user: {ex.Message}");
-                    return;
                 }
-                    
             }
         }
+
         private async Task LoadUsersAsync()
         {
             try
             {
                 var users = await userServices.getAllClient();
-
                 if (flowLayoutPanelUsers.InvokeRequired)
                 {
                     flowLayoutPanelUsers.Invoke(new Action(() =>
@@ -209,9 +250,7 @@ namespace E_Commerce.Presentation
                         flowLayoutPanelUsers.Controls.Clear();
                         int index = 1;
                         foreach (var u in users)
-                        {
-                            AddUserToPanel(u.FirstName,u.LastName,u.Username,u.Email,u.Password,u.Status,u.IsActive,index++);
-                        }
+                            AddUserToPanel(u.FirstName, u.LastName, u.Username, u.Email, u.Password, u.Status, u.IsActive, index++);
                     }));
                 }
                 else
@@ -219,9 +258,7 @@ namespace E_Commerce.Presentation
                     flowLayoutPanelUsers.Controls.Clear();
                     int index = 1;
                     foreach (var u in users)
-                    {
-                        AddUserToPanel(u.FirstName, u.LastName, u.Username, u.Email, u.Password, u.Status, u.IsActive,index++);
-                    }
+                        AddUserToPanel(u.FirstName, u.LastName, u.Username, u.Email, u.Password, u.Status, u.IsActive, index++);
                 }
             }
             catch (Exception ex)
@@ -235,20 +272,16 @@ namespace E_Commerce.Presentation
             AddUser addForm = new AddUser(flowLayoutPanelUsers);
             if (addForm.ShowDialog() == DialogResult.OK)
             {
-
-                //string isActive = addForm.IsActive;
                 try
                 {
-                    // Extract form data
                     string firstName = addForm.FirstName;
                     string lastName = addForm.LastName;
                     string username = addForm.UserName;
                     string email = addForm.UserEmail;
                     string password = addForm.UserPassword;
-                    string status = addForm.UserStatus=="User"?"Client":"Admin";
+                    string status = addForm.UserStatus == "User" ? "Client" : "Admin";
                     string isActive = addForm.IsActive;
 
-                    // Call AddUserAsync and unpack the tuple
                     var (user, ActiveStatus) = await userServices.AddUserAsync(new UserDTO
                     {
                         FirstName = firstName,
@@ -257,21 +290,15 @@ namespace E_Commerce.Presentation
                         Email = email,
                         Password = password,
                         status = (UserStatus)Enum.Parse(typeof(UserStatus), status)
-                        // Note: IsActive is set in the service, not passed here
                     });
                     var count = userServices.getAllClient().Result.Count;
-                    // Add the user to the panel using the returned user data
-                    AddUserToPanel(user.FirstName, user.LastName, user.Username, user.Email, user.Password, user.status.ToString(), ActiveStatus.ToString(),count++);
-
+                    AddUserToPanel(user.FirstName, user.LastName, user.Username, user.Email, user.Password, user.status.ToString(), ActiveStatus.ToString(), count++);
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show($"Error adding user: {ex.Message}");
-                    return;
                 }
-
             }
         }
     }
-
 }

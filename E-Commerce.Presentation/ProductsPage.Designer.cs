@@ -76,7 +76,7 @@
             label9.AutoSize = true;
             label9.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
             label9.ForeColor = Color.Gray;
-            label9.Location = new Point(1444, 95);
+            label9.Location = new Point(1467, 95);
             label9.Name = "label9";
             label9.Size = new Size(91, 21);
             label9.TabIndex = 15;
@@ -149,6 +149,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            AutoScroll = true;
             Controls.Add(label3);
             Controls.Add(label9);
             Controls.Add(label8);
