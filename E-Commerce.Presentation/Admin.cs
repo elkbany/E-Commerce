@@ -24,7 +24,7 @@ namespace E_Commerce.Presentation
 
             productsPage = new ProductsPage(ServiceProviderContainer.ServiceProvider.GetRequiredService<IProductServices>());
             categoriesPage = ServiceProviderContainer.ServiceProvider.GetRequiredService<CategoriesPage>();
-            usersPage = new UsersPage();
+            usersPage = ServiceProviderContainer.ServiceProvider.GetRequiredService<UsersPage>();
             profilePage = new ProfilePage();
             ordersPage = new OrdersPage();
             //ourTeam = new OurTeam();

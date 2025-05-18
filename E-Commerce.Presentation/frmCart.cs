@@ -25,7 +25,9 @@ namespace E_Commerce.Presentation
         {
             try
             {
+                //lblLoading.Visible = true;
                 cartItems = (await cartServices.GetCartItemsByUserIdAsync(userId)).ToList();
+                //flowLayoutPanelCart.SuspendLayout();
                 flowLayoutPanelCart.Controls.Clear();
 
                 if (cartItems.Any())
@@ -50,34 +52,32 @@ namespace E_Commerce.Presentation
             {
                 MessageBox.Show($"Error loading cart: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-        }
-
-        private void UpdateCartTotal()
-        {
-            decimal total = cartItems.Sum(item => item.TotalPrice); // استخدام الـ Cache
-            lblTotal.Text = $"${total:F2}";
+            finally
+            {
+                //lblLoading.Visible = false;
+                //flowLayoutPanelCart.ResumeLayout();
+            }
         }
 
         private async void CartItemCard_CartUpdated(object sender, EventArgs e)
         {
             try
             {
-                // تحديث الـ Cache من الداتابيز فقط للتأكد من الوضع الحالي
-                var updatedCart = await cartServices.GetCartItemsByUserIdAsync(userId);
-                cartItems = updatedCart.ToList();
+                //lblLoading.Visible = true;
+                // جلب البيانات الجديدة من الداتابيز وتحديث الـ Cache
+                var updatedCart = (await cartServices.GetCartItemsByUserIdAsync(userId)).ToList();
 
-                // إعادة تحميل الـ Controls بناءً على الـ Cache
-                flowLayoutPanelCart.Controls.Clear();
+                //flowLayoutPanelCart.SuspendLayout();
+
+                // تحديث ديناميكي للـ UI
+                UpdateCartItemsUI(updatedCart);
+
+                // تحديث الـ Cache
+                cartItems = updatedCart;
+
                 if (cartItems.Any())
                 {
                     lblNoItems.Visible = false;
-                    foreach (var item in cartItems)
-                    {
-                        var cartItemCard = new CartItemCard(cartServices);
-                        cartItemCard.SetCartItemData(item);
-                        cartItemCard.CartUpdated += CartItemCard_CartUpdated;
-                        flowLayoutPanelCart.Controls.Add(cartItemCard);
-                    }
                     UpdateCartTotal();
                 }
                 else
@@ -90,6 +90,56 @@ namespace E_Commerce.Presentation
             {
                 MessageBox.Show($"Error updating cart: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+            finally
+            {
+                //lblLoading.Visible = false;
+                //flowLayoutPanelCart.ResumeLayout();
+            }
+        }
+
+        private void UpdateCartItemsUI(List<CartItemDTO> updatedCart)
+        {
+            // إزالة الـ Event Handlers القديمة
+            foreach (CartItemCard card in flowLayoutPanelCart.Controls.OfType<CartItemCard>())
+            {
+                card.CartUpdated -= CartItemCard_CartUpdated;
+            }
+
+            // تحديث العناصر الموجودة، إضافة عناصر جديدة، وإزالة العناصر المحذوفة
+            var existingCards = flowLayoutPanelCart.Controls.OfType<CartItemCard>().ToList();
+            foreach (var card in existingCards)
+            {
+                var updatedItem = updatedCart.FirstOrDefault(x => x.Id == card.CartItemId);
+                if (updatedItem != null)
+                {
+                    // تحديث العنصر الموجود
+                    card.SetCartItemData(updatedItem);
+                    card.CartUpdated += CartItemCard_CartUpdated;
+                }
+                else
+                {
+                    // إزالة العنصر لو مش موجود في الـ Cache الجديد
+                    flowLayoutPanelCart.Controls.Remove(card);
+                }
+            }
+
+            // إضافة العناصر الجديدة
+            foreach (var item in updatedCart)
+            {
+                if (!existingCards.Any(c => c.CartItemId == item.Id))
+                {
+                    var cartItemCard = new CartItemCard(cartServices);
+                    cartItemCard.SetCartItemData(item);
+                    cartItemCard.CartUpdated += CartItemCard_CartUpdated;
+                    flowLayoutPanelCart.Controls.Add(cartItemCard);
+                }
+            }
+        }
+
+        private void UpdateCartTotal()
+        {
+            decimal total = cartItems.Sum(item => item.TotalPrice);
+            lblTotal.Text = $"${total:F2}";
         }
 
         private async void btnCheckout_Click(object sender, EventArgs e)
@@ -99,7 +149,6 @@ namespace E_Commerce.Presentation
                 btnCheckout.Enabled = false;
                 btnCheckout.Text = "Processing...";
 
-                var cartItems = await cartServices.GetCartItemsByUserIdAsync(userId);
                 if (!cartItems.Any())
                 {
                     MessageBox.Show("Your cart is empty.", "Info", MessageBoxButtons.OK, MessageBoxIcon.Information);

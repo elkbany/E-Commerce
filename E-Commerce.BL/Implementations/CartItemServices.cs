@@ -5,6 +5,7 @@ using E_Commerce.BL.Features.CartItem.Validators;
 using E_Commerce.BL.Features.Order.DTOs;
 using E_Commerce.Domain.Models;
 using Mapster;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,13 +20,15 @@ namespace E_Commerce.BL.Implementations
         private readonly IProductServices productServices;
         //private readonly IProductRepository _productRepo;
         private readonly IOrderServices _orderService;
+        private readonly ILogger<CartItemServices> _logger;
+        public event EventHandler<int> CartUpdated; // Event بيتنادى لما الـ Cart يتغير (UserId هو الـ Parameter)
 
-        public CartItemServices(ICartItemRepository cartRepo,IProductServices productServices, IOrderServices orderService)
+        public CartItemServices(ICartItemRepository cartRepo, IProductServices productServices, IOrderServices orderService, ILogger<CartItemServices> logger)
         {
             _cartRepo = cartRepo;
             this.productServices = productServices;
-           // _productRepo = productRepo;
             _orderService = orderService;
+            _logger = logger;
         }
 
         public async Task<CartItemDTO> AddToCartAsync(AddCartItemDTO cartItemDto)
@@ -57,6 +60,7 @@ namespace E_Commerce.BL.Implementations
             {
 
                 var result = addedItem.Adapt<CartItemDTO>();
+                CartUpdated?.Invoke(this, cartItemDto.UserId); // استدعاء الـ Event بعد الإضافة
                 return result;
             }
             else
@@ -67,6 +71,7 @@ namespace E_Commerce.BL.Implementations
 
         public async Task<IEnumerable<CartItemDTO>> GetCartItemsByUserIdAsync(int userId)
         {
+            _logger.LogInformation($"Fetching cart items for user {userId}");
             var cartItems = await _cartRepo.GetAllAsync(x => x.UserID == userId, x => x.Product);
             return cartItems.Adapt<List<CartItemDTO>>();
         }

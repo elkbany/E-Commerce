@@ -57,12 +57,13 @@
             // 
             pictureBox1.Anchor = AnchorStyles.None;
             pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
-            pictureBox1.Location = new Point(58, 156);
+            pictureBox1.Location = new Point(64, 128);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(254, 252);
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
+            pictureBox1.Click += pictureBox1_Click;
             // 
             // label1
             // 
@@ -178,10 +179,11 @@
             panel1.Controls.Add(label3);
             panel1.Controls.Add(label2);
             panel1.Controls.Add(label1);
-            panel1.Location = new Point(350, 58);
+            panel1.Location = new Point(324, 25);
             panel1.Name = "panel1";
-            panel1.Size = new Size(735, 474);
+            panel1.Size = new Size(585, 474);
             panel1.TabIndex = 1;
+            panel1.Paint += panel1_Paint_1;
             // 
             // button3
             // 
@@ -232,16 +234,15 @@
             // 
             // frmProfile
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
-            AutoScaleMode = AutoScaleMode.Font;
-            AutoSize = true;
+            AutoScaleMode = AutoScaleMode.None;
             BackColor = Color.White;
-            ClientSize = new Size(1130, 618);
+            ClientSize = new Size(975, 520);
             Controls.Add(panel1);
             Controls.Add(pictureBox1);
             FormBorderStyle = FormBorderStyle.None;
             Name = "frmProfile";
             Text = "frmProfile";
+            Load += frmProfile_Load;
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             panel2.ResumeLayout(false);
             panel2.PerformLayout();

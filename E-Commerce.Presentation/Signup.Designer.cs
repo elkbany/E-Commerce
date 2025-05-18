@@ -239,6 +239,7 @@
             // 
             // signup_btn
             // 
+            signup_btn.Animated = true;
             signup_btn.AutoRoundedCorners = true;
             signup_btn.BorderRadius = 21;
             signup_btn.CustomizableEdges = customizableEdges13;
