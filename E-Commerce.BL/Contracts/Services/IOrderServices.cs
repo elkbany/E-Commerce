@@ -19,6 +19,7 @@ namespace E_Commerce.BL.Contracts.Services
         Task<(bool Success, string Message, OrderDTO Data)> DenyOrderAsync(int orderId);
         Task CreateOrderFromCartItemsAsync(int userId, List<CartItem> cartItems);
         Task<IEnumerable<OrderDTO>> GetOrdersByUserId(int userId);
-    
+        Task<(bool Success, string Message, OrderDTO Data)> UpdateOrderStatusAsync(int orderId, OrderStatus newStatus);
+
     }
 }
