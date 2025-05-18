@@ -60,7 +60,7 @@ namespace E_Commerce.BL.Implementations
             return products.Adapt<List<ProductDTO>>();
         }
 
-        public async Task<ProductDTO> UpdateProductAsync(int id, ProductDTO addProductDTO)
+        public async Task<ProductDTO> UpdateProductAsync(int id, ProductDTO productDTO)
         {
             var existing = await productRepository.GetByIdAsync(id);
             if (existing == null)

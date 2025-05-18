@@ -83,18 +83,6 @@ namespace E_Commerce.Presentation
             this.Hide();
         }
 
-        private void showPassword_CheckedChanged(object sender, EventArgs e)
-        {
-            if (showPassword.Checked)
-            {
-                txtPassword.PasswordChar = '\0';
-            }
-            else
-            {
-                txtPassword.PasswordChar = '●';
-            }
-        }
-
         private void Login_FormClosed(object sender, FormClosedEventArgs e)
         {
             if (_startForm != null && !_startForm.IsDisposed)
