@@ -40,7 +40,7 @@ namespace E_Commerce.Presentation
             _categoryToEdit = categoryToEdit;
             label1.Text = "Edit Category";
             txtCategoryName.Text = categoryToEdit.Name;
-            txtCategoryDesc.Text = categoryToEdit.Description ?? ""; // التأكد إن الـ Description بيتحمل
+           // txtCategoryDesc.Text = categoryToEdit.Description ?? ""; // التأكد إن الـ Description بيتحمل
         }
 
         private async void btnSave_Click_1(object sender, EventArgs e)
@@ -50,8 +50,8 @@ namespace E_Commerce.Presentation
                 Console.WriteLine("[AddCategory] Save button clicked.");
                 var categoryDTO = new CategoryDTO
                 {
-                    Name = txtCategoryName.Text,
-                    Description = txtCategoryDesc.Text
+                    Name = txtCategoryName.Text
+                   // Description = txtCategoryDesc.Text
                 };
 
                 var validationResult = await _validator.ValidateAsync(categoryDTO);

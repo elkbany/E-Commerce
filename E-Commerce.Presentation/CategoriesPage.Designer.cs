@@ -67,7 +67,7 @@
             btnAddCategory.Size = new Size(181, 44);
             btnAddCategory.TabIndex = 12;
             btnAddCategory.Text = "Add New Category";
-            btnAddCategory.Click += btnAddCategory_Click;
+            //btnAddCategory.Click += btnAddCategory_Click;
             // 
             // label3
             // 

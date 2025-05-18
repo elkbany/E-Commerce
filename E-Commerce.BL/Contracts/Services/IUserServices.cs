@@ -11,13 +11,13 @@ namespace E_Commerce.BL.Contracts.Services
 {
     public interface IUserServices
     {
-        Task<UserDTO> AddUserAsync(UserDTO user);
+        public Task<(UserDTO, bool IsActive)> AddUserAsync(UserDTO user);
         Task<UserDTO> getUserById(int ID);
         //Task<List<UserDTO>> getAllUser();
         Task<List<UserIformationDTO>> getAllClient();
         Task<List<UserIformationDTO>> getAllAdmin();
         Task<UpdateUserAccountDTO> Update(int Id, UpdateUserAccountDTO entity);
-        Task<UserDTO> Delete(int Id);
+        Task<UserDTO> Delete(string userName);
         Task activateUser(int Id);
         Task deactivateUser(int Id);
 

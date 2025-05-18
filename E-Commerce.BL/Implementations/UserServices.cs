@@ -9,6 +9,7 @@ using E_Commerce.BL.Features.User.DTOs;
 using E_Commerce.Domain.Enums;
 using E_Commerce.Domain.Models;
 using Mapster;
+using Microsoft.AspNetCore.Identity;
 
 namespace E_Commerce.BL.Implementations
 {
@@ -19,20 +20,25 @@ namespace E_Commerce.BL.Implementations
         {
             _userRepository = userRepository;
         }
-        public async Task<UserDTO> AddUserAsync(UserDTO user)
+        public async Task<(UserDTO,bool IsActive)> AddUserAsync(UserDTO user)
         {
+            var hasher = new PasswordHasher<User>();
             var newUser = new User
             {
                 Username = user.Username,
-                PasswordHash = user.Password,
+                // PasswordHash = user.Password,
                 Email = user.Email,
                 FirstName = user.FirstName,
                 LastName = user.LastName,
-                Status = UserStatus.Client
+                Status = user.status
             };
-            var AddUser = _userRepository.AddAsync(newUser);
+            newUser.IsActive = true;
+            newUser.PasswordHash = hasher.HashPassword(newUser, user.Password);
+
+            await _userRepository.AddAsync(newUser);
             await _userRepository.CommitAsync();
-            return newUser?.Adapt<UserDTO>();
+            return (newUser?.Adapt<UserDTO>(), newUser.IsActive);
+            //return newUser?.Adapt<UserDTO>();
         }
         public async Task<AddUserDTO> AddUserByAdminAsync(AddUserDTO user)
         {
@@ -90,12 +96,12 @@ namespace E_Commerce.BL.Implementations
 
 
         }
-        public async Task<UserDTO> Delete(int Id)
+        public async Task<UserDTO> Delete(string userName)
         {
-            var TheUser = await _userRepository.GetByIdAsync(Id);
+            var TheUser = await _userRepository.FirstOrDefaultAsync(u=>u.Username==userName);
             if (TheUser == null)
             {
-                throw new Exception($"User with ID {Id} not found");
+                throw new Exception($"User with username {userName} not found");
             }
 
             var user = _userRepository.Delete(TheUser);

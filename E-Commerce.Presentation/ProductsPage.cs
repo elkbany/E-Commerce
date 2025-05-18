@@ -9,20 +9,21 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Extensions.DependencyInjection;
 using E_Commerce.BL.Contracts.Services;
+using E_Commerce.BL.Features.Product.DTOs;
+using FluentValidation;
 
 namespace E_Commerce.Presentation
 {
     public partial class ProductsPage : UserControl
     {
-        private readonly IProductServices _productServices;
-        public ProductsPage(IProductServices productServices)
+        private readonly IProductServices _productServices; public ProductsPage(IProductServices productServices)
         {
-            _productServices = productServices;
+            _productServices = productServices; 
             InitializeComponent();
-            LoadProducts(); // Load products when page initializes
+            LoadProducts(); 
         }
 
-        public async void LoadProducts()
+    public async void LoadProducts()
         {
             flowLayoutPanelProducts.Controls.Clear();
             var products = await _productServices.GetAllProductsAsync();
@@ -32,8 +33,6 @@ namespace E_Commerce.Presentation
                 AddProductToPanel(product.Name, product.Price, product.UnitsInStock, product.Category);
             }
         }
-
-    // ... keep your existing AddProductToPanel implementation ...
 
         public void AddProductToPanel(string name, decimal price, int unitsInStock, string category)
         {
@@ -78,23 +77,33 @@ namespace E_Commerce.Presentation
             lblCategory.Font = new Font("Arial", 10);
             productPanel.Controls.Add(lblCategory);
 
-            Button btnEdit = new Button();
-            btnEdit.Text = "";
-            btnEdit.Size = new Size(25, 25);
-            btnEdit.Location = new Point(1482, 7);
-            btnEdit.FlatStyle = FlatStyle.Flat;
-            btnEdit.BackColor = Color.Transparent;
-            btnEdit.FlatAppearance.BorderColor = Color.Cyan;
-            btnEdit.FlatAppearance.BorderSize = 1;
-           // btnEdit.BackgroundImage = Image.FromFile(@"C:\Users\user\Downloads\edit_24dp_05E0E9_FILL0_wght400_GRAD0_opsz24.png");
-           // btnEdit.BackgroundImageLayout = ImageLayout.Zoom;
+            // زرار Edit (باستخدام Guna2Button)
+            Guna.UI2.WinForms.Guna2Button btnEdit = new Guna.UI2.WinForms.Guna2Button
+            {
+                Text = "Edit",
+                Location = new Point(1452, 10),
+                Size = new Size(80, 30),
+                FillColor = Color.FromArgb(0, 174, 239), // لون مشابه لـ Color.Cyan
+                ForeColor = Color.White,
+                BorderRadius = 5,
+                
+            }; 
             btnEdit.Click += (sender, e) => {
                 decimal priceValue;
                 decimal.TryParse(lblPrice.Text.Replace("$", ""), out priceValue);
                 int unitsValue;
                 int.TryParse(lblUnitsInStock.Text, out unitsValue);
 
-                EditForm editForm = new EditForm(lblName.Text, priceValue, unitsValue, lblCategory.Text);
+                // Pass the required dependencies to the EditForm constructor
+                EditForm editForm = new EditForm(
+                    lblName.Text,
+                    priceValue,
+                    unitsValue,
+                    lblCategory.Text,
+                    _productServices,
+                    ServiceProviderContainer.ServiceProvider.GetRequiredService<IValidator<AddProductDTO>>(),
+                    ServiceProviderContainer.ServiceProvider.GetRequiredService<ICategoryServices>()
+                );
 
                 DialogResult result = editForm.ShowDialog();
                 if (result == DialogResult.OK)
@@ -114,24 +123,40 @@ namespace E_Commerce.Presentation
                     MessageBox.Show("Unexpected dialog result: " + result.ToString());
                 }
             };
-
-
             productPanel.Controls.Add(btnEdit);
 
-            Button btnDelete = new Button();
-            btnDelete.Text = "";
-            btnDelete.Size = new Size(25, 25);
-            btnDelete.Location = new Point(1537, 7);
-            btnDelete.FlatStyle = FlatStyle.Flat;
-            btnDelete.BackColor = Color.Transparent;
-            btnDelete.FlatAppearance.BorderColor = Color.IndianRed;
-            btnDelete.FlatAppearance.BorderSize = 2;
-           // btnDelete.BackgroundImage = Image.FromFile(@"C:\Users\user\Downloads\delete_24dp_FF2768_FILL0_wght400_GRAD0_opsz24.png");
-           // btnDelete.BackgroundImageLayout = ImageLayout.Zoom;
-            btnDelete.Click += (sender, e) => { productPanel.Parent.Controls.Remove(productPanel); };
+            // زرار Delete (باستخدام Guna2Button)
+            Guna.UI2.WinForms.Guna2Button btnDelete = new Guna.UI2.WinForms.Guna2Button
+            {
+                Text = "Delete",
+                Location = new Point(1537, 10),
+                Size = new Size(80, 30),
+                FillColor = Color.FromArgb(229, 105, 151),
+                ForeColor = Color.White,
+                BorderRadius = 5
+            };
+            btnDelete.Click += (s, e) => DeleteProduct(productPanel, name);
             productPanel.Controls.Add(btnDelete);
 
             flowLayoutPanelProducts.Controls.Add(productPanel);
+        }
+
+        private void DeleteProduct(Panel productPanel, string productName)
+        {
+            DialogResult result = MessageBox.Show(
+                $"Are you sure you want to delete the product '{productName}'?",
+                "Confirm Delete",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Warning
+            );
+
+            if (result == DialogResult.Yes)
+            {
+                // هنا هيحصل الحذف من قاعدة البيانات في المستقبل
+                // مثلاً: await _productServices.DeleteProductAsync(productId);
+                productPanel.Parent.Controls.Remove(productPanel); // حذف المنتج من الواجهة
+                MessageBox.Show("Product deleted successfully!");
+            }
         }
 
         private void btnAddProduct_Click(object sender, EventArgs e)
@@ -153,9 +178,6 @@ namespace E_Commerce.Presentation
             // Clean up the event handler
             addForm.ProductAdded -= (s, args) => { };
         }
-
-
-
-
     }
+
 }

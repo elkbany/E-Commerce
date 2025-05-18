@@ -234,6 +234,7 @@
             txtCategory.ShadowDecoration.CustomizableEdges = customizableEdges12;
             txtCategory.Size = new Size(250, 36);
             txtCategory.TabIndex = 19;
+            txtCategory.SelectedIndexChanged += txtCategory_SelectedIndexChanged;
             // 
             // EditForm
             // 
