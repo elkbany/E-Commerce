@@ -63,7 +63,7 @@ namespace E_Commerce.DA.Context
             modelBuilder.Entity<CartItem>().HasOne(c => c.User)
                 .WithMany(u => u.CartItems)
                 .HasForeignKey(c => c.UserID)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
             #endregion
             #region Category
             modelBuilder.Entity<Category>().HasMany(c => c.Products)
