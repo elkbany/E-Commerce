@@ -47,7 +47,7 @@
             flowLayoutPanelProducts.AutoScroll = true;
             flowLayoutPanelProducts.Location = new Point(0, 147);
             flowLayoutPanelProducts.Name = "flowLayoutPanelProducts";
-            flowLayoutPanelProducts.Size = new Size(1572, 613);
+            flowLayoutPanelProducts.Size = new Size(1668, 613);
             flowLayoutPanelProducts.TabIndex = 0;
             // 
             // btnAddProduct
@@ -63,7 +63,7 @@
             btnAddProduct.ForeColor = Color.White;
             btnAddProduct.Image = (Image)resources.GetObject("btnAddProduct.Image");
             btnAddProduct.IndicateFocus = true;
-            btnAddProduct.Location = new Point(1393, 13);
+            btnAddProduct.Location = new Point(1448, 13);
             btnAddProduct.Name = "btnAddProduct";
             btnAddProduct.ShadowDecoration.CustomizableEdges = customizableEdges2;
             btnAddProduct.Size = new Size(181, 44);
@@ -76,7 +76,7 @@
             label9.AutoSize = true;
             label9.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
             label9.ForeColor = Color.Gray;
-            label9.Location = new Point(1471, 95);
+            label9.Location = new Point(1467, 95);
             label9.Name = "label9";
             label9.Size = new Size(91, 21);
             label9.TabIndex = 15;
@@ -87,7 +87,7 @@
             label8.AutoSize = true;
             label8.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
             label8.ForeColor = Color.Gray;
-            label8.Location = new Point(1110, 95);
+            label8.Location = new Point(1128, 95);
             label8.Name = "label8";
             label8.Size = new Size(78, 21);
             label8.TabIndex = 14;
@@ -149,6 +149,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            AutoScroll = true;
             Controls.Add(label3);
             Controls.Add(label9);
             Controls.Add(label8);
@@ -159,7 +160,7 @@
             Controls.Add(btnAddProduct);
             Controls.Add(flowLayoutPanelProducts);
             Name = "ProductsPage";
-            Size = new Size(1575, 760);
+            Size = new Size(1674, 760);
             ResumeLayout(false);
             PerformLayout();
         }
