@@ -169,5 +169,10 @@ namespace E_Commerce.Presentation
                 btnCheckout.Text = "Proceed to Checkout";
             }
         }
+
+        private void guna2Button1_Click(object sender, EventArgs e)
+        {
+            LoadCartItems();
+        }
     }
 }
