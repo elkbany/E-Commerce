@@ -104,7 +104,7 @@ namespace E_Commerce.BL.Implementations
             }
 
             await _unitOfWork.Users.Delete(user);
-            await _unitOfWork.CommitAsync(); // Commit via Unit of Work
+            await _unitOfWork.Users.CommitAsync(); // Commit via Unit of Work
 
             return user.Adapt<UserDTO>();
         }
@@ -129,6 +129,11 @@ namespace E_Commerce.BL.Implementations
                 await _unitOfWork.Users.Update(user);
                 await _unitOfWork.CommitAsync(); // Commit via Unit of Work
             }
+        }
+        public async Task<User> GetUserByNameAsync(string userName)
+        {
+            var user = await _unitOfWork.Users.GetUserByName(userName);
+            return user;
         }
     }
 }

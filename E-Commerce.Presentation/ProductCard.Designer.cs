@@ -91,14 +91,13 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
-            BorderStyle = BorderStyle.FixedSingle;
             Controls.Add(guna2PictureBox1);
             Controls.Add(btnAddToCart);
             Controls.Add(lblCategory);
             Controls.Add(lblPrice);
             Controls.Add(lblProductName);
             Name = "ProductCard";
-            Size = new Size(292, 287);
+            Size = new Size(294, 289);
             ((System.ComponentModel.ISupportInitialize)guna2PictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();

@@ -2,19 +2,31 @@
 using System.Configuration;
 using System.Windows.Forms;
 using E_Commerce.BL.Contracts.Services;
+using E_Commerce.BL.Features.User.DTOs;
 using E_Commerce.BL.Implementations;
 using E_Commerce.Presentation;
+using Microsoft.AspNet.Identity;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace E_Commerce.Presentation
 {
     public partial class Admin : Form
     {
+        private readonly IAccountServices accountServices;
+        private int userId;
+        //private UserIformationDTO userInfo;
+
+        public void SetUserId(int id)
+        {
+            userId = id;
+        }
+
+
+
         private ProductsPage productsPage;
         private CategoriesPage categoriesPage;
         private UsersPage usersPage;
         public ProfilePage profilePage;
-        //private OurTeam ourTeam;
         private UserControl currentPage;
         private OrdersPage ordersPage;
 
@@ -22,6 +34,8 @@ namespace E_Commerce.Presentation
         {
             InitializeComponent();
 
+            //////
+            accountServices = ServiceProviderContainer.ServiceProvider.GetRequiredService<IAccountServices>();
             productsPage = new ProductsPage(ServiceProviderContainer.ServiceProvider.GetRequiredService<IProductServices>());
             categoriesPage = ServiceProviderContainer.ServiceProvider.GetRequiredService<CategoriesPage>();
             usersPage = ServiceProviderContainer.ServiceProvider.GetRequiredService<UsersPage>();
@@ -82,7 +96,7 @@ namespace E_Commerce.Presentation
             else
             {
                 sidebar.Width += 10;
-                if (sidebar.Width >= 287)
+                if (sidebar.Width >= 250)
                 {
                     sidebarExpand = true;
                     sidebarTransition.Stop();
@@ -124,11 +138,6 @@ namespace E_Commerce.Presentation
             ShowPage(ordersPage);
         }
 
-        //private void btnSettings_Click(object sender, EventArgs e)
-        //{
-        //    Console.WriteLine("btnSettings clicked");
-        //    ShowPage(ourTeam);
-        //}
 
         private void addNewItem_Click(object sender, EventArgs e)
         {
@@ -144,60 +153,35 @@ namespace E_Commerce.Presentation
             addForm.ShowDialog();
         }
 
+        //Logout Here
+        
+        private async void guna2Button5_Click(object sender, EventArgs e)
+        {
+
+            try
+            {
+                var userInfo = await accountServices.ViewProfile(userId);
+                if (userInfo != null)
+                {
+                    bool loggedOut = await accountServices.LogoutUserAsync(userInfo.Username);
+                    if (loggedOut)
+                    {
+                        MessageBox.Show("Logged out successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        this.Hide();
+                        var loginForm = ServiceProviderContainer.ServiceProvider.GetRequiredService<Login>();
+                        loginForm.Show();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Failed to log out.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error logging out: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }}
+        
     }
 }
-        //private void btnAddCategory_Click(object sender, EventArgs e)
-        //{
-        //    AddForm addForm = new AddForm(categoriesPage.flowLayoutPanelCategories);
-        //    if (addForm.ShowDialog() == DialogResult.OK)
-        //    {
-        //        string categoryName = addForm.ProductName; // ???????? ProductName ???? ?????
-        //        decimal categoryPrice = addForm.ProductPrice;
-        //        int unitsInStock = addForm.UnitsInStock;
-        //        string category = addForm.Category;
-
-        //        categoriesPage.AddCategoryToPanel(categoryName);
-        //    }
-        //}
-
-        //private void btnAddCategory_Click(object sender, EventArgs e) //this i fix it
-        //{
-        //    // Get form from DI
-        //    var addForm = ServiceProviderContainer.ServiceProvider.GetRequiredService<AddForm>();
-
-//            if(addForm.ShowDialog() == DialogResult.OK)
-//            {
-//                string categoryName = addForm.ProductName;
-//        decimal categoryPrice = addForm.ProductPrice;
-//        int unitsInStock = addForm.UnitsInStock;
-//        string category = addForm.Category;
-
-//            if(addForm.ShowDialog() == DialogResult.OK)
-//            {
-//                string categoryName = addForm.ProductName;
-//        categoriesPage.AddCategoryToPanel(categoryName);
-//            }
-//}
-    
-
-        //    if (addUser.ShowDialog() == DialogResult.OK)
-        //    {
-        //        string userName = addUser.UserName; 
-        //        string userEmail = addUser.UserEmail;
-        //        string userPassword = addUser.UserPassword;
-        //        string userRole = addUser.UserStatus;
-
-//            if (addUser.ShowDialog() == DialogResult.OK)
-//            {
-//                string firstName = addUser.FirstName;
-//                string lastName = addUser.LastName;
-//                string userName = addUser.UserName;
-//                string userEmail = addUser.UserEmail;
-//                string userPassword = addUser.UserPassword;
-//                string userRole = addUser.UserStatus;
-//                string isActive = addUser.IsActive;
-
-//                usersPage.AddUserToPanel(firstName, lastName, userName, userEmail, userPassword, userRole, isActive);
-//            }
-//        }
-//    }}

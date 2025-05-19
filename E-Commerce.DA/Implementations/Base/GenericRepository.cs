@@ -39,6 +39,7 @@ namespace E_Commerce.DA.Implementations.Base
             }
 
             _context.Entry(entity).State = EntityState.Modified;
+            _context.SaveChanges();
             return entity;
         }
 

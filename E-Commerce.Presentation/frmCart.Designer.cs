@@ -17,6 +17,8 @@
         {
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges1 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges2 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges3 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
+            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges4 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             lblTitle = new Label();
             lblNoItems = new Label();
             panelSummary = new Panel();
@@ -25,6 +27,7 @@
             lblTotalLabel = new Label();
             lblTotal = new Label();
             panel1 = new Panel();
+            guna2Button1 = new Guna.UI2.WinForms.Guna2Button();
             flowLayoutPanelCart = new FlowLayoutPanel();
             panelSummary.SuspendLayout();
             panel2.SuspendLayout();
@@ -62,10 +65,10 @@
             panelSummary.Controls.Add(btnCheckout);
             panelSummary.Controls.Add(panel2);
             panelSummary.Dock = DockStyle.Bottom;
-            panelSummary.Location = new Point(0, 535);
+            panelSummary.Location = new Point(0, 484);
             panelSummary.Name = "panelSummary";
             panelSummary.Padding = new Padding(0, 0, 0, 50);
-            panelSummary.Size = new Size(1071, 69);
+            panelSummary.Size = new Size(1071, 98);
             panelSummary.TabIndex = 3;
             // 
             // btnCheckout
@@ -77,7 +80,7 @@
             btnCheckout.FillColor = Color.FromArgb(0, 120, 212);
             btnCheckout.Font = new Font("Segoe UI", 12F);
             btnCheckout.ForeColor = Color.White;
-            btnCheckout.Location = new Point(809, 12);
+            btnCheckout.Location = new Point(809, 27);
             btnCheckout.Name = "btnCheckout";
             btnCheckout.ShadowDecoration.CustomizableEdges = customizableEdges2;
             btnCheckout.Size = new Size(180, 45);
@@ -90,7 +93,7 @@
             panel2.Anchor = AnchorStyles.None;
             panel2.Controls.Add(lblTotalLabel);
             panel2.Controls.Add(lblTotal);
-            panel2.Location = new Point(40, 23);
+            panel2.Location = new Point(40, 38);
             panel2.Name = "panel2";
             panel2.Size = new Size(156, 24);
             panel2.TabIndex = 3;
@@ -117,6 +120,7 @@
             // 
             // panel1
             // 
+            panel1.Controls.Add(guna2Button1);
             panel1.Controls.Add(lblNoItems);
             panel1.Controls.Add(lblTitle);
             panel1.Dock = DockStyle.Top;
@@ -125,6 +129,23 @@
             panel1.Size = new Size(1071, 47);
             panel1.TabIndex = 4;
             // 
+            // guna2Button1
+            // 
+            guna2Button1.CustomizableEdges = customizableEdges3;
+            guna2Button1.DisabledState.BorderColor = Color.DarkGray;
+            guna2Button1.DisabledState.CustomBorderColor = Color.DarkGray;
+            guna2Button1.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
+            guna2Button1.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
+            guna2Button1.Font = new Font("Segoe UI", 9F);
+            guna2Button1.ForeColor = Color.White;
+            guna2Button1.Location = new Point(851, 5);
+            guna2Button1.Name = "guna2Button1";
+            guna2Button1.ShadowDecoration.CustomizableEdges = customizableEdges4;
+            guna2Button1.Size = new Size(120, 36);
+            guna2Button1.TabIndex = 3;
+            guna2Button1.Text = "Refresh";
+            guna2Button1.Click += guna2Button1_Click;
+            // 
             // flowLayoutPanelCart
             // 
             flowLayoutPanelCart.AutoScroll = true;
@@ -132,15 +153,16 @@
             flowLayoutPanelCart.Location = new Point(0, 47);
             flowLayoutPanelCart.Name = "flowLayoutPanelCart";
             flowLayoutPanelCart.Padding = new Padding(20, 0, 0, 0);
-            flowLayoutPanelCart.Size = new Size(1071, 488);
+            flowLayoutPanelCart.Size = new Size(1071, 437);
             flowLayoutPanelCart.TabIndex = 5;
+            flowLayoutPanelCart.Paint += flowLayoutPanelCart_Paint;
             // 
             // frmCart
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
-            ClientSize = new Size(1071, 604);
+            ClientSize = new Size(1071, 582);
             Controls.Add(flowLayoutPanelCart);
             Controls.Add(panel1);
             Controls.Add(panelSummary);
@@ -164,5 +186,6 @@
         private Panel panel1;
         private FlowLayoutPanel flowLayoutPanelCart;
         private Panel panel2;
+        private Guna.UI2.WinForms.Guna2Button guna2Button1;
     }
 }

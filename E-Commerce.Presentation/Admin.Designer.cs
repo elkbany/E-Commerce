@@ -40,8 +40,6 @@
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges8 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges9 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges10 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges11 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
-            Guna.UI2.WinForms.Suite.CustomizableEdges customizableEdges12 = new Guna.UI2.WinForms.Suite.CustomizableEdges();
             panel1 = new Panel();
             label1 = new Label();
             btnSide = new PictureBox();
@@ -52,7 +50,6 @@
             btnProducts = new Guna.UI2.WinForms.Guna2Button();
             btnCategories = new Guna.UI2.WinForms.Guna2Button();
             btnUsers = new Guna.UI2.WinForms.Guna2Button();
-            btnProfile = new Guna.UI2.WinForms.Guna2Button();
             btnOrders = new Guna.UI2.WinForms.Guna2Button();
             guna2Button5 = new Guna.UI2.WinForms.Guna2Button();
             sidebarTransition = new System.Windows.Forms.Timer(components);
@@ -127,7 +124,6 @@
             sidebar.Controls.Add(btnProducts);
             sidebar.Controls.Add(btnCategories);
             sidebar.Controls.Add(btnUsers);
-            sidebar.Controls.Add(btnProfile);
             sidebar.Controls.Add(btnOrders);
             sidebar.Controls.Add(guna2Button5);
             sidebar.Dock = DockStyle.Left;
@@ -135,7 +131,7 @@
             sidebar.Margin = new Padding(0);
             sidebar.Name = "sidebar";
             sidebar.Padding = new Padding(0, 30, 0, 0);
-            sidebar.Size = new Size(287, 786);
+            sidebar.Size = new Size(250, 966);
             sidebar.TabIndex = 1;
             // 
             // panel2
@@ -143,7 +139,7 @@
             panel2.Controls.Add(label2);
             panel2.Location = new Point(3, 33);
             panel2.Name = "panel2";
-            panel2.Size = new Size(284, 60);
+            panel2.Size = new Size(245, 60);
             panel2.TabIndex = 4;
             // 
             // label2
@@ -247,35 +243,6 @@
             btnUsers.TextAlign = HorizontalAlignment.Left;
             btnUsers.Click += btnUsers_Click;
             // 
-            // btnProfile
-            // 
-            btnProfile.Animated = true;
-            btnProfile.AutoRoundedCorners = true;
-            btnProfile.BackColor = Color.Transparent;
-            btnProfile.BorderRadius = 20;
-            btnProfile.Cursor = Cursors.Hand;
-            btnProfile.CustomizableEdges = customizableEdges7;
-            btnProfile.DisabledState.BorderColor = Color.DarkGray;
-            btnProfile.DisabledState.CustomBorderColor = Color.DarkGray;
-            btnProfile.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
-            btnProfile.DisabledState.ForeColor = Color.FromArgb(141, 141, 141);
-            btnProfile.FillColor = Color.FromArgb(5, 78, 97);
-            btnProfile.Font = new Font("Segoe UI", 10.8F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            btnProfile.ForeColor = Color.White;
-            btnProfile.Image = (Image)resources.GetObject("btnProfile.Image");
-            btnProfile.ImageAlign = HorizontalAlignment.Left;
-            btnProfile.ImageOffset = new Point(20, 0);
-            btnProfile.IndicateFocus = true;
-            btnProfile.Location = new Point(0, 317);
-            btnProfile.Margin = new Padding(0, 15, 0, 0);
-            btnProfile.Name = "btnProfile";
-            btnProfile.ShadowDecoration.CustomizableEdges = customizableEdges8;
-            btnProfile.Size = new Size(248, 42);
-            btnProfile.TabIndex = 7;
-            btnProfile.Text = "     Profile";
-            btnProfile.TextAlign = HorizontalAlignment.Left;
-            btnProfile.Click += btnProfile_Click;
-            // 
             // btnOrders
             // 
             btnOrders.Animated = true;
@@ -283,7 +250,7 @@
             btnOrders.BackColor = Color.Transparent;
             btnOrders.BorderRadius = 20;
             btnOrders.Cursor = Cursors.Hand;
-            btnOrders.CustomizableEdges = customizableEdges9;
+            btnOrders.CustomizableEdges = customizableEdges7;
             btnOrders.DisabledState.BorderColor = Color.DarkGray;
             btnOrders.DisabledState.CustomBorderColor = Color.DarkGray;
             btnOrders.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
@@ -295,10 +262,10 @@
             btnOrders.ImageAlign = HorizontalAlignment.Left;
             btnOrders.ImageOffset = new Point(20, 0);
             btnOrders.IndicateFocus = true;
-            btnOrders.Location = new Point(0, 374);
+            btnOrders.Location = new Point(0, 317);
             btnOrders.Margin = new Padding(0, 15, 0, 0);
             btnOrders.Name = "btnOrders";
-            btnOrders.ShadowDecoration.CustomizableEdges = customizableEdges10;
+            btnOrders.ShadowDecoration.CustomizableEdges = customizableEdges8;
             btnOrders.Size = new Size(248, 42);
             btnOrders.TabIndex = 8;
             btnOrders.Text = "     Orders";
@@ -310,7 +277,7 @@
             guna2Button5.Animated = true;
             guna2Button5.BackColor = Color.Transparent;
             guna2Button5.Cursor = Cursors.Hand;
-            guna2Button5.CustomizableEdges = customizableEdges11;
+            guna2Button5.CustomizableEdges = customizableEdges9;
             guna2Button5.DisabledState.BorderColor = Color.DarkGray;
             guna2Button5.DisabledState.CustomBorderColor = Color.DarkGray;
             guna2Button5.DisabledState.FillColor = Color.FromArgb(169, 169, 169);
@@ -322,14 +289,15 @@
             guna2Button5.ImageAlign = HorizontalAlignment.Left;
             guna2Button5.ImageOffset = new Point(20, 0);
             guna2Button5.IndicateFocus = true;
-            guna2Button5.Location = new Point(0, 916);
-            guna2Button5.Margin = new Padding(0, 500, 0, 0);
+            guna2Button5.Location = new Point(0, 509);
+            guna2Button5.Margin = new Padding(0, 150, 0, 0);
             guna2Button5.Name = "guna2Button5";
-            guna2Button5.ShadowDecoration.CustomizableEdges = customizableEdges12;
+            guna2Button5.ShadowDecoration.CustomizableEdges = customizableEdges10;
             guna2Button5.Size = new Size(248, 42);
             guna2Button5.TabIndex = 9;
             guna2Button5.Text = "     Logout";
             guna2Button5.TextAlign = HorizontalAlignment.Left;
+            guna2Button5.Click += guna2Button5_Click;
             // 
             // sidebarTransition
             // 
@@ -339,16 +307,16 @@
             // mainContentPanel
             // 
             mainContentPanel.Dock = DockStyle.Fill;
-            mainContentPanel.Location = new Point(287, 39);
+            mainContentPanel.Location = new Point(250, 39);
             mainContentPanel.Name = "mainContentPanel";
-            mainContentPanel.Size = new Size(1411, 786);
+            mainContentPanel.Size = new Size(1448, 966);
             mainContentPanel.TabIndex = 10;
             // 
             // Admin
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1698, 825);
+            ClientSize = new Size(1698, 1005);
             Controls.Add(mainContentPanel);
             Controls.Add(sidebar);
             Controls.Add(panel1);
@@ -356,6 +324,7 @@
             KeyPreview = true;
             Name = "Admin";
             Text = "Form1";
+            WindowState = FormWindowState.Maximized;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)btnSide).EndInit();
@@ -378,7 +347,6 @@
         private Panel panel2;
         private Guna.UI2.WinForms.Guna2Button btnCategories;
         private Guna.UI2.WinForms.Guna2Button btnUsers;
-        private Guna.UI2.WinForms.Guna2Button btnProfile;
         private Guna.UI2.WinForms.Guna2Button btnOrders;
         private Guna.UI2.WinForms.Guna2Button guna2Button5;
         private Panel panelTemplate;

@@ -172,7 +172,7 @@ namespace E_Commerce.Presentation
                 ForeColor = Color.White,
                 BorderRadius = 5
             };
-            btnEdit.Click += (sender, e) =>
+            btnEdit.Click += async (sender, e) =>
             {
                 AddUser editForm = new AddUser(flowLayoutPanelUsers);
                 editForm.txtFirstName.Text = firstName;
@@ -189,19 +189,40 @@ namespace E_Commerce.Presentation
                 DialogResult result = editForm.ShowDialog();
                 if (result == DialogResult.OK)
                 {
-                    userPanel.Controls[1].Text = editForm.FirstName;
-                    userPanel.Controls[2].Text = editForm.LastName;
-                    userPanel.Controls[3].Text = editForm.UserName;
-                    userPanel.Controls[4].Text = editForm.UserEmail;
-                    userPanel.Controls[5].Text = editForm.UserPassword;
-                    userPanel.Controls[6].Text = editForm.UserStatus;
-                    userPanel.Controls[7].Text = editForm.IsActive;
-                    MessageBox.Show("User updated successfully!");
+                    try
+                    {
+                        var userId = userServices.GetUserByNameAsync(username).Result.Id;
+                        var updateDto = new UpdateUserAccountDTO
+                        {
+                            Email = editForm.txtUserEmail.Text,
+                            FirstName = editForm.txtFirstName.Text,
+                            LastName = editForm.txtLastName.Text,
+                            Role = editForm.txtUserStatus.Text=="User"? UserStatus.Client : UserStatus.Admin,
+                            ActiveOrNot = isActive=="Yes" ? true : false,
+
+
+                        };
+                        var updatedUser= userServices.Update(userId, updateDto).Result;
+                        email = updatedUser.Email;
+                        firstName = updatedUser.FirstName;
+                        lastName = updatedUser.LastName;
+                        isActive = updatedUser.ActiveOrNot==true?"Yes":"No";
+                        status = updatedUser.Role == UserStatus.Client ? "User" : "Admin";
+
+
+                        MessageBox.Show("User updated successfully!");
+                    }
+                    catch(Exception ex)
+                    { 
+                    MessageBox.Show(ex.Message);
+                    }
                 }
                 else if (result == DialogResult.Cancel)
                     MessageBox.Show("Edit canceled.");
                 else
                     MessageBox.Show("Unexpected dialog result: " + result.ToString());
+
+                await LoadUsersAsync();
             };
             userPanel.Controls.Add(btnEdit);
 
@@ -215,9 +236,9 @@ namespace E_Commerce.Presentation
                 BorderRadius = 5
             };
             btnDelete.Click += (s, e) => DeleteItem(userPanel, username);
-            userPanel.Controls.Add(btnDelete);
+            userPanel.Controls.Add(btnDelete); 
 
-            flowLayoutPanelUsers.Controls.Add(userPanel);
+            flowLayoutPanelUsers.Controls.Add(userPanel); 
         }
 
         private async void DeleteItem(Panel panel, string username)
@@ -236,12 +257,14 @@ namespace E_Commerce.Presentation
                     MessageBox.Show($"Error deleting user: {ex.Message}");
                 }
             }
+            await LoadUsersAsync();
         }
 
         private async Task LoadUsersAsync()
         {
             try
             {
+                this.RefreshPanels();
                 var users = await userServices.getAllClient();
                 if (flowLayoutPanelUsers.InvokeRequired)
                 {
@@ -304,6 +327,7 @@ namespace E_Commerce.Presentation
                     MessageBox.Show($"Error adding user: {ex.Message}");
                 }
             }
+            await LoadUsersAsync();
         }
     }
 }
