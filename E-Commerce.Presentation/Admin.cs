@@ -2,14 +2,27 @@
 using System.Configuration;
 using System.Windows.Forms;
 using E_Commerce.BL.Contracts.Services;
+using E_Commerce.BL.Features.User.DTOs;
 using E_Commerce.BL.Implementations;
 using E_Commerce.Presentation;
+using Microsoft.AspNet.Identity;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace E_Commerce.Presentation
 {
     public partial class Admin : Form
     {
+        private readonly IAccountServices accountServices;
+        private int userId;
+        //private UserIformationDTO userInfo;
+
+        public void SetUserId(int id)
+        {
+            userId = id;
+        }
+
+
+
         private ProductsPage productsPage;
         private CategoriesPage categoriesPage;
         private UsersPage usersPage;
@@ -22,6 +35,8 @@ namespace E_Commerce.Presentation
         {
             InitializeComponent();
 
+            //////
+            accountServices = ServiceProviderContainer.ServiceProvider.GetRequiredService<IAccountServices>();
             productsPage = new ProductsPage(ServiceProviderContainer.ServiceProvider.GetRequiredService<IProductServices>());
             categoriesPage = ServiceProviderContainer.ServiceProvider.GetRequiredService<CategoriesPage>();
             usersPage = ServiceProviderContainer.ServiceProvider.GetRequiredService<UsersPage>();
@@ -124,11 +139,6 @@ namespace E_Commerce.Presentation
             ShowPage(ordersPage);
         }
 
-        //private void btnSettings_Click(object sender, EventArgs e)
-        //{
-        //    Console.WriteLine("btnSettings clicked");
-        //    ShowPage(ourTeam);
-        //}
 
         private void addNewItem_Click(object sender, EventArgs e)
         {
@@ -144,6 +154,62 @@ namespace E_Commerce.Presentation
             addForm.ShowDialog();
         }
 
+        //Logout Here
+        
+        private async void guna2Button5_Click(object sender, EventArgs e)
+        {
+
+            try
+            {
+                if (accountServices == null)
+                {
+                    MessageBox.Show("Account service is not initialized.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                var userInfo = await accountServices.ViewProfile(userId);
+                if (userInfo != null)
+                {
+                    userId = 0; // تنظيف الجلسة
+                    MessageBox.Show("Logged out successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    this.Close();
+                    var loginForm = ServiceProviderContainer.ServiceProvider.GetRequiredService<Login>();
+                    loginForm.Show();
+                }
+                else
+                {
+                    MessageBox.Show("User information not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error during logout: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            //try
+            //{
+            //    var unserInfo = await accountServices.ViewProfile(userId); 
+            //    if(userInfo != null)
+            //    {
+            //        bool loggedOut = await accountServices.LogoutUserAsync(userInfo.Username);
+            //        if (loggedOut)
+            //        {
+            //            MessageBox.Show("Logged out successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            //            this.Close();
+            //            var loginForm = ServiceProviderContainer.ServiceProvider.GetRequiredService<Login>();
+            //            loginForm.Show();
+            //        }
+            //        else
+            //        {
+            //            MessageBox.Show("Failed to log out.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //        }
+
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show($"Error during logout: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //}
+        }
     }
 }
         //private void btnAddCategory_Click(object sender, EventArgs e)

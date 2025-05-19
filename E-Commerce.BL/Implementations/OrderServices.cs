@@ -104,7 +104,7 @@ namespace E_Commerce.BL.Implementations
             order.Status = OrderStatus.Approved;
             order.DateProcessed = DateTime.UtcNow;
             await _unitOfWork.Orders.Update(order);
-            await _unitOfWork.CommitAsync();
+            await _unitOfWork.Orders.CommitAsync();
 
             return (true, "Order approved successfully.", order.Adapt<OrderDTO>());
         }
@@ -141,7 +141,7 @@ namespace E_Commerce.BL.Implementations
             order.Status = OrderStatus.Denied;
             order.DateProcessed = DateTime.UtcNow;
             await _unitOfWork.Orders.Update(order);
-            await _unitOfWork.CommitAsync();
+            await _unitOfWork.Orders.CommitAsync();
 
             return (true, "Order denied successfully.", order.Adapt<OrderDTO>());
         }

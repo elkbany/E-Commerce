@@ -24,5 +24,10 @@ namespace E_Commerce.DA.Implementations.Repositories
         {
             return await _context.Users.AnyAsync(u => u.Email.ToLower() == email.ToLower());
         }
+        public async Task<User?> GetUserByName(string username)
+        {
+            var user = _context.Users.FirstOrDefault(u => u.Username == username);
+            return user;
+        } 
     }
 }

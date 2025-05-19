@@ -11,6 +11,7 @@ namespace E_Commerce.BL.Contracts.Repositories
     {
         public Task<bool> IsUsernameTakenAsync(string username);
         public Task<bool> IsEmailAlreadyExistsAsync(string email);
+        public Task<User?> GetUserByName(string username);
 
 
     }

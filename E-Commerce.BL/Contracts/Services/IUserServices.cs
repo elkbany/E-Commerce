@@ -20,6 +20,8 @@ namespace E_Commerce.BL.Contracts.Services
         Task<UserDTO> Delete(string userName);
         Task activateUser(int Id);
         Task deactivateUser(int Id);
+        public  Task<User> GetUserByNameAsync(string userName);
+
 
     }
 }

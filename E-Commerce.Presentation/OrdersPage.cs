@@ -96,10 +96,10 @@ namespace E_Commerce.Presentation
             }
         }
 
-        private void ComboBoxStatusFilter_SelectedIndexChanged(object sender, EventArgs e)
+        private async void ComboBoxStatusFilter_SelectedIndexChanged(object sender, EventArgs e)
         {
             var selectedStatus = comboBoxStatusFilter.SelectedItem.ToString();
-            LoadOrders(selectedStatus);
+             LoadOrders(selectedStatus);
         }
 
         private void AddOrderToPanel(OrderDTO order, int index)
