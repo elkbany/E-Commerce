@@ -294,6 +294,11 @@ namespace E_Commerce.Presentation
                     var count = userServices.getAllClient().Result.Count;
                     AddUserToPanel(user.FirstName, user.LastName, user.Username, user.Email, user.Password, user.status.ToString(), ActiveStatus.ToString(), count++);
                 }
+                catch (FluentValidation.ValidationException ex)
+                {
+                    var errorMessages = string.Join("\n", ex.Errors.Select(error => error.ErrorMessage));
+                    MessageBox.Show(errorMessages, "Validation Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
                 catch (Exception ex)
                 {
                     MessageBox.Show($"Error adding user: {ex.Message}");

@@ -13,5 +13,7 @@ namespace E_Commerce.BL.Contracts.Repositories
     {
         Product GetByName(string name);
         public Task<IEnumerable<Product>> GetAllAsync(Expression<Func<Product, bool>>? filter = null, params Expression<Func<Product, object>>[] includes);
+        public  Task<bool> IsProductNameExistsAsync(string name);
+
     }
 }

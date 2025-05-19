@@ -41,6 +41,10 @@ namespace E_Commerce.DA.Implementations.Repositories
             }
             return await query.ToListAsync();
         }
+        public async Task<bool> IsProductNameExistsAsync(string name)
+        {
+            return await _context.Products.AnyAsync(p => p.Name == name);
+        }
     }
 }
 

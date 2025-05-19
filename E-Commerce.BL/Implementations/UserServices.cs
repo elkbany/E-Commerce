@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using E_Commerce.BL.Contracts.Repositories;
 using E_Commerce.BL.Contracts.Services;
 using E_Commerce.BL.Features.User.DTOs;
+using E_Commerce.BL.Features.User.Validators;
 using E_Commerce.Domain.Enums;
 using E_Commerce.Domain.Models;
 using Mapster;
@@ -12,7 +13,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace E_Commerce.BL.Implementations
 {
-    public class UserServices : IUserServices
+    public class UserServices : AppService, IUserServices
     {
         private readonly IUnitOfWork _unitOfWork;
 
@@ -23,6 +24,8 @@ namespace E_Commerce.BL.Implementations
 
         public async Task<(UserDTO User, bool IsActive)> AddUserAsync(UserDTO user)
         {
+            await DoValidationAsync<UserDTOValidator, UserDTO>(user, _unitOfWork.Users);
+
             var hasher = new PasswordHasher<User>();
             var newUser = new User
             {
