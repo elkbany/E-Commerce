@@ -78,7 +78,7 @@ namespace E_Commerce.Presentation
                     services.AddScoped<ICategoryRepository, CategoryRepository>();
                     services.AddScoped<IOrderDetailRepository, OrderDetailRepository>();
                     services.AddTransient<ICartItemRepository, CartItemRepository>();
-                    services.AddScoped<IUnitOfWork, UnitOfWork>();
+                    services.AddTransient<IUnitOfWork, UnitOfWork>();
 
                     // Register Services
                     services.AddScoped<IProductServices, ProductServices>();

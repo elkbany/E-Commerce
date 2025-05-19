@@ -15,7 +15,7 @@ namespace E_Commerce.BL.Implementations
 {
     public class CartItemServices : AppService, ICartItemServices
     {
-        private readonly IUnitOfWork unitOfWork;
+        private readonly ICartItemRepository cartItemRepository;
         private readonly IProductServices productServices;
         private readonly IOrderServices orderService;
         private readonly ILogger<CartItemServices> logger;
@@ -23,12 +23,12 @@ namespace E_Commerce.BL.Implementations
         public event EventHandler<int> CartUpdated;
 
         public CartItemServices(
-            IUnitOfWork unitOfWork,
+            ICartItemRepository cartItemRepository,
             IProductServices productServices,
             IOrderServices orderService,
             ILogger<CartItemServices> logger)
         {
-            this.unitOfWork = unitOfWork;
+            this.cartItemRepository = cartItemRepository;
             this.productServices = productServices;
             this.orderService = orderService;
             this.logger = logger;
@@ -53,8 +53,8 @@ namespace E_Commerce.BL.Implementations
                 DateAdded = DateTime.Now
             };
 
-            var addedItem = await unitOfWork.CartItems.AddAsync(cartItem);
-            await unitOfWork.CommitAsync();
+            var addedItem = await cartItemRepository.AddAsync(cartItem);
+            await cartItemRepository.CommitAsync(); // assuming the repository has this method
 
             if (addedItem != null)
             {
@@ -69,7 +69,7 @@ namespace E_Commerce.BL.Implementations
         public async Task<IEnumerable<CartItemDTO>> GetCartItemsByUserIdAsync(int userId)
         {
             logger.LogInformation($"Fetching cart items for user {userId}");
-            var cartItems = await unitOfWork.CartItems.GetAllAsync(x => x.UserID == userId, x => x.Product);
+            var cartItems = await cartItemRepository.GetAllAsync(x => x.UserID == userId, x => x.Product);
             return cartItems.Adapt<List<CartItemDTO>>();
         }
 
@@ -77,7 +77,7 @@ namespace E_Commerce.BL.Implementations
         {
             await DoValidationAsync<UpdateCartItemQuantityDTOValidator, UpdateCartItemQuantityDTO>(quantityDto);
 
-            var cartItem = await unitOfWork.CartItems.FirstOrDefaultAsync(x => x.Id == cartItemId, x => x.Product);
+            var cartItem = await cartItemRepository.FirstOrDefaultAsync(x => x.Id == cartItemId, x => x.Product);
             if (cartItem == null)
                 throw new Exception("Cart item not found.");
 
@@ -85,34 +85,34 @@ namespace E_Commerce.BL.Implementations
                 throw new Exception("Requested quantity exceeds available stock.");
 
             cartItem.Quantity = quantityDto.Quantity;
-            await unitOfWork.CartItems.Update(cartItem);
-            await unitOfWork.CommitAsync();
+            await cartItemRepository.Update(cartItem);
+            await cartItemRepository.CommitAsync();
 
             return cartItem.Adapt<CartItemDTO>();
         }
 
         public async Task DeleteFromCartAsync(int cartItemId)
         {
-            var cartItem = await unitOfWork.CartItems.FirstOrDefaultAsync(x => x.Id == cartItemId);
+            var cartItem = await cartItemRepository.FirstOrDefaultAsync(x => x.Id == cartItemId);
             if (cartItem == null)
                 throw new Exception("Cart item not found.");
 
-            await unitOfWork.CartItems.Delete(cartItem);
-            await unitOfWork.CommitAsync();
+            await cartItemRepository.Delete(cartItem);
+            await cartItemRepository.CommitAsync();
         }
 
         public async Task SubmitCartAsync(int userId)
         {
-            var cartItems = await unitOfWork.CartItems.GetAllAsync(x => x.UserID == userId, x => x.Product);
+            var cartItems = await cartItemRepository.GetAllAsync(x => x.UserID == userId, x => x.Product);
             if (!cartItems.Any())
                 throw new Exception("Cart is empty.");
 
             await orderService.CreateOrderFromCartItemsAsync(userId, cartItems);
 
             foreach (var item in cartItems)
-                await unitOfWork.CartItems.Delete(item);
+                await cartItemRepository.Delete(item);
 
-            await unitOfWork.CommitAsync();
+            await cartItemRepository.CommitAsync();
         }
     }
 }
