@@ -48,10 +48,9 @@
             // flowLayoutPanelUsers
             // 
             flowLayoutPanelUsers.AutoScroll = true;
-            flowLayoutPanelUsers.Location = new Point(0, 195);
-            flowLayoutPanelUsers.Margin = new Padding(3, 4, 3, 4);
+            flowLayoutPanelUsers.Location = new Point(0, 146);
             flowLayoutPanelUsers.Name = "flowLayoutPanelUsers";
-            flowLayoutPanelUsers.Size = new Size(1797, 817);
+            flowLayoutPanelUsers.Size = new Size(1635, 613);
             flowLayoutPanelUsers.TabIndex = 0;
             // 
             // btnAddUser
@@ -67,11 +66,10 @@
             btnAddUser.ForeColor = Color.White;
             btnAddUser.Image = (Image)resources.GetObject("btnAddUser.Image");
             btnAddUser.IndicateFocus = true;
-            btnAddUser.Location = new Point(880, 27);
-            btnAddUser.Margin = new Padding(3, 4, 3, 4);
+            btnAddUser.Location = new Point(1440, 20);
             btnAddUser.Name = "btnAddUser";
             btnAddUser.ShadowDecoration.CustomizableEdges = customizableEdges2;
-            btnAddUser.Size = new Size(207, 59);
+            btnAddUser.Size = new Size(181, 44);
             btnAddUser.TabIndex = 13;
             btnAddUser.Text = "Add New User";
             btnAddUser.Click += btnAddUser_Click;
@@ -80,9 +78,9 @@
             // 
             label3.AutoSize = true;
             label3.Font = new Font("Segoe UI", 19.8000011F, FontStyle.Bold | FontStyle.Italic, GraphicsUnit.Point, 0);
-            label3.Location = new Point(0, 27);
+            label3.Location = new Point(0, 20);
             label3.Name = "label3";
-            label3.Size = new Size(107, 46);
+            label3.Size = new Size(86, 37);
             label3.TabIndex = 30;
             label3.Text = "Users";
             // 
@@ -91,9 +89,9 @@
             label9.AutoSize = true;
             label9.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
             label9.ForeColor = Color.Gray;
-            label9.Location = new Point(1683, 137);
+            label9.Location = new Point(1504, 103);
             label9.Name = "label9";
-            label9.Size = new Size(112, 28);
+            label9.Size = new Size(91, 21);
             label9.TabIndex = 29;
             label9.Text = "Operations";
             // 
@@ -102,9 +100,9 @@
             label8.AutoSize = true;
             label8.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
             label8.ForeColor = Color.Gray;
-            label8.Location = new Point(1267, 137);
+            label8.Location = new Point(1113, 103);
             label8.Name = "label8";
-            label8.Size = new Size(126, 28);
+            label8.Size = new Size(103, 21);
             label8.TabIndex = 28;
             label8.Text = "Status / Role";
             // 
@@ -113,9 +111,9 @@
             label7.AutoSize = true;
             label7.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
             label7.ForeColor = Color.Gray;
-            label7.Location = new Point(1021, 137);
+            label7.Location = new Point(905, 103);
             label7.Name = "label7";
-            label7.Size = new Size(97, 28);
+            label7.Size = new Size(79, 21);
             label7.TabIndex = 27;
             label7.Text = "Password";
             // 
@@ -124,9 +122,9 @@
             label6.AutoSize = true;
             label6.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
             label6.ForeColor = Color.Gray;
-            label6.Location = new Point(787, 137);
+            label6.Location = new Point(704, 103);
             label6.Name = "label6";
-            label6.Size = new Size(60, 28);
+            label6.Size = new Size(48, 21);
             label6.TabIndex = 26;
             label6.Text = "Email";
             // 
@@ -135,18 +133,18 @@
             label5.AutoSize = true;
             label5.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
             label5.ForeColor = Color.Gray;
-            label5.Location = new Point(543, 137);
+            label5.Location = new Point(488, 103);
             label5.Name = "label5";
-            label5.Size = new Size(113, 28);
+            label5.Size = new Size(90, 21);
             label5.TabIndex = 25;
             label5.Text = "User Name";
             // 
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(21, 141);
+            label4.Location = new Point(18, 106);
             label4.Name = "label4";
-            label4.Size = new Size(18, 20);
+            label4.Size = new Size(14, 15);
             label4.TabIndex = 24;
             label4.Text = "#";
             // 
@@ -155,9 +153,9 @@
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
             label1.ForeColor = Color.Gray;
-            label1.Location = new Point(82, 137);
+            label1.Location = new Point(73, 103);
             label1.Name = "label1";
-            label1.Size = new Size(110, 28);
+            label1.Size = new Size(88, 21);
             label1.TabIndex = 31;
             label1.Text = "First Name";
             // 
@@ -166,9 +164,9 @@
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
             label2.ForeColor = Color.Gray;
-            label2.Location = new Point(331, 137);
+            label2.Location = new Point(293, 103);
             label2.Name = "label2";
-            label2.Size = new Size(108, 28);
+            label2.Size = new Size(86, 21);
             label2.TabIndex = 32;
             label2.Text = "Last Name";
             // 
@@ -177,16 +175,17 @@
             label10.AutoSize = true;
             label10.Font = new Font("Segoe UI Semibold", 12F, FontStyle.Bold);
             label10.ForeColor = Color.Gray;
-            label10.Location = new Point(1485, 137);
+            label10.Location = new Point(1310, 103);
             label10.Name = "label10";
-            label10.Size = new Size(91, 28);
+            label10.Size = new Size(75, 21);
             label10.TabIndex = 33;
             label10.Text = "IsActive?";
             // 
             // UsersPage
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
+            AutoScroll = true;
             Controls.Add(label10);
             Controls.Add(label2);
             Controls.Add(label1);
@@ -199,9 +198,8 @@
             Controls.Add(label4);
             Controls.Add(btnAddUser);
             Controls.Add(flowLayoutPanelUsers);
-            Margin = new Padding(3, 4, 3, 4);
             Name = "UsersPage";
-            Size = new Size(1800, 1013);
+            Size = new Size(1638, 760);
             ResumeLayout(false);
             PerformLayout();
         }
