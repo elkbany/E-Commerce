@@ -78,7 +78,7 @@ namespace E_Commerce.Presentation
                     services.AddScoped<ICategoryRepository, CategoryRepository>();
                     services.AddScoped<IOrderDetailRepository, OrderDetailRepository>();
                     services.AddTransient<ICartItemRepository, CartItemRepository>();
-                    services.AddScoped<IUnitOfWork, UnitOfWork>();
+                    services.AddTransient<IUnitOfWork, UnitOfWork>();
 
                     // Register Services
                     services.AddScoped<IProductServices, ProductServices>();
@@ -95,6 +95,7 @@ namespace E_Commerce.Presentation
                     services.AddTransient<IValidator<int>, OrderIdValidator>();
                     services.AddTransient<IValidator<AddProductDTO>, ProductDTOValidator>();
                     services.AddTransient<frmMain>();
+                    services.AddTransient<Admin>();
                     services.AddTransient<IValidator<CategoryDTO>, CategoryDTOValidator>();
 
 

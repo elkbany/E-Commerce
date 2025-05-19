@@ -58,6 +58,7 @@ namespace E_Commerce.Presentation
                     {
                         var adminForm = ServiceProviderContainer.ServiceProvider.GetRequiredService<Admin>();
                         adminForm.Show();
+                        adminForm.SetUserId(userId); // أضف هذا السطر عشان تعين userId
                         this.Hide();
                     }
                     else

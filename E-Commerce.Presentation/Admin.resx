@@ -159,16 +159,6 @@
         RK5CYII=
 </value>
   </data>
-  <data name="btnProfile.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAR9JREFUSEvd
-        lDFuwkAQRTlKREEZKQ0NUigQDQdIm2NwC7gCTc5CAwWHoYv0okEz1vh7x3FS8jr/93cQa2tms6cHmANn
-        hlg21/5kgLVOHGGt50cBTunwHdg0Oht3wUk7TYBjOvSuXrFO6h/V98jX0nDXNOja8EF9Xam0KvIe0lm1
-        8g5g4f4u+ZsejGdz0o13ssh5yIvLneR7zw8pO3i2l+7O80vOQz5o5K/q4tlcv13PqcXEdxCUrhQOcOsm
-        w019UM4pxR8p56R986FuKnbWZ5zVmbSlNvh1YJm+sIxlS+kG7SWYCp/AS3r+DevamQc6t6PYoN/AttHd
-        ulPqVWHIJv1Sr1gn9f+1Uaf+g/FNqhTXVTF+LWP4Eqy+ouFSezp+AMOFDUKcdSr7AAAAAElFTkSuQmCC
-</value>
-  </data>
   <data name="btnOrders.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABGdBTUEAALGPC/xhBQAAAShJREFUSEvl
