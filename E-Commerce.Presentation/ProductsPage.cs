@@ -124,7 +124,7 @@ namespace E_Commerce.Presentation
                 Text = "Edit",
                 Location = new Point(productPanel.Width - 240, 10),
                 Size = new Size(80, 30),
-                FillColor = Color.FromArgb(0, 174, 239),
+                FillColor = Color.FromArgb(102, 210, 214),
                 ForeColor = Color.White,
                 BorderRadius = 5
             };
@@ -181,27 +181,8 @@ namespace E_Commerce.Presentation
             flowLayoutPanelProducts.Controls.Add(productPanel);
         }
 
-        //private void DeleteProduct(Panel productPanel, string productName)
-        //{
-        //    DialogResult result = MessageBox.Show(
-        //        $"Are you sure you want to delete the product '{productName}'?",
-        //        "Confirm Delete",
-        //        MessageBoxButtons.YesNo,
-        //        MessageBoxIcon.Warning
-        //    );
-
-        //    if (result == DialogResult.Yes)
-        //    {
-        //        // هنا هيحصل الحذف من قاعدة البيانات في المستقبل
-        //        // مثلاً: await _productServices.DeleteProductAsync(productId);
-        //        productPanel.Parent.Controls.Remove(productPanel); // حذف المنتج من الواجهة
-        //        MessageBox.Show("Product deleted successfully!");
-        //    }
-        //}
-        private async void DeleteProduct(Panel productPanel, string productName)
+        private void DeleteProduct(Panel productPanel, string productName)
         {
-            var product = await _productServices.GetProductByName(productName);
-            var productId = product.Id; 
             DialogResult result = MessageBox.Show(
                 $"Are you sure you want to delete the product '{productName}'?",
                 "Confirm Delete",
@@ -215,23 +196,6 @@ namespace E_Commerce.Presentation
                 // مثلاً: await _productServices.DeleteProductAsync(productId);
                 productPanel.Parent.Controls.Remove(productPanel);
                 MessageBox.Show("Product deleted successfully!");
-            }
-                try
-                {
-                    // First delete from database
-                    await _productServices.DeleteProductAsync(productId);
-
-                    // Then remove from UI
-                    productPanel.Parent.Controls.Remove(productPanel);
-                    MessageBox.Show("Product deleted successfully!");
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Error deleting product: {ex.Message}",
-                                   "Error",
-                                   MessageBoxButtons.OK,
-                                   MessageBoxIcon.Error);
-                }
             }
         }
 
@@ -252,5 +216,4 @@ namespace E_Commerce.Presentation
             addForm.ProductAdded -= (s, args) => { };
         }
     }
-
 }
