@@ -53,11 +53,11 @@ namespace E_Commerce.DA.Context
             modelBuilder.Entity<Product>().HasMany(p => p.OrderDetails)
                 .WithOne(od => od.Product)
                 .HasForeignKey(od => od.ProductID)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
             modelBuilder.Entity<Product>().HasMany(p => p.CartItems)
                 .WithOne(c => c.Product)
                 .HasForeignKey(c => c.ProductID)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.Cascade);
             #endregion
             #region CartItem
             modelBuilder.Entity<CartItem>().HasOne(c => c.User)

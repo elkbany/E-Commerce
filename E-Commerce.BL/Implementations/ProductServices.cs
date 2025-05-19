@@ -88,7 +88,7 @@ namespace E_Commerce.BL.Implementations
             existing.CategoryID = category.Id;
 
             await _unitOfWork.Products.Update(existing);
-            await _unitOfWork.CommitAsync(); // Commit via Unit of Work
+            await _unitOfWork.Products.CommitAsync(); // Commit via Unit of Work
 
             return existing.Adapt<AddProductDTO>();
         }
@@ -99,7 +99,7 @@ namespace E_Commerce.BL.Implementations
             if (product != null)
             {
                 await _unitOfWork.Products.Delete(product);
-                await _unitOfWork.CommitAsync(); // Commit via Unit of Work
+                await _unitOfWork.Products.CommitAsync(); // Commit via Unit of Work
             }
         }
 
