@@ -174,5 +174,10 @@ namespace E_Commerce.Presentation
         {
             LoadCartItems();
         }
+
+        private void flowLayoutPanelCart_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
     }
 }

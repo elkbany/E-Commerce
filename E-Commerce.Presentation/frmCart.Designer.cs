@@ -65,10 +65,10 @@
             panelSummary.Controls.Add(btnCheckout);
             panelSummary.Controls.Add(panel2);
             panelSummary.Dock = DockStyle.Bottom;
-            panelSummary.Location = new Point(0, 535);
+            panelSummary.Location = new Point(0, 484);
             panelSummary.Name = "panelSummary";
             panelSummary.Padding = new Padding(0, 0, 0, 50);
-            panelSummary.Size = new Size(1071, 69);
+            panelSummary.Size = new Size(1071, 98);
             panelSummary.TabIndex = 3;
             // 
             // btnCheckout
@@ -80,7 +80,7 @@
             btnCheckout.FillColor = Color.FromArgb(0, 120, 212);
             btnCheckout.Font = new Font("Segoe UI", 12F);
             btnCheckout.ForeColor = Color.White;
-            btnCheckout.Location = new Point(809, 12);
+            btnCheckout.Location = new Point(809, 27);
             btnCheckout.Name = "btnCheckout";
             btnCheckout.ShadowDecoration.CustomizableEdges = customizableEdges2;
             btnCheckout.Size = new Size(180, 45);
@@ -93,7 +93,7 @@
             panel2.Anchor = AnchorStyles.None;
             panel2.Controls.Add(lblTotalLabel);
             panel2.Controls.Add(lblTotal);
-            panel2.Location = new Point(40, 23);
+            panel2.Location = new Point(40, 38);
             panel2.Name = "panel2";
             panel2.Size = new Size(156, 24);
             panel2.TabIndex = 3;
@@ -153,15 +153,16 @@
             flowLayoutPanelCart.Location = new Point(0, 47);
             flowLayoutPanelCart.Name = "flowLayoutPanelCart";
             flowLayoutPanelCart.Padding = new Padding(20, 0, 0, 0);
-            flowLayoutPanelCart.Size = new Size(1071, 488);
+            flowLayoutPanelCart.Size = new Size(1071, 437);
             flowLayoutPanelCart.TabIndex = 5;
+            flowLayoutPanelCart.Paint += flowLayoutPanelCart_Paint;
             // 
             // frmCart
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.White;
-            ClientSize = new Size(1071, 604);
+            ClientSize = new Size(1071, 582);
             Controls.Add(flowLayoutPanelCart);
             Controls.Add(panel1);
             Controls.Add(panelSummary);
