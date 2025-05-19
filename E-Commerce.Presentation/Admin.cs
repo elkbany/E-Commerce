@@ -27,7 +27,6 @@ namespace E_Commerce.Presentation
         private CategoriesPage categoriesPage;
         private UsersPage usersPage;
         public ProfilePage profilePage;
-        //private OurTeam ourTeam;
         private UserControl currentPage;
         private OrdersPage ordersPage;
 
@@ -97,7 +96,7 @@ namespace E_Commerce.Presentation
             else
             {
                 sidebar.Width += 10;
-                if (sidebar.Width >= 287)
+                if (sidebar.Width >= 250)
                 {
                     sidebarExpand = true;
                     sidebarTransition.Stop();
@@ -161,109 +160,28 @@ namespace E_Commerce.Presentation
 
             try
             {
-                if (accountServices == null)
-                {
-                    MessageBox.Show("Account service is not initialized.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-
                 var userInfo = await accountServices.ViewProfile(userId);
                 if (userInfo != null)
                 {
-                    userId = 0; // تنظيف الجلسة
-                    MessageBox.Show("Logged out successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    this.Close();
-                    var loginForm = ServiceProviderContainer.ServiceProvider.GetRequiredService<Login>();
-                    loginForm.Show();
+                    bool loggedOut = await accountServices.LogoutUserAsync(userInfo.Username);
+                    if (loggedOut)
+                    {
+                        MessageBox.Show("Logged out successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        this.Hide();
+                        var loginForm = ServiceProviderContainer.ServiceProvider.GetRequiredService<Login>();
+                        loginForm.Show();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Failed to log out.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
-                else
-                {
-                    MessageBox.Show("User information not found.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error during logout: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-            //try
-            //{
-            //    var unserInfo = await accountServices.ViewProfile(userId); 
-            //    if(userInfo != null)
-            //    {
-            //        bool loggedOut = await accountServices.LogoutUserAsync(userInfo.Username);
-            //        if (loggedOut)
-            //        {
-            //            MessageBox.Show("Logged out successfully.", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            //            this.Close();
-            //            var loginForm = ServiceProviderContainer.ServiceProvider.GetRequiredService<Login>();
-            //            loginForm.Show();
-            //        }
-            //        else
-            //        {
-            //            MessageBox.Show("Failed to log out.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //        }
-
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show($"Error during logout: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //}
-        }
+                MessageBox.Show($"Error logging out: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }}
+        
     }
 }
-        //private void btnAddCategory_Click(object sender, EventArgs e)
-        //{
-        //    AddForm addForm = new AddForm(categoriesPage.flowLayoutPanelCategories);
-        //    if (addForm.ShowDialog() == DialogResult.OK)
-        //    {
-        //        string categoryName = addForm.ProductName; // ???????? ProductName ???? ?????
-        //        decimal categoryPrice = addForm.ProductPrice;
-        //        int unitsInStock = addForm.UnitsInStock;
-        //        string category = addForm.Category;
-
-        //        categoriesPage.AddCategoryToPanel(categoryName);
-        //    }
-        //}
-
-        //private void btnAddCategory_Click(object sender, EventArgs e) //this i fix it
-        //{
-        //    // Get form from DI
-        //    var addForm = ServiceProviderContainer.ServiceProvider.GetRequiredService<AddForm>();
-
-//            if(addForm.ShowDialog() == DialogResult.OK)
-//            {
-//                string categoryName = addForm.ProductName;
-//        decimal categoryPrice = addForm.ProductPrice;
-//        int unitsInStock = addForm.UnitsInStock;
-//        string category = addForm.Category;
-
-//            if(addForm.ShowDialog() == DialogResult.OK)
-//            {
-//                string categoryName = addForm.ProductName;
-//        categoriesPage.AddCategoryToPanel(categoryName);
-//            }
-//}
-    
-
-        //    if (addUser.ShowDialog() == DialogResult.OK)
-        //    {
-        //        string userName = addUser.UserName; 
-        //        string userEmail = addUser.UserEmail;
-        //        string userPassword = addUser.UserPassword;
-        //        string userRole = addUser.UserStatus;
-
-//            if (addUser.ShowDialog() == DialogResult.OK)
-//            {
-//                string firstName = addUser.FirstName;
-//                string lastName = addUser.LastName;
-//                string userName = addUser.UserName;
-//                string userEmail = addUser.UserEmail;
-//                string userPassword = addUser.UserPassword;
-//                string userRole = addUser.UserStatus;
-//                string isActive = addUser.IsActive;
-
-//                usersPage.AddUserToPanel(firstName, lastName, userName, userEmail, userPassword, userRole, isActive);
-//            }
-//        }
-//    }}

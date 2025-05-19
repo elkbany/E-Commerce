@@ -95,7 +95,6 @@ namespace E_Commerce.Presentation
                     services.AddTransient<IValidator<int>, OrderIdValidator>();
                     services.AddTransient<IValidator<AddProductDTO>, ProductDTOValidator>();
                     services.AddTransient<frmMain>();
-                    services.AddTransient<Admin>();
                     services.AddTransient<IValidator<CategoryDTO>, CategoryDTOValidator>();
 
 

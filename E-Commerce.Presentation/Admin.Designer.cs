@@ -131,7 +131,7 @@
             sidebar.Margin = new Padding(0);
             sidebar.Name = "sidebar";
             sidebar.Padding = new Padding(0, 30, 0, 0);
-            sidebar.Size = new Size(287, 966);
+            sidebar.Size = new Size(250, 966);
             sidebar.TabIndex = 1;
             // 
             // panel2
@@ -139,7 +139,7 @@
             panel2.Controls.Add(label2);
             panel2.Location = new Point(3, 33);
             panel2.Name = "panel2";
-            panel2.Size = new Size(284, 60);
+            panel2.Size = new Size(245, 60);
             panel2.TabIndex = 4;
             // 
             // label2
@@ -289,8 +289,8 @@
             guna2Button5.ImageAlign = HorizontalAlignment.Left;
             guna2Button5.ImageOffset = new Point(20, 0);
             guna2Button5.IndicateFocus = true;
-            guna2Button5.Location = new Point(0, 859);
-            guna2Button5.Margin = new Padding(0, 500, 0, 0);
+            guna2Button5.Location = new Point(0, 509);
+            guna2Button5.Margin = new Padding(0, 150, 0, 0);
             guna2Button5.Name = "guna2Button5";
             guna2Button5.ShadowDecoration.CustomizableEdges = customizableEdges10;
             guna2Button5.Size = new Size(248, 42);
@@ -307,9 +307,9 @@
             // mainContentPanel
             // 
             mainContentPanel.Dock = DockStyle.Fill;
-            mainContentPanel.Location = new Point(287, 39);
+            mainContentPanel.Location = new Point(250, 39);
             mainContentPanel.Name = "mainContentPanel";
-            mainContentPanel.Size = new Size(1411, 966);
+            mainContentPanel.Size = new Size(1448, 966);
             mainContentPanel.TabIndex = 10;
             // 
             // Admin
@@ -324,6 +324,7 @@
             KeyPreview = true;
             Name = "Admin";
             Text = "Form1";
+            WindowState = FormWindowState.Maximized;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)btnSide).EndInit();
